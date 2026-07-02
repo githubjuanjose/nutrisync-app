@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "NutriSync",
+    "slug": "nutrisync",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "nutrisync",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": false,
+    "runtimeVersion": { "policy": "appVersion" },
+    "updates": {
+      "url": "https://u.expo.dev/REPLACE_WITH_EAS_PROJECT_ID",
+      "fallbackToCacheTimeout": 0
+    },
+    "splash": {
+      "backgroundColor": "#FCF1EC",
+      "resizeMode": "contain"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": { "supportsTablet": true, "bundleIdentifier": "com.nutrisync.app" },
+    "android": { "package": "com.nutrisync.app" },
+    "plugins": ["expo-font"]
+  }
+}
