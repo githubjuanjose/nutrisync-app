@@ -5,13 +5,3 @@ dist/
 *.log
 google-service-account.json
 .DS_Store
-
-.claude/
-node_modules/
-.expo/
-.env
-
-node_modules/
-.expo/
-.env
-.claude/

@@ -163,3 +163,19 @@ export async function getTodayScore(userId: string): Promise<number | null> {
     .from('daily_scores').select('cas_total').eq('user_id', userId).eq('date', todayISO()).maybeSingle();
   return data ? Number((data as any).cas_total) : null;
 }
+
+export type ScoreDetail = {
+  cas_total: number; c1: number; c2: number; c3: number; c4: number; c5: number;
+};
+export async function getScoreDetail(userId: string): Promise<ScoreDetail | null> {
+  const { data } = await supabase
+    .from('daily_scores')
+    .select('cas_total,component_1_phase_confidence,component_2_biomarkers,component_3_nutrition,component_4_fitness,component_5_logging')
+    .eq('user_id', userId).eq('date', todayISO()).maybeSingle();
+  if (!data) return null;
+  const d = data as any;
+  return {
+    cas_total: Number(d.cas_total), c1: Number(d.component_1_phase_confidence), c2: Number(d.component_2_biomarkers),
+    c3: Number(d.component_3_nutrition), c4: Number(d.component_4_fitness), c5: Number(d.component_5_logging),
+  };
+}

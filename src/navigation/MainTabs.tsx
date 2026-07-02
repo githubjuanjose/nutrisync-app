@@ -6,7 +6,8 @@ import { colors, font } from '../theme';
 import CycleScreen from '../screens/main/CycleScreen';
 import NutriLogScreen from '../screens/main/NutriLogScreen';
 import MovementLogScreen from '../screens/main/MovementLogScreen';
-import { makePlaceholder } from '../screens/Placeholder';
+import ProgressScreen from '../screens/main/ProgressScreen';
+import CalendarScreen from '../screens/main/CalendarScreen';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -26,11 +27,11 @@ export default function MainTabs() {
         tabBarIcon: ({ color }) => <Text style={{ fontSize: 18, color }}>{ICON[route.name]}</Text>,
       })}
     >
-      <Tab.Screen name="Calendar" component={makePlaceholder('Calendar')} />
+      <Tab.Screen name="Calendar" component={CalendarScreen} />
       <Tab.Screen name="Cycle" component={CycleScreen} />
       <Tab.Screen name="NutriLog" component={NutriLogScreen} />
       <Tab.Screen name="Movement" component={MovementLogScreen} />
-      <Tab.Screen name="Progress" component={makePlaceholder('Progress')} />
+      <Tab.Screen name="Progress" component={ProgressScreen} />
     </Tab.Navigator>
   );
 }
