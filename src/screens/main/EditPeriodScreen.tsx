@@ -1,48 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndicator, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { Circle, Path, Ellipse } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { saveEditPeriod } from '../../lib/daily';
 import { ChipGroup } from '../../ui/Chips';
 
-/* ---------- Mood faces (recreated; exact Figma emotes to be swapped in) ---------- */
-type Mouth = 'smile' | 'bigSmile' | 'frown' | 'wavy' | 'flat' | 'smirk';
-const MOODS: { name: string; color: string; mouth: Mouth }[] = [
-  { name: 'calm', color: '#F5641E', mouth: 'smile' },
-  { name: 'content', color: '#F5641E', mouth: 'smile' },
-  { name: 'worried', color: '#F5641E', mouth: 'wavy' },
-  { name: 'anxious', color: '#F5641E', mouth: 'frown' },
-  { name: 'happy', color: '#F5641E', mouth: 'bigSmile' },
-  { name: 'mad', color: '#E4553A', mouth: 'frown' },
-  { name: 'sad', color: '#E4708A', mouth: 'frown' },
-  { name: 'nervous', color: '#E4708A', mouth: 'wavy' },
-  { name: 'brainfog', color: '#E4708A', mouth: 'flat' },
-  { name: 'distracted', color: '#E4708A', mouth: 'flat' },
-  { name: 'mischievous', color: '#E4708A', mouth: 'smirk' },
-  { name: 'clear', color: '#E4708A', mouth: 'smile' },
-];
-function mouthPath(m: Mouth) {
-  switch (m) {
-    case 'bigSmile': return 'M34 52 Q50 68 66 52';
-    case 'smile': return 'M36 52 Q50 62 64 52';
-    case 'frown': return 'M36 60 Q50 50 64 60';
-    case 'wavy': return 'M36 55 Q43 50 50 55 Q57 60 64 55';
-    case 'flat': return 'M38 56 L62 56';
-    case 'smirk': return 'M38 55 Q52 62 64 53';
-  }
-}
-function MoodFace({ color, mouth, on }: { color: string; mouth: Mouth; on: boolean }) {
-  return (
-    <Svg width={50} height={50} viewBox="0 0 100 100">
-      <Circle cx={50} cy={50} r={46} fill={color} opacity={on ? 1 : 0.28} />
-      <Ellipse cx={38} cy={42} rx={4.5} ry={6} fill="#2A1206" />
-      <Ellipse cx={62} cy={42} rx={4.5} ry={6} fill="#2A1206" />
-      <Path d={mouthPath(mouth)} stroke="#2A1206" strokeWidth={3} fill="none" strokeLinecap="round" />
-    </Svg>
-  );
-}
+/* ---------- Mood faces — exact emotes extracted from the Figma edit-period design ---------- */
+const EMOTE: Record<string, any> = {
+  calm: require('../../../assets/emotes/calm.png'),
+  content: require('../../../assets/emotes/content.png'),
+  worried: require('../../../assets/emotes/worried.png'),
+  anxious: require('../../../assets/emotes/anxious.png'),
+  happy: require('../../../assets/emotes/happy.png'),
+  mad: require('../../../assets/emotes/mad.png'),
+  sad: require('../../../assets/emotes/sad.png'),
+  nervous: require('../../../assets/emotes/nervous.png'),
+  brainfog: require('../../../assets/emotes/brainfog.png'),
+  distracted: require('../../../assets/emotes/distracted.png'),
+  mischievous: require('../../../assets/emotes/mischievous.png'),
+  clear: require('../../../assets/emotes/clear.png'),
+};
+const MOOD_NAMES = ['calm', 'content', 'worried', 'anxious', 'happy', 'mad', 'sad', 'nervous', 'brainfog', 'distracted', 'mischievous', 'clear'];
 
 /* ---------- Flow droplet ---------- */
 function Droplet({ size = 16, color = colors.coral }: { size?: number; color?: string }) {
@@ -135,12 +115,12 @@ export default function EditPeriodScreen({ navigation }: any) {
           <View style={styles.card}>
             <Text style={styles.h}>Mood &amp; Mental State</Text>
             <View style={styles.moodGrid}>
-              {MOODS.map((m) => {
-                const on = moods.includes(m.name);
+              {MOOD_NAMES.map((m) => {
+                const on = moods.includes(m);
                 return (
-                  <Pressable key={m.name} onPress={() => toggle(moods, setMoods, m.name)} style={styles.moodCell}>
-                    <MoodFace color={m.color} mouth={m.mouth} on={on} />
-                    <Text style={[styles.moodLabel, on && { color: colors.coralDeep, fontFamily: font.semibold }]}>{m.name}</Text>
+                  <Pressable key={m} onPress={() => toggle(moods, setMoods, m)} style={styles.moodCell}>
+                    <Image source={EMOTE[m]} style={[styles.emote, !on && { opacity: 0.4 }]} />
+                    <Text style={[styles.moodLabel, on && { color: colors.coralDeep, fontFamily: font.semibold }]}>{m}</Text>
                   </Pressable>
                 );
               })}
@@ -215,6 +195,7 @@ const styles = StyleSheet.create({
   flowDrops: { flexDirection: 'row', flexWrap: 'wrap', width: 34, justifyContent: 'center', gap: 1 },
   moodGrid: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 12 },
   moodCell: { width: '16.6%', alignItems: 'center', marginBottom: 12 },
+  emote: { width: 48, height: 48 },
   moodLabel: { fontFamily: font.regular, fontSize: 9.5, color: colors.muted, marginTop: 3 },
   libRow: { flexDirection: 'row', gap: 10, marginTop: 14, alignItems: 'center' },
   libDot: { flex: 1, height: 10, borderRadius: 6, backgroundColor: '#EFE2D7' },
