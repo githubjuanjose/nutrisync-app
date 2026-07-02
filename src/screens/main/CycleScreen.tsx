@@ -74,10 +74,10 @@ export default function CycleScreen({ navigation }: any) {
         <ScrollView contentContainerStyle={{ paddingBottom: 30 }} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <Text style={styles.brand}>NUTRISYNC ᖭ</Text>
-            <View style={styles.avatarWrap}>
+            <Pressable style={styles.avatarWrap} onPress={() => navigation.navigate('Settings')}>
               <Image source={{ uri: 'https://i.pravatar.cc/100?img=47' }} style={styles.avatar} />
               <View style={styles.online} />
-            </View>
+            </Pressable>
           </View>
 
           <Text style={styles.hello}>Hello, <Text style={styles.helloBold}>{firstName}</Text></Text>
