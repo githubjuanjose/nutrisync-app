@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable, ActivityIndicator } from
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow, phaseColor } from '../../theme';
+import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getCurrentCycle, CycleRow } from '../../lib/api';
 import { cycleDay, phaseForDay, displayPhase } from '../../lib/cas';
@@ -29,7 +30,7 @@ export default function CalendarScreen() {
     })();
   }, [userId]);
 
-  if (loading) return <View style={styles.fillC}><ActivityIndicator color={colors.coral} /></View>;
+  if (loading) return <LoadingView />;
 
   const today = new Date();
   const len = cycle?.cycle_length ?? 28;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
+import { LoadingView } from '../../ui/LoadingView';
 import { NutriOrb } from '../../ui/NutriOrb';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
@@ -44,7 +45,7 @@ export default function PersonalInfoScreen({ navigation }: any) {
     finally { setSaving(false); }
   };
 
-  if (loading) return <View style={styles.fillC}><ActivityIndicator color={colors.coral} /></View>;
+  if (loading) return <LoadingView />;
 
   const Field = ({ label, k, ...p }: { label: string; k: keyof Form } & any) => (
     <View style={styles.field}>

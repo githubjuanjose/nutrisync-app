@@ -20,11 +20,6 @@
   },
   "submit": {
     "production": {
-      "ios": {
-        "appleId": "REPLACE_with_apple_id_email",
-        "ascAppId": "REPLACE_with_app_store_connect_app_id",
-        "appleTeamId": "REPLACE_with_apple_team_id"
-      },
       "android": {
         "serviceAccountKeyPath": "./google-service-account.json",
         "track": "internal"

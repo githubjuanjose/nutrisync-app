@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { colors, PhaseKey } from '../../theme';
+import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle } from '../../lib/api';
 import { cycleDay, phaseForDay, displayPhase } from '../../lib/cas';
@@ -50,7 +51,7 @@ export default function MovementLogScreen() {
     }
   };
 
-  if (loading) return <View style={{ flex: 1, backgroundColor: colors.peachTop, alignItems: 'center', justifyContent: 'center' }}><ActivityIndicator color={colors.coral} /></View>;
+  if (loading) return <LoadingView />;
 
   const items: LogItem[] = moves.map((mv) => ({ name: mv.item_name, tag: mv.category_tag }));
   return (

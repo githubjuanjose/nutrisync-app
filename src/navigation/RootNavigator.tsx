@@ -8,14 +8,13 @@ import OnboardingWizard from '../screens/onboarding/OnboardingWizard';
 import AppStack from './AppStack';
 import { useSession } from '../state/SessionProvider';
 import { colors } from '../theme';
+import { LoadingView } from '../ui/LoadingView';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function Splash() {
   return (
-    <View style={{ flex: 1, backgroundColor: colors.peachTop, alignItems: 'center', justifyContent: 'center' }}>
-      <ActivityIndicator color={colors.coral} />
-    </View>
+    <LoadingView />
   );
 }
 

@@ -18,6 +18,8 @@ export type RootStackParamList = {
   Security: undefined;
   DataPrivacy: undefined;
   CommunityPrivacy: undefined;
+  AppPreferences: undefined;
+  NutritionalPreferences: undefined;
   SendFeedback: undefined;
 };
 

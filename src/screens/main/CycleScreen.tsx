@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, Pressable, ScrollView, ActivityIndicator
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
+import { LoadingView } from '../../ui/LoadingView';
 import { PhaseRing } from '../../ui/PhaseRing';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle, UserRow, CycleRow } from '../../lib/api';
@@ -62,9 +63,7 @@ export default function CycleScreen({ navigation }: any) {
 
   if (loading) {
     return (
-      <View style={[styles.fill, { alignItems: 'center', justifyContent: 'center' }]}>
-        <ActivityIndicator color={colors.coral} />
-      </View>
+      <LoadingView />
     );
   }
 
@@ -74,10 +73,15 @@ export default function CycleScreen({ navigation }: any) {
         <ScrollView contentContainerStyle={{ paddingBottom: 30 }} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <Text style={styles.brand}>NUTRISYNC ᖭ</Text>
-            <Pressable style={styles.avatarWrap} onPress={() => navigation.navigate('Settings')}>
-              <Image source={{ uri: 'https://i.pravatar.cc/100?img=47' }} style={styles.avatar} />
-              <View style={styles.online} />
-            </Pressable>
+            <View style={styles.headerRight}>
+              <Pressable style={styles.bell} onPress={() => navigation.navigate('NotificationCenter')}>
+                <Text style={styles.bellIcon}>🔔</Text>
+              </Pressable>
+              <Pressable style={styles.avatarWrap} onPress={() => navigation.navigate('Settings')}>
+                <Image source={{ uri: 'https://i.pravatar.cc/100?img=47' }} style={styles.avatar} />
+                <View style={styles.online} />
+              </Pressable>
+            </View>
           </View>
 
           <Text style={styles.hello}>Hello, <Text style={styles.helloBold}>{firstName}</Text></Text>
@@ -106,7 +110,7 @@ export default function CycleScreen({ navigation }: any) {
                 <Text style={styles.pillTxt}>edit period</Text>
               </LinearGradient>
             </Pressable>
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate('EditHealth')}>
               <LinearGradient colors={[colors.orange, colors.orangeLight]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.pill}>
                 <Text style={styles.pillTxt}>edit health</Text>
               </LinearGradient>
@@ -132,6 +136,9 @@ const styles = StyleSheet.create({
   fill: { flex: 1, backgroundColor: colors.peachTop },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 22, paddingTop: 6 },
   brand: { fontFamily: font.semibold, fontSize: 13, letterSpacing: 1, color: colors.ink },
+  headerRight: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  bell: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center', ...shadow.card },
+  bellIcon: { fontSize: 18 },
   avatarWrap: { width: 44, height: 44 },
   avatar: { width: 44, height: 44, borderRadius: 22 },
   online: { position: 'absolute', right: 0, top: 1, width: 11, height: 11, borderRadius: 6, backgroundColor: colors.good, borderWidth: 2, borderColor: colors.white },

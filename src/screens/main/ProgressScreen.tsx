@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
+import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile } from '../../lib/api';
 import { getScoreDetail, ScoreDetail } from '../../lib/daily';
@@ -40,7 +41,7 @@ export default function ProgressScreen({ navigation }: any) {
     return unsub;
   }, [userId, navigation]);
 
-  if (loading) return <View style={styles.fillC}><ActivityIndicator color={colors.coral} /></View>;
+  if (loading) return <LoadingView />;
 
   const total = score?.cas_total ?? 0;
 

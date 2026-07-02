@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
+import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile } from '../../lib/api';
 import { NutriOrb } from '../../ui/NutriOrb';
@@ -18,9 +19,9 @@ const SECTIONS: { title: string; rows: Row[] }[] = [
     { icon: '👥', label: 'Community Privacy', route: 'CommunityPrivacy' },
   ]},
   { title: 'PREFERENCES', rows: [
-    { icon: '⚙️', label: 'App Preferences' },
+    { icon: '⚙️', label: 'App Preferences', route: 'AppPreferences' },
     { icon: '🔔', label: 'Notifications & Reminders', route: 'Notifications' },
-    { icon: '🥗', label: 'Nutritional Preferences' },
+    { icon: '🥗', label: 'Nutritional Preferences', route: 'NutritionalPreferences' },
     { icon: '🟠', label: 'Choose Your Nutri', route: 'NutriAvatar' },
   ]},
 ];
@@ -37,7 +38,7 @@ export default function SettingsScreen({ navigation }: any) {
     })();
   }, [userId]);
 
-  if (loading) return <View style={styles.fillC}><ActivityIndicator color={colors.coral} /></View>;
+  if (loading) return <LoadingView />;
 
   return (
     <View style={styles.fill}>
