@@ -14,6 +14,7 @@ import CommunityPrivacyScreen from '../screens/settings/CommunityPrivacyScreen';
 import NotificationsScreen from '../screens/settings/NotificationsScreen';
 import AppPreferencesScreen from '../screens/settings/AppPreferencesScreen';
 import NutritionalPreferencesScreen from '../screens/settings/NutritionalPreferencesScreen';
+import ConnectedDevicesScreen from '../screens/settings/ConnectedDevicesScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ export default function AppStack() {
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="AppPreferences" component={AppPreferencesScreen} />
       <Stack.Screen name="NutritionalPreferences" component={NutritionalPreferencesScreen} />
+      <Stack.Screen name="ConnectedDevices" component={ConnectedDevicesScreen} />
       <Stack.Screen name="PersonalInfo" component={PersonalInfoScreen} />
       <Stack.Screen name="Security" component={SecurityScreen} />
       <Stack.Screen name="DataPrivacy" component={DataPrivacyScreen} />

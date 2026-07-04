@@ -6,12 +6,15 @@ import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile } from '../../lib/api';
 import { NutriOrb } from '../../ui/NutriOrb';
+import { isEnabled, FlagKey } from '../../lib/flags';
+import { useT } from '../../i18n';
 
-type Row = { icon: string; label: string; route?: string };
+type Row = { icon: string; label: string; route?: string; flag?: FlagKey };
 const SECTIONS: { title: string; rows: Row[] }[] = [
   { title: 'HEALTH & PROFILE', rows: [
     { icon: '👤', label: 'Personal Information', route: 'PersonalInfo' },
     { icon: '🩺', label: 'Cycle & Health Information', route: 'EditPeriod' },
+    { icon: '⌚', label: 'Connected Devices', route: 'ConnectedDevices', flag: 'connectors' },
   ]},
   { title: 'PRIVACY & SECURITY', rows: [
     { icon: '🔒', label: 'Sign In & Security', route: 'Security' },
@@ -27,6 +30,7 @@ const SECTIONS: { title: string; rows: Row[] }[] = [
 ];
 
 export default function SettingsScreen({ navigation }: any) {
+  const t = useT();
   const { userId, signOut } = useSession();
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(true);
@@ -45,7 +49,7 @@ export default function SettingsScreen({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
-          <Text style={styles.headerTitle}>Settings</Text>
+          <Text style={styles.headerTitle}>{t('ui.settings', 'Settings')}</Text>
           <View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
@@ -58,11 +62,11 @@ export default function SettingsScreen({ navigation }: any) {
             <View key={s.title} style={{ marginTop: 18 }}>
               <Text style={styles.sectionTitle}>{s.title}</Text>
               <View style={styles.card}>
-                {s.rows.map((r, i) => (
+                {s.rows.filter((r) => !r.flag || isEnabled(r.flag)).map((r, i, arr) => (
                   <Pressable
                     key={r.label}
                     onPress={() => r.route && navigation.navigate(r.route)}
-                    style={[styles.row, i < s.rows.length - 1 && styles.rowBorder]}
+                    style={[styles.row, i < arr.length - 1 && styles.rowBorder]}
                   >
                     <Text style={styles.rowIcon}>{r.icon}</Text>
                     <Text style={styles.rowLabel}>{r.label}</Text>
@@ -74,7 +78,7 @@ export default function SettingsScreen({ navigation }: any) {
           ))}
 
           <Pressable onPress={signOut} style={styles.signOut}>
-            <Text style={styles.signOutTxt}>Sign Out</Text>
+            <Text style={styles.signOutTxt}>{t('ui.logout', 'Sign Out')}</Text>
           </Pressable>
         </ScrollView>
       </SafeAreaView>

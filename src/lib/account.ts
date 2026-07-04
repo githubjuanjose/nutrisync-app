@@ -1,5 +1,6 @@
 import { Share } from 'react-native';
 import { supabase } from './supabase';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config';
 
 const USER_TABLES = [
   'meal_logs', 'daily_scores', 'nutrition_checklist', 'movement_checklist',
@@ -31,4 +32,27 @@ export async function deleteAccountData(userId: string) {
   }
   await supabase.from('users').delete().eq('id', userId);
   await supabase.auth.signOut();
+}
+
+/**
+ * Full account erasure (§B2 / backlog D4): calls the `delete-account` Edge
+ * Function, which removes the user's data AND their auth identity using the
+ * service-role key server-side. Falls back to data-only deletion if the
+ * function isn't deployed/reachable, so the button always does something safe.
+ */
+export async function deleteAccount() {
+  const { data: { session } } = await supabase.auth.getSession();
+  const token = session?.access_token;
+  const uid = session?.user?.id;
+  if (token) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/delete-account`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}`, apikey: SUPABASE_ANON_KEY },
+      });
+      if (res.ok) { await supabase.auth.signOut(); return; }
+    } catch { /* fall through to data-only deletion */ }
+  }
+  if (uid) await deleteAccountData(uid);
+  else await supabase.auth.signOut();
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
 import { colors, font } from '../theme';
+import { useT } from '../i18n';
 
 // The mascot "looks around" while loading (exact eye variants from Figma).
 const FRAMES = [
@@ -11,7 +12,9 @@ const FRAMES = [
 ];
 
 /** Branded full-screen loader — pulsing Nutri orb that glances around. */
-export function LoadingView({ text = 'Sync your cycle…' }: { text?: string }) {
+export function LoadingView({ text }: { text?: string }) {
+  const t = useT();
+  const label = text ?? t('ui.rail1', 'Sync your cycle…');
   const scale = useRef(new Animated.Value(0.94)).current;
   const [frame, setFrame] = useState(0);
 
@@ -33,7 +36,7 @@ export function LoadingView({ text = 'Sync your cycle…' }: { text?: string }) 
         style={[styles.orb, { transform: [{ scale }] }]}
         resizeMode="contain"
       />
-      <Text style={styles.txt}>{text}</Text>
+      <Text style={styles.txt}>{label}</Text>
     </View>
   );
 }

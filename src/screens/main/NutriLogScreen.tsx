@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { colors, PhaseKey } from '../../theme';
+import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle } from '../../lib/api';
@@ -10,6 +11,7 @@ import { saveChecklist, saveMeal } from '../../lib/daily';
 import DailyLogScreen, { LogItem } from './DailyLogScreen';
 
 export default function NutriLogScreen() {
+  const t = useT();
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
   const [logging, setLogging] = useState(false);
@@ -57,9 +59,9 @@ export default function NutriLogScreen() {
   const items: LogItem[] = basics.map((b) => ({ name: b.item_name, tag: b.nutrient_tag }));
   return (
     <DailyLogScreen
-      title="NutriLog" greeting={`Good morning, ${name}`} checklistTitle="Nutri Basics"
+      title="NutriLog" greeting={`Good morning, ${name}`} checklistTitle={t('mob.nutriBasics', "Nutri Basics")}
       items={items} tips={{ primary: tips.daily_tip, insight: tips.body_insight }}
-      phase={phase} day={day} mealTitle="TODAY'S MEAL" logging={logging} onLog={onLog}
+      phase={phase} day={day} mealTitle={t('mob.todaysMeal', "TODAY'S MEAL")} logging={logging} onLog={onLog}
     />
   );
 }

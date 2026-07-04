@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow, phaseColor, PhaseKey } from '../../theme';
+import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getCurrentCycle } from '../../lib/api';
@@ -16,6 +17,7 @@ type Note = { icon: string; title: string; body: string; accent: string; when: s
  * phase and today's logging state (no fake notifications).
  */
 export default function NotificationCenterScreen({ navigation }: any) {
+  const t = useT();
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState<Note[]>([]);
@@ -89,7 +91,7 @@ export default function NotificationCenterScreen({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
-          <Text style={styles.headerTitle}>Notifications</Text><View style={{ width: 24 }} />
+          <Text style={styles.headerTitle}>{t('mob.notifications', "Notifications")}</Text><View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           {notes.map((n, i) => (

@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Alert, ActivityI
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
-import { exportUserData, deleteAccountData } from '../../lib/account';
+import { exportUserData, deleteAccount } from '../../lib/account';
+import { useT } from '../../i18n';
 
 export default function DataPrivacyScreen({ navigation }: any) {
+  const t = useT();
   const { userId } = useSession();
   const [analytics, setAnalytics] = useState(true);
   const [insights, setInsights] = useState(true);
@@ -30,7 +32,7 @@ export default function DataPrivacyScreen({ navigation }: any) {
           onPress: async () => {
             if (!userId) return;
             setBusy(true);
-            try { await deleteAccountData(userId); } // sign-out fires the navigator back to Welcome
+            try { await deleteAccount(); } // full erasure (data + auth); sign-out fires the navigator back to Welcome
             catch (e: any) { Alert.alert('Delete failed', e?.message ?? 'Try again.'); setBusy(false); }
           },
         },
@@ -58,30 +60,30 @@ export default function DataPrivacyScreen({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
-          <Text style={styles.headerTitle}>Data Privacy</Text><View style={{ width: 24 }} />
+          <Text style={styles.headerTitle}>{t('ui.dataPrivacy', 'Data Privacy')}</Text><View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           <View style={styles.banner}>
             <Text style={styles.bannerTxt}>🔒 Your health data is encrypted and never sold. You control what's shared below.</Text>
           </View>
 
-          <Text style={styles.sectionTitle}>DATA PERMISSIONS</Text>
+          <Text style={styles.sectionTitle}>{t('mob.dataPermissions', "DATA PERMISSIONS")}</Text>
           <View style={styles.card}>
-            <Toggle v={analytics} set={setAnalytics} title="Analytics & crash reports" sub="Helps us fix bugs faster" />
-            <Toggle v={insights} set={setInsights} title="Personalised insights" sub="Tailors tips to your patterns" />
-            <Toggle v={research} set={setResearch} title="Research participation" sub="Anonymised, for women's health" />
+            <Toggle v={analytics} set={setAnalytics} title={t('mob.analyticsCrash', "Analytics & crash reports")} sub="Helps us fix bugs faster" />
+            <Toggle v={insights} set={setInsights} title={t('mob.personalisedInsights', "Personalised insights")} sub="Tailors tips to your patterns" />
+            <Toggle v={research} set={setResearch} title={t('mob.researchPart', "Research participation")} sub="Anonymised, for women's health" />
           </View>
 
-          <Text style={styles.sectionTitle}>YOUR DATA RIGHTS</Text>
+          <Text style={styles.sectionTitle}>{t('mob.yourDataRights', "YOUR DATA RIGHTS")}</Text>
           <View style={styles.card}>
-            <RightRow icon="⬇️" label={busy ? 'Preparing…' : 'Download my data'} onPress={onExport} />
+            <RightRow icon="⬇️" label={busy ? 'Preparing…' : t('ui.exportJson', 'Download my data')} onPress={onExport} />
             <RightRow icon="📄" label="View privacy policy" />
             <RightRow icon="🗂️" label="Manage activity log" />
             <RightRow icon="🍪" label="Cookie preferences" />
           </View>
 
           <Pressable onPress={onDelete} disabled={busy} style={styles.delete}>
-            {busy ? <ActivityIndicator color={colors.coralDeep} /> : <Text style={styles.deleteTxt}>Delete account</Text>}
+            {busy ? <ActivityIndicator color={colors.coralDeep} /> : <Text style={styles.deleteTxt}>{t('mob.deleteAccount', "Delete account")}</Text>}
           </Pressable>
         </ScrollView>
       </SafeAreaView>

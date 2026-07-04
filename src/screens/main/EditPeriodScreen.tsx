@@ -6,6 +6,7 @@ import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { saveEditPeriod } from '../../lib/daily';
 import { ChipGroup } from '../../ui/Chips';
+import { useT } from '../../i18n';
 
 /* ---------- Mood faces — exact emotes extracted from the Figma edit-period design ---------- */
 const EMOTE: Record<string, any> = {
@@ -45,6 +46,7 @@ const BIRTH = ['Condom', 'Patch', 'Ring', 'Pill'];
 
 export default function EditPeriodScreen({ navigation }: any) {
   const { userId } = useSession();
+  const t = useT();
   const [flow, setFlow] = useState<number | null>(null);
   const [moods, setMoods] = useState<string[]>([]);
   const [sym, setSym] = useState<Record<string, string[]>>({});
@@ -88,7 +90,7 @@ export default function EditPeriodScreen({ navigation }: any) {
         <View style={styles.header}>
           <Pressable onPress={() => navigation.goBack()} style={styles.iconBtn}><Text style={styles.x}>✕</Text></Pressable>
           <View style={{ alignItems: 'center' }}>
-            <Text style={styles.title}>Period</Text>
+            <Text style={styles.title}>{t('mob.period', "Period")}</Text>
             <Text style={styles.date}>March 11th, 2026</Text>
           </View>
           <Pressable onPress={save} style={styles.iconBtn}>
@@ -99,7 +101,7 @@ export default function EditPeriodScreen({ navigation }: any) {
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 60 }} showsVerticalScrollIndicator={false}>
           {/* Flow */}
           <View style={styles.card}>
-            <Text style={styles.h}>Flow</Text>
+            <Text style={styles.h}>{t('ui.flow', 'Flow')}</Text>
             <View style={styles.flowRow}>
               {[1, 2, 3, 4].map((n) => (
                 <Pressable key={n} onPress={() => setFlow(n)} style={[styles.flowCircle, flow === n && styles.flowOn]}>
@@ -113,7 +115,7 @@ export default function EditPeriodScreen({ navigation }: any) {
 
           {/* Mood & Mental State */}
           <View style={styles.card}>
-            <Text style={styles.h}>Mood &amp; Mental State</Text>
+            <Text style={styles.h}>{t('ui.moodMental', 'Mood & Mental State')}</Text>
             <View style={styles.moodGrid}>
               {MOOD_NAMES.map((m) => {
                 const on = moods.includes(m);
@@ -128,17 +130,17 @@ export default function EditPeriodScreen({ navigation }: any) {
           </View>
 
           {/* Physical symptoms */}
-          <Text style={styles.section}>Physical Symptoms</Text>
+          <Text style={styles.section}>{t('ui.physSymptoms', 'Physical Symptoms')}</Text>
           <View style={styles.card}>
             {PERSIST_SECTIONS.map((s) => (
               <ChipGroup key={s.key} title={s.title} options={s.options} selected={sym[s.key] ?? []} onToggle={(v) => toggleSym(s.key, v)} />
             ))}
-            <ChipGroup title="Sleep Quality" options={SLEEP} selected={sleep} single onToggle={(v) => setSleep([v])} />
+            <ChipGroup title={t('mob.sleepQuality', "Sleep Quality")} options={SLEEP} selected={sleep} single onToggle={(v) => setSleep([v])} />
           </View>
 
           {/* Libido */}
           <View style={styles.card}>
-            <Text style={styles.h}>Libido</Text>
+            <Text style={styles.h}>{t('ui.libido', 'Libido')}</Text>
             <View style={styles.libRow}>
               {[1, 2, 3, 4, 5].map((n) => (
                 <Pressable key={n} onPress={() => setLibido(n)} style={[styles.libDot, libido != null && n <= libido && styles.libOn]} />
@@ -148,8 +150,8 @@ export default function EditPeriodScreen({ navigation }: any) {
 
           {/* Birth control + sex log */}
           <View style={styles.card}>
-            <ChipGroup title="Birth Control" options={BIRTH} selected={birth} onToggle={(v) => toggle(birth, setBirth, v)} />
-            <Text style={[styles.h, { marginTop: 16 }]}>Sex Log</Text>
+            <ChipGroup title={t('ui.birthControl', 'Birth Control')} options={BIRTH} selected={birth} onToggle={(v) => toggle(birth, setBirth, v)} />
+            <Text style={[styles.h, { marginTop: 16 }]}>{t('mob.sexLog', "Sex Log")}</Text>
             <View style={{ gap: 8, marginTop: 6 }}>
               {['Protected', 'Unprotected'].map((s) => {
                 const on = sex.includes(s);
@@ -165,12 +167,12 @@ export default function EditPeriodScreen({ navigation }: any) {
 
           {/* Notes */}
           <View style={styles.card}>
-            <Text style={styles.h}>Add notes</Text>
-            <TextInput value={notes} onChangeText={setNotes} placeholder="Enter a description..." placeholderTextColor={colors.faint} multiline style={styles.notes} />
+            <Text style={styles.h}>{t('mob.notes', "Add notes")}</Text>
+            <TextInput value={notes} onChangeText={setNotes} placeholder={t('mob.descPh', "Enter a description...")} placeholderTextColor={colors.faint} multiline style={styles.notes} />
           </View>
 
           <Pressable onPress={save} disabled={saving} style={styles.saveBtn}>
-            <Text style={styles.saveTxt}>{saving ? 'Saving…' : 'Save'}</Text>
+            <Text style={styles.saveTxt}>{saving ? 'Saving…' : t('ui.saveLog', 'Save')}</Text>
           </Pressable>
         </ScrollView>
       </SafeAreaView>

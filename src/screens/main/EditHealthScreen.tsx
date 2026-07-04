@@ -7,6 +7,7 @@ import { LoadingView } from '../../ui/LoadingView';
 import { ChipGroup } from '../../ui/Chips';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
+import { useT } from '../../i18n';
 
 /* NutriGoals — from the Figma "Health Profile" design. */
 const NUTRIGOALS = [
@@ -28,6 +29,7 @@ const toggleTok = (arr: string[], label: string) => {
 
 export default function EditHealthScreen({ navigation }: any) {
   const { userId } = useSession();
+  const t = useT();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [goalIdx, setGoalIdx] = useState(0);
@@ -84,8 +86,8 @@ export default function EditHealthScreen({ navigation }: any) {
         <View style={styles.header}>
           <Pressable onPress={() => navigation.goBack()} style={styles.iconBtn}><Text style={styles.x}>✕</Text></Pressable>
           <View style={{ alignItems: 'center' }}>
-            <Text style={styles.title}>Health Profile</Text>
-            <Text style={styles.subtitle}>NutriGoals</Text>
+            <Text style={styles.title}>{t('mob.healthProfile', "Health Profile")}</Text>
+            <Text style={styles.subtitle}>{t('mob.nutriGoals', "NutriGoals")}</Text>
           </View>
           <Pressable onPress={save} style={styles.iconBtn}>
             {saving ? <ActivityIndicator color={colors.coral} /> : <Text style={styles.tick}>✓</Text>}
@@ -96,7 +98,7 @@ export default function EditHealthScreen({ navigation }: any) {
           <Text style={styles.reminder}>Your NutriGoal shapes your whole plan — you can change it after two full cycles.</Text>
 
           {/* NutriGoal orb + arrows */}
-          <Text style={styles.currentLabel}>Your current NutriGoal</Text>
+          <Text style={styles.currentLabel}>{t('mob.currentNutriGoal', "Your current NutriGoal")}</Text>
           <View style={styles.orbRow}>
             <Pressable onPress={() => cycleGoal(-1)} hitSlop={12} style={styles.arrowBtn}>
               <Text style={[styles.arrow, goalLocked && styles.arrowOff]}>‹</Text>
@@ -120,21 +122,21 @@ export default function EditHealthScreen({ navigation }: any) {
           )}
 
           {/* Allergies */}
-          <Text style={styles.section}>Allergies</Text>
+          <Text style={styles.section}>{t('mob.allergiesH', "Allergies")}</Text>
           <View style={styles.card}>
             <ChipGroup options={ALLERGIES} selected={ALLERGIES.filter((a) => has(allergies, a))}
               onToggle={(v) => setAllergies((p) => toggleTok(p, v))} />
           </View>
 
           {/* Health Conditions */}
-          <Text style={styles.section}>Health Conditions</Text>
+          <Text style={styles.section}>{t('mob.healthConditions', "Health Conditions")}</Text>
           <View style={styles.card}>
             <ChipGroup options={CONDITIONS} selected={CONDITIONS.filter((c) => has(conditions, c))}
               onToggle={(v) => setConditions((p) => toggleTok(p, v))} />
           </View>
 
           <Pressable onPress={save} disabled={saving} style={styles.saveBtn}>
-            <Text style={styles.saveTxt}>{saving ? 'Saving…' : 'Save'}</Text>
+            <Text style={styles.saveTxt}>{saving ? 'Saving…' : t('ui.saveChanges', 'Save')}</Text>
           </Pressable>
         </ScrollView>
       </SafeAreaView>

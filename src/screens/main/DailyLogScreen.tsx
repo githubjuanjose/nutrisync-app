@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { colors, font, radius, shadow } from '../../theme';
 import { PhaseKey, phaseColor } from '../../theme';
+import { useT } from '../../i18n';
 
 export type LogItem = { name: string; tag: string | null };
 
@@ -52,6 +53,7 @@ type Props = {
 export default function DailyLogScreen({
   title, greeting, checklistTitle, items, tips, phase, day, mealTitle, logging, onLog,
 }: Props) {
+  const t = useT();
   const [tab, setTab] = useState<'tip' | 'insight'>('tip');
   const [checked, setChecked] = useState<Set<string>>(new Set(items.map((i) => i.name)));
   const [text, setText] = useState('');
@@ -77,10 +79,10 @@ export default function DailyLogScreen({
           <View style={styles.row}>
             <View style={styles.toggle}>
               <Pressable onPress={() => setTab('tip')} style={[styles.tog, tab === 'tip' && styles.togOn]}>
-                <Text style={[styles.togTxt, tab === 'tip' && styles.togTxtOn]}>Daily Tip</Text>
+                <Text style={[styles.togTxt, tab === 'tip' && styles.togTxtOn]}>{t('mob.dailyTip', "Daily Tip")}</Text>
               </Pressable>
               <Pressable onPress={() => setTab('insight')} style={[styles.tog, tab === 'insight' && styles.togOn]}>
-                <Text style={[styles.togTxt, tab === 'insight' && styles.togTxtOn]}>Body Insight</Text>
+                <Text style={[styles.togTxt, tab === 'insight' && styles.togTxtOn]}>{t('mob.bodyInsight', "Body Insight")}</Text>
               </Pressable>
             </View>
           </View>
@@ -109,11 +111,11 @@ export default function DailyLogScreen({
           <View style={styles.mealCard}>
             <Text style={styles.mealTitle}>{mealTitle}</Text>
             <TextInput
-              value={text} onChangeText={setText} placeholder="Enter a description..." placeholderTextColor={colors.faint}
+              value={text} onChangeText={setText} placeholder={t('mob.descPh', "Enter a description...")} placeholderTextColor={colors.faint}
               multiline style={styles.mealInput}
             />
             <Pressable onPress={() => onLog([...checked], text)} disabled={logging} style={styles.logBtn}>
-              {logging ? <ActivityIndicator color={colors.coral} /> : <Text style={styles.logTxt}>log today</Text>}
+              {logging ? <ActivityIndicator color={colors.coral} /> : <Text style={styles.logTxt}>{t('ui.logToday', 'log today')}</Text>}
             </Pressable>
           </View>
         </ScrollView>

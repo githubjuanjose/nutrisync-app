@@ -7,10 +7,12 @@ import { colors, font } from '../../theme';
 import { NutriOrb } from '../../ui/NutriOrb';
 import { PrimaryButton, SecondaryButton } from '../../ui/Buttons';
 import { RootStackParamList } from '../../navigation/types';
+import { useT } from '../../i18n';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
 
 export default function WelcomeScreen({ navigation }: Props) {
+  const t = useT();
   return (
     <LinearGradient colors={[colors.peachTop, '#FBE0D2', colors.peachBottom]} style={styles.fill}>
       <SafeAreaView style={styles.fill}>
@@ -22,7 +24,7 @@ export default function WelcomeScreen({ navigation }: Props) {
         </View>
 
         <View style={styles.copy}>
-          <Text style={styles.h1}>Welcome to</Text>
+          <Text style={styles.h1}>{t('mob.welcomeTo', "Welcome to")}</Text>
           <Text style={[styles.h1, { color: colors.brandOrange }]}>NutriSync</Text>
           <Text style={styles.sub}>
             You are here because your body deserves better than guesswork. Lets sync your
@@ -31,9 +33,9 @@ export default function WelcomeScreen({ navigation }: Props) {
         </View>
 
         <View style={styles.actions}>
-          <PrimaryButton label="Create account" onPress={() => navigation.navigate('CreateAccount')} />
+          <PrimaryButton label={t('ui.createAccount', 'Create account')} onPress={() => navigation.navigate('CreateAccount')} />
           <SecondaryButton
-            label="Log in"
+            label={t('ui.login', 'Log in')}
             style={{ marginTop: 14 }}
             onPress={() => navigation.navigate('Login')}
           />

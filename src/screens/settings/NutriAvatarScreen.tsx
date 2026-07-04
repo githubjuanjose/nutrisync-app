@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Circle, Defs, RadialGradient, Stop, Ellipse, Path } from 'react-native-svg';
 import { colors, font, radius } from '../../theme';
+import { useT } from '../../i18n';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
 
@@ -37,6 +38,7 @@ function Avatar({ a, b, halo, size = 120 }: { a: string; b: string; halo?: strin
 }
 
 export default function NutriAvatarScreen({ navigation }: any) {
+  const t = useT();
   const { userId } = useSession();
   const [sel, setSel] = useState('coral');
   const [busy, setBusy] = useState(false);
@@ -56,8 +58,8 @@ export default function NutriAvatarScreen({ navigation }: any) {
           <View style={{ width: 24 }} />
         </View>
         <View style={{ paddingHorizontal: 26, flex: 1 }}>
-          <Text style={styles.title}>Choose Your Nutri</Text>
-          <Text style={styles.sub}>Select your Nutri profile</Text>
+          <Text style={styles.title}>{t('mob.chooseNutri', "Choose Your Nutri")}</Text>
+          <Text style={styles.sub}>{t('mob.selectNutri', "Select your Nutri profile")}</Text>
           <View style={styles.grid}>
             {VARIANTS.map((v) => (
               <Pressable key={v.key} onPress={() => setSel(v.key)} style={[styles.cell, sel === v.key && styles.cellOn]}>
@@ -67,7 +69,7 @@ export default function NutriAvatarScreen({ navigation }: any) {
           </View>
           <View style={{ flex: 1 }} />
           <Pressable onPress={save} disabled={busy} style={styles.save}>
-            {busy ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveTxt}>Save</Text>}
+            {busy ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveTxt}>{t('mob.save', "Save")}</Text>}
           </Pressable>
         </View>
       </SafeAreaView>

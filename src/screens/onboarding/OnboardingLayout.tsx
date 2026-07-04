@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 import { colors, font, radius } from '../../theme';
+import { useT } from '../../i18n';
 
 function Chevron() {
   return (
@@ -33,9 +34,11 @@ type Props = {
 };
 
 export function OnboardingLayout({
-  progress, stepLabel, showBack = true, onBack, nextLabel = 'Next', onNext,
+  progress, stepLabel, showBack = true, onBack, nextLabel, onNext,
   nextFull = false, nextDisabled = false, children,
 }: Props) {
+  const t = useT();
+  const resolvedNextLabel = nextLabel ?? t('ui.next', 'Next');
   return (
     <LinearGradient colors={[colors.peachTop, '#FBE3D6', colors.peachBottom]} style={styles.fill}>
       <SafeAreaView style={styles.fill} edges={['top', 'bottom']}>
@@ -57,13 +60,13 @@ export function OnboardingLayout({
           {nextFull ? (
             <Pressable onPress={onNext} disabled={nextDisabled} style={{ opacity: nextDisabled ? 0.5 : 1 }}>
               <LinearGradient colors={[colors.orange, '#EF4B12']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.full}>
-                <Text style={styles.fullTxt}>{nextLabel}</Text><View style={{ width: 8 }} /><Arrow />
+                <Text style={styles.fullTxt}>{resolvedNextLabel}</Text><View style={{ width: 8 }} /><Arrow />
               </LinearGradient>
             </Pressable>
           ) : (
             <Pressable onPress={onNext} disabled={nextDisabled} style={[styles.nextWrap, { opacity: nextDisabled ? 0.5 : 1 }]}>
               <LinearGradient colors={[colors.orange, '#EF4B12']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.next}>
-                <Text style={styles.nextTxt}>{nextLabel}</Text><View style={{ width: 7 }} /><Arrow />
+                <Text style={styles.nextTxt}>{resolvedNextLabel}</Text><View style={{ width: 7 }} /><Arrow />
               </LinearGradient>
             </Pressable>
           )}

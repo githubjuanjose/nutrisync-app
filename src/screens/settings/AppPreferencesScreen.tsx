@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-nat
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors, font, radius, shadow } from '../../theme';
+import { useT } from '../../i18n';
+import { useI18n } from '../../i18n';
 
 const KEY = 'nutrisync.appPrefs.v1';
 type Prefs = { units: 'metric' | 'imperial'; weekStart: 'monday' | 'sunday'; haptics: boolean; appearance: 'light' | 'system' };
@@ -25,6 +27,7 @@ function Segment<T extends string>({ value, options, onChange }: { value: T; opt
 }
 
 export default function AppPreferencesScreen({ navigation }: any) {
+  const t = useT();
   const [p, setP] = useState<Prefs>(DEFAULTS);
 
   useEffect(() => {
@@ -33,6 +36,8 @@ export default function AppPreferencesScreen({ navigation }: any) {
       if (raw) { try { setP({ ...DEFAULTS, ...JSON.parse(raw) }); } catch {} }
     })();
   }, []);
+
+  const { lang, setLang } = useI18n();
 
   const update = (patch: Partial<Prefs>) => {
     const next = { ...p, ...patch };
@@ -45,36 +50,45 @@ export default function AppPreferencesScreen({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
-          <Text style={styles.headerTitle}>App Preferences</Text><View style={{ width: 24 }} />
+          <Text style={styles.headerTitle}>{t('mob.appPreferences', "App Preferences")}</Text><View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
-          <Text style={styles.sectionTitle}>UNITS</Text>
+          <Text style={styles.sectionTitle}>{t('mob.languageCaps', "LANGUAGE")}</Text>
           <View style={styles.card}>
             <View style={styles.rowCol}>
-              <Text style={styles.rowLabel}>Measurement units</Text>
+              <Text style={styles.rowLabel}>App language · Idioma</Text>
+              <Segment value={lang} onChange={(v) => setLang(v as any)}
+                options={[{ key: 'en', label: 'English' }, { key: 'es', label: 'Español' }]} />
+            </View>
+          </View>
+
+          <Text style={styles.sectionTitle}>{t('mob.unitsCaps', "UNITS")}</Text>
+          <View style={styles.card}>
+            <View style={styles.rowCol}>
+              <Text style={styles.rowLabel}>{t('mob.measureUnits', "Measurement units")}</Text>
               <Segment value={p.units} onChange={(v) => update({ units: v })}
                 options={[{ key: 'metric', label: 'Metric (kg, cm)' }, { key: 'imperial', label: 'Imperial (lb, in)' }]} />
             </View>
           </View>
 
-          <Text style={styles.sectionTitle}>CALENDAR</Text>
+          <Text style={styles.sectionTitle}>{t('mob.calendarCaps', "CALENDAR")}</Text>
           <View style={styles.card}>
             <View style={styles.rowCol}>
-              <Text style={styles.rowLabel}>Start week on</Text>
+              <Text style={styles.rowLabel}>{t('mob.startWeek', "Start week on")}</Text>
               <Segment value={p.weekStart} onChange={(v) => update({ weekStart: v })}
                 options={[{ key: 'monday', label: 'Monday' }, { key: 'sunday', label: 'Sunday' }]} />
             </View>
           </View>
 
-          <Text style={styles.sectionTitle}>GENERAL</Text>
+          <Text style={styles.sectionTitle}>{t('mob.generalCaps', "GENERAL")}</Text>
           <View style={styles.card}>
             <View style={[styles.row, styles.rowBorder]}>
-              <Text style={styles.rowLabel}>Haptic feedback</Text>
+              <Text style={styles.rowLabel}>{t('mob.haptics', "Haptic feedback")}</Text>
               <Switch value={p.haptics} onValueChange={(v) => update({ haptics: v })}
                 trackColor={{ true: colors.coral, false: '#E3D8CE' }} thumbColor="#fff" />
             </View>
             <View style={styles.rowCol}>
-              <Text style={styles.rowLabel}>Appearance</Text>
+              <Text style={styles.rowLabel}>{t('mob.appearance', "Appearance")}</Text>
               <Segment value={p.appearance} onChange={(v) => update({ appearance: v })}
                 options={[{ key: 'light', label: 'Light' }, { key: 'system', label: 'System' }]} />
             </View>

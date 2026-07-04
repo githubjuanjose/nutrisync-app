@@ -7,18 +7,20 @@ import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getCurrentCycle, CycleRow } from '../../lib/api';
 import { cycleDay, phaseForDay, displayPhase } from '../../lib/cas';
+import { useT } from '../../i18n';
 
 const DOW = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const LEGEND = [
+const LEGEND: { c: string; l: string; k?: string }[] = [
   { c: colors.menstrual, l: 'Menstruation' },
-  { c: colors.follicular, l: 'Follicular' },
+  { c: colors.follicular, l: 'Follicular', k: 'follicular' },
   { c: colors.ovulatory, l: 'Ovulation' },
-  { c: colors.luteal, l: 'Luteal' },
+  { c: colors.luteal, l: 'Luteal', k: 'luteal' },
 ];
 
 export default function CalendarScreen() {
   const { userId } = useSession();
+  const t = useT();
   const [cycle, setCycle] = useState<CycleRow | null>(null);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState(() => { const d = new Date(); return { y: d.getFullYear(), m: d.getMonth() }; });
@@ -53,18 +55,18 @@ export default function CalendarScreen() {
     <View style={styles.fill}>
       <SafeAreaView style={styles.fill} edges={['top']}>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
-          <Text style={styles.title}>Calendar</Text>
+          <Text style={styles.title}>{t('navLabels.calendar', 'Calendar')}</Text>
 
           {/* Today card */}
           <LinearGradient colors={[colors.orange, '#EF4B12']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.todayCard}>
             <Text style={styles.todayLabel}>Today · {today.toLocaleDateString(undefined, { weekday: 'short', month: 'long', day: 'numeric' })}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
-              <Text style={styles.cycleDay}>Cycle Day {todayDay}</Text>
+              <Text style={styles.cycleDay}>{t('ui.cycleDay', 'Cycle Day')} {todayDay}</Text>
               <View style={styles.phasePill}><Text style={styles.phasePillTxt}>{todayPhase}</Text></View>
             </View>
             <View style={styles.miniStats}>
-              <View><Text style={styles.miniStatN}>{len} days</Text><Text style={styles.miniStatL}>Avg cycle</Text></View>
-              <View><Text style={styles.miniStatN}>{dur} days</Text><Text style={styles.miniStatL}>Avg period</Text></View>
+              <View><Text style={styles.miniStatN}>{len} days</Text><Text style={styles.miniStatL}>{t('mob.avgCycle', "Avg cycle")}</Text></View>
+              <View><Text style={styles.miniStatN}>{dur} days</Text><Text style={styles.miniStatL}>{t('mob.avgPeriod', "Avg period")}</Text></View>
             </View>
           </LinearGradient>
 
@@ -73,7 +75,7 @@ export default function CalendarScreen() {
             {LEGEND.map((x) => (
               <View key={x.l} style={styles.legendItem}>
                 <View style={[styles.legendDot, { backgroundColor: x.c }]} />
-                <Text style={styles.legendTxt}>{x.l}</Text>
+                <Text style={styles.legendTxt}>{x.k ? t(`phaseNames.${x.k}`, x.l) : x.l}</Text>
               </View>
             ))}
           </View>

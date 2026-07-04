@@ -7,6 +7,7 @@ import { useSession } from '../../state/SessionProvider';
 import { getProfile } from '../../lib/api';
 import { getScoreDetail, ScoreDetail } from '../../lib/daily';
 import { ScoreRing } from '../../ui/ScoreRing';
+import { useT } from '../../i18n';
 
 const COMPONENTS = [
   { key: 'c1', label: 'Phase', max: 15 },
@@ -25,6 +26,7 @@ const INSIGHTS = [
 
 export default function ProgressScreen({ navigation }: any) {
   const { userId } = useSession();
+  const t = useT();
   const [name, setName] = useState('there');
   const [score, setScore] = useState<ScoreDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -49,7 +51,7 @@ export default function ProgressScreen({ navigation }: any) {
     <View style={styles.fill}>
       <SafeAreaView style={styles.fill} edges={['top']}>
         <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
-          <Text style={styles.title}>Progress</Text>
+          <Text style={styles.title}>{t('ui.progress', 'Progress')}</Text>
           <Text style={styles.sub}>Keep it up, {name}!</Text>
 
           {/* CAS card */}

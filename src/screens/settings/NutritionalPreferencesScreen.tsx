@@ -7,6 +7,7 @@ import { ChipGroup } from '../../ui/Chips';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
 import { DIET } from '../../lib/onboardingMap';
+import { useT } from '../../i18n';
 
 const DIET_LABELS = Object.keys(DIET); // Balanced Diet, Keto, Vegetarian, ...
 const ALLERGIES = ['Milk', 'Eggs', 'Fish', 'Shellfish', 'Peanuts', 'Tree nuts', 'Wheat', 'Soy'];
@@ -19,6 +20,7 @@ const toggleTok = (arr: string[], label: string) => {
 };
 
 export default function NutritionalPreferencesScreen({ navigation }: any) {
+  const t = useT();
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -56,24 +58,24 @@ export default function NutritionalPreferencesScreen({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
-          <Text style={styles.headerTitle}>Nutritional Preferences</Text><View style={{ width: 24 }} />
+          <Text style={styles.headerTitle}>{t('mob.nutritionalPrefs', "Nutritional Preferences")}</Text><View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           <Text style={styles.note}>These tune your food guidance — allergens are removed and diet type reshapes each phase's list.</Text>
 
-          <Text style={styles.sectionTitle}>DIET TYPE</Text>
+          <Text style={styles.sectionTitle}>{t('mob.dietTypeCaps', "DIET TYPE")}</Text>
           <View style={styles.card}>
             <ChipGroup options={DIET_LABELS} selected={[dietLabel]} single onToggle={(v) => setDietLabel(v)} />
           </View>
 
-          <Text style={styles.sectionTitle}>ALLERGIES & INTOLERANCES</Text>
+          <Text style={styles.sectionTitle}>{t('mob.allergiesIntol', "ALLERGIES & INTOLERANCES")}</Text>
           <View style={styles.card}>
             <ChipGroup options={ALLERGIES} selected={ALLERGIES.filter((a) => has(allergies, a))}
               onToggle={(v) => setAllergies((p) => toggleTok(p, v))} />
           </View>
 
           <Pressable onPress={save} disabled={saving} style={styles.save}>
-            {saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveTxt}>Save Changes</Text>}
+            {saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveTxt}>{t('ui.saveChanges', 'Save Changes')}</Text>}
           </Pressable>
         </ScrollView>
       </SafeAreaView>

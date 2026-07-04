@@ -9,7 +9,9 @@ import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle, UserRow, CycleRow } from '../../lib/api';
 import { cycleDay, phaseForDay, displayPhase, cycleProgress } from '../../lib/cas';
 import { getTodayLog, getTodayScore } from '../../lib/daily';
+import { useT } from '../../i18n';
 
+const WINGS = require('../../../assets/nutri-wings.png');
 const DAYNAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 /** Mon–Sun strip around today, with real dates. */
@@ -27,6 +29,7 @@ function weekAroundToday() {
 
 export default function CycleScreen({ navigation }: any) {
   const { userId } = useSession();
+  const t = useT();
   const [profile, setProfile] = useState<UserRow | null>(null);
   const [cycle, setCycle] = useState<CycleRow | null>(null);
   const [score, setScore] = useState<number | null>(null);
@@ -72,7 +75,10 @@ export default function CycleScreen({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top']}>
         <ScrollView contentContainerStyle={{ paddingBottom: 30 }} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
-            <Text style={styles.brand}>NUTRISYNC ᖭ</Text>
+            <View style={styles.brandLockup}>
+              <Image source={WINGS} style={styles.brandMark} resizeMode="contain" />
+              <Text style={styles.brand}>NUTRISYNC</Text>
+            </View>
             <View style={styles.headerRight}>
               <Pressable style={styles.bell} onPress={() => navigation.navigate('NotificationCenter')}>
                 <Text style={styles.bellIcon}>🔔</Text>
@@ -84,7 +90,7 @@ export default function CycleScreen({ navigation }: any) {
             </View>
           </View>
 
-          <Text style={styles.hello}>Hello, <Text style={styles.helloBold}>{firstName}</Text></Text>
+          <Text style={styles.hello}>{t('mob.hello', "Hello,")}<Text style={styles.helloBold}>{firstName}</Text></Text>
           <Text style={styles.synced}>{cycle ? 'cycle synced ✓' : 'add your period to sync'}</Text>
 
           <View style={styles.weekCard}>
@@ -107,19 +113,19 @@ export default function CycleScreen({ navigation }: any) {
           <View style={styles.actions}>
             <Pressable onPress={() => navigation.navigate('EditPeriod')}>
               <LinearGradient colors={['#F18BA0', '#E4708A']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.pill}>
-                <Text style={styles.pillTxt}>edit period</Text>
+                <Text style={styles.pillTxt}>{t('ui.editPeriodBtn', 'edit period')}</Text>
               </LinearGradient>
             </Pressable>
             <Pressable onPress={() => navigation.navigate('EditHealth')}>
               <LinearGradient colors={[colors.orange, colors.orangeLight]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.pill}>
-                <Text style={styles.pillTxt}>edit health</Text>
+                <Text style={styles.pillTxt}>{t('ui.editHealthBtn', 'edit health')}</Text>
               </LinearGradient>
             </Pressable>
           </View>
 
           <View style={styles.scoreCard}>
             <View style={{ flex: 1 }}>
-              <Text style={styles.scoreLabel}>Cycle Sync Score</Text>
+              <Text style={styles.scoreLabel}>{t('mob.cycleSyncScore', "Cycle Sync Score")}</Text>
               <Text style={styles.scoreHint}>
                 {score == null ? 'Log your day to build today’s score' : 'Updates live as you log'}
               </Text>
@@ -135,7 +141,9 @@ export default function CycleScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   fill: { flex: 1, backgroundColor: colors.peachTop },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 22, paddingTop: 6 },
-  brand: { fontFamily: font.semibold, fontSize: 13, letterSpacing: 1, color: colors.ink },
+  brandLockup: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  brandMark: { width: 34, height: 34 },
+  brand: { fontFamily: font.bold, fontSize: 19, letterSpacing: 1.5, color: colors.ink },
   headerRight: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   bell: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center', ...shadow.card },
   bellIcon: { fontSize: 18 },

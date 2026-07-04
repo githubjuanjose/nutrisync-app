@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
+import { useT } from '../../i18n';
 
 export default function SecurityScreen({ navigation }: any) {
+  const t = useT();
   const { session } = useSession();
   const email = session?.user.email ?? 'you@email.com';
 
@@ -19,16 +21,16 @@ export default function SecurityScreen({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
-          <Text style={styles.headerTitle}>Sign-in & Security</Text><View style={{ width: 24 }} />
+          <Text style={styles.headerTitle}>{t('ui.security', 'Sign-in & Security')}</Text><View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
-          <Text style={styles.sectionTitle}>LOGIN DETAILS</Text>
+          <Text style={styles.sectionTitle}>{t('mob.loginDetails', "LOGIN DETAILS")}</Text>
           <View style={styles.card}>
-            <View style={styles.kv}><Text style={styles.k}>Email</Text><Text style={styles.v}>{email}</Text></View>
+            <View style={styles.kv}><Text style={styles.k}>{t('mob.email', "Email")}</Text><Text style={styles.v}>{email}</Text></View>
             <View style={[styles.kv, { borderBottomWidth: 0 }]}><Text style={styles.k}>Password</Text><Text style={styles.v}>••••••••••</Text></View>
           </View>
 
-          <Text style={styles.sectionTitle}>TWO-FACTOR AUTHENTICATION</Text>
+          <Text style={styles.sectionTitle}>{t('ui.twofaHdr', 'TWO-FACTOR AUTHENTICATION')}</Text>
           <View style={styles.card}>
             {TFA.map((t, i) => (
               <View key={t.label} style={[styles.row, i < TFA.length - 1 && styles.rowBorder]}>
@@ -39,17 +41,17 @@ export default function SecurityScreen({ navigation }: any) {
             ))}
           </View>
 
-          <Text style={styles.sectionTitle}>ACTIVE SESSIONS</Text>
+          <Text style={styles.sectionTitle}>{t('ui.sessionsHdr', 'ACTIVE SESSIONS')}</Text>
           <View style={styles.card}>
             <View style={[styles.row, styles.rowBorder]}>
               <Text style={styles.rowIcon}>📱</Text>
-              <View style={{ flex: 1 }}><Text style={styles.rowLabel}>iPhone 15 Pro</Text><Text style={styles.sub}>Current device</Text></View>
-              <Text style={styles.active}>Active</Text>
+              <View style={{ flex: 1 }}><Text style={styles.rowLabel}>iPhone 15 Pro</Text><Text style={styles.sub}>{t('mob.currentDevice', "Current device")}</Text></View>
+              <Text style={styles.active}>{t('mob.activeWord', "Active")}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.rowIcon}>💻</Text>
               <View style={{ flex: 1 }}><Text style={styles.rowLabel}>MacBook Pro</Text><Text style={styles.sub}>2 hours ago</Text></View>
-              <Text style={styles.logout}>Log Out</Text>
+              <Text style={styles.logout}>{t('ui.logout', 'Log Out')}</Text>
             </View>
           </View>
 

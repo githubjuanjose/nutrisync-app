@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { colors, PhaseKey } from '../../theme';
+import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle } from '../../lib/api';
@@ -10,6 +11,7 @@ import { saveChecklist } from '../../lib/daily';
 import DailyLogScreen, { LogItem } from './DailyLogScreen';
 
 export default function MovementLogScreen() {
+  const t = useT();
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
   const [logging, setLogging] = useState(false);
@@ -56,9 +58,9 @@ export default function MovementLogScreen() {
   const items: LogItem[] = moves.map((mv) => ({ name: mv.item_name, tag: mv.category_tag }));
   return (
     <DailyLogScreen
-      title="Movement Log" greeting={`Good morning, ${name}`} checklistTitle="Movement"
+      title={t('mob.movementLog', "Movement Log")} greeting={`Good morning, ${name}`} checklistTitle={t('mob.movement', "Movement")}
       items={items} tips={{ primary: tips.daily_tip, insight: tips.body_insight }}
-      phase={phase} day={day} mealTitle="TODAY'S MOVEMENT" logging={logging} onLog={onLog}
+      phase={phase} day={day} mealTitle={t('mob.todaysMovement', "TODAY'S MOVEMENT")} logging={logging} onLog={onLog}
     />
   );
 }

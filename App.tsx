@@ -10,6 +10,7 @@ import {
 } from '@expo-google-fonts/poppins';
 import RootNavigator from './src/navigation/RootNavigator';
 import { SessionProvider } from './src/state/SessionProvider';
+import { LanguageProvider } from './src/i18n';
 
 export default function App() {
   const [loaded] = useFonts({
@@ -21,12 +22,14 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <SessionProvider>
-          <NavigationContainer>
-            <StatusBar style="dark" />
-            <RootNavigator />
-          </NavigationContainer>
-        </SessionProvider>
+        <LanguageProvider>
+          <SessionProvider>
+            <NavigationContainer>
+              <StatusBar style="dark" />
+              <RootNavigator />
+            </NavigationContainer>
+          </SessionProvider>
+        </LanguageProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

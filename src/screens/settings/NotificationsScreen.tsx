@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
+import { useT } from '../../i18n';
 
 export default function NotificationsScreen({ navigation }: any) {
+  const t = useT();
   const [state, setState] = useState<Record<string, boolean>>({
     daily: true, mood: true, phase: true, nutri: true, movement: false, community: false, quiet: true,
   });
@@ -32,7 +34,7 @@ export default function NotificationsScreen({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
-          <Text style={styles.headerTitle}>Notifications & Reminders</Text><View style={{ width: 24 }} />
+          <Text style={styles.headerTitle}>{t('mob.notifReminders', "Notifications & Reminders")}</Text><View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           {groups.map((g) => (

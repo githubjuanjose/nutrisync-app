@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { saveMoodEnergy } from '../../lib/daily';
+import { useT } from '../../i18n';
 
 const VALUES = [5, 4, 3, 2, 1];
 
@@ -28,6 +29,7 @@ function Scale({ value, onSelect, tint }: { value: number | null; onSelect: (v: 
 }
 
 export default function MoodEnergyGate({ navigation }: any) {
+  const t = useT();
   const { userId } = useSession();
   const [stepEnergy, setStepEnergy] = useState(false);
   const [mood, setMood] = useState<number | null>(null);
@@ -54,8 +56,11 @@ export default function MoodEnergyGate({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top', 'bottom']}>
         <View style={styles.header}>
           <View>
-            <Text style={styles.brand}>NUTRISYNC ᖭ</Text>
-            <Text style={styles.title}>Before we Sync...</Text>
+            <View style={styles.brandLockup}>
+              <Image source={require('../../../assets/nutri-wings.png')} style={styles.brandMark} resizeMode="contain" />
+              <Text style={styles.brand}>NUTRISYNC</Text>
+            </View>
+            <Text style={styles.title}>{t('mob.beforeSync', "Before we Sync...")}</Text>
           </View>
           <Image source={{ uri: 'https://i.pravatar.cc/100?img=47' }} style={styles.avatar} />
         </View>
@@ -66,7 +71,7 @@ export default function MoodEnergyGate({ navigation }: any) {
         </View>
 
         <View style={styles.qWrap}>
-          <Text style={styles.q}>{stepEnergy ? "how's your energy today?" : "how's your mood today?"}</Text>
+          <Text style={styles.q}>{stepEnergy ? t('ui.gateTitleEnergy', "how's your energy today?") : t('ui.gateTitleMood', "how's your mood today?")}</Text>
         </View>
 
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -82,7 +87,7 @@ export default function MoodEnergyGate({ navigation }: any) {
             <ActivityIndicator color={colors.ink} />
           ) : (
             <Pressable onPress={onNext} disabled={disabled} style={[styles.next, disabled && { opacity: 0.4 }]}>
-              <Text style={styles.nextTxt}>next</Text>
+              <Text style={styles.nextTxt}>{t('ui.next', 'next')}</Text>
             </Pressable>
           )}
         </View>
@@ -94,7 +99,9 @@ export default function MoodEnergyGate({ navigation }: any) {
 const styles = StyleSheet.create({
   fill: { flex: 1, backgroundColor: colors.peachTop },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 22, paddingTop: 8 },
-  brand: { fontFamily: font.semibold, fontSize: 12, letterSpacing: 1, color: colors.ink },
+  brandLockup: { flexDirection: 'row', alignItems: 'center', gap: 7, marginBottom: 2 },
+  brandMark: { width: 30, height: 30 },
+  brand: { fontFamily: font.bold, fontSize: 17, letterSpacing: 1.3, color: colors.ink },
   title: { fontFamily: font.regular, fontSize: 30, color: colors.ink, marginTop: 8 },
   avatar: { width: 46, height: 46, borderRadius: 23 },
   track: { flexDirection: 'row', gap: 8, paddingHorizontal: 22, marginTop: 18 },

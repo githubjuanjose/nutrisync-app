@@ -8,10 +8,12 @@ import { PrimaryButton } from '../../ui/Buttons';
 import { supabase } from '../../lib/supabase';
 import { isSupabaseConfigured } from '../../lib/config';
 import { RootStackParamList } from '../../navigation/types';
+import { useT } from '../../i18n';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login' | 'CreateAccount'>;
 
 export default function AuthScreen({ route, navigation }: Props) {
+  const t = useT();
   const signup = route.name === 'CreateAccount';
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
@@ -53,14 +55,14 @@ export default function AuthScreen({ route, navigation }: Props) {
       <SafeAreaView style={styles.fill}>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.fill}>
           <View style={styles.body}>
-            <Text style={styles.h1}>{signup ? 'Create account' : 'Welcome back'}</Text>
+            <Text style={styles.h1}>{signup ? t('ui.createAccount', 'Create account') : t('ui.loginTitle', 'Welcome back')}</Text>
             <Text style={styles.sub}>{signup ? 'A minute to set up your rhythm.' : 'Log in to sync your cycle.'}</Text>
 
             {signup && (
-              <Field placeholder="First name" value={firstName} onChangeText={setFirstName} autoCapitalize="words" />
+              <Field placeholder={t('mob.firstName', "First name")} value={firstName} onChangeText={setFirstName} autoCapitalize="words" />
             )}
-            <Field placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" />
-            <Field placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
+            <Field placeholder={t('mob.email', "Email")} value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" />
+            <Field placeholder={t('ui.password', 'Password')} value={password} onChangeText={setPassword} secureTextEntry />
 
             {err ? <Text style={styles.err}>{err}</Text> : null}
 
@@ -68,13 +70,13 @@ export default function AuthScreen({ route, navigation }: Props) {
             {busy ? (
               <View style={styles.busy}><ActivityIndicator color={colors.coral} /></View>
             ) : (
-              <PrimaryButton label={signup ? 'Create account' : 'Log in'} onPress={submit} />
+              <PrimaryButton label={signup ? t('ui.createAccount', 'Create account') : t('ui.login', 'Log in')} onPress={submit} />
             )}
 
             <Pressable onPress={() => navigation.replace(signup ? 'Login' : 'CreateAccount')} style={{ marginTop: 18 }}>
               <Text style={styles.switch}>
-                {signup ? 'Already have an account? ' : "New here? "}
-                <Text style={{ color: colors.coral, fontFamily: font.semibold }}>{signup ? 'Log in' : 'Create account'}</Text>
+                {signup ? t('ui.haveAccount', 'Already have an account?') + ' ' : t('ui.newHere', 'New here?') + ' '}
+                <Text style={{ color: colors.coral, fontFamily: font.semibold }}>{signup ? t('ui.login', 'Log in') : t('ui.createAccount', 'Create account')}</Text>
               </Text>
             </Pressable>
           </View>

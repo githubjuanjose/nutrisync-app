@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
+import { useT } from '../../i18n';
 
 const WHO = ['Everyone', 'Friends only', 'Nobody'];
 
 export default function CommunityPrivacyScreen({ navigation }: any) {
+  const t = useT();
   const [feed, setFeed] = useState(true);
   const [cycle, setCycle] = useState(false);
   const [streaks, setStreaks] = useState(true);
@@ -23,21 +25,21 @@ export default function CommunityPrivacyScreen({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
-          <Text style={styles.headerTitle}>Community Privacy</Text><View style={{ width: 24 }} />
+          <Text style={styles.headerTitle}>{t('mob.communityPrivacy', "Community Privacy")}</Text><View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           <View style={styles.banner}>
             <Text style={styles.bannerTxt}>👥 Being part of the community keeps you motivated. Customise what parts of your journey others can see.</Text>
           </View>
 
-          <Text style={styles.sectionTitle}>PROFILE VISIBILITY</Text>
+          <Text style={styles.sectionTitle}>{t('mob.profileVisibility', "PROFILE VISIBILITY")}</Text>
           <View style={styles.card}>
-            <Toggle v={feed} set={setFeed} title="Show in community feed" sub="Let others see your posts and activity" />
-            <Toggle v={cycle} set={setCycle} title="Show cycle status" sub="Display your phase to friends" />
-            <Toggle v={streaks} set={setStreaks} title="Show activity streaks" sub="Share your consistency badges" />
+            <Toggle v={feed} set={setFeed} title={t('mob.showFeed', "Show in community feed")} sub="Let others see your posts and activity" />
+            <Toggle v={cycle} set={setCycle} title={t('mob.showCycleStatus', "Show cycle status")} sub="Display your phase to friends" />
+            <Toggle v={streaks} set={setStreaks} title={t('mob.showStreaks', "Show activity streaks")} sub="Share your consistency badges" />
           </View>
 
-          <Text style={styles.sectionTitle}>WHO CAN FIND ME</Text>
+          <Text style={styles.sectionTitle}>{t('mob.whoFindMe', "WHO CAN FIND ME")}</Text>
           <View style={styles.card}>
             {WHO.map((w, i) => (
               <Pressable key={w} onPress={() => setWho(w)} style={[styles.radioRow, i < WHO.length - 1 && styles.rowBorder]}>
@@ -47,9 +49,9 @@ export default function CommunityPrivacyScreen({ navigation }: any) {
             ))}
           </View>
 
-          <Text style={styles.sectionTitle}>BLOCKED USERS</Text>
+          <Text style={styles.sectionTitle}>{t('mob.blockedCaps', "BLOCKED USERS")}</Text>
           <View style={styles.card}>
-            <View style={styles.radioRow}><Text style={styles.radioLabel}>Blocked users</Text><Text style={styles.count}>0 ›</Text></View>
+            <View style={styles.radioRow}><Text style={styles.radioLabel}>{t('mob.blockedUsers', "Blocked users")}</Text><Text style={styles.count}>0 ›</Text></View>
           </View>
         </ScrollView>
       </SafeAreaView>

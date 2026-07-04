@@ -12,6 +12,7 @@ import { STEPS, Step } from './steps';
 import { supabase } from '../../lib/supabase';
 import { saveOnboarding } from '../../lib/api';
 import { useSession } from '../../state/SessionProvider';
+import { useT } from '../../i18n';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Onboarding'>;
 
@@ -39,6 +40,7 @@ function Highlighted({ text, highlight }: { text: string; highlight?: string }) 
 }
 
 export default function OnboardingWizard({ navigation }: Props) {
+  const t = useT();
   const { refreshOnboarding } = useSession();
   const [idx, setIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
@@ -116,7 +118,7 @@ export default function OnboardingWizard({ navigation }: Props) {
         <View style={{ alignItems: 'center', marginTop: 10 }}>
           <HaloOrb size={170} />
           <Text style={styles.eyebrow}>BETA</Text>
-          <Text style={styles.hero}>You're an early tester</Text>
+          <Text style={styles.hero}>{t('mob.earlyTester', "You're an early tester")}</Text>
           <Text style={{ fontSize: 26, marginTop: 6 }}>❤️</Text>
           <Text style={styles.heroSub}>
             Welcome to the NutriSync beta! You're among the first to try it. A few onboarding
@@ -126,7 +128,7 @@ export default function OnboardingWizard({ navigation }: Props) {
             <Text style={{ fontSize: 18, marginRight: 10 }}>💡</Text>
             <Text style={styles.infoTxt}>
               Your feedback directly guides what we build. Spot something? Tap{' '}
-              <Text style={{ color: colors.coral, fontFamily: font.semibold }}>Send feedback</Text> anytime in Settings.
+              <Text style={{ color: colors.coral, fontFamily: font.semibold }}>{t('mob.sendFeedback', "Send feedback")}</Text> anytime in Settings.
             </Text>
           </View>
         </View>
@@ -138,9 +140,9 @@ export default function OnboardingWizard({ navigation }: Props) {
   if (step.kind === 'periodDate') {
     return (
       <OnboardingLayout progress={step.progress} stepLabel={step.stepLabel} onBack={back} onNext={next} nextDisabled={!periodDate}>
-        <Text style={styles.section}>Cycle Info</Text>
+        <Text style={styles.section}>{t('mob.cycleInfo', "Cycle Info")}</Text>
         <Text style={styles.sectionItalic}>Be as accurate as possible so NutriSync can give you tailored results.</Text>
-        <Text style={styles.question}>When did your last period start?</Text>
+        <Text style={styles.question}>{t('mob.lastPeriodStart', "When did your last period start?")}</Text>
         <Text style={styles.helper}>This is the single most important answer — it's how we work out your phase each day.</Text>
         <Pressable style={styles.dateBtn} onPress={() => setShowPicker(true)}>
           <Svg width={18} height={18} viewBox="0 0 24 24">
@@ -170,8 +172,8 @@ export default function OnboardingWizard({ navigation }: Props) {
   if (step.kind === 'city') {
     return (
       <OnboardingLayout progress={step.progress} stepLabel={step.stepLabel} onBack={back} onNext={next} nextDisabled={!city.trim()}>
-        <Text style={styles.section}>Almost there</Text>
-        <Text style={styles.question}>And finally, where are you based?</Text>
+        <Text style={styles.section}>{t('mob.almostThere', "Almost there")}</Text>
+        <Text style={styles.question}>{t('mob.whereBased', "And finally, where are you based?")}</Text>
         <Text style={styles.helper}>This helps NutriSync localise tips and get a better understanding of you!</Text>
         <View style={styles.cityInput}>
           <Svg width={18} height={18} viewBox="0 0 24 24">
@@ -179,7 +181,7 @@ export default function OnboardingWizard({ navigation }: Props) {
             <Path d="M12 11.5a2.2 2.2 0 100-4.4 2.2 2.2 0 000 4.4z" fill="#fff" />
           </Svg>
           <TextInput
-            value={city} onChangeText={setCity} placeholder="Type your city..." placeholderTextColor={colors.faint}
+            value={city} onChangeText={setCity} placeholder={t('mob.typeCity', "Type your city...")} placeholderTextColor={colors.faint}
             style={styles.cityText}
           />
         </View>
@@ -215,7 +217,7 @@ export default function OnboardingWizard({ navigation }: Props) {
         <View style={{ marginTop: 16, gap: 12 }}>
           <ConsentRow checked={agree} onToggle={() => setAgree(!agree)}>
             <Text style={styles.consentTxt}>
-              I agree to NutriSync's <Text style={styles.link}>Privacy Policy</Text> and <Text style={styles.link}>Terms</Text>,
+              I agree to NutriSync's <Text style={styles.link}>{t('mob.privacyPolicy', "Privacy Policy")}</Text> and <Text style={styles.link}>{t('mob.terms', "Terms")}</Text>,
               and consent to the processing of my health data to personalise my guidance. <Text style={styles.req}>(Required)</Text>
             </Text>
           </ConsentRow>
@@ -233,12 +235,12 @@ export default function OnboardingWizard({ navigation }: Props) {
   return (
     <OnboardingLayout
       progress={1} showBack={false} nextFull
-      nextLabel={saving ? 'Saving…' : 'Enter NutriSync'} onNext={finish} nextDisabled={saving}
+      nextLabel={saving ? 'Saving…' : t('ui.enterApp', 'Enter NutriSync')} onNext={finish} nextDisabled={saving}
     >
       <View style={{ alignItems: 'center', marginTop: 20 }}>
         <HaloOrb size={200} />
-        <Text style={styles.eyebrow}>WELCOME</Text>
-        <Text style={styles.hero}>You're all set!</Text>
+        <Text style={styles.eyebrow}>{t('mob.welcomeCaps', "WELCOME")}</Text>
+        <Text style={styles.hero}>{t('mob.allSet', "You're all set!")}</Text>
         <Text style={styles.heroSub}>
           Nutri has built your first phase plan from your answers. Your personalised nutrition &
           movement guidance is ready.

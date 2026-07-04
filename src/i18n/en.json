@@ -1,0 +1,608 @@
+{
+  "ui": {
+    "boot": "SYNCING…",
+    "rail1": "Sync your cycle.",
+    "rail2": "Fuel your mind.",
+    "protoBadge": "PROTOTYPE · DEMO DATA",
+    "railCopy": "Nutrition and movement that move with your hormones — personalised to exactly where you are in your cycle, every day.",
+    "loginTitle": "Welcome back",
+    "loginSub": "Pick up right where you left off.",
+    "email": "Email address",
+    "password": "Password",
+    "createPassword": "Create password",
+    "fullName": "Full name",
+    "remember": "Remember me",
+    "forgot": "Forgot password?",
+    "login": "Log in",
+    "newHere": "New here?",
+    "createAccount": "Create account",
+    "signupSub": "A minute now — tailored guidance for every day after.",
+    "getStarted": "Get started →",
+    "haveAccount": "Already have an account?",
+    "settingUp": "SETTING UP",
+    "obRail1": "Let’s learn",
+    "obRail2": "your rhythm.",
+    "obRailCopy": "A few quick questions so every recommendation fits your body — not an average.",
+    "obDateNote": "Not sure? Your best guess is fine — Nutri refines it as you log.",
+    "age": "AGE",
+    "years": "years",
+    "height": "HEIGHT",
+    "weight": "WEIGHT",
+    "obOptional": "Optional — skip anything you’d rather not share.",
+    "obConsentA": "Cycle & symptoms",
+    "obConsentADesc": "Powers your daily guidance.",
+    "obConsentB": "Stored securely",
+    "obConsentBDesc": "Encrypted, GDPR-compliant, never sold.",
+    "obAgree": "I agree to the Privacy Policy & Terms, and understand my data stays mine.",
+    "continueBtn": "Continue →",
+    "finishSetup": "Finish setup →",
+    "obSaving": "Saving your setup…",
+    "obErr": "Could not save — check your connection and try again.",
+    "dailyCheckin": "DAILY CHECK-IN",
+    "skipToday": "Skip for today",
+    "next": "Next →",
+    "syncDay": "Sync my day →",
+    "gateTitleMood": "How are you feeling?",
+    "gateSubMood": "One honest word — Nutri tunes today’s plan around it.",
+    "gateTitleEnergy": "And your energy?",
+    "gateSubEnergy": "From running-on-empty (1) to unstoppable (5).",
+    "allsetCopy": "Nutri is personalising your nutrition and movement from your answers. You can update them anytime in Settings.",
+    "enterApp": "Enter NutriSync →",
+    "settings": "Settings",
+    "goodMorning": "Good morning",
+    "cycleDay": "Cycle day",
+    "cycleAlignment": "CYCLE ALIGNMENT",
+    "editPeriodBtn": "Edit period",
+    "editHealthBtn": "Edit health",
+    "logToday": "Log today ›",
+    "checkedIn": "✓ Checked in",
+    "firstRunStrong": "Day 1 of your journey.",
+    "firstRunRest": "Your Cycle Alignment Score unlocks after 7 days of logging — Nutri is already personalising from your answers.",
+    "todaysFuel": "Today’s fuel",
+    "openNutrilog": "Open NutriLog ›",
+    "movement": "Movement",
+    "plan": "Plan ›",
+    "nutriInsight": "NUTRI INSIGHT",
+    "fromDevices": "From your devices",
+    "manage": "Manage ›",
+    "deviceNote": "Nightly sync arrives with the mobile beta — your reads consent is already set.",
+    "statSleep": "SLEEP",
+    "statHrv": "HRV",
+    "statRhr": "REST HR",
+    "statSleepNote": "▲ vs 7-day avg",
+    "statHrvNote": "steady",
+    "statRhrNote": "▼ 2 bpm",
+    "demoSyncLine": "Oura Ring · last synced 6:40 am",
+    "consentActive": "consent active",
+    "welcomeInsight": "Welcome! Your first insight arrives tomorrow, once Nutri has a day of you in the picture.",
+    "focusWord": "focus:",
+    "hydration": "Hydration",
+    "glasses": "of 8 glasses",
+    "whyFoods": "WHY THESE FOODS",
+    "logMeal": "Log this meal",
+    "loggedMeal": "✓ Logged",
+    "today": "TODAY",
+    "thisWeek": "This week",
+    "lowEnergy": "LOW-ENERGY DAY?",
+    "markDone": "Mark as done",
+    "sessionDone": "✓ Session complete",
+    "mvAlt": "Swap for a 20-minute walk and gentle stretch — consistency beats intensity, every phase.",
+    "progress": "Progress",
+    "casLong": "CYCLE ALIGNMENT SCORE",
+    "trend6w": "6-week trend",
+    "prCopyDemo": "Nutrition, movement and sleep are pulling in the same direction as your hormones.",
+    "prCopyLive": "Five component scores — phase confidence, biomarkers, nutrition, fitness and consistency — update with every log.",
+    "prDeltaDemo": "▲ +4 vs last week",
+    "prFirst": "First score on the board",
+    "prNone": "Scores land as you log",
+    "prOver": "over",
+    "prDays": "days",
+    "brewTitle": "Your trends are brewing",
+    "brewCopy": "Log for 7 days and Nutri will chart your Cycle Alignment Score, energy patterns and phase history here.",
+    "brewDay": "DAY",
+    "brewOf": "OF 7",
+    "backToday": "‹ Today",
+    "editPeriod": "Edit Period",
+    "saveLog": "Save log",
+    "flow": "Flow",
+    "moodMental": "Mood & mental state",
+    "libido": "Libido",
+    "birthControl": "Birth control",
+    "physSymptoms": "Physical symptoms",
+    "notes": "Notes",
+    "notesPh": "Anything else about today…",
+    "editHealth": "Edit Health",
+    "yourProfile": "Your profile",
+    "saveChanges": "Save changes",
+    "allergies": "FOOD ALLERGIES",
+    "conditions": "DIAGNOSED CONDITIONS",
+    "yourGoal": "YOUR NUTRIGOAL",
+    "nextCycle": "Changes apply next cycle",
+    "yourNutri": "YOUR NUTRI",
+    "notifPush": "Daily log reminders",
+    "notifEmail": "Weekly email digest",
+    "logout": "Log out",
+    "langRegion": "Language & region",
+    "language": "Language",
+    "region": "Region",
+    "backSettings": "‹ Settings",
+    "connectedApps": "Connected apps",
+    "connIntro": "NutriSync reads only what you allow — and never writes back.",
+    "connSome": "of 6 connected.",
+    "connNone": "Nothing connected yet.",
+    "connectedPill": "Connected ✓",
+    "connectPill": "Connect",
+    "connectedWord": "Connected",
+    "whatReads": "What NutriSync reads",
+    "whatReadsDesc": "Applies to every connected device. Toggle a metric off to stop syncing it.",
+    "encTitle": "Encrypted in transit & at rest",
+    "encCopy": "Device data augments your logs — it never silently overrides what you enter yourself. Disconnect anytime; your synced history stays yours.",
+    "backConnections": "‹ Connections",
+    "connectWord": "Connect",
+    "connectCopy": "NutriSync will read the following to sharpen your phase detection and Cycle Alignment Score:",
+    "connectNoteA": "Read-only. NutriSync never writes back to",
+    "connectNoteB": "and you can disconnect anytime.",
+    "allowAccess": "Allow access",
+    "notNow": "Not now",
+    "dataPrivacy": "Data & Privacy",
+    "privIntro": "You own your data. Control what’s used, and take it with you anytime.",
+    "consentHdr": "CONSENT",
+    "yourData": "YOUR DATA",
+    "exportJson": "Export my data",
+    "pdfReport": "Download PDF report",
+    "accountHdr": "ACCOUNT",
+    "deactivate": "Deactivate account",
+    "deleteAll": "Delete account & all data",
+    "delNote": "Deletion is permanent and completes within 30 days.",
+    "security": "Sign-in & security",
+    "signinHdr": "SIGN-IN",
+    "changePw": "Change password",
+    "passkeys": "Passkeys",
+    "setUp": "Set up",
+    "twofaHdr": "TWO-FACTOR AUTHENTICATION",
+    "authApp": "Authenticator app",
+    "twofaOn": "On · protects your account",
+    "twofaOff": "Off · we recommend turning this on",
+    "smsBackup": "SMS backup",
+    "addNumber": "Add number ›",
+    "sessionsHdr": "ACTIVE SESSIONS",
+    "thisDevice": "This device",
+    "revoke": "Revoke",
+    "signOutOthers": "Sign out of all other sessions",
+    "noteCreds": "Enter your email and password.",
+    "noteSigningIn": "Signing in…",
+    "noteCreds6": "Enter your email and a password (6+ characters).",
+    "noteCreating": "Creating your account…",
+    "noteConfirm": "Check your email to confirm your account, then log in.",
+    "alertDemoExport": "Demo mode — connect the backend to export real data.",
+    "alertDemoDelete": "Demo mode — nothing to delete.",
+    "alertConfirmDelete": "Delete your account and all data? This cannot be undone.",
+    "alertDeleted": "Your data has been deleted. Sign-in record removal completes within 30 days.",
+    "alertDeactivate": "During beta, deactivation is handled by support — email hello@nutrisynccollective.com.",
+    "alertDemoAccount": "Demo mode — account actions need the live backend."
+  },
+  "dows": [
+    "SUN",
+    "MON",
+    "TUE",
+    "WED",
+    "THU",
+    "FRI",
+    "SAT"
+  ],
+  "phaseNames": {
+    "menstrual": "Menstrual",
+    "follicular": "Follicular",
+    "ovulatory": "Ovulatory",
+    "luteal": "Luteal"
+  },
+  "navLabels": {
+    "home": "Today",
+    "nutrilog": "NutriLog",
+    "movement": "Movement",
+    "progress": "Progress",
+    "calendar": "Calendar"
+  },
+  "moodLabels": {
+    "Low": "Low",
+    "Meh": "Meh",
+    "Okay": "Okay",
+    "Good": "Good",
+    "Great": "Great"
+  },
+  "phase": {
+    "menstrual": {
+      "headline": "Rest is productive.",
+      "copy": "Hormones are at their lowest ebb — warm, iron-rich food and gentle movement rebuild you from day one.",
+      "sideNote": "Lowest-energy days — go gentle",
+      "focus": "iron, folate & warm comfort foods to replenish.",
+      "nlWhy": "Bleeding draws down iron and magnesium. Warm, cooked meals digest easily while your body does its heaviest work of the month.",
+      "insight": "Energy is at its monthly low — protect your evenings and let sleep do the repair work.",
+      "moveCopy": "Recovery day — restorative yoga or a slow walk.",
+      "chips": [
+        {
+          "label": "15–25 MIN",
+          "hot": true
+        },
+        {
+          "label": "GENTLE",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Restorative yoga",
+      "mvCopy": "Movement should feel like a warm bath today — circulation without strain.",
+      "mvParts": [
+        {
+          "label": "Breathing + cat-cow",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Yin sequence · hips & back",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Legs up the wall",
+          "mins": "5 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Tue · Restorative yoga",
+          "state": "Today",
+          "today": true
+        },
+        {
+          "label": "Thu · Slow walk",
+          "state": "Planned",
+          "done": false
+        },
+        {
+          "label": "Sat · Gentle stretch",
+          "state": "Planned",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Warm oats, dates & cacao",
+          "slot": "Breakfast",
+          "tag": "IRON"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Lentil & spinach stew",
+          "slot": "Lunch",
+          "tag": "IRON + FOLATE"
+        },
+        {
+          "emoji": "🍛",
+          "name": "Salmon, sweet potato & greens",
+          "slot": "Dinner",
+          "tag": "OMEGA-3"
+        }
+      ],
+      "mealWhy": [
+        "Iron starts replacing what bleeding draws down.",
+        "Folate and iron rebuild your blood supply.",
+        "Omega-3s ease prostaglandin-driven cramps."
+      ]
+    },
+    "follicular": {
+      "headline": "Energy rising — build gently.",
+      "copy": "Estrogen is climbing. Fresh, light meals and progressive training land best this week.",
+      "sideNote": "Energy is ramping up this week",
+      "focus": "vitamin C, lean protein & iron as energy ramps.",
+      "nlWhy": "In your follicular phase estrogen rebuilds — iron restores what your period used, and vitamin C doubles its absorption.",
+      "insight": "Estrogen is climbing — learning sticks faster and training builds more muscle this week. Stack the hard things now.",
+      "moveCopy": "Energy is building — brisk walk + light core.",
+      "chips": [
+        {
+          "label": "20–30 MIN",
+          "hot": true
+        },
+        {
+          "label": "MODERATE",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Brisk walk + core",
+      "mvCopy": "Build gradually as estrogen rises — rhythm over intensity today.",
+      "mvParts": [
+        {
+          "label": "Warm-up · easy pace",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Brisk walk · steady",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Core circuit · 2 rounds",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Wed · Brisk walk + core",
+          "state": "Today",
+          "today": true
+        },
+        {
+          "label": "Fri · Light strength",
+          "state": "Planned",
+          "done": false
+        },
+        {
+          "label": "Sun · Yoga flow",
+          "state": "Planned",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Overnight oats, flax & citrus",
+          "slot": "Breakfast",
+          "tag": "VITAMIN C"
+        },
+        {
+          "emoji": "🥙",
+          "name": "Chicken & sprouted-grain salad",
+          "slot": "Lunch",
+          "tag": "LEAN PROTEIN"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Tofu & greens noodle bowl",
+          "slot": "Dinner",
+          "tag": "IRON"
+        }
+      ],
+      "mealWhy": [
+        "Vitamin C boosts iron absorption as energy ramps.",
+        "Protein fuels rising estrogen’s muscle-building window.",
+        "Iron rebuilds stores after your period."
+      ]
+    },
+    "ovulatory": {
+      "headline": "Peak power, peak confidence.",
+      "copy": "Estrogen is at its highest — chase a personal best, book the hard conversation, and fuel with zinc & antioxidants.",
+      "sideNote": "Peak energy window — 3 more days",
+      "focus": "zinc, antioxidants & omega-3s to support ovulation.",
+      "nlWhy": "Around ovulation your body runs hotter and burns through micronutrients faster. Zinc supports the LH surge; antioxidants protect the egg’s journey.",
+      "insight": "Estrogen peaks today — confidence and social energy are at their highest. Schedule the big conversation.",
+      "moveCopy": "Peak power day — HIIT or heavy lifts.",
+      "chips": [
+        {
+          "label": "30–40 MIN",
+          "hot": true
+        },
+        {
+          "label": "HIGH INTENSITY",
+          "hot": false
+        }
+      ],
+      "mvTitle": "HIIT intervals",
+      "mvCopy": "Your body recovers fastest right now — push intensity today, you’ve earned the ceiling.",
+      "mvParts": [
+        {
+          "label": "Warm-up · dynamic",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Intervals · 8 × 40s hard / 80s easy",
+          "mins": "24 MIN"
+        },
+        {
+          "label": "Cool-down · stretch",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Mon · Strength",
+          "state": "Done",
+          "done": true
+        },
+        {
+          "label": "Wed · HIIT intervals",
+          "state": "Today",
+          "today": true
+        },
+        {
+          "label": "Fri · Mobility & core",
+          "state": "Planned",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Greek yoghurt, berries & pumpkin seeds",
+          "slot": "Breakfast",
+          "tag": "ZINC"
+        },
+        {
+          "emoji": "🥗",
+          "name": "Salmon & quinoa bowl",
+          "slot": "Lunch",
+          "tag": "OMEGA-3"
+        },
+        {
+          "emoji": "🍜",
+          "name": "Stir-fry with leafy greens",
+          "slot": "Dinner",
+          "tag": "B6 + FIBRE"
+        }
+      ],
+      "mealWhy": [
+        "Zinc supports the LH surge around ovulation.",
+        "Omega-3s temper mid-cycle inflammation.",
+        "B6 + fibre help clear peaking estrogen."
+      ]
+    },
+    "luteal": {
+      "headline": "Steady fuel, softer edges.",
+      "copy": "Progesterone is in charge — steady blood sugar and magnesium keep energy and mood level through the wind-down.",
+      "sideNote": "Wind-down week — steady fuel helps",
+      "focus": "magnesium, B6 & slow carbs to steady the wind-down.",
+      "nlWhy": "Progesterone raises your metabolic rate about 5% — steady, slow-burning meals prevent the dips that read as cravings.",
+      "insight": "Serotonin dips as progesterone rises — a magnesium-rich dinner and an early night change how tomorrow feels.",
+      "moveCopy": "Moderate & steady — strength or a hilly walk.",
+      "chips": [
+        {
+          "label": "25–35 MIN",
+          "hot": true
+        },
+        {
+          "label": "MODERATE",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Steady strength",
+      "mvCopy": "Keep bar speed smooth and rests generous — consistency over ceiling this week.",
+      "mvParts": [
+        {
+          "label": "Warm-up · mobility",
+          "mins": "6 MIN"
+        },
+        {
+          "label": "Full-body strength · 3 rounds",
+          "mins": "20 MIN"
+        },
+        {
+          "label": "Walk-down · easy",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Mon · Strength",
+          "state": "Done",
+          "done": true
+        },
+        {
+          "label": "Thu · Hilly walk",
+          "state": "Today",
+          "today": true
+        },
+        {
+          "label": "Sun · Mobility",
+          "state": "Planned",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🍳",
+          "name": "Eggs, avocado & seeded toast",
+          "slot": "Breakfast",
+          "tag": "B6"
+        },
+        {
+          "emoji": "🥘",
+          "name": "Turkey & sweet-potato bowl",
+          "slot": "Lunch",
+          "tag": "SLOW CARBS"
+        },
+        {
+          "emoji": "🍮",
+          "name": "Dark-choc chia pudding",
+          "slot": "Dinner",
+          "tag": "MAGNESIUM"
+        }
+      ],
+      "mealWhy": [
+        "B6 supports serotonin as progesterone rises.",
+        "Slow carbs level the blood-sugar dips behind cravings.",
+        "Magnesium eases tension and readies deep sleep."
+      ]
+    }
+  },
+  "mob": {
+    "save": "Save",
+    "notes": "Add notes",
+    "descPh": "Enter a description...",
+    "email": "Email",
+    "firstName": "First name",
+    "cycleSyncScore": "Cycle Sync Score",
+    "hello": "Hello,",
+    "avgCycle": "Avg cycle",
+    "avgPeriod": "Avg period",
+    "dailyTip": "Daily Tip",
+    "bodyInsight": "Body Insight",
+    "healthProfile": "Health Profile",
+    "nutriGoals": "NutriGoals",
+    "currentNutriGoal": "Your current NutriGoal",
+    "allergiesH": "Allergies",
+    "healthConditions": "Health Conditions",
+    "period": "Period",
+    "sexLog": "Sex Log",
+    "sleepQuality": "Sleep Quality",
+    "movement": "Movement",
+    "movementLog": "Movement Log",
+    "todaysMovement": "TODAY'S MOVEMENT",
+    "nutriBasics": "Nutri Basics",
+    "todaysMeal": "TODAY'S MEAL",
+    "notifications": "Notifications",
+    "beforeSync": "Before we Sync...",
+    "welcomeTo": "Welcome to",
+    "almostThere": "Almost there",
+    "whereBased": "And finally, where are you based?",
+    "cycleInfo": "Cycle Info",
+    "privacyPolicy": "Privacy Policy",
+    "sendFeedback": "Send feedback",
+    "terms": "Terms",
+    "typeCity": "Type your city...",
+    "welcomeCaps": "WELCOME",
+    "lastPeriodStart": "When did your last period start?",
+    "allSet": "You're all set!",
+    "earlyTester": "You're an early tester",
+    "dataYours": "Your data stays yours",
+    "appPreferences": "App Preferences",
+    "appearance": "Appearance",
+    "calendarCaps": "CALENDAR",
+    "generalCaps": "GENERAL",
+    "haptics": "Haptic feedback",
+    "languageCaps": "LANGUAGE",
+    "measureUnits": "Measurement units",
+    "startWeek": "Start week on",
+    "unitsCaps": "UNITS",
+    "communityPrivacy": "Community Privacy",
+    "profileVisibility": "PROFILE VISIBILITY",
+    "showStreaks": "Show activity streaks",
+    "showCycleStatus": "Show cycle status",
+    "showFeed": "Show in community feed",
+    "whoFindMe": "WHO CAN FIND ME",
+    "blockedCaps": "BLOCKED USERS",
+    "blockedUsers": "Blocked users",
+    "connectedDevices": "Connected Devices",
+    "disconnect": "Disconnect",
+    "healthPlatforms": "HEALTH PLATFORMS",
+    "analyticsCrash": "Analytics & crash reports",
+    "cookiePrefs": "Cookie preferences",
+    "dataPermissions": "DATA PERMISSIONS",
+    "deleteAccount": "Delete account",
+    "manageActivity": "Manage activity log",
+    "personalisedInsights": "Personalised insights",
+    "researchPart": "Research participation",
+    "viewPrivacy": "View privacy policy",
+    "yourDataRights": "YOUR DATA RIGHTS",
+    "notifReminders": "Notifications & Reminders",
+    "chooseNutri": "Choose Your Nutri",
+    "selectNutri": "Select your Nutri profile",
+    "allergiesIntol": "ALLERGIES & INTOLERANCES",
+    "dietTypeCaps": "DIET TYPE",
+    "nutritionalPrefs": "Nutritional Preferences",
+    "basicInfo": "BASIC INFO",
+    "bodyMetrics": "BODY METRICS",
+    "dob": "Date of birth",
+    "heightCm": "Height (cm)",
+    "weightKg": "Weight (kg)",
+    "personalInfo": "Personal Information",
+    "activeWord": "Active",
+    "currentDevice": "Current device",
+    "loginDetails": "LOGIN DETAILS"
+  }
+}

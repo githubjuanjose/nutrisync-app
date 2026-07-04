@@ -6,10 +6,12 @@ import { LoadingView } from '../../ui/LoadingView';
 import { NutriOrb } from '../../ui/NutriOrb';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
+import { useT } from '../../i18n';
 
 type Form = { first_name: string; full_name: string; email: string; date_of_birth: string; height_cm: string; weight_kg: string };
 
 export default function PersonalInfoScreen({ navigation }: any) {
+  const t = useT();
   const { userId } = useSession();
   const [f, setF] = useState<Form>({ first_name: '', full_name: '', email: '', date_of_birth: '', height_cm: '', weight_kg: '' });
   const [loading, setLoading] = useState(true);
@@ -59,7 +61,7 @@ export default function PersonalInfoScreen({ navigation }: any) {
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
-          <Text style={styles.headerTitle}>Personal Information</Text><View style={{ width: 24 }} />
+          <Text style={styles.headerTitle}>{t('mob.personalInfo', "Personal Information")}</Text><View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           <View style={{ alignItems: 'center', marginBottom: 10 }}>
@@ -68,21 +70,21 @@ export default function PersonalInfoScreen({ navigation }: any) {
             <Text style={styles.email}>{f.email}</Text>
           </View>
 
-          <Text style={styles.sectionTitle}>BASIC INFO</Text>
+          <Text style={styles.sectionTitle}>{t('mob.basicInfo', "BASIC INFO")}</Text>
           <View style={styles.card}>
             <Field label="First name" k="first_name" autoCapitalize="words" />
-            <Field label="Full name" k="full_name" autoCapitalize="words" />
+            <Field label={t('ui.fullName', 'Full name')} k="full_name" autoCapitalize="words" />
             <Field label="Date of birth" k="date_of_birth" placeholder="YYYY-MM-DD" />
           </View>
 
-          <Text style={styles.sectionTitle}>BODY METRICS</Text>
+          <Text style={styles.sectionTitle}>{t('mob.bodyMetrics', "BODY METRICS")}</Text>
           <View style={styles.card}>
             <Field label="Height (cm)" k="height_cm" keyboardType="numeric" />
             <Field label="Weight (kg)" k="weight_kg" keyboardType="numeric" />
           </View>
 
           <Pressable onPress={save} disabled={saving} style={styles.save}>
-            {saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveTxt}>Save Changes</Text>}
+            {saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveTxt}>{t('ui.saveChanges', 'Save Changes')}</Text>}
           </Pressable>
         </ScrollView>
       </SafeAreaView>
