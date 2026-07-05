@@ -7,9 +7,10 @@ import { colors, font, radius } from '../../theme';
 import { useT } from '../../i18n';
 
 function Chevron() {
+  // Bold double-chevron "«" — clearly visible back affordance.
   return (
-    <Svg width={16} height={16} viewBox="0 0 24 24">
-      <Path d="M15 5l-7 7 7 7" stroke={colors.ink} strokeWidth={2.4} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    <Svg width={24} height={24} viewBox="0 0 24 24">
+      <Path d="M13 6l-6 6 6 6M19 6l-6 6 6 6" stroke={colors.ink} strokeWidth={2.6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
@@ -45,8 +46,8 @@ export function OnboardingLayout({
       <SafeAreaView style={styles.fill} edges={['top', 'bottom']}>
         <View style={styles.head}>
           {showBack ? (
-            <Pressable onPress={onBack} style={styles.back}><Chevron /></Pressable>
-          ) : <View style={{ width: 34 }} />}
+            <Pressable onPress={onBack} hitSlop={10} style={styles.back}><Chevron /></Pressable>
+          ) : <View style={{ width: 42 }} />}
           <View style={styles.track}>
             <View style={[styles.trackFill, { width: `${Math.max(4, progress * 100)}%` }]} />
           </View>
