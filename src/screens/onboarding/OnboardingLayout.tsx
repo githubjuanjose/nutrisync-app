@@ -26,6 +26,7 @@ type Props = {
   stepLabel?: string;          // e.g. "2/8"
   showBack?: boolean;
   onBack?: () => void;
+  onRestart?: () => void;      // when set, shows a "Start over" control
   nextLabel?: string;
   onNext?: () => void;
   nextFull?: boolean;          // full-width primary button vs small pill
@@ -34,7 +35,7 @@ type Props = {
 };
 
 export function OnboardingLayout({
-  progress, stepLabel, showBack = true, onBack, nextLabel, onNext,
+  progress, stepLabel, showBack = true, onBack, onRestart, nextLabel, onNext,
   nextFull = false, nextDisabled = false, children,
 }: Props) {
   const t = useT();
@@ -49,7 +50,14 @@ export function OnboardingLayout({
           <View style={styles.track}>
             <View style={[styles.trackFill, { width: `${Math.max(4, progress * 100)}%` }]} />
           </View>
-          {stepLabel ? <Text style={styles.step}>{stepLabel}</Text> : <View style={{ width: 30 }} />}
+          <View style={styles.headRight}>
+            {stepLabel ? <Text style={styles.step}>{stepLabel}</Text> : null}
+            {onRestart ? (
+              <Pressable onPress={onRestart} hitSlop={8} style={styles.restart}>
+                <Text style={styles.restartTxt}>{t('mob.startOver', 'Start over')}</Text>
+              </Pressable>
+            ) : (!stepLabel ? <View style={{ width: 30 }} /> : null)}
+          </View>
         </View>
 
         <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
@@ -82,7 +90,10 @@ const styles = StyleSheet.create({
   back: { width: 34, height: 34, borderRadius: 17, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center' },
   track: { flex: 1, height: 8, borderRadius: 8, backgroundColor: 'rgba(255,255,255,0.6)', overflow: 'hidden' },
   trackFill: { height: '100%', borderRadius: 8, backgroundColor: colors.orange },
-  step: { fontFamily: font.medium, fontSize: 14, color: colors.muted, width: 30, textAlign: 'right' },
+  step: { fontFamily: font.medium, fontSize: 14, color: colors.muted, textAlign: 'right' },
+  headRight: { flexDirection: 'row', alignItems: 'center', gap: 10, justifyContent: 'flex-end', minWidth: 30 },
+  restart: { paddingVertical: 2 },
+  restartTxt: { fontFamily: font.semibold, fontSize: 12.5, color: colors.coral },
   body: { paddingHorizontal: 26, paddingTop: 26, paddingBottom: 20 },
   footer: { paddingHorizontal: 24, paddingBottom: 8, paddingTop: 6 },
   nextWrap: { alignSelf: 'flex-end' },

@@ -179,7 +179,8 @@
     "alertConfirmDelete": "¿Eliminar tu cuenta y todos los datos? Esta acción no se puede deshacer.",
     "alertDeleted": "Tus datos se han eliminado. La retirada del registro de acceso se completa en 30 días.",
     "alertDeactivate": "Durante la beta, la desactivación la gestiona el equipo — escribe a hello@nutrisynccollective.com.",
-    "alertDemoAccount": "Modo demo — las acciones de cuenta necesitan el backend en vivo."
+    "alertDemoAccount": "Modo demo — las acciones de cuenta necesitan el backend en vivo.",
+    "cancel": "Cancelar"
   },
   "dows": [
     "DOM",
@@ -922,6 +923,8 @@
     "personalInfo": "Información personal",
     "activeWord": "Activo",
     "currentDevice": "Dispositivo actual",
-    "loginDetails": "DATOS DE ACCESO"
+    "loginDetails": "DATOS DE ACCESO",
+    "startOver": "Empezar de nuevo",
+    "startOverBody": "Esto borra tus respuestas hasta ahora y te lleva al primer paso."
   }
 }

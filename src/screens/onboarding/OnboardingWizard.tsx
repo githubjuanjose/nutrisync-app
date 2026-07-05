@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TextInput, Pressable, Platform, BackHandler, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Svg, { Path } from 'react-native-svg';
@@ -57,6 +57,29 @@ export default function OnboardingWizard({ navigation }: Props) {
   const next = () => (idx >= STEPS.length - 1 ? finish() : setIdx(idx + 1));
   const back = () => (idx <= 0 ? navigation.goBack() : setIdx(idx - 1));
 
+  // Start the whole flow over (clears every answer) — confirmed first.
+  const restart = () => {
+    Alert.alert(
+      t('mob.startOver', 'Start over?'),
+      t('mob.startOverBody', 'This clears your answers so far and takes you back to the first step.'),
+      [
+        { text: t('ui.cancel', 'Cancel'), style: 'cancel' },
+        {
+          text: t('mob.startOver', 'Start over'), style: 'destructive', onPress: () => {
+            setIdx(0); setAnswers({}); setCity(''); setAgree(false);
+            setResearch(false); setPeriodDate(null); setSaveErr('');
+          },
+        },
+      ]
+    );
+  };
+
+  // Android hardware back → step back within the wizard instead of leaving the app.
+  useEffect(() => {
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => { back(); return true; });
+    return () => sub.remove();
+  }, [idx]);
+
   // Persist onboarding to Supabase, then enter the app.
   const finish = async () => {
     setSaveErr('');
@@ -93,7 +116,7 @@ export default function OnboardingWizard({ navigation }: Props) {
     return (
       <OnboardingLayout
         progress={step.progress} stepLabel={step.stepLabel}
-        onBack={back} onNext={next} nextDisabled={sel.length === 0}
+        onBack={back} onRestart={restart} onNext={next} nextDisabled={sel.length === 0}
       >
         <Text style={styles.section}>{step.section}</Text>
         {step.sectionItalic ? <Text style={styles.sectionItalic}>{step.sectionItalic}</Text> : null}
@@ -139,7 +162,7 @@ export default function OnboardingWizard({ navigation }: Props) {
   // ---- Last period start date (critical field) ----
   if (step.kind === 'periodDate') {
     return (
-      <OnboardingLayout progress={step.progress} stepLabel={step.stepLabel} onBack={back} onNext={next} nextDisabled={!periodDate}>
+      <OnboardingLayout progress={step.progress} stepLabel={step.stepLabel} onBack={back} onRestart={restart} onNext={next} nextDisabled={!periodDate}>
         <Text style={styles.section}>{t('mob.cycleInfo', "Cycle Info")}</Text>
         <Text style={styles.sectionItalic}>Be as accurate as possible so NutriSync can give you tailored results.</Text>
         <Text style={styles.question}>{t('mob.lastPeriodStart', "When did your last period start?")}</Text>
@@ -171,7 +194,7 @@ export default function OnboardingWizard({ navigation }: Props) {
   // ---- City ----
   if (step.kind === 'city') {
     return (
-      <OnboardingLayout progress={step.progress} stepLabel={step.stepLabel} onBack={back} onNext={next} nextDisabled={!city.trim()}>
+      <OnboardingLayout progress={step.progress} stepLabel={step.stepLabel} onBack={back} onRestart={restart} onNext={next} nextDisabled={!city.trim()}>
         <Text style={styles.section}>{t('mob.almostThere', "Almost there")}</Text>
         <Text style={styles.question}>{t('mob.whereBased', "And finally, where are you based?")}</Text>
         <Text style={styles.helper}>This helps NutriSync localise tips and get a better understanding of you!</Text>
@@ -197,7 +220,7 @@ export default function OnboardingWizard({ navigation }: Props) {
       { icon: '🔒', title: 'Stored Securely', desc: 'Encrypted, never sold, deletable any time.' },
     ];
     return (
-      <OnboardingLayout progress={1} showBack={false} nextFull nextLabel="Agree and Continue" onNext={next} nextDisabled={!agree}>
+      <OnboardingLayout progress={1} onBack={back} onRestart={restart} nextFull nextLabel="Agree and Continue" onNext={next} nextDisabled={!agree}>
         <View style={{ alignItems: 'center' }}>
           <HaloOrb size={150} />
           <Text style={styles.hero}>You're data stays yours</Text>
@@ -234,7 +257,7 @@ export default function OnboardingWizard({ navigation }: Props) {
   // ---- All set ----
   return (
     <OnboardingLayout
-      progress={1} showBack={false} nextFull
+      progress={1} onBack={back} onRestart={restart} nextFull
       nextLabel={saving ? 'Saving…' : t('ui.enterApp', 'Enter NutriSync')} onNext={finish} nextDisabled={saving}
     >
       <View style={{ alignItems: 'center', marginTop: 20 }}>
