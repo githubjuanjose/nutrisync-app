@@ -1,0 +1,775 @@
+{
+  "ui": {
+    "boot": "SINCRONIZANDO…",
+    "rail1": "Sincroniza o teu ciclo.",
+    "rail2": "Alimenta a túa mente.",
+    "protoBadge": "PROTOTIPO · DATOS DE DEMO",
+    "railCopy": "Nutrición e movemento que se moven coas túas hormonas — personalizados exactamente ao punto do ciclo no que estás, cada día.",
+    "loginTitle": "Benvida de novo",
+    "loginSub": "Retoma xusto onde o deixaches.",
+    "email": "Enderezo electrónico",
+    "password": "Contrasinal",
+    "createPassword": "Crea un contrasinal",
+    "fullName": "Nome completo",
+    "remember": "Lémbrame",
+    "forgot": "Esqueciches o contrasinal?",
+    "login": "Iniciar sesión",
+    "newHere": "Primeira vez aquí?",
+    "createAccount": "Crear conta",
+    "signupSub": "Un minuto agora — orientación á medida para cada día despois.",
+    "getStarted": "Comezar →",
+    "haveAccount": "Xa tes unha conta?",
+    "settingUp": "CONFIGURACIÓN",
+    "obRail1": "Aprendamos",
+    "obRail2": "o teu ritmo.",
+    "obRailCopy": "Unhas preguntas rápidas para que cada recomendación se axuste ao teu corpo — non a unha media.",
+    "obDateNote": "Non estás segura? Unha estimación abonda — Nutri afínaa a medida que rexistras.",
+    "age": "IDADE",
+    "years": "anos",
+    "height": "ALTURA",
+    "weight": "PESO",
+    "obOptional": "Opcional — salta o que prefiras non compartir.",
+    "obConsentA": "Ciclo e síntomas",
+    "obConsentADesc": "Alimenta a túa orientación diaria.",
+    "obConsentB": "Gardado de forma segura",
+    "obConsentBDesc": "Cifrado, conforme ao RXPD, nunca vendido.",
+    "obAgree": "Acepto a Política de privacidade e as Condicións, e entendo que os meus datos seguen sendo meus.",
+    "continueBtn": "Continuar →",
+    "finishSetup": "Rematar a configuración →",
+    "obSaving": "Gardando a túa configuración…",
+    "obErr": "Non se puido gardar — comproba a conexión e téntao de novo.",
+    "dailyCheckin": "REXISTRO DIARIO",
+    "skipToday": "Saltar por hoxe",
+    "next": "Seguinte →",
+    "syncDay": "Sincronizar o meu día →",
+    "gateTitleMood": "Como te sentes?",
+    "gateSubMood": "Unha palabra sincera — Nutri axusta o plan de hoxe arredor dela.",
+    "gateTitleEnergy": "E a túa enerxía?",
+    "gateSubEnergy": "De baleira de todo (1) a imparable (5).",
+    "allsetCopy": "Nutri está a personalizar a túa nutrición e movemento a partir das túas respostas. Podes actualizalas cando queiras en Configuración.",
+    "enterApp": "Entrar en NutriSync →",
+    "settings": "Configuración",
+    "goodMorning": "Bo día",
+    "cycleDay": "Día do ciclo",
+    "cycleAlignment": "ALIÑAMENTO DO CICLO",
+    "editPeriodBtn": "Editar a regra",
+    "editHealthBtn": "Editar a saúde",
+    "logToday": "Rexistrar hoxe ›",
+    "checkedIn": "✓ Rexistrado",
+    "firstRunStrong": "Día 1 do teu camiño.",
+    "firstRunRest": "A túa Puntuación de Aliñamento do Ciclo desbloquéase tras 7 días de rexistros — Nutri xa personaliza a partir das túas respostas.",
+    "todaysFuel": "O combustible de hoxe",
+    "openNutrilog": "Abrir NutriLog ›",
+    "movement": "Movemento",
+    "plan": "Planificar ›",
+    "nutriInsight": "APUNTAMENTO DE NUTRI",
+    "fromDevices": "Desde os teus dispositivos",
+    "manage": "Xestionar ›",
+    "deviceNote": "A sincronización nocturna chega coa beta móbil — o teu consentimento de lectura xa está listo.",
+    "statSleep": "SONO",
+    "statHrv": "VFC",
+    "statRhr": "FC REPOUSO",
+    "statSleepNote": "▲ vs media 7 días",
+    "statHrvNote": "estable",
+    "statRhrNote": "▼ 2 bpm",
+    "demoSyncLine": "Oura Ring · última sincronización 6:40",
+    "consentActive": "consentimento activo",
+    "welcomeInsight": "Benvida! O teu primeiro apuntamento chega mañá, cando Nutri teña un día teu no cadro.",
+    "focusWord": "foco:",
+    "hydration": "Hidratación",
+    "glasses": "de 8 vasos",
+    "whyFoods": "POR QUE ESTES ALIMENTOS",
+    "logMeal": "Rexistrar esta comida",
+    "loggedMeal": "✓ Rexistrado",
+    "today": "HOXE",
+    "thisWeek": "Esta semana",
+    "lowEnergy": "DÍA DE POUCA ENERXÍA?",
+    "markDone": "Marcar como feito",
+    "sessionDone": "✓ Sesión completada",
+    "mvAlt": "Cámbiao por 20 minutos de camiñada e estiramentos suaves — a constancia gaña á intensidade, en cada fase.",
+    "progress": "Progreso",
+    "casLong": "PUNTUACIÓN DE ALIÑAMENTO DO CICLO",
+    "trend6w": "Tendencia de 6 semanas",
+    "prCopyDemo": "Nutrición, movemento e sono tiran na mesma dirección cás túas hormonas.",
+    "prCopyLive": "Cinco puntuacións — confianza de fase, biomarcadores, nutrición, forma física e constancia — actualízanse con cada rexistro.",
+    "prDeltaDemo": "▲ +4 vs a semana pasada",
+    "prFirst": "Primeira puntuación no marcador",
+    "prNone": "As puntuacións chegan a medida que rexistras",
+    "prOver": "en",
+    "prDays": "días",
+    "brewTitle": "As túas tendencias están a madurar",
+    "brewCopy": "Rexistra durante 7 días e Nutri trazará aquí a túa Puntuación de Aliñamento, os teus patróns de enerxía e o historial de fases.",
+    "brewDay": "DÍA",
+    "brewOf": "DE 7",
+    "backToday": "‹ Hoxe",
+    "editPeriod": "Editar a regra",
+    "saveLog": "Gardar o rexistro",
+    "flow": "Fluxo",
+    "moodMental": "Ánimo e estado mental",
+    "libido": "Libido",
+    "birthControl": "Anticoncepción",
+    "physSymptoms": "Síntomas físicos",
+    "notes": "Notas",
+    "notesPh": "Algo máis sobre hoxe…",
+    "editHealth": "Editar a saúde",
+    "yourProfile": "O teu perfil",
+    "saveChanges": "Gardar os cambios",
+    "allergies": "ALERXIAS ALIMENTARIAS",
+    "conditions": "CONDICIÓNS DIAGNOSTICADAS",
+    "yourGoal": "O TEU NUTRIGOAL",
+    "nextCycle": "Os cambios aplícanse no próximo ciclo",
+    "yourNutri": "A TÚA NUTRI",
+    "notifPush": "Recordatorios de rexistro diarios",
+    "notifEmail": "Resumo semanal por correo",
+    "logout": "Pechar sesión",
+    "langRegion": "Lingua e rexión",
+    "language": "Lingua",
+    "region": "Rexión",
+    "phaseHeroFmt": "FASE {PH} · DÍA {D}",
+    "dayWord": "DÍA",
+    "nlFocusFmt": "Foco da fase {phl}:",
+    "allsetFmt": "Todo listo, {name}!",
+    "bpmUnit": "lpm",
+    "prTrendStart": "feb.",
+    "prTrendEnd": "mar.",
+    "backToSite": "Volver ao sitio",
+    "obStartOver": "Comezar de novo",
+    "backSettings": "‹ Configuración",
+    "connectedApps": "Aplicacións conectadas",
+    "connIntro": "NutriSync só le o que ti permites — e nunca escribe de volta.",
+    "connSome": "de 6 conectadas.",
+    "connNone": "Aínda non hai nada conectado.",
+    "connectedPill": "Conectada ✓",
+    "connectPill": "Conectar",
+    "connectedWord": "Conectada",
+    "whatReads": "Que le NutriSync",
+    "whatReadsDesc": "Aplícase a cada dispositivo conectado. Desactiva unha métrica para deter a súa sincronización.",
+    "encTitle": "Cifrado en tránsito e en repouso",
+    "encCopy": "Os datos dos dispositivos complementan os teus rexistros — nunca sobrescriben en silencio o que ti introduces. Desconecta cando queiras; o teu historial segue sendo teu.",
+    "backConnections": "‹ Conexións",
+    "connectWord": "Conectar",
+    "connectCopy": "NutriSync lerá o seguinte para afinar a detección da túa fase e a Puntuación de Aliñamento do Ciclo:",
+    "connectNoteA": "Só lectura. NutriSync nunca escribe en",
+    "connectNoteB": "e podes desconectar cando queiras.",
+    "allowAccess": "Permitir o acceso",
+    "notNow": "Agora non",
+    "dataPrivacy": "Datos e privacidade",
+    "privIntro": "Os teus datos son teus. Controla que se usa e lévaos contigo cando queiras.",
+    "consentHdr": "CONSENTIMENTO",
+    "yourData": "OS TEUS DATOS",
+    "exportJson": "Exportar os meus datos",
+    "pdfReport": "Descargar o informe PDF",
+    "accountHdr": "CONTA",
+    "deactivate": "Desactivar a conta",
+    "deleteAll": "Eliminar a conta e todos os datos",
+    "delNote": "A eliminación é definitiva e complétase en 30 días.",
+    "security": "Inicio de sesión e seguridade",
+    "signinHdr": "INICIO DE SESIÓN",
+    "changePw": "Cambiar o contrasinal",
+    "passkeys": "Claves de acceso",
+    "setUp": "Configurar",
+    "twofaHdr": "AUTENTICACIÓN DE DOUS FACTORES",
+    "authApp": "Aplicación de autenticación",
+    "twofaOn": "Activada · protexe a túa conta",
+    "twofaOff": "Desactivada · recomendamos activala",
+    "smsBackup": "SMS de reserva",
+    "addNumber": "Engadir un número ›",
+    "sessionsHdr": "SESIÓNS ACTIVAS",
+    "thisDevice": "Este dispositivo",
+    "revoke": "Revogar",
+    "signOutOthers": "Pechar todas as outras sesións",
+    "noteCreds": "Introduce o correo e o contrasinal.",
+    "noteSigningIn": "Iniciando sesión…",
+    "noteCreds6": "Introduce o correo e un contrasinal (6+ caracteres).",
+    "noteCreating": "Creando a túa conta…",
+    "noteConfirm": "Revisa o correo para confirmar a conta e despois inicia sesión.",
+    "alertDemoExport": "Modo demo — conecta o backend para exportar datos reais.",
+    "alertDemoDelete": "Modo demo — non hai nada que eliminar.",
+    "alertConfirmDelete": "Eliminar a túa conta e todos os datos? Non se pode desfacer.",
+    "alertDeleted": "Os teus datos elimináronse. A retirada das credenciais complétase en 30 días.",
+    "alertDeactivate": "Durante a beta, a desactivación xestiónase co soporte — escribe a hello@nutrisynccollective.com.",
+    "alertDemoAccount": "Modo demo — as accións da conta precisan o backend en produción."
+  },
+  "dows": [
+    "DOM",
+    "LUN",
+    "MAR",
+    "MÉR",
+    "XOV",
+    "VEN",
+    "SÁB"
+  ],
+  "phaseNames": {
+    "menstrual": "Menstrual",
+    "follicular": "Folicular",
+    "ovulatory": "Ovulatoria",
+    "luteal": "Lútea"
+  },
+  "navLabels": {
+    "home": "Hoxe",
+    "nutrilog": "NutriLog",
+    "movement": "Movemento",
+    "progress": "Progreso",
+    "calendar": "Calendario"
+  },
+  "moodLabels": {
+    "Low": "Baixa",
+    "Meh": "Regular",
+    "Okay": "Ben",
+    "Good": "Moi ben",
+    "Great": "Xenial"
+  },
+  "phase": {
+    "menstrual": {
+      "headline": "Descansar é produtivo.",
+      "copy": "As hormonas están no punto máis baixo — pratos quentes ricos en ferro e movemento suave reconstrúente desde o primeiro día.",
+      "sideNote": "Os días con menos enerxía — vai con calma",
+      "focus": "ferro, folatos e pratos quentes reconfortantes para repoñerte.",
+      "nlWhy": "A regra consome ferro e magnesio. As comidas quentes e cociñadas dixírense doadamente mentres o teu corpo fai o traballo máis duro do mes.",
+      "insight": "A enerxía está no mínimo mensual — protexe as túas tardes e deixa que o sono faga a reparación.",
+      "moveCopy": "Día de recuperación — ioga restaurativo ou camiñada lenta.",
+      "chips": [
+        {
+          "label": "15–25 MIN",
+          "hot": true
+        },
+        {
+          "label": "SUAVE",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Ioga restaurativo",
+      "mvCopy": "Hoxe o movemento debe parecer un baño quente — circulación sen esforzo.",
+      "mvParts": [
+        {
+          "label": "Respiración + gato-vaca",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Secuencia yin · cadeiras e costas",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Pernas na parede",
+          "mins": "5 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Mar · Ioga restaurativo",
+          "state": "Hoxe",
+          "today": true
+        },
+        {
+          "label": "Xov · Camiñada lenta",
+          "state": "Planificado",
+          "done": false
+        },
+        {
+          "label": "Sáb · Estiramentos suaves",
+          "state": "Planificado",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Avea quente, dátiles e cacao",
+          "slot": "Almorzo",
+          "tag": "FERRO"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Guiso de lentellas e espinacas",
+          "slot": "Xantar",
+          "tag": "FERRO + FOLATOS"
+        },
+        {
+          "emoji": "🍛",
+          "name": "Salmón, pataca doce e verduras",
+          "slot": "Cea",
+          "tag": "OMEGA-3"
+        }
+      ],
+      "mealWhy": [
+        "O ferro comeza a substituír o que a regra consome.",
+        "Folatos e ferro reconstrúen a túa reserva de sangue.",
+        "Os omega-3 alivian os cólicos das prostaglandinas."
+      ]
+    },
+    "follicular": {
+      "headline": "A enerxía sobe — constrúe con calma.",
+      "copy": "Os estróxenos soben. Comidas frescas e lixeiras e adestramento progresivo funcionan mellor esta semana.",
+      "sideNote": "A enerxía vai subindo esta semana",
+      "focus": "vitamina C, proteína magra e ferro mentres a enerxía sobe.",
+      "nlWhy": "Na fase folicular os estróxenos reconstrúen — o ferro restaura o que a regra gastou e a vitamina C duplica a súa absorción.",
+      "insight": "Os estróxenos soben — a aprendizaxe fíxase máis rápido e o adestramento constrúe máis músculo esta semana. Programa agora as cousas difíciles.",
+      "moveCopy": "A enerxía constrúese — camiñada rápida + core lixeiro.",
+      "chips": [
+        {
+          "label": "20–30 MIN",
+          "hot": true
+        },
+        {
+          "label": "MODERADO",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Camiñada rápida + core",
+      "mvCopy": "Medra gradualmente cos estróxenos — hoxe ritmo por riba de intensidade.",
+      "mvParts": [
+        {
+          "label": "Quecemento · paso doado",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Camiñada rápida · constante",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Circuíto de core · 2 voltas",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Mér · Camiñada rápida + core",
+          "state": "Hoxe",
+          "today": true
+        },
+        {
+          "label": "Ven · Forza lixeira",
+          "state": "Planificado",
+          "done": false
+        },
+        {
+          "label": "Dom · Fluxo de ioga",
+          "state": "Planificado",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Avea nocturna, liño e cítricos",
+          "slot": "Almorzo",
+          "tag": "VITAMINA C"
+        },
+        {
+          "emoji": "🥙",
+          "name": "Ensalada de polo con grans xermolados",
+          "slot": "Xantar",
+          "tag": "PROTEÍNA MAGRA"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Cunca de fideos con tofu e verduras",
+          "slot": "Cea",
+          "tag": "FERRO"
+        }
+      ],
+      "mealWhy": [
+        "A vitamina C potencia a absorción do ferro mentres a enerxía sobe.",
+        "A proteína alimenta a xanela muscular dos estróxenos crecentes.",
+        "O ferro repón as reservas despois da regra."
+      ]
+    },
+    "ovulatory": {
+      "headline": "Máxima potencia, máxima confianza.",
+      "copy": "Os estróxenos están no cumio — persegue unha marca persoal, pecha a conversa difícil e cárgate de cinc e antioxidantes.",
+      "sideNote": "Xanela de enerxía máxima — quedan 3 días",
+      "focus": "cinc, antioxidantes e omega-3 para apoiar a ovulación.",
+      "nlWhy": "Arredor da ovulación o teu corpo vai máis quente e queima micronutrientes máis rápido. O cinc apoia o pico de LH; os antioxidantes protexen a viaxe do óvulo.",
+      "insight": "Os estróxenos culminan hoxe — confianza e enerxía social no máximo. Programa a gran conversa.",
+      "moveCopy": "Día de máxima potencia — HIIT ou pesos pesados.",
+      "chips": [
+        {
+          "label": "30–40 MIN",
+          "hot": true
+        },
+        {
+          "label": "ALTA INTENSIDADE",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Intervalos HIIT",
+      "mvCopy": "O teu corpo recupérase máis rápido ca nunca — aperta a intensidade hoxe, gañaches o teito.",
+      "mvParts": [
+        {
+          "label": "Quecemento · dinámico",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Intervalos · 8 × 40 s forte / 80 s doado",
+          "mins": "24 MIN"
+        },
+        {
+          "label": "Volta á calma · estiramentos",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Lun · Forza",
+          "state": "Feito",
+          "done": true
+        },
+        {
+          "label": "Mér · Intervalos HIIT",
+          "state": "Hoxe",
+          "today": true
+        },
+        {
+          "label": "Ven · Mobilidade e core",
+          "state": "Planificado",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Iogur grego, froitos vermellos e pebidas de cabaza",
+          "slot": "Almorzo",
+          "tag": "CINC"
+        },
+        {
+          "emoji": "🥗",
+          "name": "Cunca de salmón e quinoa",
+          "slot": "Xantar",
+          "tag": "OMEGA-3"
+        },
+        {
+          "emoji": "🍜",
+          "name": "Salteado con verduras de folla",
+          "slot": "Cea",
+          "tag": "B6 + FIBRA"
+        }
+      ],
+      "mealWhy": [
+        "O cinc apoia o pico de LH arredor da ovulación.",
+        "Os omega-3 temperan a inflamación de medio ciclo.",
+        "B6 + fibra axudan a eliminar os estróxenos no cumio."
+      ]
+    },
+    "luteal": {
+      "headline": "Combustible estable, arestas máis suaves.",
+      "copy": "A proxesterona manda — azucre en sangue estable e magnesio manteñen enerxía e ánimo en equilibrio durante a baixada.",
+      "sideNote": "Semana de desaceleración — o combustible estable axuda",
+      "focus": "magnesio, B6 e carbohidratos lentos para estabilizar a baixada.",
+      "nlWhy": "A proxesterona sobe o teu metabolismo arredor dun 5% — comidas estables de combustión lenta evitan as baixadas que parecen antollos.",
+      "insight": "A serotonina baixa mentres a proxesterona sobe — unha cea rica en magnesio e deitarse cedo cambian como se sentirá mañá.",
+      "moveCopy": "Moderado e constante — forza ou camiñada con costas.",
+      "chips": [
+        {
+          "label": "25–35 MIN",
+          "hot": true
+        },
+        {
+          "label": "MODERADO",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Forza constante",
+      "mvCopy": "Mantén o ritmo fluído e os descansos xenerosos — esta semana constancia por riba de marcas.",
+      "mvParts": [
+        {
+          "label": "Quecemento · mobilidade",
+          "mins": "6 MIN"
+        },
+        {
+          "label": "Forza de corpo enteiro · 3 voltas",
+          "mins": "20 MIN"
+        },
+        {
+          "label": "Camiñada final · doada",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Lun · Forza",
+          "state": "Feito",
+          "done": true
+        },
+        {
+          "label": "Xov · Camiñada con costas",
+          "state": "Hoxe",
+          "today": true
+        },
+        {
+          "label": "Dom · Mobilidade",
+          "state": "Planificado",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🍳",
+          "name": "Ovos, aguacate e torrada de sementes",
+          "slot": "Almorzo",
+          "tag": "B6"
+        },
+        {
+          "emoji": "🥘",
+          "name": "Cunca de pavo e pataca doce",
+          "slot": "Xantar",
+          "tag": "CARBOS LENTOS"
+        },
+        {
+          "emoji": "🍮",
+          "name": "Pudin de chía con chocolate negro",
+          "slot": "Cea",
+          "tag": "MAGNESIO"
+        }
+      ],
+      "mealWhy": [
+        "A B6 apoia a serotonina mentres a proxesterona sobe.",
+        "Os carbohidratos lentos nivelan as baixadas de azucre tras os antollos.",
+        "O magnesio relaxa e prepara o sono profundo."
+      ]
+    }
+  },
+  "ob": [
+    {
+      "q": "Que te trae a NutriSync?",
+      "help": "Isto orienta o que Nutri destaca primeiro.",
+      "type": "choice",
+      "key": "obGoal",
+      "opts": [
+        {
+          "k": "Balance my energy",
+          "label": "Equilibrar a miña enerxía"
+        },
+        {
+          "k": "Ease PMS & symptoms",
+          "label": "Aliviar a SPM e os síntomas"
+        },
+        {
+          "k": "Train smarter with my cycle",
+          "label": "Adestrar mellor co meu ciclo"
+        },
+        {
+          "k": "Understand my body better",
+          "label": "Entender mellor o meu corpo"
+        }
+      ]
+    },
+    {
+      "q": "Como de regular é o teu ciclo?",
+      "help": "A irregularidade é común — Nutri adáptase igual.",
+      "type": "choice",
+      "key": "obReg",
+      "opts": [
+        {
+          "k": "Like clockwork",
+          "label": "Coma un reloxo"
+        },
+        {
+          "k": "Mostly regular",
+          "label": "Case sempre regular"
+        },
+        {
+          "k": "Pretty unpredictable",
+          "label": "Bastante imprevisible"
+        },
+        {
+          "k": "Not sure",
+          "label": "Non o sei"
+        }
+      ]
+    },
+    {
+      "q": "Cando comezou a túa última regra?",
+      "help": "Isto ancora a detección da túa fase.",
+      "type": "date",
+      "key": "obDate"
+    },
+    {
+      "q": "Canto dura o teu ciclo habitual?",
+      "help": "Conta do día 1 dunha regra ao día 1 da seguinte.",
+      "type": "choice",
+      "key": "obLen",
+      "opts": [
+        {
+          "k": "21–24 days",
+          "label": "21–24 días"
+        },
+        {
+          "k": "25–30 days",
+          "label": "25–30 días"
+        },
+        {
+          "k": "31–35 days",
+          "label": "31–35 días"
+        },
+        {
+          "k": "Not sure",
+          "label": "Non o sei"
+        }
+      ]
+    },
+    {
+      "q": "Algún patrón alimentario que respectar?",
+      "help": "As comidas sempre se axustarán ao teu patrón.",
+      "type": "choice",
+      "key": "obDiet",
+      "opts": [
+        {
+          "k": "No restrictions",
+          "label": "Sen restricións"
+        },
+        {
+          "k": "Vegetarian",
+          "label": "Vexetariana"
+        },
+        {
+          "k": "Vegan",
+          "label": "Vegana"
+        },
+        {
+          "k": "Gluten-free",
+          "label": "Sen glute"
+        },
+        {
+          "k": "Dairy-free",
+          "label": "Sen lácteos"
+        }
+      ]
+    },
+    {
+      "q": "Un pouco sobre o teu corpo",
+      "help": "Só serve para calibrar racións e necesidades de enerxía — nunca para xulgar.",
+      "type": "numbers"
+    },
+    {
+      "q": "Escolle a túa Nutri",
+      "help": "A túa compañeira en cada fase. Podes cambiala cando queiras.",
+      "type": "avatar"
+    },
+    {
+      "q": "Os teus datos, as túas normas",
+      "help": "Nada se comparte sen o teu visto e prace.",
+      "type": "consent"
+    }
+  ],
+  "provSync": {
+    "apple": "sincronizado 6:40",
+    "oura": "sincronizado hai 2 h",
+    "garmin": "sincroniza a diario",
+    "fitbit": "sincroniza a diario",
+    "whoop": "sincroniza a diario",
+    "gfit": "sincroniza a diario"
+  },
+  "provReads": {
+    "apple": "Sono, VFC, frecuencia cardíaca en repouso",
+    "oura": "Fases do sono, readiness, temperatura",
+    "garmin": "Adestramentos, pasos, estrés",
+    "fitbit": "Actividade, sono, frecuencia cardíaca",
+    "whoop": "Esforzo, recuperación, débeda de sono",
+    "gfit": "Pasos, adestramentos, puntos cardio"
+  },
+  "metricLabels": [
+    "Duración e fases do sono",
+    "Variabilidade da frecuencia cardíaca",
+    "Frecuencia cardíaca en repouso",
+    "Tendencia da temperatura corporal",
+    "Adestramentos e carga de adestramento",
+    "Pasos e actividade diaria"
+  ],
+  "readLists": {
+    "apple": [
+      "Duración e fases do sono",
+      "Variabilidade cardíaca (VFC)",
+      "Frecuencia en repouso",
+      "Adestramentos e enerxía activa"
+    ],
+    "oura": [
+      "Fases e eficiencia do sono",
+      "Readiness e VFC",
+      "Tendencia da temperatura corporal",
+      "Niveis de actividade"
+    ],
+    "garmin": [
+      "Adestramentos e carga",
+      "Pasos e minutos de intensidade",
+      "Sono e puntuación de estrés"
+    ],
+    "fitbit": [
+      "Actividade e pasos",
+      "Fases do sono",
+      "Frecuencia cardíaca"
+    ],
+    "whoop": [
+      "Esforzo e recuperación",
+      "Débeda de sono",
+      "VFC e frecuencia en repouso"
+    ],
+    "gfit": [
+      "Pasos e puntos cardio",
+      "Adestramentos",
+      "Sesións de sono"
+    ]
+  },
+  "consentRows": [
+    {
+      "label": "Apuntamentos personalizados",
+      "desc": "Permite que Nutri analice os teus rexistros para axustar a orientación."
+    },
+    {
+      "label": "Investigación anonimizada",
+      "desc": "Contribúe con datos desidentificados á investigación en saúde feminina."
+    },
+    {
+      "label": "Novidades do produto",
+      "desc": "Noticias ocasionais sobre novas funcións de NutriSync."
+    }
+  ],
+  "sessions": [
+    {
+      "d": "MacBook Pro · Safari",
+      "loc": "Lisboa, PT · agora",
+      "me": true,
+      "other": false
+    },
+    {
+      "d": "iPhone 15 · app NutriSync",
+      "loc": "Lisboa, PT · hai 2 h",
+      "me": false,
+      "other": true
+    },
+    {
+      "d": "iPad Air · Safari",
+      "loc": "Porto, PT · 8 de mar.",
+      "me": false,
+      "other": true
+    }
+  ],
+  "sessionLive": {
+    "d": "Este navegador",
+    "loc": "Agora mesmo"
+  },
+  "winsDemo": [
+    {
+      "t": "Racha de 12 días rexistrando",
+      "d": "A túa máis longa — as predicións vanse afinando."
+    },
+    {
+      "t": "Enerxía +18% nas semanas ovulatorias",
+      "d": "Comparado cos teus dous últimos ciclos."
+    },
+    {
+      "t": "3 adestramentos axustados á fase",
+      "d": "Cada sesión da semana caeu na súa xanela ideal."
+    }
+  ],
+  "calBannerA": "Próxima regra prevista arredor do",
+  "calBannerB": "— Nutri desprazará a túa alimentación cara ao ferro e os pratos reconfortantes dous días antes.",
+  "calBannerNone": "Rexistra o inicio da regra e Nutri predirá o mes que vén.",
+  "calBannerDemo": "Próxima regra prevista arredor do 24 de marzo — Nutri desprazará a túa alimentación cara ao ferro e os pratos reconfortantes dous días antes.",
+  "calBannerForming": "Predición en marcha — a estimación do 24 de marzo afínase con cada día que rexistras.",
+  "_meta": {
+    "lang": "gl",
+    "name": "Galego",
+    "source": "design-v11.22"
+  }
+}
