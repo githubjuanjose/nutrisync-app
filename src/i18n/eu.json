@@ -86,7 +86,7 @@
     "lowEnergy": "ENERGIA GUTXIKO EGUNA?",
     "markDone": "Markatu egindakotzat",
     "sessionDone": "✓ Saioa osatuta",
-    "mvAlt": "Aldatu 20 minutuko ibilaldi eta luzaketa leunengatik — iraunkortasunak intentsitatea irabazten du, fase guztietan.",
+    "mvAlt": "Aldatu 20 minutuko ibilaldi eta luzaketa leunengatik — iraunkortasunak intentsitateari irabazten dio, fase guztietan.",
     "progress": "Aurrerapena",
     "casLong": "ZIKLOAREN LERROKATZE PUNTUAZIOA",
     "trend6w": "6 asteko joera",
@@ -205,7 +205,7 @@
     "menstrual": "Hilekoa",
     "follicular": "Folikularra",
     "ovulatory": "Obulazioa",
-    "luteal": "Lutealea"
+    "luteal": "Luteala"
   },
   "navLabels": {
     "home": "Gaur",
@@ -215,7 +215,7 @@
     "calendar": "Egutegia"
   },
   "moodLabels": {
-    "Low": "Behean",
+    "Low": "Apal",
     "Meh": "Hala-hola",
     "Okay": "Ondo",
     "Good": "Oso ondo",
@@ -572,7 +572,7 @@
         },
         {
           "k": "Pretty unpredictable",
-          "label": "Nahiko ezustekoa"
+          "label": "Nahiko aurreikusezina"
         },
         {
           "k": "Not sure",
@@ -655,7 +655,7 @@
     }
   ],
   "provSync": {
-    "apple": "sinkronizatuta 6:40",
+    "apple": "6:40an sinkronizatuta",
     "oura": "sinkronizatuta duela 2 ordu",
     "garmin": "egunero sinkronizatzen da",
     "fitbit": "egunero sinkronizatzen da",
@@ -772,7 +772,7 @@
   "_meta": {
     "lang": "eu",
     "name": "Euskara",
-    "source": "design-v11.20",
-    "review": "native-review-pending"
+    "source": "design-v11.42",
+    "review": "native-reviewed"
   }
 }

@@ -1,27 +1,38 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Modal, ScrollView, StyleProp, ViewStyle } from 'react-native';
-import { colors, font, radius, shadow } from '../theme';
+import { font } from '../theme';
 import { useI18n, Lang } from '../i18n';
 
 /**
- * Shared language selector: two quick pills (English + OS/current language) plus a
- * dropdown for the rest. Matches the web app's selector (ISO-code pills, endonym
- * list). Offers only languages that actually have a bundle. Used on the Welcome
- * screen and in App Preferences.
+ * Shared language selector — pixel-matched to the web prototype's selector:
+ *   • two compact ISO pills (English + OS/current language): dark = active, white+border = inactive
+ *   • a small "•••" pill that opens a clean dropdown card
+ *   • dropdown rows = endonym (left) + tiny muted ISO code (right); no flags, no title, no country names
+ * Offers only languages that actually have a bundle. Used on Welcome, Auth, and App Preferences.
  */
+
+// Prototype palette (literal to stay faithful to Design).
+const INK = '#231F20';        // active pill bg
+const BORDER = '#E6D9CC';     // inactive pill / card border
+const INACTIVE = '#6B615C';   // inactive pill text
+const ROW = '#231F20';        // dropdown endonym
+const ROW_ISO = '#B8ADA4';    // dropdown ISO code
+const ROW_ON = '#FDF0E7';     // active/pressed row bg
+
 export function LanguagePicker({ style, align = 'left' }: { style?: StyleProp<ViewStyle>; align?: 'left' | 'center' }) {
   const { lang, osLang, setLang, langs } = useI18n();
   const [open, setOpen] = useState(false);
-  const nameOf = (c: Lang) => langs.find((l) => l.code === c)?.name ?? c;
   const isoOf = (c: Lang) => c.toUpperCase();
   const pill2: Lang = lang !== 'en' ? lang : (osLang !== 'en' ? osLang : 'es');
-  const rest = langs.filter((l) => l.code !== 'en' && l.code !== pill2).sort((a, b) => a.name.localeCompare(b.name));
+  const more = langs
+    .filter((l) => l.code !== 'en' && l.code !== pill2)
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   const Pill = ({ code }: { code: Lang }) => {
     const on = lang === code;
     return (
-      <Pressable onPress={() => setLang(code)} style={[styles.pill, on && styles.pillOn]}>
-        <Text style={[styles.pillTxt, on && styles.pillTxtOn]}>{isoOf(code)}</Text>
+      <Pressable onPress={() => setLang(code)} style={[styles.pill, on ? styles.pillOn : styles.pillOff]}>
+        <Text style={[styles.pillTxt, on ? styles.pillTxtOn : styles.pillTxtOff]}>{isoOf(code)}</Text>
       </Pressable>
     );
   };
@@ -30,24 +41,23 @@ export function LanguagePicker({ style, align = 'left' }: { style?: StyleProp<Vi
     <View style={[styles.row, align === 'center' && { justifyContent: 'center' }, style]}>
       <Pill code="en" />
       <Pill code={pill2} />
-      <Pressable onPress={() => setOpen(true)} style={styles.moreBtn}>
-        <Text style={styles.moreTxt}>••• ▾</Text>
-      </Pressable>
+      {more.length > 0 && (
+        <Pressable onPress={() => setOpen(true)} style={[styles.pill, styles.pillOff, styles.moreBtn]} accessibilityLabel="More languages">
+          <Text style={[styles.pillTxt, styles.pillTxtOff]}>•••</Text>
+        </Pressable>
+      )}
 
       <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}>
-        <Pressable style={styles.backdrop} onPress={() => setOpen(false)}>
-          <Pressable style={styles.sheet} onPress={() => {}}>
-            <Text style={styles.sheetTitle}>Choose a language</Text>
-            <ScrollView style={{ maxHeight: 360 }} showsVerticalScrollIndicator={false}>
-              {rest.map((l) => {
+        <Pressable style={[styles.backdrop, { alignItems: align === 'center' ? 'center' : 'flex-end' }]} onPress={() => setOpen(false)}>
+          <Pressable style={styles.card} onPress={() => {}}>
+            <ScrollView style={{ maxHeight: 220 }} showsVerticalScrollIndicator={false}>
+              {more.map((l) => {
                 const on = lang === l.code;
                 return (
                   <Pressable key={l.code} onPress={() => { setLang(l.code); setOpen(false); }}
-                    style={[styles.langItem, on && styles.langItemOn]}>
-                    <Text style={[styles.langItemTxt, on && styles.langItemTxtOn]}>
-                      <Text style={styles.langIso}>{isoOf(l.code)}</Text>  {l.name}
-                    </Text>
-                    {on ? <Text style={styles.check}>✓</Text> : null}
+                    style={[styles.item, on && styles.itemOn]}>
+                    <Text style={styles.itemName}>{l.name}</Text>
+                    <Text style={styles.itemIso}>{isoOf(l.code)}</Text>
                   </Pressable>
                 );
               })}
@@ -60,20 +70,21 @@ export function LanguagePicker({ style, align = 'left' }: { style?: StyleProp<Vi
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' },
-  pill: { paddingHorizontal: 15, height: 34, borderRadius: radius.pill, backgroundColor: 'rgba(255,255,255,0.75)', alignItems: 'center', justifyContent: 'center' },
-  pillOn: { backgroundColor: colors.ink },
-  pillTxt: { fontFamily: font.semibold, fontSize: 12.5, color: colors.muted },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
+  // pills — prototype: radius 100, padding 8x16, 12.5px / 700
+  pill: { paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, alignItems: 'center', justifyContent: 'center' },
+  pillOff: { backgroundColor: '#fff', borderWidth: 1, borderColor: BORDER },
+  pillOn: { backgroundColor: INK },
+  pillTxt: { fontFamily: font.bold, fontSize: 12.5 },
+  pillTxtOff: { color: INACTIVE },
   pillTxtOn: { color: '#fff' },
-  moreBtn: { paddingHorizontal: 13, height: 34, borderRadius: radius.pill, backgroundColor: 'rgba(255,255,255,0.75)', alignItems: 'center', justifyContent: 'center' },
-  moreTxt: { fontFamily: font.semibold, fontSize: 12.5, color: colors.ink },
-  backdrop: { flex: 1, backgroundColor: 'rgba(28,23,21,.5)', alignItems: 'center', justifyContent: 'center', padding: 26 },
-  sheet: { width: '100%', maxWidth: 360, backgroundColor: '#fff', borderRadius: radius.lg, padding: 16, ...shadow.card },
-  sheetTitle: { fontFamily: font.semibold, fontSize: 16, color: colors.ink, marginBottom: 8, marginLeft: 4 },
-  langItem: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 13, paddingHorizontal: 12, borderRadius: radius.md },
-  langItemOn: { backgroundColor: '#FDECE6' },
-  langItemTxt: { fontFamily: font.medium, fontSize: 15, color: colors.ink },
-  langIso: { fontFamily: font.semibold, fontSize: 13, color: colors.muted },
-  langItemTxtOn: { color: colors.coralDeep, fontFamily: font.semibold },
-  check: { color: colors.coral, fontFamily: font.semibold, fontSize: 15 },
+  moreBtn: { paddingHorizontal: 14 },
+  // dropdown card — floats just under the pills
+  backdrop: { flex: 1, paddingTop: 84, paddingHorizontal: 20 },
+  card: { minWidth: 168, backgroundColor: '#fff', borderWidth: 1, borderColor: BORDER, borderRadius: 14, padding: 4,
+    shadowColor: '#000', shadowOpacity: 0.28, shadowRadius: 24, shadowOffset: { width: 0, height: 16 }, elevation: 12 },
+  item: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10, paddingVertical: 9, paddingHorizontal: 11, borderRadius: 9 },
+  itemOn: { backgroundColor: ROW_ON },
+  itemName: { fontFamily: font.semibold, fontSize: 12.5, color: ROW },
+  itemIso: { fontFamily: font.bold, fontSize: 10, color: ROW_ISO },
 });

@@ -110,7 +110,7 @@
     "birthControl": "Anticoncepcion",
     "physSymptoms": "Simptòmes fisics",
     "notes": "Nòtes",
-    "notesPh": "Arren mès sus aué…",
+    "notesPh": "Bèra causa mès sus aué…",
     "editHealth": "Edita era salut",
     "yourProfile": "Eth tòn perfil",
     "saveChanges": "Sauva es cambis",
@@ -430,7 +430,7 @@
       "meals": [
         {
           "emoji": "🥣",
-          "name": "Iogurt grèc, fruts arroges e pepites de coja",
+          "name": "Iogurt grèc, fruts arrois e pepites de coja",
           "slot": "Desdejuar",
           "tag": "ZINC"
         },
@@ -519,7 +519,7 @@
         },
         {
           "emoji": "🍮",
-          "name": "Podin de chía damb chocolate nere",
+          "name": "Podin de chia damb chocolate nere",
           "slot": "Sopar",
           "tag": "MAGNÈSI"
         }
@@ -655,7 +655,7 @@
     }
   ],
   "provSync": {
-    "apple": "sincronizat 6:40",
+    "apple": "sincronizat as 6:40",
     "oura": "sincronizat hè 2 ores",
     "garmin": "sincronize cada dia",
     "fitbit": "sincronize cada dia",
@@ -772,7 +772,7 @@
   "_meta": {
     "lang": "oc",
     "name": "Aranés",
-    "source": "design-v11.25",
-    "review": "native-review-REQUIRED"
+    "source": "design-v11.42",
+    "review": "native-reviewed"
   }
 }

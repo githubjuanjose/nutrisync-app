@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Modal } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors, font, radius, shadow } from '../../theme';
-import { useT, useI18n, Lang } from '../../i18n';
+import { useT } from '../../i18n';
+import { LanguagePicker } from '../../ui/LanguagePicker';
 
 const KEY = 'nutrisync.appPrefs.v1';
 type Prefs = { units: 'metric' | 'imperial'; weekStart: 'monday' | 'sunday'; haptics: boolean; appearance: 'light' | 'system' };
@@ -21,61 +22,6 @@ function Segment<T extends string>({ value, options, onChange }: { value: T; opt
           </Pressable>
         );
       })}
-    </View>
-  );
-}
-
-/** Language selector: two quick pills (English + OS/current language) + a dropdown for the rest. */
-function LanguagePicker() {
-  const { lang, osLang, setLang, langs } = useI18n();
-  const [open, setOpen] = useState(false);
-  const nameOf = (c: Lang) => langs.find((l) => l.code === c)?.name ?? c;
-  // ISO-code label to match the web selector (EN · ES · FR · VAL · OC …).
-  const isoOf = (c: Lang) => c.toUpperCase();
-  // Second pill = current language if non-English; else the OS language; else Spanish (fallback pair).
-  const pill2: Lang = lang !== 'en' ? lang : (osLang !== 'en' ? osLang : 'es');
-  const rest = langs
-    .filter((l) => l.code !== 'en' && l.code !== pill2)
-    .sort((a, b) => a.name.localeCompare(b.name));
-
-  const Pill = ({ code }: { code: Lang }) => {
-    const on = lang === code;
-    return (
-      <Pressable onPress={() => setLang(code)} style={[styles.pill, on && styles.pillOn]}>
-        <Text style={[styles.pillTxt, on && styles.pillTxtOn]}>{isoOf(code)}</Text>
-      </Pressable>
-    );
-  };
-
-  return (
-    <View style={styles.langRow}>
-      <Pill code="en" />
-      <Pill code={pill2} />
-      <Pressable onPress={() => setOpen(true)} style={styles.moreBtn}>
-        <Text style={styles.moreTxt}>More ▾</Text>
-      </Pressable>
-
-      <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}>
-        <Pressable style={styles.backdrop} onPress={() => setOpen(false)}>
-          <Pressable style={styles.sheet} onPress={() => {}}>
-            <Text style={styles.sheetTitle}>Choose a language</Text>
-            <ScrollView style={{ maxHeight: 360 }} showsVerticalScrollIndicator={false}>
-              {rest.map((l) => {
-                const on = lang === l.code;
-                return (
-                  <Pressable key={l.code} onPress={() => { setLang(l.code); setOpen(false); }}
-                    style={[styles.langItem, on && styles.langItemOn]}>
-                    <Text style={[styles.langItemTxt, on && styles.langItemTxtOn]}>
-                      <Text style={styles.langIso}>{isoOf(l.code)}</Text>  {l.name}
-                    </Text>
-                    {on ? <Text style={styles.check}>✓</Text> : null}
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
-          </Pressable>
-        </Pressable>
-      </Modal>
     </View>
   );
 }
@@ -169,21 +115,4 @@ const styles = StyleSheet.create({
   segTxt: { fontFamily: font.medium, fontSize: 13, color: colors.muted },
   segTxtOn: { color: colors.ink, fontFamily: font.semibold },
   note: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 18, textAlign: 'center' },
-  // language picker
-  langRow: { flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' },
-  pill: { paddingHorizontal: 16, height: 38, borderRadius: radius.pill, backgroundColor: '#F6EEE7', alignItems: 'center', justifyContent: 'center' },
-  pillOn: { backgroundColor: colors.coral },
-  pillTxt: { fontFamily: font.medium, fontSize: 13.5, color: colors.muted },
-  pillTxtOn: { color: '#fff', fontFamily: font.semibold },
-  moreBtn: { paddingHorizontal: 14, height: 38, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' },
-  moreTxt: { fontFamily: font.semibold, fontSize: 13, color: colors.ink },
-  backdrop: { flex: 1, backgroundColor: 'rgba(28,23,21,.5)', alignItems: 'center', justifyContent: 'center', padding: 26 },
-  sheet: { width: '100%', maxWidth: 360, backgroundColor: '#fff', borderRadius: radius.lg, padding: 16, ...shadow.card },
-  sheetTitle: { fontFamily: font.semibold, fontSize: 16, color: colors.ink, marginBottom: 8, marginLeft: 4 },
-  langItem: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 13, paddingHorizontal: 12, borderRadius: radius.md },
-  langItemOn: { backgroundColor: '#FDECE6' },
-  langItemTxt: { fontFamily: font.medium, fontSize: 15, color: colors.ink },
-  langIso: { fontFamily: font.semibold, fontSize: 13, color: colors.muted },
-  langItemTxtOn: { color: colors.coralDeep, fontFamily: font.semibold },
-  check: { color: colors.coral, fontFamily: font.semibold, fontSize: 15 },
 });
