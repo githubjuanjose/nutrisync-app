@@ -30,6 +30,8 @@ function LanguagePicker() {
   const { lang, osLang, setLang, langs } = useI18n();
   const [open, setOpen] = useState(false);
   const nameOf = (c: Lang) => langs.find((l) => l.code === c)?.name ?? c;
+  // ISO-code label to match the web selector (EN · ES · FR …). Aranese → OC.
+  const isoOf = (c: Lang) => (c === 'oc-aran' ? 'OC' : c.toUpperCase());
   // Second pill = current language if non-English; else the OS language; else Spanish (fallback pair).
   const pill2: Lang = lang !== 'en' ? lang : (osLang !== 'en' ? osLang : 'es');
   const rest = langs
@@ -40,7 +42,7 @@ function LanguagePicker() {
     const on = lang === code;
     return (
       <Pressable onPress={() => setLang(code)} style={[styles.pill, on && styles.pillOn]}>
-        <Text style={[styles.pillTxt, on && styles.pillTxtOn]}>{nameOf(code)}</Text>
+        <Text style={[styles.pillTxt, on && styles.pillTxtOn]}>{isoOf(code)}</Text>
       </Pressable>
     );
   };
@@ -63,7 +65,9 @@ function LanguagePicker() {
                 return (
                   <Pressable key={l.code} onPress={() => { setLang(l.code); setOpen(false); }}
                     style={[styles.langItem, on && styles.langItemOn]}>
-                    <Text style={[styles.langItemTxt, on && styles.langItemTxtOn]}>{l.name}</Text>
+                    <Text style={[styles.langItemTxt, on && styles.langItemTxtOn]}>
+                      <Text style={styles.langIso}>{isoOf(l.code)}</Text>  {l.name}
+                    </Text>
                     {on ? <Text style={styles.check}>✓</Text> : null}
                   </Pressable>
                 );
@@ -179,6 +183,7 @@ const styles = StyleSheet.create({
   langItem: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 13, paddingHorizontal: 12, borderRadius: radius.md },
   langItemOn: { backgroundColor: '#FDECE6' },
   langItemTxt: { fontFamily: font.medium, fontSize: 15, color: colors.ink },
+  langIso: { fontFamily: font.semibold, fontSize: 13, color: colors.muted },
   langItemTxtOn: { color: colors.coralDeep, fontFamily: font.semibold },
   check: { color: colors.coral, fontFamily: font.semibold, fontSize: 15 },
 });
