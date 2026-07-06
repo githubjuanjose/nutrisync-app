@@ -1,0 +1,775 @@
+{
+  "ui": {
+    "boot": "SINCRONITZANT…",
+    "rail1": "Sincronitza el teu cicle.",
+    "rail2": "Nodrix la teua ment.",
+    "protoBadge": "PROTOTIP · DADES DE DEMO",
+    "railCopy": "Nutrició i moviment que es mouen amb les teues hormones — personalitzats exactament al punt del cicle on estàs, cada dia.",
+    "loginTitle": "Benvinguda de nou",
+    "loginSub": "Reprén just on ho vas deixar.",
+    "email": "Adreça electrònica",
+    "password": "Contrasenya",
+    "createPassword": "Crea una contrasenya",
+    "fullName": "Nom complet",
+    "remember": "Recorda'm",
+    "forgot": "Has oblidat la contrasenya?",
+    "login": "Inicia la sessió",
+    "newHere": "Primera vegada ací?",
+    "createAccount": "Crea un compte",
+    "signupSub": "Un minut ara — orientació a mida per a cada dia després.",
+    "getStarted": "Comença →",
+    "haveAccount": "Ja tens un compte?",
+    "settingUp": "CONFIGURACIÓ",
+    "obRail1": "Aprenguem",
+    "obRail2": "el teu ritme.",
+    "obRailCopy": "Unes quantes preguntes ràpides perquè cada recomanació s'ajuste al teu cos — no a una mitjana.",
+    "obDateNote": "No n'estàs segura? Una estimació és suficient — Nutri l'afina a mesura que registres.",
+    "age": "EDAT",
+    "years": "anys",
+    "height": "ALÇÀRIA",
+    "weight": "PES",
+    "obOptional": "Opcional — bota el que preferisques no compartir.",
+    "obConsentA": "Cicle i símptomes",
+    "obConsentADesc": "Alimenta la teua orientació diària.",
+    "obConsentB": "Guardat de manera segura",
+    "obConsentBDesc": "Xifrat, conforme al RGPD, mai venut.",
+    "obAgree": "Accepte la Política de privacitat i les Condicions, i entenc que les meues dades continuen sent meues.",
+    "continueBtn": "Continua →",
+    "finishSetup": "Acaba la configuració →",
+    "obSaving": "Guardant la teua configuració…",
+    "obErr": "No s'ha pogut guardar — comprova la connexió i torna-ho a provar.",
+    "dailyCheckin": "REGISTRE DIARI",
+    "skipToday": "Bota-ho per hui",
+    "next": "Següent →",
+    "syncDay": "Sincronitza el meu dia →",
+    "gateTitleMood": "Com et trobes?",
+    "gateSubMood": "Una paraula sincera — Nutri hi ajusta el pla de hui.",
+    "gateTitleEnergy": "I la teua energia?",
+    "gateSubEnergy": "De ben buida (1) a imparable (5).",
+    "allsetCopy": "Nutri està personalitzant la teua nutrició i moviment a partir de les teues respostes. Pots actualitzar-les quan vulgues en Configuració.",
+    "enterApp": "Entra a NutriSync →",
+    "settings": "Configuració",
+    "goodMorning": "Bon dia",
+    "cycleDay": "Dia del cicle",
+    "cycleAlignment": "ALINEACIÓ DEL CICLE",
+    "editPeriodBtn": "Edita la regla",
+    "editHealthBtn": "Edita la salut",
+    "logToday": "Registra hui ›",
+    "checkedIn": "✓ Registrat",
+    "firstRunStrong": "Dia 1 del teu camí.",
+    "firstRunRest": "La teua Puntuació d'Alineació del Cicle es desbloqueja després de 7 dies de registres — Nutri ja personalitza a partir de les teues respostes.",
+    "todaysFuel": "El combustible de hui",
+    "openNutrilog": "Obri NutriLog ›",
+    "movement": "Moviment",
+    "plan": "Planifica ›",
+    "nutriInsight": "APUNT DE NUTRI",
+    "fromDevices": "Des dels teus dispositius",
+    "manage": "Gestiona ›",
+    "deviceNote": "La sincronització nocturna arriba amb la beta mòbil — el teu consentiment de lectura ja està configurat.",
+    "statSleep": "SON",
+    "statHrv": "VFC",
+    "statRhr": "FC REPÒS",
+    "statSleepNote": "▲ vs mitjana 7 dies",
+    "statHrvNote": "estable",
+    "statRhrNote": "▼ 2 bpm",
+    "demoSyncLine": "Oura Ring · última sincronització 6:40",
+    "consentActive": "consentiment actiu",
+    "welcomeInsight": "Benvinguda! El teu primer apunt arriba demà, quan Nutri tinga un dia teu al quadre.",
+    "focusWord": "focus:",
+    "hydration": "Hidratació",
+    "glasses": "de 8 gots",
+    "whyFoods": "PER QUÈ ESTOS ALIMENTS",
+    "logMeal": "Registra este menjar",
+    "loggedMeal": "✓ Registrat",
+    "today": "HUI",
+    "thisWeek": "Esta setmana",
+    "lowEnergy": "DIA DE POCA ENERGIA?",
+    "markDone": "Marca com a fet",
+    "sessionDone": "✓ Sessió completada",
+    "mvAlt": "Canvia-ho per 20 minuts de caminada i estiraments suaus — la constància guanya la intensitat, en cada fase.",
+    "progress": "Progrés",
+    "casLong": "PUNTUACIÓ D'ALINEACIÓ DEL CICLE",
+    "trend6w": "Tendència de 6 setmanes",
+    "prCopyDemo": "Nutrició, moviment i son estiren en la mateixa direcció que les teues hormones.",
+    "prCopyLive": "Cinc puntuacions — confiança de fase, biomarcadors, nutrició, forma física i constància — s'actualitzen amb cada registre.",
+    "prDeltaDemo": "▲ +4 vs la setmana passada",
+    "prFirst": "Primera puntuació al marcador",
+    "prNone": "Les puntuacions arriben a mesura que registres",
+    "prOver": "en",
+    "prDays": "dies",
+    "brewTitle": "Les teues tendències s'estan coent",
+    "brewCopy": "Registra durant 7 dies i Nutri traçarà ací la teua Puntuació d'Alineació, els teus patrons d'energia i l'historial de fases.",
+    "brewDay": "DIA",
+    "brewOf": "DE 7",
+    "backToday": "‹ Hui",
+    "editPeriod": "Edita la regla",
+    "saveLog": "Guarda el registre",
+    "flow": "Fluix",
+    "moodMental": "Ànim i estat mental",
+    "libido": "Libido",
+    "birthControl": "Anticoncepció",
+    "physSymptoms": "Símptomes físics",
+    "notes": "Notes",
+    "notesPh": "Res més sobre hui…",
+    "editHealth": "Edita la salut",
+    "yourProfile": "El teu perfil",
+    "saveChanges": "Guarda els canvis",
+    "allergies": "AL·LÈRGIES ALIMENTÀRIES",
+    "conditions": "CONDICIONS DIAGNOSTICADES",
+    "yourGoal": "EL TEU NUTRIGOAL",
+    "nextCycle": "Els canvis s'apliquen al pròxim cicle",
+    "yourNutri": "LA TEUA NUTRI",
+    "notifPush": "Recordatoris de registre diaris",
+    "notifEmail": "Resum setmanal per correu",
+    "logout": "Tanca la sessió",
+    "langRegion": "Llengua i regió",
+    "language": "Llengua",
+    "region": "Regió",
+    "phaseHeroFmt": "FASE {PH} · DIA {D}",
+    "dayWord": "DIA",
+    "nlFocusFmt": "Focus de la fase {phl}:",
+    "allsetFmt": "Tot a punt, {name}!",
+    "bpmUnit": "bpm",
+    "prTrendStart": "febr.",
+    "prTrendEnd": "març",
+    "backToSite": "Torna al web",
+    "obStartOver": "Torna a començar",
+    "backSettings": "‹ Configuració",
+    "connectedApps": "Aplicacions connectades",
+    "connIntro": "NutriSync només llig el que tu permets — i mai no escriu de tornada.",
+    "connSome": "de 6 connectades.",
+    "connNone": "Encara no hi ha res connectat.",
+    "connectedPill": "Connectada ✓",
+    "connectPill": "Connecta",
+    "connectedWord": "Connectada",
+    "whatReads": "Què llig NutriSync",
+    "whatReadsDesc": "S'aplica a cada dispositiu connectat. Desactiva una mètrica per a parar-ne la sincronització.",
+    "encTitle": "Xifrat en trànsit i en repòs",
+    "encCopy": "Les dades dels dispositius complementen els teus registres — mai no sobreescriuen en silenci el que tu introduïxes. Desconnecta quan vulgues; el teu historial continua sent teu.",
+    "backConnections": "‹ Connexions",
+    "connectWord": "Connecta",
+    "connectCopy": "NutriSync llegirà el següent per a afinar la detecció de la teua fase i la Puntuació d'Alineació del Cicle:",
+    "connectNoteA": "Només lectura. NutriSync mai no escriu a",
+    "connectNoteB": "i pots desconnectar quan vulgues.",
+    "allowAccess": "Permet l'accés",
+    "notNow": "Ara no",
+    "dataPrivacy": "Dades i privacitat",
+    "privIntro": "Les teues dades són teues. Controla què s'utilitza i emporta-te-les quan vulgues.",
+    "consentHdr": "CONSENTIMENT",
+    "yourData": "LES TEUES DADES",
+    "exportJson": "Exporta les meues dades",
+    "pdfReport": "Descarrega l'informe PDF",
+    "accountHdr": "COMPTE",
+    "deactivate": "Desactiva el compte",
+    "deleteAll": "Suprimix el compte i totes les dades",
+    "delNote": "La supressió és definitiva i es completa en 30 dies.",
+    "security": "Inici de sessió i seguretat",
+    "signinHdr": "INICI DE SESSIÓ",
+    "changePw": "Canvia la contrasenya",
+    "passkeys": "Claus d'accés",
+    "setUp": "Configura",
+    "twofaHdr": "AUTENTICACIÓ DE DOS FACTORS",
+    "authApp": "Aplicació d'autenticació",
+    "twofaOn": "Activada · protegix el teu compte",
+    "twofaOff": "Desactivada · recomanem activar-la",
+    "smsBackup": "SMS de reserva",
+    "addNumber": "Afig un número ›",
+    "sessionsHdr": "SESSIONS ACTIVES",
+    "thisDevice": "Este dispositiu",
+    "revoke": "Revoca",
+    "signOutOthers": "Tanca totes les altres sessions",
+    "noteCreds": "Introduïx el correu i la contrasenya.",
+    "noteSigningIn": "Iniciant la sessió…",
+    "noteCreds6": "Introduïx el correu i una contrasenya (6+ caràcters).",
+    "noteCreating": "Creant el teu compte…",
+    "noteConfirm": "Revisa el correu per a confirmar el compte i després inicia la sessió.",
+    "alertDemoExport": "Mode demo — connecta el backend per a exportar dades reals.",
+    "alertDemoDelete": "Mode demo — no hi ha res per suprimir.",
+    "alertConfirmDelete": "Vols suprimir el compte i totes les dades? No es pot desfer.",
+    "alertDeleted": "Les teues dades s'han suprimit. L'eliminació de les credencials es completa en 30 dies.",
+    "alertDeactivate": "Durant la beta, la desactivació es gestiona amb suport — escriu a hello@nutrisynccollective.com.",
+    "alertDemoAccount": "Mode demo — les accions del compte necessiten el backend en producció."
+  },
+  "dows": [
+    "DG",
+    "DL",
+    "DT",
+    "DC",
+    "DJ",
+    "DV",
+    "DS"
+  ],
+  "phaseNames": {
+    "menstrual": "Menstrual",
+    "follicular": "Fol·licular",
+    "ovulatory": "Ovulatòria",
+    "luteal": "Lútia"
+  },
+  "navLabels": {
+    "home": "Hui",
+    "nutrilog": "NutriLog",
+    "movement": "Moviment",
+    "progress": "Progrés",
+    "calendar": "Calendari"
+  },
+  "moodLabels": {
+    "Low": "Baixa",
+    "Meh": "Regular",
+    "Okay": "Bé",
+    "Good": "Prou bé",
+    "Great": "Genial"
+  },
+  "phase": {
+    "menstrual": {
+      "headline": "Descansar és productiu.",
+      "copy": "Les hormones estan al punt més baix — plats calents rics en ferro i moviment suau et reconstruïxen des del primer dia.",
+      "sideNote": "Els dies amb menys energia — ves-hi amb suavitat",
+      "focus": "ferro, folats i plats calents reconfortants per a recuperar-te.",
+      "nlWhy": "La regla consumix ferro i magnesi. Els menjars calents i cuinats es digerixen fàcilment mentre el teu cos fa la faena més dura del mes.",
+      "insight": "L'energia està al mínim mensual — protegix les teues vesprades i deixa que el son faça la reparació.",
+      "moveCopy": "Dia de recuperació — ioga restauratiu o caminada lenta.",
+      "chips": [
+        {
+          "label": "15–25 MIN",
+          "hot": true
+        },
+        {
+          "label": "SUAU",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Ioga restauratiu",
+      "mvCopy": "Hui el moviment ha de paréixer un bany calent — circulació sense esforç.",
+      "mvParts": [
+        {
+          "label": "Respiració + gat-vaca",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Seqüència yin · malucs i esquena",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Cames a la paret",
+          "mins": "5 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Dt · Ioga restauratiu",
+          "state": "Hui",
+          "today": true
+        },
+        {
+          "label": "Dj · Caminada lenta",
+          "state": "Planificat",
+          "done": false
+        },
+        {
+          "label": "Ds · Estiraments suaus",
+          "state": "Planificat",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Civada calenta, dàtils i cacau",
+          "slot": "Desdejuni",
+          "tag": "FERRO"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Estofat de llentilles i espinacs",
+          "slot": "Dinar",
+          "tag": "FERRO + FOLATS"
+        },
+        {
+          "emoji": "🍛",
+          "name": "Salmó, moniato i verdures",
+          "slot": "Sopar",
+          "tag": "OMEGA-3"
+        }
+      ],
+      "mealWhy": [
+        "El ferro comença a substituir el que la regla consumix.",
+        "Folats i ferro reconstruïxen la teua reserva de sang.",
+        "Els omega-3 alleugen les rampes de les prostaglandines."
+      ]
+    },
+    "follicular": {
+      "headline": "L'energia puja — construïx amb calma.",
+      "copy": "Els estrògens pugen. Menjars frescos i lleugers i entrenament progressiu funcionen millor esta setmana.",
+      "sideNote": "L'energia s'enfila esta setmana",
+      "focus": "vitamina C, proteïna magra i ferro mentre l'energia puja.",
+      "nlWhy": "En la fase fol·licular els estrògens reconstruïxen — el ferro restaura el que la regla ha gastat i la vitamina C en duplica l'absorció.",
+      "insight": "Els estrògens pugen — l'aprenentatge s'apega més ràpid i l'entrenament construïx més múscul esta setmana. Programa ara les coses difícils.",
+      "moveCopy": "L'energia es construïx — caminada ràpida + core lleuger.",
+      "chips": [
+        {
+          "label": "20–30 MIN",
+          "hot": true
+        },
+        {
+          "label": "MODERAT",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Caminada ràpida + core",
+      "mvCopy": "Creix gradualment amb els estrògens — hui ritme per damunt d'intensitat.",
+      "mvParts": [
+        {
+          "label": "Calfament · pas fàcil",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Caminada ràpida · constant",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Circuit de core · 2 voltes",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Dc · Caminada ràpida + core",
+          "state": "Hui",
+          "today": true
+        },
+        {
+          "label": "Dv · Força lleugera",
+          "state": "Planificat",
+          "done": false
+        },
+        {
+          "label": "Dg · Flux de ioga",
+          "state": "Planificat",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Civada nocturna, lli i cítrics",
+          "slot": "Desdejuni",
+          "tag": "VITAMINA C"
+        },
+        {
+          "emoji": "🥙",
+          "name": "Ensalada de pollastre amb grans germinats",
+          "slot": "Dinar",
+          "tag": "PROTEÏNA MAGRA"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Bol de fideus amb tofu i verdures",
+          "slot": "Sopar",
+          "tag": "FERRO"
+        }
+      ],
+      "mealWhy": [
+        "La vitamina C potencia l'absorció del ferro mentre l'energia puja.",
+        "La proteïna alimenta la finestra muscular dels estrògens creixents.",
+        "El ferro refà les reserves després de la regla."
+      ]
+    },
+    "ovulatory": {
+      "headline": "Màxima potència, màxima confiança.",
+      "copy": "Els estrògens estan al cim — perseguix una marca personal, tanca la conversa difícil i carrega zinc i antioxidants.",
+      "sideNote": "Finestra d'energia màxima — queden 3 dies",
+      "focus": "zinc, antioxidants i omega-3 per a donar suport a l'ovulació.",
+      "nlWhy": "Al voltant de l'ovulació el teu cos va més calent i crema micronutrients més de pressa. El zinc dona suport al pic de LH; els antioxidants protegixen el viatge de l'òvul.",
+      "insight": "Els estrògens culminen hui — confiança i energia social al màxim. Programa la gran conversa.",
+      "moveCopy": "Dia de màxima potència — HIIT o pesos pesants.",
+      "chips": [
+        {
+          "label": "30–40 MIN",
+          "hot": true
+        },
+        {
+          "label": "ALTA INTENSITAT",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Intervals HIIT",
+      "mvCopy": "El teu cos es recupera més ràpid que mai — força la intensitat hui, t'has guanyat el sostre.",
+      "mvParts": [
+        {
+          "label": "Calfament · dinàmic",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Intervals · 8 × 40 s fort / 80 s fàcil",
+          "mins": "24 MIN"
+        },
+        {
+          "label": "Tornada a la calma · estiraments",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Dl · Força",
+          "state": "Fet",
+          "done": true
+        },
+        {
+          "label": "Dc · Intervals HIIT",
+          "state": "Hui",
+          "today": true
+        },
+        {
+          "label": "Dv · Mobilitat i core",
+          "state": "Planificat",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Iogurt grec, fruits rojos i pipes de carabassa",
+          "slot": "Desdejuni",
+          "tag": "ZINC"
+        },
+        {
+          "emoji": "🥗",
+          "name": "Bol de salmó i quinoa",
+          "slot": "Dinar",
+          "tag": "OMEGA-3"
+        },
+        {
+          "emoji": "🍜",
+          "name": "Saltat amb verdures de fulla",
+          "slot": "Sopar",
+          "tag": "B6 + FIBRA"
+        }
+      ],
+      "mealWhy": [
+        "El zinc dona suport al pic de LH al voltant de l'ovulació.",
+        "Els omega-3 temperen la inflamació de mig cicle.",
+        "B6 + fibra ajuden a eliminar els estrògens al cim."
+      ]
+    },
+    "luteal": {
+      "headline": "Combustible estable, cantons més suaus.",
+      "copy": "La progesterona mana — sucre en sang estable i magnesi mantenen energia i ànim equilibrats durant la desacceleració.",
+      "sideNote": "Setmana de desacceleració — el combustible estable ajuda",
+      "focus": "magnesi, B6 i carbohidrats lents per a estabilitzar la baixada.",
+      "nlWhy": "La progesterona puja el teu metabolisme prop d'un 5% — menjars estables de combustió lenta eviten les baixades que pareixen desitjos.",
+      "insight": "La serotonina baixa mentre la progesterona puja — un sopar ric en magnesi i anar-se'n a dormir prompte canvien com se sentirà demà.",
+      "moveCopy": "Moderat i constant — força o caminada amb pujades.",
+      "chips": [
+        {
+          "label": "25–35 MIN",
+          "hot": true
+        },
+        {
+          "label": "MODERAT",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Força constant",
+      "mvCopy": "Mantín el ritme fluid i els descansos generosos — esta setmana constància per damunt de rècords.",
+      "mvParts": [
+        {
+          "label": "Calfament · mobilitat",
+          "mins": "6 MIN"
+        },
+        {
+          "label": "Força de cos sencer · 3 voltes",
+          "mins": "20 MIN"
+        },
+        {
+          "label": "Caminada final · fàcil",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Dl · Força",
+          "state": "Fet",
+          "done": true
+        },
+        {
+          "label": "Dj · Caminada amb pujades",
+          "state": "Hui",
+          "today": true
+        },
+        {
+          "label": "Dg · Mobilitat",
+          "state": "Planificat",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🍳",
+          "name": "Ous, alvocat i torrada de llavors",
+          "slot": "Desdejuni",
+          "tag": "B6"
+        },
+        {
+          "emoji": "🥘",
+          "name": "Bol de titot i moniato",
+          "slot": "Dinar",
+          "tag": "CARBOHIDRATS LENTS"
+        },
+        {
+          "emoji": "🍮",
+          "name": "Púding de chía amb xocolate negre",
+          "slot": "Sopar",
+          "tag": "MAGNESI"
+        }
+      ],
+      "mealWhy": [
+        "La B6 dona suport a la serotonina mentre la progesterona puja.",
+        "Els carbohidrats lents anivellen les baixades de sucre darrere dels desitjos.",
+        "El magnesi relaxa i prepara el son profund."
+      ]
+    }
+  },
+  "ob": [
+    {
+      "q": "Què et porta a NutriSync?",
+      "help": "Açò orienta el que Nutri destaca primer.",
+      "type": "choice",
+      "key": "obGoal",
+      "opts": [
+        {
+          "k": "Balance my energy",
+          "label": "Equilibrar la meua energia"
+        },
+        {
+          "k": "Ease PMS & symptoms",
+          "label": "Alleujar la SPM i els símptomes"
+        },
+        {
+          "k": "Train smarter with my cycle",
+          "label": "Entrenar millor amb el meu cicle"
+        },
+        {
+          "k": "Understand my body better",
+          "label": "Entendre millor el meu cos"
+        }
+      ]
+    },
+    {
+      "q": "Com de regular és el teu cicle?",
+      "help": "La irregularitat és habitual — Nutri s'hi adapta igualment.",
+      "type": "choice",
+      "key": "obReg",
+      "opts": [
+        {
+          "k": "Like clockwork",
+          "label": "Com un rellotge"
+        },
+        {
+          "k": "Mostly regular",
+          "label": "Prou regular"
+        },
+        {
+          "k": "Pretty unpredictable",
+          "label": "Prou imprevisible"
+        },
+        {
+          "k": "Not sure",
+          "label": "No ho sé"
+        }
+      ]
+    },
+    {
+      "q": "Quan va començar la teua última regla?",
+      "help": "Açò ancora la detecció de la teua fase.",
+      "type": "date",
+      "key": "obDate"
+    },
+    {
+      "q": "Quant dura el teu cicle habitual?",
+      "help": "Compta del dia 1 d'una regla al dia 1 de la següent.",
+      "type": "choice",
+      "key": "obLen",
+      "opts": [
+        {
+          "k": "21–24 days",
+          "label": "21–24 dies"
+        },
+        {
+          "k": "25–30 days",
+          "label": "25–30 dies"
+        },
+        {
+          "k": "31–35 days",
+          "label": "31–35 dies"
+        },
+        {
+          "k": "Not sure",
+          "label": "No ho sé"
+        }
+      ]
+    },
+    {
+      "q": "Algun patró alimentari que respectar?",
+      "help": "Els menjars sempre s'ajustaran al teu patró.",
+      "type": "choice",
+      "key": "obDiet",
+      "opts": [
+        {
+          "k": "No restrictions",
+          "label": "Sense restriccions"
+        },
+        {
+          "k": "Vegetarian",
+          "label": "Vegetariana"
+        },
+        {
+          "k": "Vegan",
+          "label": "Vegana"
+        },
+        {
+          "k": "Gluten-free",
+          "label": "Sense gluten"
+        },
+        {
+          "k": "Dairy-free",
+          "label": "Sense lactis"
+        }
+      ]
+    },
+    {
+      "q": "Un poc sobre el teu cos",
+      "help": "Només servix per a calibrar racions i necessitats d'energia — mai per a jutjar.",
+      "type": "numbers"
+    },
+    {
+      "q": "Tria la teua Nutri",
+      "help": "La teua companya en cada fase. Pots canviar-la quan vulgues.",
+      "type": "avatar"
+    },
+    {
+      "q": "Les teues dades, les teues normes",
+      "help": "Res no es compartix sense el teu vistiplau.",
+      "type": "consent"
+    }
+  ],
+  "provSync": {
+    "apple": "sincronitzat 6:40",
+    "oura": "sincronitzat fa 2 h",
+    "garmin": "sincronitza cada dia",
+    "fitbit": "sincronitza cada dia",
+    "whoop": "sincronitza cada dia",
+    "gfit": "sincronitza cada dia"
+  },
+  "provReads": {
+    "apple": "Son, VFC, freqüència cardíaca en repòs",
+    "oura": "Fases del son, readiness, temperatura",
+    "garmin": "Entrenaments, passes, estrés",
+    "fitbit": "Activitat, son, freqüència cardíaca",
+    "whoop": "Esforç, recuperació, dèficit de son",
+    "gfit": "Passes, entrenaments, punts cardio"
+  },
+  "metricLabels": [
+    "Duració i fases del son",
+    "Variabilitat de la freqüència cardíaca",
+    "Freqüència cardíaca en repòs",
+    "Tendència de temperatura corporal",
+    "Entrenaments i càrrega d'entrenament",
+    "Passes i activitat diària"
+  ],
+  "readLists": {
+    "apple": [
+      "Duració i fases del son",
+      "Variabilitat cardíaca (VFC)",
+      "Freqüència en repòs",
+      "Entrenaments i energia activa"
+    ],
+    "oura": [
+      "Fases i eficiència del son",
+      "Readiness i VFC",
+      "Tendència de temperatura corporal",
+      "Nivells d'activitat"
+    ],
+    "garmin": [
+      "Entrenaments i càrrega",
+      "Passes i minuts d'intensitat",
+      "Son i puntuació d'estrés"
+    ],
+    "fitbit": [
+      "Activitat i passes",
+      "Fases del son",
+      "Freqüència cardíaca"
+    ],
+    "whoop": [
+      "Esforç i recuperació",
+      "Dèficit de son",
+      "VFC i freqüència en repòs"
+    ],
+    "gfit": [
+      "Passes i punts cardio",
+      "Entrenaments",
+      "Sessions de son"
+    ]
+  },
+  "consentRows": [
+    {
+      "label": "Apunts personalitzats",
+      "desc": "Permet que Nutri analitze els teus registres per a ajustar l'orientació."
+    },
+    {
+      "label": "Investigació anonimitzada",
+      "desc": "Contribuïx amb dades desidentificades a la investigació en salut femenina."
+    },
+    {
+      "label": "Novetats del producte",
+      "desc": "Notícies ocasionals sobre noves funcions de NutriSync."
+    }
+  ],
+  "sessions": [
+    {
+      "d": "MacBook Pro · Safari",
+      "loc": "Lisboa, PT · ara",
+      "me": true,
+      "other": false
+    },
+    {
+      "d": "iPhone 15 · app NutriSync",
+      "loc": "Lisboa, PT · fa 2 h",
+      "me": false,
+      "other": true
+    },
+    {
+      "d": "iPad Air · Safari",
+      "loc": "Porto, PT · 8 de març",
+      "me": false,
+      "other": true
+    }
+  ],
+  "sessionLive": {
+    "d": "Este navegador",
+    "loc": "Ara mateix"
+  },
+  "winsDemo": [
+    {
+      "t": "Ratxa de 12 dies registrant",
+      "d": "La teua més llarga — les prediccions s'afinen."
+    },
+    {
+      "t": "Energia +18% en setmanes ovulatòries",
+      "d": "Comparat amb els teus dos últims cicles."
+    },
+    {
+      "t": "3 entrenaments encaixats a la fase",
+      "d": "Cada sessió de la setmana ha caigut en la seua finestra ideal."
+    }
+  ],
+  "calBannerA": "Pròxima regla prevista cap al",
+  "calBannerB": "— Nutri desplaçarà la teua alimentació cap al ferro i els plats reconfortants dos dies abans.",
+  "calBannerNone": "Registra l'inici de la regla i Nutri predirà el mes que ve.",
+  "calBannerDemo": "Pròxima regla prevista cap al 24 de març — Nutri desplaçarà la teua alimentació cap al ferro i els plats reconfortants dos dies abans.",
+  "calBannerForming": "Predicció en marxa — l'estimació del 24 de març s'afina amb cada dia que registres.",
+  "_meta": {
+    "lang": "val",
+    "name": "Valencià",
+    "source": "design-v11.24"
+  }
+}
