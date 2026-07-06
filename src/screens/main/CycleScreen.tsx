@@ -139,7 +139,7 @@ export default function CycleScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  fill: { flex: 1, backgroundColor: colors.peachTop },
+  fill: { flex: 1, backgroundColor: 'transparent' },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 22, paddingTop: 6 },
   brandLockup: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   brandMark: { width: 34, height: 34 },

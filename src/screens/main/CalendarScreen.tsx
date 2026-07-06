@@ -119,8 +119,8 @@ export default function CalendarScreen() {
 }
 
 const styles = StyleSheet.create({
-  fill: { flex: 1, backgroundColor: colors.peachTop },
-  fillC: { flex: 1, backgroundColor: colors.peachTop, alignItems: 'center', justifyContent: 'center' },
+  fill: { flex: 1, backgroundColor: 'transparent' },
+  fillC: { flex: 1, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center' },
   title: { fontFamily: font.bold, fontSize: 24, color: colors.ink, textAlign: 'center', marginBottom: 12 },
   todayCard: { borderRadius: radius.lg, padding: 18 },
   todayLabel: { fontFamily: font.medium, fontSize: 12, color: 'rgba(255,255,255,0.9)' },

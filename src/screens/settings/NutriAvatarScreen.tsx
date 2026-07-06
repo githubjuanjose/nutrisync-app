@@ -78,7 +78,7 @@ export default function NutriAvatarScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  fill: { flex: 1, backgroundColor: colors.peachTop },
+  fill: { flex: 1, backgroundColor: 'transparent' },
   headerBar: { flexDirection: 'row', paddingHorizontal: 20, paddingTop: 4 },
   back: { fontSize: 30, color: colors.ink, width: 24 },
   title: { fontFamily: font.bold, fontSize: 24, color: colors.ink, marginTop: 6 },

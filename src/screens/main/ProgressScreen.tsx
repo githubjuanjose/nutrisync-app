@@ -128,8 +128,8 @@ const Stat3 = ({ n, l }: { n: string; l: string }) => (
 );
 
 const styles = StyleSheet.create({
-  fill: { flex: 1, backgroundColor: colors.peachTop },
-  fillC: { flex: 1, backgroundColor: colors.peachTop, alignItems: 'center', justifyContent: 'center' },
+  fill: { flex: 1, backgroundColor: 'transparent' },
+  fillC: { flex: 1, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center' },
   title: { fontFamily: font.bold, fontSize: 26, color: colors.ink },
   sub: { fontFamily: font.regular, fontSize: 14, color: colors.muted, marginTop: 2 },
   casCard: { backgroundColor: colors.white, borderWidth: 1.5, borderColor: '#F3C9BC', borderRadius: radius.lg, padding: 18, marginTop: 16, ...shadow.card },

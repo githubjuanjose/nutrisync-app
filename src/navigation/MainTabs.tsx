@@ -25,7 +25,7 @@ const LABEL: Record<keyof MainTabParamList, [string, string]> = {
 export default function MainTabs() {
   const t = useT();
   return (
-    <Tab.Navigator
+    <Tab.Navigator sceneContainerStyle={{ backgroundColor: 'transparent' }}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: colors.coral,

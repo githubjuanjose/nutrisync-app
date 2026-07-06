@@ -97,7 +97,7 @@ export default function MoodEnergyGate({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  fill: { flex: 1, backgroundColor: colors.peachTop },
+  fill: { flex: 1, backgroundColor: 'transparent' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 22, paddingTop: 8 },
   brandLockup: { flexDirection: 'row', alignItems: 'center', gap: 7, marginBottom: 2 },
   brandMark: { width: 30, height: 30 },

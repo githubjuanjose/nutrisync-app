@@ -125,7 +125,7 @@ export default function DailyLogScreen({
 }
 
 const styles = StyleSheet.create({
-  fill: { flex: 1, backgroundColor: colors.peachTop },
+  fill: { flex: 1, backgroundColor: 'transparent' },
   head: { flexDirection: 'row', alignItems: 'center', marginBottom: 14 },
   greeting: { fontFamily: font.semibold, fontSize: 14, color: colors.coral },
   title: { fontFamily: font.bold, fontSize: 26, color: colors.ink },

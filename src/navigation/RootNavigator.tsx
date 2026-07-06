@@ -22,7 +22,7 @@ export default function RootNavigator() {
   const { session, onboarded } = useSession();
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' } }}>
       {!session ? (
         <>
           <Stack.Screen name="Welcome" component={WelcomeScreen} />

@@ -87,8 +87,8 @@ export default function SettingsScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  fill: { flex: 1, backgroundColor: colors.peachTop },
-  fillC: { flex: 1, backgroundColor: colors.peachTop, alignItems: 'center', justifyContent: 'center' },
+  fill: { flex: 1, backgroundColor: 'transparent' },
+  fillC: { flex: 1, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center' },
   headerBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 4 },
   back: { fontSize: 30, color: colors.ink, width: 24 },
   headerTitle: { fontFamily: font.semibold, fontSize: 17, color: colors.ink },

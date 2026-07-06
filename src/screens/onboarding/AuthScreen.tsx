@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { colors, font, radius, shadow } from '../../theme';
+import { PeachBg } from '../../ui/PeachBg';
 import { PrimaryButton } from '../../ui/Buttons';
 import { LanguagePicker } from '../../ui/LanguagePicker';
 import { supabase } from '../../lib/supabase';
@@ -52,7 +52,7 @@ export default function AuthScreen({ route, navigation }: Props) {
   };
 
   return (
-    <LinearGradient colors={[colors.peachTop, '#FBE3D6', colors.peachBottom]} style={styles.fill}>
+    <PeachBg>
       <SafeAreaView style={styles.fill}>
         <View style={styles.header}>
           <Pressable onPress={() => navigation.goBack()} hitSlop={12} style={styles.backBtn}>
@@ -89,7 +89,7 @@ export default function AuthScreen({ route, navigation }: Props) {
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
-    </LinearGradient>
+    </PeachBg>
   );
 }
 

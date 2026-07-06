@@ -84,7 +84,7 @@ export default function NutritionalPreferencesScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  fill: { flex: 1, backgroundColor: colors.peachTop },
+  fill: { flex: 1, backgroundColor: 'transparent' },
   headerBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 4 },
   back: { fontSize: 30, color: colors.ink, width: 24 },
   headerTitle: { fontFamily: font.semibold, fontSize: 17, color: colors.ink },

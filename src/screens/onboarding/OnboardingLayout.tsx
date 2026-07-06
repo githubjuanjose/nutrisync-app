@@ -42,7 +42,7 @@ export function OnboardingLayout({
   const t = useT();
   const resolvedNextLabel = nextLabel ?? t('ui.next', 'Next');
   return (
-    <LinearGradient colors={[colors.peachTop, '#FBE3D6', colors.peachBottom]} style={styles.fill}>
+    <View style={styles.fill}>
       <SafeAreaView style={styles.fill} edges={['top', 'bottom']}>
         <View style={styles.head}>
           {showBack ? (
@@ -81,7 +81,7 @@ export function OnboardingLayout({
           )}
         </View>
       </SafeAreaView>
-    </LinearGradient>
+    </View>
   );
 }
 
