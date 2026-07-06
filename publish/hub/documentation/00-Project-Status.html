@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Project Status & Changelog — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Project Status &amp; Changelog</h1>
+<p><em>Single source of truth for where NutriSync stands. Last updated: </em><em>July 2026</em><em>.</em></p>
+<p>NutriSync is a cycle-synced nutrition and movement intelligence app for women aged 25–45: its guidance adapts to the user's menstrual phase, and its proprietary <strong>Cycle Alignment Score (CAS)</strong> turns each day's logging into a single 0–100 signal of how well the user is living in step with her cycle. This document summarizes what is built, what is live, and what remains.</p>
+<h2>The one-paragraph status</h2>
+<p>Both the <strong>native mobile app</strong> (iOS + Android, Expo SDK 54) and the <strong>web application</strong> are built and running against a <strong>single shared Supabase backend</strong>, with the CAS engine recomputing scores in real time on both surfaces. The <strong>marketing site + web app</strong> are live on Cloudflare Pages, and <strong>both deploy themselves on every git push</strong> — mobile over-the-air via EAS Update, web via a Cloudflare Pages Action. In plain terms: the product exists, it works end to end on real data, and shipping an update is now a single <code>git push</code>. What remains is scale-up infrastructure (AWS), a few compliance follow-ups, and getting test builds onto the Madrid testers' phones.</p>
+<h2>Live URLs</h2>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>URL</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Marketing site</td>
+<td>https://nutrisync-collective.pages.dev</td>
+<td>Site root</td>
+</tr>
+<tr>
+<td>Web app</td>
+<td>https://nutrisync-collective.pages.dev/app.html</td>
+<td>Real sign-up/login, backend-wired</td>
+</tr>
+<tr>
+<td>Gated hub (investor/builder docs)</td>
+<td>footer <strong>Team access</strong> → code <code>123456</code></td>
+<td>Embedded documents</td>
+</tr>
+</tbody>
+</table>
+<p>The Cloudflare Access email whitelist has been <strong>removed</strong> — the site is public. It can be re-added at any time via Cloudflare <strong>Zero Trust → Access</strong>.</p>
+<h2>What's built</h2>
+<h3>Mobile app (React Native / Expo SDK 54) — effectively 1:1 with the Figma prototype</h3>
+<p>Onboarding (Welcome → Auth → multi-step wizard, persisted to <code>users</code> + <code>cycles</code>); the daily "Before we Sync" mood/energy gate; the five main tabs (Cycle home with phase ring + live Sync Score, NutriLog, Movement Log, Progress, Calendar); Edit Period (real Figma emotes + flow logging); and the full Settings hub. The most recent additions closed the last gaps against the prototype:</p>
+<ul>
+<li><strong>Edit Health / "Health Profile"</strong> — NutriGoal carousel (locked until two full cycles), Allergies, and Health Conditions, saved to <code>users</code>.</li>
+<li><strong>Notification Center</strong> — a live feed computed from real cycle/phase/logging state (phase tip, check-in nudge, today's score, cycle milestones), reached from a 🔔 on the home header.</li>
+<li><strong>App Preferences</strong> (units, week-start, haptics, appearance — saved on-device) and <strong>Nutritional Preferences</strong> (diet type + allergies).</li>
+<li><strong>Visual polish</strong> — the official Figma "NutriBubble" orb throughout, an animated "looking-around" branded loading screen, and the real Figma emotes.</li>
+</ul>
+<h3>Web application</h3>
+<p>The Claude Design UI, genuinely stitched to Supabase: real sign-up and login, session routing (no session → login · session without a cycle → onboarding · else → home), reads and writes across all eight core tables, the same five-component CAS writing <code>daily_scores</code>, and in-app JSON export + account deletion.</p>
+<h3>Backend (Supabase — Phase 1, EU)</h3>
+<p>Postgres + Auth + Row-Level Security. Eight core tables (users, cycles, daily_logs, nutrition_checklist, movement_checklist, meal_logs, daily_scores, user_phase_averages) plus content tables (phase_food, movement_activity, phase_tip). RLS scopes every row to the signed-in user, which is why the publishable/anon key is safe to ship. Two operational notes carry forward: <strong>turn off "Confirm email"</strong> in Auth for signup to complete, and <strong>full auth-record deletion</strong> needs a small service-role Edge Function (in-app data deletion already works).</p>
+<h3>CI/CD — both pipelines live</h3>
+<ul>
+<li><strong>Mobile</strong> — repo <code>githubjuanjose/nutrisync-app</code>; every push runs <code>eas update --branch production</code>, delivering the change over-the-air to installed builds. Think of it as a conveyor belt: push code, the update rolls out to phones on next launch.</li>
+<li><strong>Web</strong> — repo <code>githubjuanjose/nutrisync-web</code>; every push runs <code>wrangler pages deploy</code> and the site rebuilds itself on Cloudflare in ~30 seconds.</li>
+</ul>
+<h2>What remains</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Android APK for testers</td>
+<td>Ready to build</td>
+<td><code>eas build --profile preview --platform android</code> → shareable link; no Apple/Google account needed. Best path for the Madrid testers.</td>
+</tr>
+<tr>
+<td>iOS TestFlight</td>
+<td>Blocked</td>
+<td>Needs the <strong>paid</strong> Apple Developer Program ($99/yr); a free account has no "team". Enrollment is the blocker.</td>
+</tr>
+<tr>
+<td>Full auth-record deletion</td>
+<td>✅ <strong>Done</strong></td>
+<td><code>delete-account</code> Edge Function deployed; erases data + auth identity server-side. App button wired (ships on next app update).</td>
+</tr>
+<tr>
+<td>Consent / cookie layer</td>
+<td>✅ <strong>Done</strong></td>
+<td>Privacy-first banner on web (essential-only default, granular opt-ins); ships on web push.</td>
+</tr>
+<tr>
+<td>Admin MIS console</td>
+<td>◑ Live KPIs wired</td>
+<td>Real Total Users + DAU/WAU/MAU via admin-gated <code>admin_kpis()</code>; billing metrics stay modelled until payments exist.</td>
+</tr>
+<tr>
+<td>Wearable connectors (top 8)</td>
+<td>◑ Foundation built</td>
+<td>Data model + consent-gated Connected Devices screen shipped behind a feature flag (OFF by default); native sync needs a dev build.</td>
+</tr>
+<tr>
+<td>Branch protection</td>
+<td>Your action</td>
+<td>Light rules (no force-push / no deletion) on both repos — 2-min GitHub toggle.</td>
+</tr>
+<tr>
+<td>Custom NutriSync domain</td>
+<td>Pending</td>
+<td>Site is on <code>nutrisync-collective.pages.dev</code>; publish on the branded domain via Cloudflare Pages → Custom domains (~15-min DNS task).</td>
+</tr>
+<tr>
+<td>AWS scale-up (Zurich)</td>
+<td>Not started</td>
+<td>Deliberately deferred — Supabase covers Phase 1; AWS is for B2B scale + Swiss data residency.</td>
+</tr>
+</tbody>
+</table>
+<h2>Repositories</h2>
+<ul>
+<li><code>githubjuanjose/nutrisync-app</code> — mobile app (Expo) + OTA pipeline.</li>
+<li><code>githubjuanjose/nutrisync-web</code> — marketing site + web app + gated hub + Cloudflare deploy pipeline.</li>
+</ul>
+<h2>Recent changelog</h2>
+<p><strong>Bilingual + Design-merge session:</strong>
+- <strong>Bilingual EN/ES</strong> live across web <em>and</em> mobile — language selector on both; decoupled <code>i18n/</code> catalogs; canonical values stay English so CAS/analytics are unaffected. 120+ mobile strings translated.
+- <strong>Translations review page</strong> in the Builders hub — founders read every label EN-beside-ES, amend the Spanish, and export <code>es.json</code>.
+- <strong><code>integrate.py</code></strong> — one command re-applies the here-only layer (consent, admin, error-hide, docs, i18n keys, translations page) onto any fresh Design export, so web merges are a ~2-minute job.</p>
+<p><strong>Wave 1 + Epic E foundation:</strong>
+- <strong>Full account deletion (Epic D4)</strong> — <code>delete-account</code> Edge Function deployed; erases user data <em>and</em> auth identity server-side (service key never leaves the server). Mobile delete button wired with a safe fallback.
+- <strong>Cookie/consent layer (Epic D8)</strong> — privacy-first banner on the web (essential-only by default, granular analytics/personalization opt-ins, choice stored).
+- <strong>Admin console now live (Epic G2)</strong> — real Total Users + DAU/WAU/MAU via an admin-gated, aggregate-only <code>admin_kpis()</code> function; auto-promote trigger for the admin allowlist. Business/financial figures stay modelled until a billing system exists.
+- <strong>Wearable-connector foundation (Epic E)</strong> — normalized <code>health_signal</code> + <code>connected_providers</code> schema, a consent-gated Connected Devices screen (top-8 providers), and a <strong>feature-flag system</strong> (<code>lib/flags.ts</code>) — connectors default <strong>OFF</strong> until a native iOS/TestFlight build.
+- Bigger brand lockups across web (auth rail, header, sidebar) and the mobile header/gate.</p>
+<p><strong>Earlier this build cycle:</strong>
+- Web app stitched to Supabase and deployed; marketing + hub live on <code>nutrisync-collective</code>.
+- Web auto-deploy pipeline (GitHub → Cloudflare Pages) built and green — <strong>Epic B complete</strong> on both tracks.
+- Mobile: added Edit Health, Notification Center, App Preferences, Nutritional Preferences; wired the "edit health" button and a notifications bell.
+- Visual polish: official orb, animated loader, real emotes.
+- Documentation fully rewritten and links repaired.</p>
+<h2>How to read the rest of the docs</h2>
+<p><code>01-PRD</code> (what &amp; why) · <code>02-Architecture</code> (how it's built + the AWS target) · <code>03-Platform-Backlog</code> (epics A–I with status) · <code>04-Team-Testing-Guide</code> (get it on a phone) · <code>05-Design-Review-and-Readiness</code> · <code>06-Business-Requirements</code> (workflows WF-1…15) · <code>07-Spec-Implementation-Plan</code> · <code>09-Mobile-Beyond-Figma-Requirements</code> (connectors, data rights) · <code>10-Expo-Publishing-Guide</code>.</p></div></body></html>

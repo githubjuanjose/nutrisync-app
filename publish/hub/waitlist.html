@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Waitlist — NutriSync Founders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--good:#2E9E6B;--emerald:#0FA968;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.55;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 22px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.wrap{max-width:1060px;margin:0 auto;padding:26px 22px 90px;}
+h1{font-size:27px;font-weight:900;letter-spacing:-.4px;margin:0 0 4px;}
+.sub{color:var(--muted);font-size:14px;margin:0 0 22px;}
+.stats{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 20px;}
+.stat{flex:1;min-width:150px;background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:16px 18px;}
+.stat .n{font-size:30px;font-weight:900;line-height:1;}
+.stat .l{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+.stat.total{background:linear-gradient(135deg,#0FA968,#12C07A);border:none;color:#fff;}
+.stat.total .l{color:rgba(255,255,255,.9);}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px;}
+.toolbar input[type=search]{flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit;outline:none;}
+.toolbar select{padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:13.5px;font-family:inherit;background:#fff;}
+.btn{border:none;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit;}
+.btn-exp{background:var(--ink);color:#fff;}
+.btn-add{background:var(--emerald);color:#fff;}
+.btn-add:hover{background:#0c9159;}
+.btn-exp:hover{background:#000;}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px;}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle;}
+th{background:var(--coral);color:#fff;font-weight:700;font-size:12px;letter-spacing:.4px;cursor:pointer;user-select:none;position:sticky;top:57px;}
+th.noSort{cursor:default;}
+tbody tr:nth-child(even){background:var(--cream);}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:3px 9px;border-radius:20px;text-transform:capitalize;}
+.tag.marketing_site{background:#FDE6DD;color:var(--coral-deep);}
+.tag.newsletter{background:#E4F0FF;color:#2563EB;}
+.tag.legacy_import{background:#E7F6EE;color:var(--emerald);}
+.tag.manual{background:#F1E8FF;color:#7C3AED;}
+.tag.other{background:#EFEAE4;color:var(--muted);}
+.act{display:inline-flex;gap:6px;}
+.iconbtn{border:1px solid var(--line);background:#fff;border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:14px;line-height:1;display:inline-flex;align-items:center;justify-content:center;}
+.iconbtn:hover{border-color:var(--coral);}
+.iconbtn.del:hover{border-color:var(--coral-deep);background:#FDECE8;}
+.empty,.gate{max-width:380px;margin:60px auto;text-align:center;color:var(--muted);}
+.gate .box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 24px;box-shadow:0 18px 44px -26px rgba(0,0,0,.4);text-align:left;}
+.gate h3{margin:0 0 4px;font-size:18px;color:var(--ink);}
+.gate p{font-size:13px;margin:0 0 14px;}
+.gate input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;margin-bottom:9px;font-size:14px;font-family:inherit;}
+.gate button{width:100%;background:var(--coral);color:#fff;border:none;border-radius:10px;padding:12px;font-weight:800;font-size:15px;cursor:pointer;}
+.err{color:var(--coral-deep);font-size:12.5px;min-height:16px;margin-top:6px;}
+.muted{color:var(--muted);font-size:12.5px;}
+.banner{background:#FFF6E9;border:1px solid #F3D9A6;color:#8A6A1F;border-radius:12px;padding:12px 14px;font-size:13px;margin:0 0 16px;}
+/* modal */
+.modal{position:fixed;inset:0;z-index:200;background:rgba(28,23,21,.5);display:none;align-items:center;justify-content:center;padding:18px;}
+.modal.on{display:flex;}
+.sheet{background:#fff;border-radius:18px;padding:22px 22px 20px;max-width:420px;width:100%;box-shadow:0 24px 60px -24px rgba(0,0,0,.5);}
+.sheet h3{margin:0 0 14px;font-size:18px;}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;}
+.field input,.field select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit;outline:none;}
+.rowbtns{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;}
+.rowbtns .cancel{background:#F3EBE4;color:var(--ink);}
+.rowbtns .save{background:var(--coral);color:#fff;}
+.merr{color:var(--coral-deep);font-size:12.5px;min-height:16px;margin-top:4px;}
+/* undo bar */
+.undobar{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:300;background:#241D1A;color:#fff;border-radius:12px;padding:12px 18px;display:none;align-items:center;gap:18px;box-shadow:0 16px 40px -18px rgba(0,0,0,.6);font-size:13.5px;max-width:92vw;}
+.undobar.on{display:flex;}
+.undobar button{background:none;border:none;color:#FFC7B3;font-weight:800;font-size:13.5px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand"><b>NUTRISYNC</b> · Waitlist</div>
+  <a href="/" onclick="if(history.length>1){history.back();return false;}return true;">‹ Back</a>
+</div>
+<div class="wrap">
+  <div id="gate" class="gate" style="display:none">
+    <div class="box">
+      <h3>Founders sign-in</h3>
+      <p class="muted">The waitlist holds personal emails, so it is admin-only. Sign in with your NutriSync founder account.</p>
+      <input id="em" type="email" placeholder="Email" autocomplete="username"/>
+      <input id="pw" type="password" placeholder="Password" autocomplete="current-password"/>
+      <button id="go">Sign in</button>
+      <div id="gerr" class="err"></div>
+    </div>
+  </div>
+
+  <div id="app" style="display:none">
+    <h1>Waitlist</h1>
+    <p class="sub">Everyone who has joined the NutriSync waitlist — legacy signups, live-site captures, and anyone you add here.</p>
+    <div id="roBanner" class="banner" style="display:none">Read-only: run <b>admin_waitlist_crud.sql</b> in Supabase to enable adding, editing and deleting from here.</div>
+    <div class="stats" id="stats"></div>
+    <div class="toolbar">
+      <input id="q" type="search" placeholder="Search email or name…"/>
+      <select id="src">
+        <option value="">All sources</option>
+        <option value="legacy_import">Legacy import</option>
+        <option value="marketing_site">Marketing site</option>
+        <option value="newsletter">Newsletter</option>
+        <option value="manual">Manual</option>
+      </select>
+      <button class="btn btn-add" id="add">＋ Add signup</button>
+      <button class="btn btn-exp" id="exp">⤓ Export CSV</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table id="tbl">
+        <thead><tr>
+          <th data-k="email">Email</th>
+          <th data-k="full_name">Name</th>
+          <th data-k="joined_at">Joined</th>
+          <th data-k="source">Source</th>
+          <th class="noSort" id="actHead" style="width:96px">Actions</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="muted" id="count" style="margin-top:12px"></p>
+  </div>
+</div>
+
+<!-- Add / Edit modal -->
+<div class="modal" id="modal">
+  <div class="sheet">
+    <h3 id="mTitle">Add signup</h3>
+    <div class="field"><label>Email *</label><input id="mEmail" type="email" placeholder="name@email.com"/></div>
+    <div class="field"><label>Name</label><input id="mName" type="text" placeholder="Optional"/></div>
+    <div class="field"><label>Source</label>
+      <select id="mSource">
+        <option value="manual">Manual</option>
+        <option value="marketing_site">Marketing site</option>
+        <option value="newsletter">Newsletter</option>
+        <option value="legacy_import">Legacy import</option>
+      </select>
+    </div>
+    <div class="field"><label>Joined date</label><input id="mJoined" type="date"/></div>
+    <div class="merr" id="mErr"></div>
+    <div class="rowbtns">
+      <button class="btn cancel" id="mCancel">Cancel</button>
+      <button class="btn save" id="mSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Undo (rollback) bar -->
+<div class="undobar" id="undoBar"><span id="undoMsg"></span><button id="undoBtn">Undo</button></div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+const U="https://nebkqncvapelrarruyqb.supabase.co", K="sb_publishable_GYj7DKlcWZ2cxdwv-GkyHQ_WBbQWHau";
+const sb = createClient(U, K);
+const $ = i => document.getElementById(i);
+let ALL = [], sortK = 'joined_at', sortDir = -1, CAN_WRITE = true, editId = null;
+
+function fmtDate(s){ if(!s) return '—'; const d=new Date(s); return isNaN(d)?'—':d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}); }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function srcClass(s){ return ['marketing_site','newsletter','legacy_import','manual'].includes(s)?s:'other'; }
+
+function stats(){
+  const by = {};
+  ALL.forEach(r => { const s=r.source||'other'; by[s]=(by[s]||0)+1; });
+  const cards = [`<div class="stat total"><div class="n">${ALL.length}</div><div class="l">Total signups</div></div>`];
+  [['legacy_import','Legacy'],['marketing_site','Marketing site'],['newsletter','Newsletter'],['manual','Manual']].forEach(([k,lab])=>{
+    if(by[k]) cards.push(`<div class="stat"><div class="n">${by[k]}</div><div class="l">${lab}</div></div>`);
+  });
+  $('stats').innerHTML = cards.join('');
+}
+
+function view(){
+  const q = $('q').value.trim().toLowerCase();
+  const src = $('src').value;
+  let rows = ALL.filter(r =>
+    (!src || (r.source||'')===src) &&
+    (!q || (r.email||'').toLowerCase().includes(q) || (r.full_name||'').toLowerCase().includes(q))
+  );
+  rows.sort((a,b)=>{
+    let x=a[sortK], y=b[sortK];
+    if(sortK==='joined_at'){ x=x?new Date(x).getTime():0; y=y?new Date(y).getTime():0; }
+    else { x=(x||'').toString().toLowerCase(); y=(y||'').toString().toLowerCase(); }
+    return x<y?-1*sortDir : x>y?1*sortDir : 0;
+  });
+  $('rows').innerHTML = rows.map(r=>`<tr>
+    <td>${esc(r.email)}</td>
+    <td>${esc(r.full_name)||'<span class="muted">—</span>'}</td>
+    <td>${fmtDate(r.joined_at||r.created_at)}</td>
+    <td><span class="tag ${srcClass(r.source)}">${esc((r.source||'other').replace('_',' '))}</span></td>
+    <td>${CAN_WRITE && r.id ? `<span class="act">
+        <button class="iconbtn edit" data-id="${esc(r.id)}" title="Edit">✎</button>
+        <button class="iconbtn del" data-id="${esc(r.id)}" title="Delete">🗑</button></span>` : '<span class="muted">—</span>'}</td>
+  </tr>`).join('') || `<tr><td colspan="5" class="muted" style="text-align:center;padding:26px">No matches.</td></tr>`;
+  $('count').textContent = `Showing ${rows.length} of ${ALL.length}`;
+  // wire row actions
+  document.querySelectorAll('.iconbtn.edit').forEach(b=>b.onclick=()=>openEdit(b.dataset.id));
+  document.querySelectorAll('.iconbtn.del').forEach(b=>b.onclick=()=>del(b.dataset.id));
+  return rows;
+}
+
+function exportCSV(){
+  const rows = view();
+  const head = ['email','full_name','joined_at','source','created_at'];
+  const lines = [head.join(',')].concat(rows.map(r=>head.map(k=>{
+    let v = r[k]==null?'':String(r[k]);
+    if(/[",\n]/.test(v)) v='"'+v.replace(/"/g,'""')+'"';
+    return v;
+  }).join(',')));
+  const blob = new Blob([lines.join('\n')], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `nutrisync-waitlist-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+/* ---- Undo (rollback) bar ---- */
+let undoTimer=null;
+function showUndo(msg, undoFn){
+  clearTimeout(undoTimer);
+  const bar=$('undoBar'); $('undoMsg').textContent=msg; bar.classList.add('on');
+  $('undoBtn').onclick=async()=>{ clearTimeout(undoTimer); bar.classList.remove('on'); await undoFn(); await load(); };
+  undoTimer=setTimeout(()=>bar.classList.remove('on'), 9000);
+}
+
+/* ---- CRUD ---- */
+function openAdd(){
+  editId=null; $('mTitle').textContent='Add signup';
+  $('mEmail').value=''; $('mName').value=''; $('mSource').value='manual';
+  $('mJoined').value=new Date().toISOString().slice(0,10); $('mErr').textContent='';
+  $('modal').classList.add('on');
+}
+function openEdit(id){
+  const r = ALL.find(x=>String(x.id)===String(id)); if(!r) return;
+  editId=id; $('mTitle').textContent='Edit signup';
+  $('mEmail').value=r.email||''; $('mName').value=r.full_name||''; $('mSource').value=srcClass(r.source);
+  $('mJoined').value=(r.joined_at||r.created_at||'').slice(0,10); $('mErr').textContent='';
+  $('modal').classList.add('on');
+}
+function closeModal(){ $('modal').classList.remove('on'); }
+
+async function save(){
+  const email=$('mEmail').value.trim().toLowerCase();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ $('mErr').textContent='Enter a valid email.'; return; }
+  const payload={ email, full_name:$('mName').value.trim()||null, source:$('mSource').value,
+                  joined_at:$('mJoined').value?new Date($('mJoined').value).toISOString():null };
+
+  if(editId){
+    // Update: Yes/No confirm -> execute -> offer rollback to previous values.
+    const prev = ALL.find(x=>String(x.id)===String(editId));
+    if(!confirm(`Save these changes to ${payload.email}?`)) return;
+    $('mSave').disabled=true; $('mErr').textContent='';
+    const { error } = await sb.from('waitlist').update(payload).eq('id',editId);
+    $('mSave').disabled=false;
+    if(error){ $('mErr').textContent = /duplicate|unique/i.test(error.message) ? 'That email is already on the list.' : error.message; return; }
+    closeModal(); await load();
+    if(prev){
+      const revert={ email:prev.email, full_name:prev.full_name, joined_at:prev.joined_at, source:prev.source };
+      showUndo(`Updated ${payload.email}.`, async()=>{
+        const { error:e2 } = await sb.from('waitlist').update(revert).eq('id',editId);
+        if(e2) alert('Undo failed: '+e2.message);
+      });
+    }
+  } else {
+    // Add: execute -> offer rollback (delete the row we just added).
+    $('mSave').disabled=true; $('mErr').textContent='';
+    const { data, error } = await sb.from('waitlist').insert(payload).select('id').single();
+    $('mSave').disabled=false;
+    if(error){ $('mErr').textContent = /duplicate|unique/i.test(error.message) ? 'That email is already on the list.' : error.message; return; }
+    closeModal(); await load();
+    const newId = data && data.id;
+    if(newId) showUndo(`Added ${payload.email}.`, async()=>{
+      const { error:e2 } = await sb.from('waitlist').delete().eq('id',newId);
+      if(e2) alert('Undo failed: '+e2.message);
+    });
+  }
+}
+async function del(id){
+  // Delete: Yes/No confirm -> execute -> offer rollback (re-insert the exact row).
+  const r = ALL.find(x=>String(x.id)===String(id));
+  if(!confirm(`Delete ${r?r.email:'this signup'} from the waitlist?`)) return;
+  const { error } = await sb.from('waitlist').delete().eq('id',id);
+  if(error){ alert('Could not delete: '+error.message); return; }
+  await load();
+  if(r){
+    const snap = { id:r.id, email:r.email, full_name:r.full_name, joined_at:r.joined_at, source:r.source, created_at:r.created_at };
+    showUndo(`Deleted ${r.email}.`, async()=>{
+      const { error:e2 } = await sb.from('waitlist').insert(snap);
+      if(e2) alert('Undo failed: '+e2.message);
+    });
+  }
+}
+
+async function load(){
+  // Primary read: direct select (gives id, needed for edit/delete). Requires admin
+  // SELECT policy from admin_waitlist_crud.sql. Fall back to the read-only RPC.
+  let { data, error } = await sb.from('waitlist')
+    .select('id,email,full_name,joined_at,source,created_at');
+  if(error){
+    if(/permission|not authorized|policy/i.test(error.message||'')){
+      $('app').style.display='none'; $('gate').style.display='block';
+      $('gerr').textContent='That account is not a NutriSync admin.'; return;
+    }
+    // table readable but maybe RPC-only deployment
+    const rpc = await sb.rpc('admin_waitlist');
+    if(rpc.error){ $('app').style.display='none'; $('gate').style.display='block';
+      $('gerr').textContent=rpc.error.message; return; }
+    data = rpc.data; CAN_WRITE=false;
+  } else {
+    CAN_WRITE = true;
+  }
+  ALL = Array.isArray(data)?data:[];
+  $('gate').style.display='none'; $('app').style.display='block';
+  $('roBanner').style.display = CAN_WRITE ? 'none' : 'block';
+  $('add').style.display = CAN_WRITE ? '' : 'none';
+  $('actHead').style.display = CAN_WRITE ? '' : 'none';
+  stats(); view();
+}
+
+$('go').addEventListener('click', async ()=>{
+  $('gerr').textContent='';
+  const { error } = await sb.auth.signInWithPassword({ email:$('em').value.trim(), password:$('pw').value });
+  if(error){ $('gerr').textContent=error.message; return; }
+  load();
+});
+$('pw').addEventListener('keydown', e=>{ if(e.key==='Enter') $('go').click(); });
+$('q').addEventListener('input', view);
+$('src').addEventListener('change', view);
+$('exp').addEventListener('click', exportCSV);
+$('add').addEventListener('click', openAdd);
+$('mCancel').addEventListener('click', closeModal);
+$('mSave').addEventListener('click', save);
+$('modal').addEventListener('click', e=>{ if(e.target===$('modal')) closeModal(); });
+document.querySelectorAll('#tbl th[data-k]').forEach(th=>th.addEventListener('click',()=>{
+  const k=th.dataset.k; if(!k) return;
+  if(sortK===k) sortDir*=-1; else { sortK=k; sortDir = k==='joined_at'?-1:1; }
+  view();
+}));
+
+(async ()=>{
+  const { data:{ session } } = await sb.auth.getSession();
+  if(session) load(); else $('gate').style.display='block';
+})();
+</script>
+</body>
+</html>

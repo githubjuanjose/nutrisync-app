@@ -1,0 +1,364 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Platform & Infra Backlog — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Platform &amp; Infrastructure Backlog</h1>
+<p>This backlog describes the full production platform NutriSync is being built toward: a scalable containerized backend, a secure zone for biometric and health data, consent captured everywhere data is collected, health and wearable connectors, a single unified web entry point, and an internal admin/MIS plus a protected business-case site.</p>
+<p>The important context, as of July 2026: <strong>the product is already live and operational on Supabase (EU).</strong> Mobile and web are both shipping, both auto-deploy on every push, and the marketing and business-case surfaces are public. This backlog therefore reads less like a from-scratch plan and more like a map from <em>where we are today</em> (a fast Phase-1 stack on Supabase) to <em>where we go for B2B scale</em> (AWS core behind Cloudflare). Each epic below carries an explicit <strong>current status</strong> so investors and builders can see at a glance what is done, what is partial, and what is deliberately deferred.</p>
+<p>Legend — <strong>Priority:</strong> P0 (MVP/launch-blocking) · P1 (fast-follow) · P2 (scale). <strong>Estimate:</strong> T-shirt (S ≤3d, M ≤1.5wk, L ≤3wk, XL &gt;3wk).</p>
+<hr />
+<h2>0. Cloud provider recommendation (Cloudflare vs Amazon vs Google)</h2>
+<p><strong>Recommendation: AWS as the primary cloud, with Cloudflare at the edge in front of it.</strong> Use Google Cloud only if the team's deep expertise is there.</p>
+<p>Think of it as a layered building: <strong>Cloudflare is the security gatehouse and lobby</strong> (CDN, WAF, DDoS, bot management, DNS) that every visitor passes through; <strong>AWS is the secured building behind it</strong> where the regulated data lives in a locked, windowless basement (private subnets + encrypted databases). They are complementary, not either/or.</p>
+<p>Why AWS is the core, specifically for NutriSync:</p>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Why AWS wins for this product</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Swiss/EU data residency</strong></td>
+<td>AWS has a <strong>Zurich region (eu-central-2)</strong> plus Frankfurt/Ireland/Paris/Spain. Switzerland is a launch market and menstrual/health data is special-category — keeping it in-country is a strong trust + compliance story.</td>
+</tr>
+<tr>
+<td><strong>Regulated health data</strong></td>
+<td>Mature GDPR + Swiss FADP posture, HIPAA-eligible services, <strong>KMS</strong> envelope encryption, <strong>Nitro</strong> isolation, fine-grained IAM, dedicated VPC private subnets, audit via CloudTrail.</td>
+</tr>
+<tr>
+<td><strong>Containers + scale</strong></td>
+<td><strong>ECS Fargate</strong> (serverless containers, simplest) or <strong>EKS</strong> (Kubernetes when needed), autoscaling, Aurora Postgres in private subnets.</td>
+</tr>
+<tr>
+<td><strong>Breadth</strong></td>
+<td>Everything in one place: managed Postgres, queues (SQS), streams (Kinesis), secrets, observability — fewer vendors for a lean team.</td>
+</tr>
+</tbody>
+</table>
+<p>Why <strong>not</strong> the others as the <em>primary</em>:
+- <strong>Cloudflare</strong> is best-in-class at the <strong>edge</strong> (CDN, WAF, DDoS, Workers, R2, Zero Trust access) and we already use it today for hosting — but it is not the right home for a regulated relational health-data store with private-subnet isolation. Keep it as the front door and for static hosting, not the secure data zone.
+- <strong>Google Cloud</strong> is excellent (GKE, BigQuery, healthcare APIs) and a fine alternative — but AWS's Zurich region plus the broader managed-service surface make it the lower-risk default. Pick GCP only if the hired engineers are GCP-native.</p>
+<p><strong>Target architecture:</strong> <code>User → Cloudflare (DNS, CDN, WAF, DDoS, Zero Trust for admin) → AWS ALB → ECS Fargate (API) → Aurora Postgres (private subnet, KMS-encrypted) + S3 (encrypted) + Secrets Manager</code>.</p>
+<p><strong>Where we are now:</strong> Phase 1 runs on <strong>Supabase (EU)</strong> — Postgres, Auth, and Row-Level Security — chosen deliberately for speed to a working product. The AWS migration below is the <em>target</em>, not a gap: we move the business logic into ECS when B2B scale (employer/university/clinic contracts) demands the added isolation, control, and residency guarantees. The secure-zone principles in Epic A apply to both stacks.</p>
+<hr />
+<h2>Epic status at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Epic</th>
+<th>Title</th>
+<th>Priority</th>
+<th>Current status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>Cloud foundation &amp; secure landing zone</td>
+<td>P0</td>
+<td><strong>Not started</strong> — Supabase Phase 1 by design</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>CI/CD pipeline: GitHub → production</td>
+<td>P0</td>
+<td><strong>✅ Done</strong> — mobile OTA + web Pages, auto-deploy on push</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>Scalable containerized backend</td>
+<td>P0</td>
+<td><strong>Not started</strong> — Supabase stands in for Phase 1</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>Data protection, consent &amp; compliance</td>
+<td>P0</td>
+<td><strong>◑ Substantially done</strong> — RLS + JSON export + <strong>full account deletion</strong> (Edge Function, deployed) + <strong>cookie/consent</strong> shipped; formal consent service, retention &amp; DPIA pending</td>
+</tr>
+<tr>
+<td><strong>E</strong></td>
+<td>Health &amp; wearable connectors</td>
+<td>P1 (roadmap 2028)</td>
+<td><strong>◑ Foundation built</strong> — normalized data model + consent-gated Connected Devices UI + feature flag (OFF by default); native sync needs a dev build</td>
+</tr>
+<tr>
+<td><strong>F</strong></td>
+<td>Unified web entry point</td>
+<td>P0</td>
+<td><strong>✅ Done</strong> (on <code>pages.dev</code>) — one site: marketing + web app + gated hub; <strong>custom NutriSync domain pending</strong> (F7)</td>
+</tr>
+<tr>
+<td><strong>G</strong></td>
+<td>Web admin application (MIS / KPIs)</td>
+<td>P1</td>
+<td><strong>◑ Live KPIs wired</strong> — Total Users + DAU/WAU/MAU via admin-gated <code>admin_kpis()</code>; billing metrics modelled until payments exist</td>
+</tr>
+<tr>
+<td><strong>H</strong></td>
+<td>Protected business-case site</td>
+<td>P1</td>
+<td><strong>✅ Done</strong> — gated hub live; email whitelist removed (re-addable)</td>
+</tr>
+<tr>
+<td><strong>I</strong></td>
+<td>Observability, security ops &amp; DR</td>
+<td>P1</td>
+<td><strong>Not started</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Status key: <strong>✅ Done</strong> · <strong>◑ Partial</strong> · <strong>▢ Documented only</strong> · <strong>Not started</strong>.</p>
+<hr />
+<h2>Epic A — Cloud foundation &amp; secure landing zone  <em>(P0)</em></h2>
+<p><strong>Current status: Not started — Supabase Phase 1 by design.</strong> Today Supabase (EU) provides Postgres, Auth, and Row-Level Security, which covers Phase-1 needs. This epic is the AWS secure landing zone we build when scale and B2B compliance obligations justify it.</p>
+<blockquote>
+<p>Goal: a hardened, multi-environment AWS foundation with a dedicated secure zone for biometric/personal data.</p>
+</blockquote>
+<ul>
+<li><strong>A1 (P0, M)</strong> — AWS Organization with separate accounts for <code>dev</code>, <code>staging</code>, <code>prod</code>, and <code>security/audit</code>. <em>AC: accounts isolated; SCP guardrails deny public S3 and non-EU/CH regions; billing alerts on.</em></li>
+<li><strong>A2 (P0, L)</strong> — VPC with public/private subnet tiers in <strong>eu-central-2 (Zurich)</strong>; NAT egress; no public DB. <em>AC: data stores only in private subnets; least-privilege security groups; flow logs enabled.</em></li>
+<li><strong>A3 (P0, M)</strong> — <strong>Secure data zone</strong>: dedicated private subnet + security group for Aurora Postgres and S3 buckets holding PII/health data; <strong>KMS</strong> customer-managed keys with rotation. <em>AC: all PII/health data encrypted at rest with CMK; access only from the API security group; key access audited.</em></li>
+<li><strong>A4 (P0, S)</strong> — Cloudflare in front: DNS, CDN, WAF, DDoS, rate limiting, bot management. <em>AC: origin locked to Cloudflare IPs; OWASP ruleset on; TLS 1.2+ end to end.</em></li>
+<li><strong>A5 (P0, S)</strong> — Secrets via AWS Secrets Manager (no secrets in repo/CI logs). <em>AC: app reads secrets at runtime; rotation enabled; CI uses OIDC, no static keys.</em></li>
+<li><strong>A6 (P1, M)</strong> — Infrastructure as Code (Terraform) for everything above; remote state + locking. <em>AC: <code>terraform plan</code> clean; environments reproducible from code.</em></li>
+<li><strong>A7 (P1, S)</strong> — Cost guardrails + tagging policy. <em>AC: per-environment cost dashboards; anomaly alerts.</em></li>
+</ul>
+<h2>Epic B — CI/CD pipeline: GitHub → production  <em>(P0)</em></h2>
+<p><strong>Current status: ✅ Done — both tracks live.</strong> Every push ships automatically. Think of each GitHub Action as a conveyor belt: code goes in one end, a live update comes out the other, no human hand on the lever.</p>
+<ul>
+<li><strong>Mobile:</strong> repo <code>githubjuanjose/nutrisync-app</code> → GitHub Action <code>.github/workflows/eas-update.yml</code> → <code>eas update --branch production</code> (over-the-air) on every push. Secret: <code>EXPO_TOKEN</code>. EAS project id <code>3b124e7e-e7e8-43ed-a54c-b660a07109dc</code>; <code>app.json updates.url = https://u.expo.dev/3b124e7e-e7e8-43ed-a54c-b660a07109dc</code>; <code>runtimeVersion</code> policy <code>appVersion</code>. Installed builds pull the OTA update on next launch.</li>
+<li><strong>Web:</strong> repo <code>githubjuanjose/nutrisync-web</code> → GitHub Action <code>.github/workflows/deploy-web.yml</code> → <code>wrangler pages deploy publish --project-name=nutrisync-collective</code> on every push to <code>main</code>. Secrets: <code>CLOUDFLARE_API_TOKEN</code> (a <strong>Custom token</strong> scoped Account · Cloudflare Pages · Edit — the old "Edit Cloudflare Pages" template no longer exists) and <code>CLOUDFLARE_ACCOUNT_ID</code>. We deliberately use the Action→wrangler direct-upload path rather than Cloudflare's built-in "Workers Builds" Git integration, which hung.</li>
+</ul>
+<p>The AWS-specific CI/CD items below (ECR, ECS blue/green, gated DB migrations) are the <em>scale-up</em> continuation of this epic and land alongside Epics A and C.</p>
+<ul>
+<li><strong>B1 (P0, S)</strong> — Branch protection, required reviews, CODEOWNERS on both repos. <em>AC: no direct pushes to <code>main</code>; PRs require green CI + 1 review.</em> — <em>pending hardening.</em></li>
+<li><strong>B2 (P0, M)</strong> — Fuller CI on GitHub Actions: lint, typecheck, unit tests, build, SBOM, container image scan (Trivy), secret scan. <em>AC: pipeline fails on critical vulns or leaked secrets; artifacts versioned.</em> — <em>lands with the containerized backend.</em></li>
+<li><strong>B3 (P0, M)</strong> — Container build &amp; push to ECR with immutable tags + image signing (cosign). <em>AC: only signed images deploy to prod.</em> — <em>AWS phase.</em></li>
+<li><strong>B4 (P0, L)</strong> — CD to ECS: deploy to <code>dev</code> on merge, <code>staging</code> on tag, <code>prod</code> on manual approval (GitHub Environments); blue/green or rolling. <em>AC: zero-downtime deploys; one-click rollback; deploy events logged.</em> — <em>AWS phase.</em></li>
+<li><strong>B5 (P0, S)</strong> — DB migrations as a gated pipeline step (expand/contract). <em>AC: migrations reversible; prod migration requires approval.</em> — <em>AWS phase.</em></li>
+<li><strong>B6 (P1, S)</strong> — Ephemeral preview environments per PR. <em>AC: each PR gets a URL; torn down on merge/close.</em></li>
+<li><strong>B7 (P1, S)</strong> — Supply-chain: Dependabot/Renovate + license checks. <em>AC: weekly dependency PRs; blocked licenses fail CI.</em></li>
+</ul>
+<h2>Epic C — Scalable containerized backend  <em>(P0)</em></h2>
+<p><strong>Current status: Not started — Supabase stands in for Phase 1.</strong> The Supabase Postgres backend already serves the live mobile and web apps across 8 core tables plus content tables, with the CAS engine writing <code>daily_scores</code> in real time. This epic containerizes and hardens that backend on AWS when B2B scale requires it.</p>
+<blockquote>
+<p>Goal: an API platform that scales from 10K to millions of users (per the GTM roadmap).</p>
+</blockquote>
+<ul>
+<li><strong>C1 (P0, L)</strong> — Containerized API service (NestJS/FastAPI) on <strong>ECS Fargate</strong> behind an ALB; health checks; autoscaling on CPU/RPS. <em>AC: scales horizontally; survives instance loss; p95 latency target met under load test.</em></li>
+<li><strong>C2 (P0, M)</strong> — <strong>Aurora PostgreSQL</strong> (Multi-AZ) in the secure zone; PgBouncer/RDS Proxy pooling. <em>AC: failover &lt; 60s; automated encrypted backups + PITR.</em></li>
+<li><strong>C3 (P0, M)</strong> — Object storage (S3, encrypted) for media/exports; signed URLs only. <em>AC: no public objects; access logged.</em></li>
+<li><strong>C4 (P1, M)</strong> — Async layer: SQS + workers for connector syncs, recommendation precompute, notifications. <em>AC: retries + dead-letter queues; idempotent consumers.</em></li>
+<li><strong>C5 (P1, M)</strong> — Caching (ElastiCache/Redis) for phase content, sessions, rate limits. <em>AC: cache hit ratio target; safe invalidation.</em></li>
+<li><strong>C6 (P2, L)</strong> — Recommendation service behind the stable <code>/recommendations</code> contract (rules → ML/Apertus AI). <em>AC: engine swappable without client changes; inputs/outputs logged (consented, de-identified).</em></li>
+<li><strong>C7 (P2, M)</strong> — Multi-region/read-replica readiness for US expansion (2028 roadmap). <em>AC: documented failover + residency plan.</em></li>
+</ul>
+<h2>Epic D — Data protection, consent &amp; compliance  <em>(P0 — legally required)</em></h2>
+<p><strong>Current status: ◑ Substantially done.</strong> The P0 data-rights gaps are now closed. Row-Level Security scopes every row to <code>auth.uid()</code>; users export their data as JSON; and <strong>full account deletion is live</strong> — the <code>delete-account</code> Edge Function erases the user's data <em>and</em> their auth identity server-side (the <code>service_role</code> key stays on the server, never in the app). The <strong>cookie/consent layer</strong> is shipped too: a privacy-first web banner with essential-only defaults and granular opt-ins. What remains is governance, not code: the <em>formal</em> consent service (versioned, granular onboarding opt-ins — D1–D3), retention/minimization (D6), and DPIA/RoPA paperwork (D7).</p>
+<blockquote>
+<p>Goal: biometric/menstrual/health data handled lawfully under GDPR &amp; Swiss FADP, with consent captured everywhere data is collected.</p>
+</blockquote>
+<ul>
+<li><strong>D1 (P0, M)</strong> — <strong>Consent service</strong>: versioned consent scopes (account, cycle/health data, wearable sync, research-anon, marketing) with immutable audit trail. <em>AC: every scope stored with timestamp + policy version; queryable per user.</em> — <em>pending.</em></li>
+<li><strong>D2 (P0, M)</strong> — <strong>Consent in onboarding</strong>: explicit, granular, unbundled opt-ins before any health data is stored. <em>AC: no health row persists without a matching consent record; refusing optional scopes still allows core use.</em> — <em>pending.</em></li>
+<li><strong>D3 (P0, M)</strong> — <strong>Consent at point of capture</strong>: just-in-time purpose + scope request when connecting a wearable or entering new sensitive data. <em>AC: connector cannot sync until its scope is granted; revocation stops sync immediately.</em> — <em>pending (paired with Epic E).</em></li>
+<li><strong>D4 (P0, M)</strong> — <strong>DSAR endpoints</strong>: self-serve <strong>export</strong> and <strong>erasure</strong>. <em>AC: export within SLA; erasure purges PII across stores.</em> — <em>export ✅ done (JSON); in-app data erasure ✅ done; full auth-record erasure pending the service-role Edge Function.</em></li>
+<li><strong>D5 (P0, S)</strong> — Row-Level Security / per-user isolation. <em>AC: cross-user access impossible; verified by tests.</em> — <em>✅ done: RLS scopes every row to <code>auth.uid()</code>.</em></li>
+<li><strong>D6 (P0, S)</strong> — Data classification + retention policy; minimization. <em>AC: each field tagged; retention enforced by jobs.</em> — <em>pending.</em></li>
+<li><strong>D7 (P1, M)</strong> — DPIA, Records of Processing, DPA templates for processors. <em>AC: DPIA signed off before launch; sub-processor list published.</em></li>
+<li><strong>D8 (P1, S)</strong> — Cookie/consent banner (privacy-first defaults) on the web entry point. <em>AC: non-essential off by default; choices logged.</em> — <em>pending — a key remaining blocker.</em></li>
+<li><strong>D9 (P1, S)</strong> — "Your data is yours" trust surface in-app. <em>AC: users can view/manage/revoke all consents in Profile.</em> — <em>partly present via the Data Privacy screen (export + delete).</em></li>
+</ul>
+<h2>Epic E — Health &amp; wearable connectors  <em>(P1 — roadmap 2028, foundation earlier)</em></h2>
+<p><strong>Current status: ◑ Foundation built (native sync deferred).</strong> The Expo Go-safe groundwork now exists: a normalized <code>health_signal</code> schema plus a <code>connected_providers</code> table (E-P1), a <strong>consent-gated Connected Devices screen</strong> listing the top 8 (E-P3), and a provider registry. It all sits behind a <strong>feature flag that defaults OFF</strong> (<code>EXPO_PUBLIC_FLAG_CONNECTORS</code>), so nothing ships to current testers until a native iOS/TestFlight build. The remaining work is the native adapters — Apple Health (HealthKit) and Health Connect need a dev build, and the OAuth providers (Garmin/Fitbit/Strava/Oura/Huawei/Xiaomi) need backend workers. Each still normalizes to the common <code>health_signal</code> shape and is consent-gated.</p>
+<p>The prioritized <strong>top 8</strong> to support: <strong>Apple Health / Apple Watch, Samsung Health, Google Fit / Fitbit, Garmin, Xiaomi (Mi Fitness), Huawei Health, Oura, Strava.</strong></p>
+<p><strong>Tier 1 — native phone health platforms (highest reach):</strong>
+- <strong>E1 (P1, L)</strong> — <strong>Apple Health (HealthKit)</strong> — steps, workouts, sleep, HR, cycle/menstrual data (iOS). <em>AC: read selected types with user grant; background delivery; revoke handled.</em>
+- <strong>E2 (P1, L)</strong> — <strong>Google Health Connect / Android</strong> (replaces Google Fit) — steps, workouts, sleep, HR. <em>AC: Health Connect permissions; graceful when app absent.</em>
+- <strong>E3 (P1, L)</strong> — <strong>Samsung Health</strong> — activity, sleep, HR (Android/Galaxy + Watch). <em>AC: SDK integration; scoped read.</em>
+- <strong>E4 (P1, M)</strong> — <strong>Huawei Health</strong> — activity, sleep, HR. <em>AC: OAuth/SDK; scoped read.</em>
+- <strong>E5 (P1, M)</strong> — <strong>Xiaomi (Mi Fitness)</strong> — activity, sleep, HR. <em>AC: OAuth/SDK; scoped read.</em></p>
+<p><strong>Tier 2 — wearables / fitness ecosystems:</strong>
+- <strong>E6 (P1, L)</strong> — <strong>Garmin Connect</strong> — activity, HR, sleep, stress. <em>AC: OAuth + webhook pull; backfill window.</em>
+- <strong>E7 (P1, M)</strong> — <strong>Fitbit</strong> (Google Fit family) — steps, sleep, HR. <em>AC: OAuth2; rate-limit aware.</em>
+- <strong>E8 (P1, M)</strong> — <strong>Strava</strong> — runs/rides/activities. <em>AC: OAuth2 + webhooks; dedup vs phone data.</em>
+- <strong>E9 (P2, M)</strong> — <strong>Oura</strong> (ring) — sleep, readiness, HRV, temperature (useful for cycle phase). <em>AC: OAuth2; temp trends mapped to cycle model.</em>
+- <strong>E10 (P2, M)</strong> — <strong>Apple Watch / Wear OS companion surfacing</strong> — show phase + daily focus on-wrist. <em>AC: complication/tile reads today's phase + focus.</em></p>
+<p><strong>Connector platform (shared):</strong>
+- <strong>E-P1 (P1, L)</strong> — Connector framework: normalized <code>health_signal</code> schema, per-provider adapters, token vault, incremental sync + backfill, dedup. <em>AC: adding a provider = new adapter only; conflicts resolved by priority rules.</em>
+- <strong>E-P2 (P1, M)</strong> — Sync orchestration via SQS workers + webhooks; retry/backoff; per-provider observability. <em>AC: failed syncs alert; per-user sync status visible.</em>
+- <strong>E-P3 (P1, S)</strong> — Consent + revoke wiring (depends D3): disconnect purges provider tokens and optionally data. <em>AC: revoke stops sync in &lt; 1 min; tokens deleted.</em></p>
+<h2>Epic F — Unified web entry point (one site, not two)  <em>(P0)</em></h2>
+<p><strong>Current status: ✅ Done.</strong> NutriSync ships as <strong>one site</strong> on the Cloudflare Pages project <code>nutrisync-collective</code>: the marketing site at the root, the transactional web app at <code>/app.html</code>, and the gated investor/builder hub reached from the footer "Team access." The web app is the Claude Design bundle genuinely stitched to the same Supabase backend — real sign-up/log-in, session routing (no session → login · session without a cycle → onboarding · else → home), reading and writing all 8 tables, and the same 5-component CAS writing <code>daily_scores</code>. In-app JSON export and delete work here too. The anon key is baked in and is public and safe (RLS scopes every row).</p>
+<p>Live URLs:
+- Marketing (root): <code>https://nutrisync-collective.pages.dev</code>
+- Web app: <code>https://nutrisync-collective.pages.dev/app.html</code>
+- Gated hub: footer <strong>Team access</strong>, code <code>123456</code>.</p>
+<blockquote>
+<p>Goal: the commercial/marketing site and the transactional web app are one application behind a single entry point that routes anonymous visitors to marketing and authenticated users to the app.</p>
+</blockquote>
+<ul>
+<li><strong>F1 (P0, M)</strong> — Single web deployment serving marketing + app + gated hub. <em>AC: one project, one deploy, one domain.</em> — <em>✅ done (<code>nutrisync-collective</code>).</em></li>
+<li><strong>F2 (P0, S)</strong> — Session-aware entry: no session → login; session without a cycle → onboarding; else → home. <em>AC: session-aware routing; deep links preserved.</em> — <em>✅ done.</em></li>
+<li><strong>F3 (P0, M)</strong> — Shared auth/session on the same Supabase identity across surfaces. <em>AC: single sign-in.</em> — <em>✅ done.</em></li>
+<li><strong>F4 (P0, S)</strong> — Shared design tokens (Figma-aligned) across marketing, web app, and React Native. <em>AC: one token source; consistent brand.</em> — <em>substantially done via the shared Claude Design/Figma system.</em></li>
+<li><strong>F5 (P1, S)</strong> — Waitlist → onboarding handoff. <em>AC: waitlisted emails convert without re-entry.</em> — <em>◑ mostly done: a live <code>public.waitlist</code> table (RLS-private, anon-insert), the marketing-site + newsletter fields now </em><em>persist</em><em> signups (tagged by source), </em><em>~140 legacy signups migrated</em><em> from an old Supabase project, and a </em><em>Founders' Waitlist dashboard</em><em> in the Builders hub with full </em><em>CRUD + CSV export</em><em> (admin-gated, with undo). Remaining: the auto-convert-to-onboarding handoff (pre-fill a waitlisted email into signup).</em></li>
+<li><strong>F6 (P1, S)</strong> — Funnel analytics + A/B (EU analytics). <em>AC: signup funnel measured end-to-end.</em> — <em>fast-follow.</em></li>
+<li><strong>F7 (P0, S)</strong> — <strong>Publish on the NutriSync custom domain</strong> (e.g. <code>nutrisynccollective.com</code>) instead of <code>*.pages.dev</code>: Cloudflare <strong>Pages → Custom domains → Add</strong>, point the domain's DNS at Pages, force HTTPS, and redirect the <code>pages.dev</code> URL to it. <em>AC: site served on the branded domain with valid TLS; both apex and <code>www</code> resolve; old URL 301s to the new one.</em> — <strong>pending</strong> — the site is live on <code>nutrisync-collective.pages.dev</code> today; this is a ~15-min DNS task once you pick/confirm the domain.</li>
+</ul>
+<p><em>Cleanup note:</em> the account still contains stale artifacts — an old <code>nutrisync-web.pages.dev</code> project and a broken <code>nutrisync</code> Worker. Neither is in use; both are safely deletable.</p>
+<h2>Epic G — Web admin application (MIS / KPIs)  <em>(P1)</em></h2>
+<p><strong>Current status: ◑ Live KPIs wired.</strong> The console now pulls <strong>real aggregates</strong> — Total Users and DAU/WAU/MAU — through an admin-gated, aggregate-only <code>admin_kpis()</code> function (SECURITY DEFINER; returns counts, never PII; refuses non-admins). An <code>admins</code> allowlist plus an auto-promote trigger manage access. A second admin surface is now live too: the <strong>Founders' Waitlist dashboard</strong> (Builders hub) — searchable/sortable signup list with per-source counts, <strong>full CRUD</strong> (add/edit/delete with confirm + undo) and <strong>CSV export</strong>, admin-gated via <code>admin_waitlist_crud.sql</code> RLS policies. Business/financial figures (MRR, subscriptions, revenue) stay <strong>modelled</strong> and are clearly labelled, because there is no billing system yet to read from — they become live via the same pattern once payments exist. Remaining: role tiers, Cloudflare Zero Trust gating on the admin path, and connector/ops panels.</p>
+<blockquote>
+<p>Goal: an internal admin app (Cloudflare Zero-Trust protected) to run the business — access, subscriptions, and the business case.</p>
+</blockquote>
+<ul>
+<li><strong>G1 (P1, M)</strong> — Admin app shell with role-based access (admin/finance/clinical/support) behind Cloudflare Access / SSO + MFA. <em>AC: no public access; roles enforced server-side; admin actions audit-logged.</em> — <em>shell exists; access control + wiring pending.</em></li>
+<li><strong>G2 (P1, M)</strong> — <strong>MIS KPI dashboard</strong>: DAU·WAU·MAU, signups, retention (D1/D7/D30), subscriptions (free vs premium, MRR, churn), conversion %, B2B seats, CAC/LTV/ARPU vs targets. <em>AC: metrics match source-of-truth analytics; date filters; export.</em> — <em>mock layout present; live data pending.</em></li>
+<li><strong>G3 (P1, M)</strong> — Business-case / financial tracker: revenue vs cost vs profit by year vs plan; user-growth actuals vs targets. <em>AC: editable assumptions; variance vs plan shown.</em> — <em>mock present; wiring pending.</em></li>
+<li><strong>G4 (P1, S)</strong> — Subscription &amp; user admin (no access to raw cycle data). <em>AC: PII access role-gated + logged; cycle data never shown individually.</em></li>
+<li><strong>G5 (P1, S)</strong> — Connector/ops health panel. <em>AC: surfaces E-P2 metrics.</em></li>
+<li><strong>G6 (P2, S)</strong> — Content/clinical review queue. <em>AC: publish workflow with clinical sign-off.</em></li>
+</ul>
+<h2>Epic H — Protected business-case site  <em>(P1)</em></h2>
+<p><strong>Current status: ✅ Done.</strong> The gated investor/builder hub is live inside <code>nutrisync-collective</code>, reached from the footer "Team access" with code <code>123456</code>. The earlier Cloudflare Access email whitelist has been <strong>removed</strong>, so the site is publicly reachable today; it can be re-gated at any time via Cloudflare Zero Trust → Access when sharing shifts to a controlled investor list.</p>
+<blockquote>
+<p>Goal: an access-controlled site presenting the full business case, pitch, and documentation for investors/advisors/team.</p>
+</blockquote>
+<ul>
+<li><strong>H1 (P1, M)</strong> — Business-case content: problem, solution, market (FemTech boom), differentiation, traction, business model, GTM, financials, team, advisory. <em>AC: all deck sections represented; responsive; brand-consistent.</em> — <em>✅ done (gated hub).</em></li>
+<li><strong>H2 (P1, S)</strong> — Access protection via Cloudflare Access (email-allowlist / SSO). <em>AC: only invited emails can view; access logged; revocable.</em> — <em>whitelist removed for now; re-addable via Zero Trust when external sharing needs it.</em></li>
+<li><strong>H3 (P1, S)</strong> — Document vault: gated downloads (deck PDF, financial model, one-pager, data-room links). <em>AC: per-file access tracked.</em></li>
+<li><strong>H4 (P2, S)</strong> — Embed the live Canva presentation + downloadable export.</li>
+<li><strong>H5 (P2, S)</strong> — Per-visitor view analytics (which investor viewed what).</li>
+</ul>
+<h2>Epic I — Observability, security ops &amp; DR  <em>(P1)</em></h2>
+<p><strong>Current status: Not started.</strong> Formal observability, security-ops tooling, and disaster-recovery drills land with the AWS migration; Phase-1 relies on Supabase's managed backups and platform monitoring.</p>
+<ul>
+<li><strong>I1 (P1, M)</strong> — Centralized logging/metrics/tracing (CloudWatch + OpenTelemetry) + dashboards + alerts. <em>AC: p95 latency, error rate, sync failures alert on-call.</em></li>
+<li><strong>I2 (P1, S)</strong> — Error tracking (Sentry) across web, RN, API. <em>AC: releases tracked; alerts routed.</em></li>
+<li><strong>I3 (P1, M)</strong> — Security: WAF rules, dependency/image scanning, pen-test before B2B launch, incident runbook. <em>AC: criticals block release; runbook rehearsed.</em></li>
+<li><strong>I4 (P1, S)</strong> — Backups + disaster-recovery drill (RPO/RTO defined). <em>AC: restore tested; RPO/RTO documented.</em></li>
+<li><strong>I5 (P2, S)</strong> — Status page + uptime monitoring. <em>AC: public status; SLO dashboards.</em></li>
+</ul>
+<hr />
+<h2>Suggested delivery order (waves)</h2>
+<p>The picture has changed since the original plan: <strong>Wave 1 is largely already delivered</strong> on the Supabase Phase-1 stack. What was once "stand up CI/CD and one unified site" is done; the near-term work is getting the app into testers' hands, and the AWS migration is now a <em>scale-driven</em> wave rather than a launch prerequisite.</p>
+<ol>
+<li><strong>Wave 0 — shipped (Phase 1 on Supabase).</strong> Epic B (CI/CD, both tracks) · Epic F (unified web entry) · Epic H (gated business-case hub) · the operational Supabase backend · CAS live on real data · RLS + JSON export + in-app delete (Epic D foundations).</li>
+<li><strong>Wave 1 — near-term, no new cloud required.</strong> Ship remote test builds: <strong>Android APK</strong> for the Madrid testers (<code>eas build --profile preview --platform android</code> — no paid account needed) and <strong>iOS TestFlight</strong> once the paid Apple Developer Program is enrolled. Close the Epic D gaps: the service-role Edge Function for full auth-record deletion and the cookie/consent layer (D8). Wire the admin console to live data (Epic G). Harden branch protection (B1).</li>
+<li><strong>Wave 2 — B2B scale migration to AWS.</strong> When employer/university/clinic contracts demand stronger isolation and residency: Epics A (secure landing zone), C (containerized backend on ECS/Aurora), the AWS half of B (ECR/ECS blue-green/gated migrations), and I (observability/DR). Migrate business logic off Supabase into the secure zone.</li>
+<li><strong>Wave 3 — connectors &amp; depth.</strong> Epic E (wearable connectors, roadmap 2028, needs a native build), G5–G6, H4–H5, C6–C7.</li>
+</ol>
+<h2>Dependencies &amp; risks</h2>
+<ul>
+<li><strong>D (consent) blocks E (connectors)</strong> — never sync a wearable without its consent scope.</li>
+<li><strong>A3 (secure zone) blocks C2/C3 (data stores)</strong> — provision the secure zone before any PII/health data lands on AWS.</li>
+<li><strong>F3 (shared auth) blocks G/H protection</strong> — one identity system feeds admin + business-case access. (Shared Supabase identity already in place.)</li>
+<li><strong>Apertus AI</strong> integration model (hosted vs self-run; residency/latency/cost) — decision needed before C6.</li>
+<li>Connector ToS/rate limits (Garmin, Strava, Huawei) and Apple/Google review policies — legal + review lead time.</li>
+<li>Full auth-record deletion requires a service-role Edge Function; the <code>service_role</code> key must never ship client-side.</li>
+</ul>
+<h2>Executable next step</h2>
+<p>The launch foundation (Epics B, F, H) is already live, so the immediate, highest-leverage step is <strong>getting the app onto testers' devices</strong>:</p>
+<ol>
+<li><strong>Android APK for the Madrid testers (recommended, no paid account):</strong> <code>eas build --profile preview --platform android</code> → shareable download link/QR. Install once; thereafter every GitHub push reaches testers over-the-air via the Epic B mobile pipeline.</li>
+<li><strong>iOS TestFlight (unblock enrollment):</strong> enroll in the paid <strong>Apple Developer Program ($99/yr)</strong> — a free Apple account has no "team" and cannot sign or distribute. Once enrolled: <code>eas build --platform ios --profile production</code> → <code>eas submit --platform ios --latest</code> → TestFlight (External testing = one-time Beta App Review). Bundle id <code>com.nutrisync.app</code>; export-compliance is pre-answered.</li>
+</ol>
+<p>The <strong>AWS migration (Epics A/C/I)</strong> is the subsequent step, triggered when B2B scale demands it — not a prerequisite for the current pilot.</p>
+<hr />
+<h2>Product feature tracks (beyond platform)</h2>
+<p>Alongside the infrastructure epics above, these product tracks sit on the roadmap. Status as of July 2026:</p>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Waitlist &amp; signups</strong></td>
+<td>✅ Done (capture + admin)</td>
+<td>Live <code>public.waitlist</code> table; marketing + newsletter capture; ~140 legacy signups migrated; Founders' CRUD dashboard (search/filter/export/undo) in the Builders hub. Auto-convert-to-onboarding handoff pending (F5).</td>
+</tr>
+<tr>
+<td><strong>DB change safety</strong></td>
+<td>✅ Done</td>
+<td>Backup-first runbook (<code>11-DB-Changes-Runbook</code>) + in-dashboard undo; every data/schema SQL now leads with a backup and ends with a verify step.</td>
+</tr>
+<tr>
+<td><strong>Bilingual EN/ES</strong></td>
+<td>✅ Done (web + mobile)</td>
+<td>Decoupled <code>i18n/</code> catalogs; language selector on both surfaces; canonical values stay English. Founders review Spanish wording via the <strong>Translations</strong> page in the Builders hub, then export <code>es.json</code>.</td>
+</tr>
+<tr>
+<td><strong>Multilingual — 14 languages</strong></td>
+<td>◑ 7 of 14 live</td>
+<td><strong>Live (web app + mobile):</strong> EN, ES, FR, DE, IT, NL, EL. <strong>Marketing translated:</strong> EN, ES, FR, DE. <strong>Pending packs:</strong> CA, EU, GL, VA, Aranés, ZH, JA (+ IT/NL/EL marketing). Selector = ISO-code pills [EN]+[OS/ES] + dropdown (web) — mobile shows endonyms (consistency TBD). <strong>MT first pass → native review (locked):</strong> European+East-Asian from English (Google/DeepL); Iberian from Spanish via <strong>Apertium</strong>; <strong>CJK font</strong> needed on web for ZH/JA. Mobile bundles each <code>app</code> translation as it ships (<code>mob.*</code> falls back to English until translated). See Design Brief §6.</td>
+</tr>
+<tr>
+<td><strong>Localization workflow</strong></td>
+<td>✅ Done</td>
+<td>Founder-editable Translations review tool; <code>integrate.py</code> keeps web + mobile catalogs in sync on each Design export.</td>
+</tr>
+<tr>
+<td><strong>Custom domain (F7)</strong></td>
+<td>⬜ Pending</td>
+<td>Publish on the branded NutriSync domain (Cloudflare Pages → Custom domains). ~15-min DNS task.</td>
+</tr>
+<tr>
+<td><strong>Monetization / subscriptions (WF-10)</strong></td>
+<td>⬜ Not built</td>
+<td>Billing system (e.g. Stripe) → premium gating, real MRR/churn in the admin console. Prerequisite for the "· model" KPIs going live.</td>
+</tr>
+<tr>
+<td><strong>Community (WF-7)</strong></td>
+<td>⬜ Not built</td>
+<td>Feed, cycle-status sharing, streaks — the Community Privacy controls already exist in-app as the settings surface.</td>
+</tr>
+<tr>
+<td><strong>Native wearable sync (Epic E adapters)</strong></td>
+<td>⬜ Deferred</td>
+<td>Apple Health / Health Connect need a native dev build; foundation + consent UI already shipped behind the <code>connectors</code> flag.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sequencing view:</strong> bilingual and the localization workflow are done. The next product build with real revenue impact is <strong>monetization</strong> (it also unblocks the live admin financial KPIs). Community and native wearables are later-stage. Custom domain is a quick your-side task, independent of all of the above.</p></div></body></html>

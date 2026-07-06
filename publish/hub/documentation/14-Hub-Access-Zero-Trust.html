@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Hub Access — Zero Trust — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>Hub Access — Cloudflare Zero Trust</h1>
+<p>How to replace the client-side <code>123456</code> room gate with <strong>real, server-side</strong> access control on the hub, for when the investor/builder material becomes sensitive.</p>
+<h2>Why</h2>
+<p>The <code>123456</code> gate is <strong>client-side</strong> — the code lives in the page bundle, so anyone who inspects the site can find it. Fine as a soft "team only" nudge, but it is <strong>not</strong> security. <strong>Cloudflare Access</strong> enforces access <strong>before any file is served</strong>, with an email allowlist and an audit log.</p>
+<p><strong>What gets protected:</strong> the real assets live under <strong><code>/hub/*</code></strong> — investor business case, admin MIS console, documentation, waitlist dashboard, translations and review tools. Gating <code>/hub/*</code> protects all of them. The marketing site at <code>/</code> stays public.</p>
+<p><strong>Cost:</strong> Cloudflare Zero Trust <strong>free plan covers up to 50 users</strong> — ample for investors + builders.</p>
+<h2>One-time setup</h2>
+<h3>1 · Turn on Zero Trust</h3>
+<p>Cloudflare dashboard → <strong>Zero Trust</strong> → choose a <strong>team name</strong> (e.g. <code>nutrisync</code>) if prompted.</p>
+<h3>2 · Choose a login method</h3>
+<p>Zero Trust → <strong>Settings → Authentication → Login methods</strong>.</p>
+<ul>
+<li><strong>One-time PIN</strong> is on by default — the user enters their email and gets a 6-digit code. No identity provider needed; simplest for investors.</li>
+<li><em>(Optional)</em> add <strong>Google / Microsoft / GitHub</strong> SSO.</li>
+</ul>
+<h3>3 · Create the Access application</h3>
+<p>Zero Trust → <strong>Access → Applications → Add an application → Self-hosted</strong>.</p>
+<ul>
+<li><strong>Name:</strong> <code>NutriSync Hub</code></li>
+<li><strong>Session duration:</strong> <code>24 hours</code></li>
+<li><strong>Application domain:</strong> <code>nutrisync-collective.pages.dev</code> · <strong>Path:</strong> <code>hub</code> (covers <code>/hub</code> and everything under <code>/hub/*</code>; add the custom domain here too once F7 is done)</li>
+</ul>
+<h3>4 · Add the allow policy</h3>
+<ul>
+<li><strong>Policy name:</strong> <code>Allowed viewers</code> · <strong>Action:</strong> <code>Allow</code></li>
+<li><strong>Include</strong> → pick one:</li>
+<li><strong>Emails</strong> — add each investor/builder address, or</li>
+<li><strong>Emails ending in</strong> — <code>@yourcompany.com</code> for a whole domain, or</li>
+<li><strong>Everyone</strong> + One-time PIN if you only need "must verify an email".</li>
+<li>Save the policy, then <strong>Save</strong> the application.</li>
+</ul>
+<p>Done — any request to <code>/hub/*</code> now shows the Cloudflare Access login; only allowed emails get through. After one login the <code>CF_Authorization</code> cookie carries the whole session, including documents embedded in the room via iframes.</p>
+<h2>Notes &amp; gotchas</h2>
+<ul>
+<li><strong>First hit prompts login;</strong> after that it's seamless for the session. If the room's iframed docs should load without a separate prompt, have users open any <code>/hub/…</code> URL once to get the cookie.</li>
+<li><strong>The <code>123456</code> gate can stay or go</strong> — Access is the real lock; the on-screen code hint is already removed. Leave the gate as a harmless second step or ask Design to drop it.</li>
+<li><strong>Admin data gets two layers</strong> — the Waitlist dashboard and Admin MIS console also require a Supabase admin login; Access sits in front of that.</li>
+<li><strong><code>pages.dev</code> works</strong>, but the cleanest setup is on the <strong>custom domain</strong> (F7) once configured — add that hostname to the same application.</li>
+<li><strong>Revoking is instant</strong> — remove an email from the policy; their next request is blocked.</li>
+<li><strong>Audit trail</strong> — Zero Trust → <strong>Logs → Access</strong> shows who viewed the hub and when (useful for an investor data room).</li>
+</ul>
+<p><em>Implements backlog Epic H2 (hub access protection) and G1 (admin behind Zero Trust). Dashboard-only — no code or deploy needed.</em></p></div></body></html>

@@ -1,0 +1,1048 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Business Requirements — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Business Requirements by User Workflow</h1>
+<p>Purpose: a Product-Owner-verifiable list of business requirements for every user workflow, each with its <strong>intent</strong> (the "why"), and a check that <strong>web + apps</strong> deliver the <strong>nine capabilities from slide 7</strong> of the deck.</p>
+<p>As of <strong>July 2026</strong>, most of the core product is built and running on real data across <strong>both</strong> the native mobile app (Expo SDK 54) and the live web app (Cloudflare Pages, wired to the same Supabase backend). This rewrite keeps every workflow and the capability matrix, but each requirement now carries a <strong>Built?</strong> signal reflecting reality — so POs verify against what actually ships, not against a plan.</p>
+<p>How to use: POs review each requirement, confirm the intent is right, and mark the <strong>Verify</strong> column (✅ met / ⚠️ partial / ❌ missing) per surface. The <strong>Built?</strong> column is our current honest read; the <strong>Verify</strong> column is the PO's sign-off. The companion <code>business-requirements.csv</code> is the tracker.</p>
+<p><strong>Surfaces:</strong> <strong>M</strong> = mobile app (iOS/Android), <strong>W</strong> = web app, <strong>Mk</strong> = marketing/entry, <strong>Ad</strong> = admin/MIS.</p>
+<p><strong>Built? legend:</strong> ✅ shipped (mobile + web unless noted) · ⚠️ partial · 📄 documented-only (design/roadmap, not built).</p>
+<h3>Slide-7 capability codes (referenced as "Intent → [C#]")</h3>
+<ul>
+<li><strong>C1</strong> Science-backed cycle-sync framework</li>
+<li><strong>C2</strong> Ethical data &amp; privacy design</li>
+<li><strong>C3</strong> Integrated cycle, nutrition &amp; fitness plans</li>
+<li><strong>C4</strong> AI personalization</li>
+<li><strong>C5</strong> Social &amp; community features</li>
+<li><strong>C6</strong> Direct-to-consumer</li>
+<li><strong>C7</strong> Clinician-partnered distribution</li>
+<li><strong>C8</strong> Institutional ATL outreach (brand / B2B / awareness)</li>
+<li><strong>C9</strong> TTL data &amp; insight loop (through-the-line data → product improvement)</li>
+</ul>
+<hr />
+<h2>WF-1 · Onboarding &amp; consent</h2>
+<p><em>Intent of workflow: turn a new visitor into an activated, consented user whose cycle is set up — lawfully (C2) and on the science (C1).</em></p>
+<p>The onboarding flow (Welcome → Auth → multi-step Wizard) is <strong>built and wired</strong> on both mobile and web; wizard answers persist to <code>users</code> and <code>cycles</code>. The formal, unbundled consent <em>record</em> layer is the remaining gap (part of Epic D).</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-1.1</td>
+<td>Capture cycle data (last period, avg cycle &amp; period length)</td>
+<td>Personalize phase model from day one [C1]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-1.2</td>
+<td>Capture goals, dietary preferences, allergies, activity level</td>
+<td>Tailor nutrition &amp; movement plans [C3,C4]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-1.3</td>
+<td>Capture health condition &amp; hormonal contraceptive use</td>
+<td>Adapt phase logic &amp; safety for non-ovulatory users [C1]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-1.4</td>
+<td>Granular, unbundled <strong>consent</strong> before any health data is stored</td>
+<td>Lawful processing of special-category data; refusal of optional scopes still allows core use [C2]</td>
+<td>M, W</td>
+<td>⚠️ consent record layer pending</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-1.5</td>
+<td>Role selection (e.g. individual vs employer-invited)</td>
+<td>Route B2C vs B2B journeys [C6,C8]</td>
+<td>M, W</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-1.6</td>
+<td>City/region selection</td>
+<td>Localization &amp; residency (EU launch) [C2]</td>
+<td>M, W</td>
+<td>⚠️</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-1.7</td>
+<td>"All set / beta welcome" confirmation</td>
+<td>Confirm activation; reduce drop-off</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-1.8</td>
+<td>No health row persists without a matching consent record</td>
+<td>Auditable compliance [C2]</td>
+<td>M, W</td>
+<td>📄 pending consent service</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-2 · Daily cycle home (Cycle)</h2>
+<p><em>Intent: every day, tell her what phase she's in and what to do — the core daily value (C1, C3, C4).</em></p>
+<p><strong>Built</strong> on both surfaces: phase ring + cycle day, week strip, the live Sync Score on the home header, and Edit-Period / Edit-Health entry points. The daily "Before we Sync" mood/energy gate shows once per day.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-2.1</td>
+<td>Show current <strong>phase + cycle day</strong> with the phase ring</td>
+<td>Orient her in her cycle at a glance [C1]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-2.2</td>
+<td>Per-phase color system (menstrual/follicular/ovulatory/luteal)</td>
+<td>Instant, consistent phase recognition [C1]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-2.3</td>
+<td>Daily focus card: nutrition, training, wellbeing for today</td>
+<td>Actionable cycle-synced guidance [C3]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-2.4</td>
+<td><strong>Cycle Sync Score</strong> surfaced on home</td>
+<td>Motivate via a single progress signal [C1,C9]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-2.5</td>
+<td>"Edit period" and "edit health" entry points</td>
+<td>Keep the model accurate over time [C1]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-2.6</td>
+<td>AI-personalized recommendations (meals/actions) for today</td>
+<td>Relevance beyond static content [C4]</td>
+<td>M, W</td>
+<td>⚠️ rules-based MVP</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-2.7</td>
+<td>Week strip / quick navigation to other days</td>
+<td>Review &amp; plan around the cycle [C3]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-3 · NutriLog (nutrition)</h2>
+<p><em>Intent: log food and learn phase-appropriate nutrition, backed by science (C1, C3).</em></p>
+<p><strong>Built:</strong> NutriLog with per-phase tips, the Nutri Basics nutrient list and library, and Today's Meal logging (writes <code>meal_logs</code>). Clinical evidence-tagging of all content is a content-ops task still in progress.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-3.1</td>
+<td>Daily Tip / Body Insight per phase</td>
+<td>Educate with phase-specific science [C1]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-3.2</td>
+<td><strong>Nutri Basics</strong> nutrient list (e.g. Salmon→Omega-3, Pumpkin Seeds→Zinc)</td>
+<td>Concrete, phase-relevant food guidance [C3]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-3.3</td>
+<td>Nutri Basics full library ("Nurturing Essentials") with search</td>
+<td>Reference depth; discoverability [C3]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-3.4</td>
+<td><strong>Today's Meal</strong> logging (free text + structured)</td>
+<td>Build the habit + data for insights [C9]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-3.5</td>
+<td>Phase-synced meal plans / recipes with macros + "why it fits"</td>
+<td>Integrated nutrition plan, explainable [C3,C1]</td>
+<td>M, W</td>
+<td>⚠️</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-3.6</td>
+<td>Recommendations respect allergies/dietary prefs</td>
+<td>Safety &amp; personalization [C4]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-3.7</td>
+<td>All nutrition content evidence-tagged &amp; clinically reviewed</td>
+<td>Trust &amp; medical credibility [C1,C7]</td>
+<td>M, W</td>
+<td>⚠️ content-ops</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-4 · MovementLog (fitness)</h2>
+<p><em>Intent: phase-appropriate movement guidance + logging — the "fitness" leg of integrated plans (C3).</em></p>
+<p><strong>Built:</strong> the Movement Log with per-phase tips and workout logging (writes <code>movement_checklist</code>). Pulling activity from wearables is documented but requires a native dev build (Epic E, roadmap 2028).</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-4.1</td>
+<td>Per-phase movement tips (e.g. steady-state in luteal)</td>
+<td>Train with the cycle, not against it [C1,C3]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-4.2</td>
+<td>Log movement / workouts</td>
+<td>Habit + data for scores [C9]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-4.3</td>
+<td>Pull activity from wearables/health apps (when connected)</td>
+<td>Reduce manual logging; richer data [C3,C9]</td>
+<td>M</td>
+<td>📄 native build needed</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-5 · Progress &amp; scores</h2>
+<p><em>Intent: show progress over time so she stays engaged and improves (C1, C9).</em></p>
+<p><strong>Built:</strong> the Cycle Alignment Score (5-component CAS in <code>src/lib/cas.ts</code>, 34 tests) recomputes in real time as she logs and writes <code>daily_scores</code>; Progress shows current/last/best, trends, per-phase averages, contributors, and mood/energy. The score formula spec is documented for clinician validation.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-5.1</td>
+<td><strong>Cycle Alignment Score</strong>: current, last cycle, best</td>
+<td>Single measure of how well she's syncing [C1,C9]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-5.2</td>
+<td>Daily / weekly / monthly / yearly trends (charts)</td>
+<td>See improvement; sustain motivation [C9]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-5.3</td>
+<td>Average score by phase</td>
+<td>Pinpoint weak phases [C1]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-5.4</td>
+<td>Top positive contributors / areas to improve</td>
+<td>Actionable feedback loop [C4,C9]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-5.5</td>
+<td><strong>Mood Score</strong> &amp; <strong>Energy Score</strong> tracking</td>
+<td>Connect nutrition/cycle to felt outcomes [C1,C9]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-5.6</td>
+<td>Define &amp; document each score's formula (inputs, range)</td>
+<td>POs/clinicians can validate the IP [C1]</td>
+<td>(spec)</td>
+<td>✅ documented</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-6 · Calendar</h2>
+<p><em>Intent: a cycle calendar to see the past/upcoming phases and logs (C1).</em></p>
+<p><strong>Built:</strong> the phase-coloured month grid with predicted period, day detail, and edit/log period from the calendar.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-6.1</td>
+<td>Cycle calendar with phases + predicted period</td>
+<td>Plan life around the cycle [C1]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-6.2</td>
+<td>Day detail: logs (meals, movement, mood, energy)</td>
+<td>One place to review a day [C9]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-6.3</td>
+<td>Edit period / log period from calendar</td>
+<td>Keep predictions accurate [C1]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-7 · Community</h2>
+<p><em>Intent: peer support &amp; expert content — the social capability (C5) and a retention driver.</em></p>
+<p>Community is <strong>documented/roadmap</strong>, not built. It remains an MVP-plus surface; nothing here is wired to live data yet.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-7.1</td>
+<td>Community trending posts</td>
+<td>Social proof &amp; engagement [C5]</td>
+<td>M, W</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-7.2</td>
+<td>Clinically-reviewed articles feed</td>
+<td>Credible education; SEO for entry [C1,C5]</td>
+<td>M, W</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-7.3</td>
+<td>Search topics / articles / people</td>
+<td>Discoverability [C5]</td>
+<td>M, W</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-7.4</td>
+<td>React / save / share; comment (MVP read+react)</td>
+<td>Lightweight participation [C5]</td>
+<td>M, W</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-7.5</td>
+<td>Community privacy controls</td>
+<td>Safe participation [C2]</td>
+<td>M, W</td>
+<td>⚠️ settings screen exists</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-7.6</td>
+<td>Sponsored expert content slots (labeled)</td>
+<td>Revenue stream from the model [C6,C8]</td>
+<td>M, W</td>
+<td>📄</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-8 · Notifications &amp; engagement</h2>
+<p><em>Intent: bring her back at the right moments (C4, C9).</em></p>
+<p><strong>Built:</strong> a live <strong>Notification Center</strong> — a feed computed from real cycle/phase/logging state (phase tip, check-in nudge, today's score, milestones), reached via the 🔔 on the home header. A <strong>Notifications &amp; Reminders</strong> settings screen exists. True OS push delivery and quiet-hours scheduling are the remaining pieces.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-8.1</td>
+<td>Daily focus / phase-change notifications</td>
+<td>Timely, relevant nudges [C4]</td>
+<td>M, (W)</td>
+<td>⚠️ in-app feed built; OS push pending</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-8.2</td>
+<td>Mood &amp; energy check-in prompts</td>
+<td>Capture felt-state data [C9]</td>
+<td>M</td>
+<td>✅ (in-app)</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-8.3</td>
+<td>Logging reminders (configurable)</td>
+<td>Sustain habit without nagging [C9]</td>
+<td>M</td>
+<td>⚠️ preferences UI; delivery pending</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-8.4</td>
+<td>Notification preferences &amp; quiet hours</td>
+<td>Respect the user; reduce churn [C2]</td>
+<td>M, W</td>
+<td>⚠️</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-9 · Profile, privacy &amp; data rights</h2>
+<p><em>Intent: visible trust — "your data is yours" as a feature (C2).</em></p>
+<p><strong>Built:</strong> the Settings hub with Personal Information, Sign-in &amp; Security, <strong>Data Privacy (in-app JSON export + delete account)</strong>, Community Privacy, Notifications &amp; Reminders, Choose Your Nutri, App Preferences, and Nutritional Preferences. In-app data export and delete work today. The known gaps: <strong>full auth-record deletion</strong> needs a service-role Edge Function (pending), and <strong>2FA/passkeys</strong> are intentionally deferred. Connector-scoped erasure depends on connectors, which aren't built.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-9.1</td>
+<td>View/manage/revoke all consents</td>
+<td>User control = trust [C2]</td>
+<td>M, W</td>
+<td>⚠️ consent layer pending</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-9.2</td>
+<td>Data <strong>export</strong> (machine-readable)</td>
+<td>GDPR/FADP right; trust [C2]</td>
+<td>M, W</td>
+<td>✅ in-app JSON export</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-9.3</td>
+<td>Account <strong>deletion / erasure</strong> incl. connectors</td>
+<td>Right to be forgotten [C2]</td>
+<td>M, W</td>
+<td>⚠️ in-app delete built; full auth-record deletion needs service-role Edge Function</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-9.4</td>
+<td>Sign-in &amp; security (password, 2FA)</td>
+<td>Protect sensitive data [C2]</td>
+<td>M, W</td>
+<td>⚠️ password ✅; 2FA/passkeys deferred</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-9.5</td>
+<td>Edit cycle, goals, health, dietary settings</td>
+<td>Keep personalization current [C1,C4]</td>
+<td>M, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-9.6</td>
+<td>Send feedback</td>
+<td>Continuous improvement [C9]</td>
+<td>M, W</td>
+<td>⚠️</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-10 · Subscription &amp; monetization</h2>
+<p><em>Intent: convert and retain paying users; fund the business (C6).</em></p>
+<p>Monetization is <strong>documented/roadmap</strong> — the value ladder and pricing are defined but billing (RevenueCat/store IAP) is not yet wired.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-10.1</td>
+<td>Free vs <strong>Premium €5.99/mo</strong> feature gating</td>
+<td>Clear value ladder [C6]</td>
+<td>M, W</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-10.2</td>
+<td>In-app purchases</td>
+<td>Secondary revenue (€0.81/user/yr) [C6]</td>
+<td>M, W</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-10.3</td>
+<td>Manage/cancel subscription; restore purchases</td>
+<td>Compliance &amp; trust [C6]</td>
+<td>M, W</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-10.4</td>
+<td>Cross-platform subscription state (one entitlement)</td>
+<td>Pay once, access everywhere [C6]</td>
+<td>M, W</td>
+<td>📄</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-11 · Health &amp; wearable connectors</h2>
+<p><em>Intent: richer, automatic data → better scores &amp; plans (C3, C9).</em></p>
+<p><strong>Documented only</strong> (top-8 platforms specified — see doc 09). Connectors require a <strong>native dev build</strong>, not Expo Go, so nothing here ships until that build exists; roadmap 2028 (Epic E).</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-11.1</td>
+<td>Connect Apple Health / Health Connect / Samsung Health</td>
+<td>Native phone data, broadest reach [C3,C9]</td>
+<td>M</td>
+<td>📄 native build needed</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-11.2</td>
+<td>Connect Garmin / Fitbit / Strava / Oura / Xiaomi / Huawei</td>
+<td>Wearable &amp; fitness ecosystems [C3,C9]</td>
+<td>M</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-11.3</td>
+<td>Just-in-time <strong>consent</strong> before each connector syncs</td>
+<td>Lawful sync; user control [C2]</td>
+<td>M</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-11.4</td>
+<td>Disconnect purges tokens &amp; stops sync</td>
+<td>Revocability [C2]</td>
+<td>M</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-11.5</td>
+<td>Dedup across overlapping sources</td>
+<td>Accurate data for scores [C9]</td>
+<td>M</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-11.6</td>
+<td>(Future) Apple Watch / Wear OS phase surfacing</td>
+<td>On-wrist daily value [C3]</td>
+<td>M</td>
+<td>📄</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-12 · Web entry &amp; signup (one site, not two)</h2>
+<p><em>Intent: a single entry point that markets to visitors and serves the app to users (C6, C8).</em></p>
+<p><strong>Built (Epic F, DONE):</strong> one Cloudflare Pages deployment (<code>nutrisync-collective</code>) serves the marketing site at the root and the wired web app at <code>/app.html</code>, with session-aware routing (no session → login, session without cycle → onboarding, else → home). Funnel analytics / A/B is not yet instrumented.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-12.1</td>
+<td>One domain: public marketing + authenticated app</td>
+<td>Unified DTC experience [C6]</td>
+<td>Mk, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-12.2</td>
+<td>Session-aware entry routing (anon→marketing, user→app)</td>
+<td>Frictionless return [C6]</td>
+<td>Mk, W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-12.3</td>
+<td>Waitlist → onboarding handoff (no re-entry)</td>
+<td>Convert demand [C6]</td>
+<td>Mk, W</td>
+<td>⚠️</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-12.4</td>
+<td>SEO-friendly marketing + article pages</td>
+<td>Organic acquisition [C8]</td>
+<td>Mk</td>
+<td>⚠️</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-12.5</td>
+<td>Shared design tokens &amp; auth across surfaces</td>
+<td>Consistent brand &amp; one identity [C6]</td>
+<td>Mk, W, M</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-12.6</td>
+<td>Funnel analytics &amp; A/B</td>
+<td>Optimize acquisition; feed MIS [C9]</td>
+<td>Mk</td>
+<td>📄</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-13 · B2B / institutional (employer, university, clinic)</h2>
+<p><em>Intent: the distribution flywheel — clinician-partnered + institutional outreach (C7, C8).</em></p>
+<p><strong>Documented/roadmap</strong> — the B2B and clinician distribution flows are not built.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-13.1</td>
+<td>Employer/seat model: invite &amp; activate eligible women</td>
+<td>B2B revenue (€35–50/employee/yr) [C8]</td>
+<td>W, Ad</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-13.2</td>
+<td>Clinic/clinician referral &amp; distribution flows</td>
+<td>Clinician-partnered distribution [C7]</td>
+<td>W, Ad</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-13.3</td>
+<td>Aggregate, <strong>non-individual</strong> org reporting</td>
+<td>Value to employer without exposing cycle data [C2,C8]</td>
+<td>Ad</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-13.4</td>
+<td>University/medical partner pilots instrumentation</td>
+<td>Validation + credibility [C7,C9]</td>
+<td>Ad</td>
+<td>📄</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-14 · Admin / MIS (internal)</h2>
+<p><em>Intent: run the business on data — the insight loop (C9).</em></p>
+<p><strong>Partial (Epic G):</strong> an admin console page exists but is <strong>static/mock</strong> — not yet wired to live Supabase data.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-14.1</td>
+<td>KPIs: access, signups, retention (D1/D7/D30)</td>
+<td>Operate on facts [C9]</td>
+<td>Ad</td>
+<td>⚠️ mock UI</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-14.2</td>
+<td>Subscriptions: free/premium, MRR, churn, conversion</td>
+<td>Track monetization [C6,C9]</td>
+<td>Ad</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-14.3</td>
+<td>Business-case actuals vs plan (revenue/cost/profit, users)</td>
+<td>Manage to the financial model [C9]</td>
+<td>Ad</td>
+<td>⚠️ mock UI</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-14.4</td>
+<td>Connector &amp; ops health</td>
+<td>Reliability of the data loop [C9]</td>
+<td>Ad</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-14.5</td>
+<td>Content/clinical review queue</td>
+<td>Governed, credible content [C1,C7]</td>
+<td>Ad</td>
+<td>📄</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-14.6</td>
+<td>RBAC + admin audit; no individual cycle data exposure</td>
+<td>Compliance &amp; trust [C2]</td>
+<td>Ad</td>
+<td>📄</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>WF-15 · Protected business-case site (investors/advisors)</h2>
+<p><em>Intent: secure access to the pitch &amp; data room (C8 fundraising support).</em></p>
+<p><strong>Built (Epic H, DONE):</strong> the gated hub lives in the marketing site footer under <strong>Team access</strong> (code <code>123456</code>) and holds the business-case materials. The earlier Cloudflare Access email whitelist was removed to make the site public; it can be re-added via Zero Trust for a stricter, per-visitor allowlist.</p>
+<table>
+<thead>
+<tr>
+<th>BR</th>
+<th>Requirement</th>
+<th>Intent</th>
+<th>Surfaces</th>
+<th>Built?</th>
+<th>Verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR-15.1</td>
+<td>Full business case (problem→financials→ask)</td>
+<td>Inform investors/advisors [C8]</td>
+<td>W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-15.2</td>
+<td>Real access control (SSO/allowlist), not placeholder</td>
+<td>Confidentiality [C2]</td>
+<td>W</td>
+<td>⚠️ team code live; Cloudflare Access re-addable</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-15.3</td>
+<td>Gated document vault (deck, model, one-pager, Canva)</td>
+<td>Controlled data room [C2]</td>
+<td>W</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>BR-15.4</td>
+<td>Per-visitor view analytics</td>
+<td>Track investor engagement [C9]</td>
+<td>Ad</td>
+<td>📄</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Slide-7 capability coverage matrix (web + apps must cover all nine)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Capability (slide 7)</th>
+<th>Where it's delivered (workflows)</th>
+<th>Mobile</th>
+<th>Web</th>
+<th>Status to verify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td>Science-backed cycle-sync framework</td>
+<td>WF-1,2,3,4,5,6 (phase model, scores, content)</td>
+<td>✅</td>
+<td>✅</td>
+<td>Built; content evidence-tagging + clinician sign-off ongoing</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>Ethical data &amp; privacy design</td>
+<td>WF-1,9,11,13,14,15 (consent, export/erase, RBAC)</td>
+<td>⚠️</td>
+<td>⚠️</td>
+<td>Export + in-app delete + RLS done; consent service + full auth-record deletion pending</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>Integrated cycle, nutrition &amp; fitness plans</td>
+<td>WF-2,3,4,11 (NutriLog + MovementLog + plans)</td>
+<td>✅</td>
+<td>✅</td>
+<td>Core built; wearable enrichment is roadmap (native build)</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>AI personalization</td>
+<td>WF-2,3,5,8 (recommendations, contributors)</td>
+<td>⚠️</td>
+<td>⚠️</td>
+<td>Rules-based MVP live; richer AI later</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>Social &amp; community features</td>
+<td>WF-7</td>
+<td>📄</td>
+<td>📄</td>
+<td>Community not built (roadmap)</td>
+</tr>
+<tr>
+<td>C6</td>
+<td>Direct-to-consumer</td>
+<td>WF-10,12 (subscription, unified web entry)</td>
+<td>⚠️</td>
+<td>⚠️</td>
+<td>Unified web entry DONE; billing (RevenueCat/IAP) to build</td>
+</tr>
+<tr>
+<td>C7</td>
+<td>Clinician-partnered distribution</td>
+<td>WF-3,13,14 (clinical review, clinic referrals)</td>
+<td>📄</td>
+<td>📄</td>
+<td>Clinic flows + review queue to build</td>
+</tr>
+<tr>
+<td>C8</td>
+<td>Institutional ATL outreach</td>
+<td>WF-12,13,15 (SEO, B2B seats, investor site)</td>
+<td>–</td>
+<td>⚠️</td>
+<td>Investor hub DONE; B2B/admin + SEO to build</td>
+</tr>
+<tr>
+<td>C9</td>
+<td>TTL data &amp; insight loop</td>
+<td>WF-3,4,5,8,12,14 (logging → scores → MIS)</td>
+<td>⚠️</td>
+<td>⚠️</td>
+<td>Logging → CAS → daily_scores live; admin MIS is mock-only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reading the matrix:</strong> the daily-value spine of the product — cycle home, NutriLog, MovementLog, Progress/CAS, Calendar, Notification Center, the unified web entry, and the gated investor hub — is <strong>shipped on live data across mobile and web</strong>. The remaining work is concentrated in three areas: the privacy/consent completion (Epic D), monetization and B2B/admin surfaces, and the wearable connectors (which need a native build). The "Status to verify" column is where POs focus — turning a designed or partial capability into a fully delivered one.</p>
+<h2>PO verification process (suggested)</h2>
+<ol>
+<li>Walk each workflow; confirm the <strong>intent</strong> matches business goals.</li>
+<li>Sanity-check the <strong>Built?</strong> column against the live web app (<code>/app.html</code>) and an installed mobile build, then mark <strong>Verify</strong> per surface (✅/⚠️/❌) in <code>business-requirements.csv</code>.</li>
+<li>For every ❌/⚠️/📄, link to a backlog story (<code>backlog.csv</code>) so it's scheduled.</li>
+<li>Confirm the slide-7 matrix reflects both Mobile and Web before launch sign-off (C7/C8 may stay web/admin-only by design).</li>
+<li>Re-verify after the consent service, billing, and any native-build milestones land.</li>
+</ol></div></body></html>

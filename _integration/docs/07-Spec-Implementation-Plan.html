@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Spec Implementation Plan — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Developer Spec → Implementation Plan &amp; Coverage</h1>
+<p>Source: <strong>NutriSync Collective — Complete Product &amp; Developer Specification, v1.0</strong>, 29 pages. This plan extracts the user stories and functionality, records what is <strong>already built</strong>, and marks the remaining work. As of July 2026 the app is effectively <strong>1:1 with the Figma prototype</strong> — the full screen set is built, wired to Supabase, and running the real-time CAS. The spec remains the single source of truth; where it conflicts with earlier inferences (e.g. luteal colour), the spec wins.</p>
+<p>Status legend: ✅ done · 🟡 partial/foundation · ⬜ to build.</p>
+<hr />
+<h2>0. Corrections the spec forced (applied everywhere)</h2>
+<ul>
+<li><strong>Brand primary is <code>#E8472A</code></strong>; background cream <strong><code>#F5F2EB</code></strong>. App-wide brand orange is <code>#FF5509</code>, orb gradient <code>#FF9269 → #FF5509</code>. Typeface: <strong>Poppins</strong> throughout.</li>
+<li><strong>Phase colours (authoritative):</strong> Menstrual <code>#E8472A</code> · Follicular <code>#6B9E6B</code> (sage) · Ovulatory <code>#D4A017</code> (gold) · <strong>Luteal <code>#7B5EA7</code> (purple/lavender)</strong>. Earlier pink luteal is corrected.</li>
+<li><strong>Five scoring phases</strong>, not four: menstrual, follicular, ovulatory, <strong>early_luteal</strong>, <strong>late_luteal</strong> → four display phases.</li>
+<li><strong>Bottom nav:</strong> Cycle (Home) · NutriLog (Meals) · Movement Log · Progress · Calendar.</li>
+<li><strong>The Nutri / NutriBubble orb</strong> (official Figma artwork, avatar variants) is a first-class brand element and appears throughout.</li>
+</ul>
+<h2>1. What's already built against the spec</h2>
+<ul>
+<li>✅ <strong>CAS engine</strong> — implemented in <code>src/lib/cas.ts</code> (ported from <code>packages/core/cas.mjs</code>): the §5.2 phase model and all five §6 components (C1 Phase Confidence 15 · C2 Biomarkers 25 · C3 Nutrition 30 · C4 Fitness 20 · C5 Logging 10) with the exact scoring tables and the §16 rules. <strong>34/34 unit tests pass</strong>, including the §6.7 worked example.</li>
+<li>✅ <strong>Real-time CAS recompute</strong> — logging recomputes the score live and upserts <code>daily_scores</code>. Runs identically in the mobile app and the web app.</li>
+<li>✅ <strong>Design tokens</strong> — colours, Poppins, and the NutriBubble orb locked to §2 and used everywhere.</li>
+<li>✅ <strong>Database schema</strong> — the <strong>8 core tables</strong> (users, cycles, daily_logs, nutrition_checklist, movement_checklist, meal_logs, daily_scores, user_phase_averages) plus content tables (phase_food, movement_activity, phase_tip), all with RLS per §16.</li>
+<li>✅ <strong>Full mobile screen set</strong> — every screen below is built and functional on live data.</li>
+<li>✅ <strong>Web app</strong> — the Claude Design bundle stitched to the same Supabase backend (real auth, session routing, reads/writes across all 8 tables, same CAS → <code>daily_scores</code>, in-app export/delete).</li>
+<li>✅ <strong>CI/CD (both tracks)</strong> — mobile OTA via EAS Update and web via wrangler Pages deploy, each auto-deploying on push.</li>
+</ul>
+<h2>2. User stories by module → status</h2>
+<h3>Onboarding (§3) ✅</h3>
+<ul>
+<li>Create an account and name your Nutri. ✅</li>
+<li>Answer <strong>Cycle Info</strong> including <strong>last period start date</strong> (the critical field), so phases can be calculated. ✅</li>
+<li>Provide <strong>Health</strong>, <strong>Nutrition prefs</strong>, <strong>NutriGoal</strong>, <strong>Nutri avatar</strong>, <strong>city</strong>, and <strong>consent</strong>, persisted to <code>users</code> + <code>cycles</code>. ✅</li>
+<li>Answers <strong>cascade</strong> at the data layer (diet/allergy/condition filtering). ✅</li>
+<li>Acceptance: no health row persists without consent; BMR via Mifflin-St Jeor, <strong>never shown as calories</strong>. ✅</li>
+</ul>
+<h3>Daily Mood &amp; Energy gate (§4) ✅</h3>
+<ul>
+<li>On first open each calendar day, log <strong>mood</strong> then <strong>energy</strong> ("Before we Sync"), feeding CAS C2 &amp; C5; shown once/day. ✅</li>
+</ul>
+<h3>Home / Cycle (§5) ✅</h3>
+<ul>
+<li>Today's <strong>phase + cycle day</strong> ring (arc colour = phase colour), greeting, week strip, edit period + edit health, live Sync Score, 🔔 to Notification Center, bottom nav. ✅</li>
+<li><code>cycle_day = today − last_period_start + 1</code>, auto, never manual (§5.2). ✅</li>
+</ul>
+<h3>CAS (§6) ✅ engine + ✅ UI wiring</h3>
+<ul>
+<li><strong>CAS (0–100)</strong> updates <strong>in real time</strong> as the user logs (§15), writing <code>daily_scores</code>. ✅</li>
+<li>CSS (Cycle Stability Score, §6.8) — donut on Progress; MVP = rolling avg of last 3 cycle CAS averages; full logic post-MVP. 🟡</li>
+</ul>
+<h3>NutriLog / Meals (§7) ✅</h3>
+<ul>
+<li><strong>Daily Tip / Body Insight</strong> change every day (indexed by cycle_day, modulated by NutriGoal), a <strong>pre-checked Nutri Basics checklist</strong>, and a free-text <strong>meal log</strong>. ✅</li>
+<li>Food lists filtered by diet/allergies/conditions <strong>before display</strong> (§7.3); checking recalculates C3 in real time. ✅</li>
+<li>Phase food content seeded to <code>phase_food</code>. ✅</li>
+</ul>
+<h3>Movement Log (§8) ✅</h3>
+<ul>
+<li>Phase movement tips + a <strong>pre-checked checklist</strong> + free-text log; highest-intensity checked item drives C4 (+ C2 sub-metric). ✅</li>
+</ul>
+<h3>Edit Period (§9) ✅</h3>
+<ul>
+<li>Log flow (droplets), emotes/mood-state, pain, digestion, cravings, skin, sleep, energy, and related fields → <code>daily_logs</code>, feeding biomarkers. ✅ (real Figma emotes)</li>
+<li>Sex log → calendar star (protected/unprotected, private). 🟡</li>
+<li>Pattern recognition after 2 cycles → Progress insights (§9.5). ⬜</li>
+</ul>
+<h3>Edit Health / NutriGoals (§10) ✅</h3>
+<ul>
+<li>View/edit allergies &amp; conditions; <strong>NutriGoal locked until completed_cycles ≥ 2</strong> (§10.2), written to <code>users.nutrigoal / allergies / health_conditions</code>. ✅</li>
+</ul>
+<h3>Notification Center (§ live feed) ✅</h3>
+<ul>
+<li>A live feed computed from real cycle/phase/logging state — phase tip, check-in nudge, today's score, milestones — reached via the 🔔 on the home header. ✅</li>
+</ul>
+<h3>Calendar (§11) ✅</h3>
+<ul>
+<li>Today banner + phase pill + month grid with <strong>phase-colour dots</strong>, predicted period, legend, selected-day insight. ✅</li>
+<li>Cycle History year view + sex-log stars. 🟡</li>
+</ul>
+<h3>Progress (§12) ✅</h3>
+<ul>
+<li>CAS summary + component breakdown, history, and cycle insights. ✅</li>
+<li>CSS donut + full CAS-history charts (by-phase bars, contributors) and biomarker snapshot depth. 🟡</li>
+</ul>
+<h3>Settings (§13) ✅</h3>
+<ul>
+<li>Personal Information, Sign-in &amp; Security, Data Privacy (JSON export + delete account), Community Privacy, Notifications &amp; Reminders, Choose Your Nutri, <strong>App Preferences</strong> (units/week-start/haptics/appearance, saved on-device), <strong>Nutritional Preferences</strong> (diet type + allergies → <code>users</code>). ✅</li>
+<li>2FA / passkeys. ⬜ (intentionally deferred)</li>
+</ul>
+<h3>Personalisation engine (§3.9, §7.3, §16) ✅</h3>
+<ul>
+<li>Dietary restrictions/allergies/conditions/NutriGoal <strong>filter and modulate</strong> food, movement, tip, and insight content at the data layer. ✅</li>
+</ul>
+<h3>Longitudinal intelligence (§6.3, §6.8, §9.5) 🟡</h3>
+<ul>
+<li>After 3 full cycles, biomarker scoring switches from population norms to the user's <strong>own per-phase averages</strong> (<code>user_phase_averages</code>). 🟡 (schema live; full switch-over logic pending)</li>
+</ul>
+<h2>3. Non-negotiable rules (§16) — guardrails/tests</h2>
+<ol>
+<li>Phase determined <strong>before</strong> score; no <code>last_period_start_date</code> → C1 = 0 and CAS blocked. ✅</li>
+<li><strong>Never penalise aligned symptoms</strong> (low energy menstrual, high appetite luteal, fragmented sleep/variable mood late-luteal = full marks). ✅</li>
+<li><strong>Checklists default checked</strong>; user unchecks what she didn't do. ✅</li>
+<li>Fitness opt-out → <strong>10/20 passive</strong>. ✅</li>
+<li>NutriGoal <strong>locked 2 cycles</strong>. ✅</li>
+<li><strong>All data user-scoped</strong>, RLS on every table. ✅</li>
+<li>Sex-log stars (protected/unprotected), calendar-only, private. 🟡</li>
+<li><strong>CSS ≠ CAS</strong> — daily alignment vs cross-cycle stability. (documented; CSS depth post-MVP)</li>
+<li><strong>Daily content changes every day</strong> within a phase (indexed by cycle_day). ✅</li>
+<li>Personalisation overrides phase defaults at the data layer. ✅</li>
+<li>Cycle-length personalisation (not fixed 28). ✅</li>
+<li>After 3 cycles → personal averages. 🟡</li>
+<li><strong>BMR internal only</strong> — never show calories. ✅</li>
+<li>NutriGoal modulates every tip/insight/food. ✅</li>
+</ol>
+<h2>4. Module status summary</h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAS engine + real-time recompute</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Onboarding (account → Nutri → cycle date → prefs → consent)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Daily Mood &amp; Energy gate</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Home / Cycle (phase ring, live Sync Score, 🔔)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>NutriLog (tips + checklist + meal log + C3)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Movement Log (checklist + C4)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Edit Period (emotes, flow, symptoms)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Edit Health / NutriGoals</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Notification Center (live feed)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Calendar (month grid, predictions)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Progress (CAS summary + history)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Settings (incl. App Prefs + Nutritional Prefs)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Web app stitched to Supabase</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>CI/CD (mobile OTA + web Pages)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Sex-log stars / Cycle History year view</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td>CSS donut + full CAS-history charts</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td>Pattern recognition (2 cycles) / personal averages (3 cycles)</td>
+<td>🟡</td>
+</tr>
+<tr>
+<td>Full auth-record deletion (service-role Edge Function)</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>Consent / cookie layer</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>2FA / passkeys</td>
+<td>⬜ (deferred)</td>
+</tr>
+<tr>
+<td>Wearable connectors</td>
+<td>⬜ (roadmap 2028)</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Remaining work</h2>
+<p><strong>Depth on existing screens:</strong> sex-log stars and the Cycle History year view; the CSS donut and full CAS-history charts (by-phase bars, contributors) on Progress; biomarker-snapshot depth.</p>
+<p><strong>Intelligence:</strong> pattern recognition after 2 cycles and the switch to personal per-phase averages after 3 cycles (<code>user_phase_averages</code> schema is live; the logic is pending).</p>
+<p><strong>Compliance:</strong> full auth-record deletion via a service-role Edge Function, and a formal consent/cookie layer. (JSON export, in-app delete, and RLS are already live.)</p>
+<p><strong>Deferred by design:</strong> 2FA / passkeys, and wearable connectors (native dev build, roadmap 2028).</p>
+<h2>6. Content &amp; assets still needed from the team</h2>
+<ul>
+<li>The full <strong>per-cycle-day content library</strong> (Daily Tip + Body Insight for days 1–28+, × NutriGoal) — clinically reviewed — to deepen the seeded content.</li>
+<li>Any remaining Nutri avatar / animation variants beyond those already integrated.</li>
+<li>Confirmation of CAS sub-metric edge values where the spec's worked example is illustrative (the engine computes deterministically from the published tables).</li>
+</ul></div></body></html>

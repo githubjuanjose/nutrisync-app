@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NutriSync — Translations Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#E8472A;--coral-deep:#C73A20;--cream:#FBF4EE;--ink:#241D1A;--muted:#736862;--line:#EADED5;--good:#3DBE8B;}
+*{box-sizing:border-box;} body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:#fff;margin:0;}
+.top{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px 22px;}
+.top h1{font-size:20px;margin:0 0 2px;font-weight:900;} .top p{margin:0;font-size:12.5px;color:var(--muted);}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;}
+.controls input[type=search],.controls select{padding:9px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:13px;}
+.controls input[type=search]{flex:1;min-width:160px;}
+.controls select#fLang{font-weight:800;color:var(--coral-deep);border-color:var(--coral);}
+.btn{border:none;border-radius:10px;padding:9px 14px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;}
+.btn-p{background:linear-gradient(135deg,var(--coral),#F4876F);color:#fff;} .btn-g{background:#F3EBE4;color:var(--ink);}
+.prog{font-size:12.5px;color:var(--muted);margin-left:auto;} .prog b{color:var(--coral-deep);}
+.wrap{max-width:1100px;margin:0 auto;padding:18px 22px 80px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--coral-deep);margin:22px 0 6px;}
+table{width:100%;border-collapse:collapse;} th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);}
+.k{font-size:11.5px;color:var(--muted);font-family:ui-monospace,monospace;word-break:break-word;max-width:220px;}
+textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font:inherit;font-size:13px;resize:vertical;min-height:34px;line-height:1.4;background:#fff;}
+textarea.ro{background:#faf6f2;color:var(--muted);}
+textarea.empty{border-color:#f0b3a6;background:#fef6f3;}
+textarea.same{border-color:#e6cf9a;background:#fdf7e9;}
+.hint{font-size:12px;color:var(--muted);background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;padding:10px 14px;margin:12px 0;}
+</style></head><body>
+<div class="top">
+  <a href="/" onclick="if(history.length>1){history.back();return false;}return true;" style="display:inline-block;color:var(--coral-deep);font-weight:800;font-size:13px;text-decoration:none;margin-bottom:6px">‹ Back</a>
+  <h1>Translations Review</h1>
+  <p>Pick a language, review the machine-translated first pass beside the English source, and amend. Edits save on this device; <b>Export</b> downloads that language file to hand to the team to publish.</p>
+  <div class="controls">
+    <select id="fLang" title="Language to review"></select>
+    <select id="fSec"><option value="">All sections</option><option value="marketing">Marketing site</option><option value="app">Web app</option><option value="catalog">Catalog (lists)</option></select>
+    <input type="search" id="fTxt" placeholder="Search key or text..."/>
+    <label style="font-size:12.5px;color:var(--muted)"><input type="checkbox" id="fEmpty"/> only untranslated (blank or = English)</label>
+    <button class="btn btn-p" id="expT">Export</button>
+    <button class="btn btn-g" id="reset">Reset my edits</button>
+    <span class="prog" id="prog"></span>
+  </div>
+</div>
+<div class="wrap">
+  <div class="hint">The <b>English</b> column is the source (read-only; catalog English is the stored value). Edit the selected language on the right. A <b>yellow</b> box = still identical to English (likely not yet translated); a <b>pink</b> box = blank. Nothing here touches the live backend — it only changes on-screen wording. Canonical values stay English.</div>
+  <div id="rows">Loading…</div>
+</div>
+<script>
+var LS='ns_i18n_edits_v2';
+// Must match the app registry (endonyms). English is the source, not a target.
+var LANGS=[['es','Español'],['fr','Français'],['it','Italiano'],['de','Deutsch'],['nl','Nederlands'],
+  ['el','Ελληνικά'],['ca','Català'],['eu','Euskara'],['gl','Galego'],['va','Valencià'],
+  ['oc-aran','Aranés'],['zh','中文'],['ja','日本語']];
+var NAME={en:'English'};LANGS.forEach(function(l){NAME[l[0]]=l[1];});
+var EN={},BASES={},entries=[],edits={},lang='es';
+function leaves(o,path,out){for(var k in o){if(k==='_note'||k==='_meta')continue;var v=o[k],p=path.concat(k);if(v&&typeof v==='object')leaves(v,p,out);else if(typeof v==='string')out.push([p,v]);}}
+function getBy(o,p){var c=o;for(var i=0;i<p.length;i++){if(c==null)return undefined;c=c[p[i]];}return c;}
+function setBy(o,p,val){var c=o;for(var i=0;i<p.length-1;i++){if(typeof c[p[i]]!=='object'||c[p[i]]==null)c[p[i]]={};c=c[p[i]];}c[p[p.length-1]]=val;}
+function keyId(p){return p.join(' ');}
+function eEdits(code){edits[code]=edits[code]||{};return edits[code];}
+function enVal(p){return getBy(EN,p)||'';}
+function curVal(code,p){var e=eEdits(code)[keyId(p)];if(e!==undefined)return e;var v=getBy(BASES[code]||{},p);return v==null?'':v;}
+function isRO(p){return p[0]==='catalog';} // catalog English is the stored value
+function persist(){localStorage.setItem(LS,JSON.stringify(edits));}
+
+function boot(){
+  var sel=document.getElementById('fLang');
+  sel.innerHTML=LANGS.map(function(l){return '<option value="'+l[0]+'">'+l[1]+' ('+l[0]+')</option>';}).join('');
+  try{edits=JSON.parse(localStorage.getItem(LS))||{};}catch(e){edits={};}
+  fetch('../i18n/en.json').then(function(x){return x.json();}).then(function(en){
+    EN=en;var enL=[];leaves(EN,[],enL);entries=enL.map(function(x){return {p:x[0],en:x[1]};});
+    loadLang('es');
+  }).catch(function(){document.getElementById('rows').textContent='Could not load en.json.';});
+}
+function loadLang(code){
+  lang=code;document.getElementById('fLang').value=code;
+  if(BASES[code]){render();return;}
+  fetch('../i18n/'+code+'.json').then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(j){BASES[code]=j;render();})
+    .catch(function(){BASES[code]={};render();}); // not published yet → start blank
+}
+function stat(){var filled=0,i;for(i=0;i<entries.length;i++){if(curVal(lang,entries[i].p).trim())filled++;}return filled;}
+function render(){
+  var sec=document.getElementById('fSec').value,q=document.getElementById('fTxt').value.toLowerCase(),onlyE=document.getElementById('fEmpty').checked;
+  var rows=document.getElementById('rows');rows.innerHTML='';
+  var bySec={},shown=0,i;
+  for(i=0;i<entries.length;i++){var e=entries[i];if(sec&&e.p[0]!==sec)continue;
+    var tv=curVal(lang,e.p),ev=enVal(e.p);
+    if(onlyE&&tv.trim()&&tv.trim()!==ev.trim())continue;
+    if(q&&!(e.p.join('.').toLowerCase().indexOf(q)>=0||ev.toLowerCase().indexOf(q)>=0||tv.toLowerCase().indexOf(q)>=0))continue;
+    (bySec[e.p[0]]=bySec[e.p[0]]||[]).push(e);shown++;}
+  var label={marketing:'Marketing site',app:'Web app',catalog:'Catalog (list content)'},order=['marketing','app','catalog'];
+  for(var s=0;s<order.length;s++){var sk=order[s];if(!bySec[sk])continue;
+    var h=document.createElement('div');h.className='sec';h.textContent=label[sk]+' — '+bySec[sk].length;rows.appendChild(h);
+    var t=document.createElement('table');t.innerHTML='<thead><tr><th>Key</th><th>English</th><th>'+NAME[lang]+'</th></tr></thead>';
+    var tb=document.createElement('tbody');
+    for(var r=0;r<bySec[sk].length;r++){(function(e){var ev=enVal(e.p),tv=curVal(lang,e.p);
+      var tr=document.createElement('tr');
+      var kd=document.createElement('td');kd.className='k';kd.textContent=e.p.slice(1).join(' / ');tr.appendChild(kd);
+      var enT=document.createElement('td');var a1=document.createElement('textarea');a1.value=ev;a1.className='ro';a1.readOnly=true;enT.appendChild(a1);tr.appendChild(enT);
+      var tT=document.createElement('td');var a2=document.createElement('textarea');a2.value=tv;
+      function cls(){a2.className=!a2.value.trim()?'empty':(a2.value.trim()===ev.trim()?'same':'');}
+      cls();
+      if(isRO(e.p)){/* editable target even for catalog */}
+      a2.oninput=function(){eEdits(lang)[keyId(e.p)]=a2.value;cls();persist();updateProg();};
+      tT.appendChild(a2);tr.appendChild(tT);tb.appendChild(tr);})(bySec[sk][r]);}
+    t.appendChild(tb);rows.appendChild(t);}
+  if(!shown)rows.innerHTML='<p style="color:var(--muted);padding:20px">No entries match.</p>';
+  updateProg(shown);
+}
+function updateProg(shown){var filled=stat(),tot=entries.length;
+  if(shown===undefined){var m=document.getElementById('prog').innerHTML.match(/Showing <b>(\d+)/);shown=m?m[1]:'';}
+  document.getElementById('prog').innerHTML=NAME[lang]+': <b>'+shown+'</b> shown · <b>'+filled+'/'+tot+'</b> filled ('+Math.round(filled/tot*100)+'%)';}
+function exportTarget(code){
+  var out=JSON.parse(JSON.stringify(EN)); // full key coverage from the English structure
+  for(var i=0;i<entries.length;i++){var p=entries[i].p;setBy(out,p,curVal(code,p));}
+  out._meta={lang:code,name:NAME[code],source:'founder-review',reviewed:true};
+  var b=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});var a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download=code+'.json';a.click();URL.revokeObjectURL(a.href);
+}
+document.getElementById('fLang').onchange=function(){loadLang(this.value);};
+document.getElementById('fSec').onchange=render;
+document.getElementById('fTxt').oninput=render;
+document.getElementById('fEmpty').onchange=render;
+document.getElementById('expT').onclick=function(){exportTarget(lang);};
+document.getElementById('reset').onclick=function(){if(confirm('Discard your local edits for '+NAME[lang]+'?')){edits[lang]={};persist();render();}};
+boot();
+</script></body></html>

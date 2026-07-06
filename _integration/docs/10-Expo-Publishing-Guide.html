@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Expo Build & Publishing Guide — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Expo build &amp; publishing guide</h1>
+<p>Everything needed to test NutriSync on real phones and publish it to the App Store and Google
+Play, using <strong>Expo Application Services (EAS)</strong>. Written for the current <strong>Expo SDK 54</strong> project
+in the <strong><code>githubjuanjose/nutrisync-app</code></strong> repo (React Native 0.81, React 19.1; requires
+<strong>Node ≥ 20.19.4</strong>).</p>
+<p>Key project facts (July 2026):
+- <strong>EAS project id:</strong> <code>3b124e7e-e7e8-43ed-a54c-b660a07109dc</code>
+- <strong>Bundle / package id:</strong> <code>com.nutrisync.app</code>
+- <strong>OTA updates URL:</strong> <code>https://u.expo.dev/3b124e7e-e7e8-43ed-a54c-b660a07109dc</code> (in <code>app.json</code>)
+- <strong>runtimeVersion policy:</strong> <code>appVersion</code>
+- <strong>OTA is already wired:</strong> every push to <code>nutrisync-app</code> runs <code>eas update --branch production</code>.</p>
+<hr />
+<h2>0. Accounts you need (once)</h2>
+<table>
+<thead>
+<tr>
+<th>Account</th>
+<th>Cost</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Expo</strong> account</td>
+<td>Free</td>
+<td>Runs EAS Build/Submit/Update. Sign up at expo.dev.</td>
+</tr>
+<tr>
+<td><strong>Apple Developer Program</strong></td>
+<td><strong>$99 / year</strong></td>
+<td>Required to build a real iOS app, use TestFlight, and ship to the App Store. <strong>This is the current iOS blocker</strong> — a free Apple account has no "team" and cannot sign or distribute.</td>
+</tr>
+<tr>
+<td><strong>Google Play Console</strong></td>
+<td><strong>$25 one-time</strong></td>
+<td>Required to publish on Android / Play internal testing — <strong>not</strong> needed for APK testing.</td>
+</tr>
+</tbody>
+</table>
+<p>You can do <strong>all Android testing</strong> — the preview APK below — before paying for anything. The
+Apple fee is the one thing standing between us and iOS TestFlight.</p>
+<hr />
+<h2>1. Tools</h2>
+<pre><code>npm install -g eas-cli
+eas login            # sign in to the shared Expo account
+git clone https://github.com/githubjuanjose/nutrisync-app
+cd nutrisync-app
+npm install
+</code></pre>
+<p>The project is already linked to EAS (project id <code>3b124e7e-e7e8-43ed-a54c-b660a07109dc</code> is in
+<code>app.json</code>), so you do <strong>not</strong> need to run <code>eas init</code> on this repo. On a brand-new project you
+would run <code>eas init</code> to create the id and write it into app config.</p>
+<blockquote>
+<p><strong>Node version matters.</strong> SDK 54 needs <strong>Node ≥ 20.19.4</strong>. If installs or builds fail with
+obscure errors, check <code>node -v</code> first — Node 18 will not work.</p>
+</blockquote>
+<hr />
+<h2>2. Fastest path — test today with Expo Go (no build, no fees)</h2>
+<pre><code>npx expo start                 # same Wi-Fi: scan the QR with Expo Go
+npx expo start --tunnel        # remote testers, via Expo's servers (ngrok — flaky)
+</code></pre>
+<p>Scan the QR with the <strong>Expo Go</strong> app (iOS App Store / Google Play). Live reload on save. This is
+for <strong>developers iterating</strong>, not for stakeholder testing: Expo Go <strong>does not receive OTA
+updates</strong> and can't run custom native modules (e.g. HealthKit), so once wearable connectors land
+you must use a <strong>development build</strong> (next section). For the Madrid testers, prefer the <strong>preview
+APK</strong> in section 4.</p>
+<hr />
+<h2>3. Development build (internal, for native features + device testing)</h2>
+<p>A development build is your own app binary with the dev tools baked in — needed once we add
+native modules (HealthKit, Health Connect, biometrics).</p>
+<pre><code># iOS (installs to registered devices or a simulator)
+eas build --profile development --platform ios
+
+# Android (installs an .apk on any device)
+eas build --profile development --platform android
+</code></pre>
+<p>EAS returns a URL/QR; open it on the phone to install. Then run <code>npx expo start --dev-client</code>
+and the build connects to your Metro bundler.</p>
+<p>For iOS physical devices you must register them first (this needs the paid Apple account):</p>
+<pre><code>eas device:create        # sends a link the tester opens on their iPhone
+</code></pre>
+<hr />
+<h2>4. Preview build (shareable, no store) — best for beta testers</h2>
+<p>This is the recommended path for the Madrid testers. The <code>preview</code> profile is configured for
+<strong>internal distribution</strong> with <strong><code>buildType: apk</code></strong>, so a single command produces a standalone
+Android install anyone can run without Expo Go or Metro.</p>
+<pre><code>eas build --profile preview --platform android
+</code></pre>
+<ul>
+<li>Produces an <strong><code>.apk</code></strong> plus a <strong>download page with a link and QR</strong> — share it, tap to install.</li>
+<li>No Apple or Google paid account required for Android.</li>
+<li>Once installed, the build <strong>receives OTA updates</strong> on every push (section 7).</li>
+</ul>
+<p>For iOS, internal distribution requires the testers' devices registered on the paid Apple
+account (<code>eas device:create</code>), or — smoother — <strong>TestFlight</strong> (section 6).</p>
+<h3>The <code>preview</code> profile (in <code>eas.json</code>)</h3>
+<pre><code class="language-json">{
+  &quot;build&quot;: {
+    &quot;preview&quot;: {
+      &quot;distribution&quot;: &quot;internal&quot;,
+      &quot;android&quot;: { &quot;buildType&quot;: &quot;apk&quot; }
+    },
+    &quot;production&quot;: {}
+  }
+}
+</code></pre>
+<hr />
+<h2>5. Production build (store-ready binaries)</h2>
+<pre><code>eas build --profile production --platform all
+</code></pre>
+<p>Produces an <code>.aab</code> (Android App Bundle) and a <code>.ipa</code> (iOS). <code>autoIncrement</code> bumps the build
+number each time. Credentials (signing keys, provisioning) are generated and stored by EAS —
+say <strong>yes</strong> when it offers to manage them. iOS builds need the paid Apple account.</p>
+<hr />
+<h2>6. Submit to the stores — <code>eas submit</code></h2>
+<p>Fill the placeholders in <code>eas.json</code> → <code>submit.production</code> first (Apple ID, App Store Connect app
+id, Apple Team id; Android service-account JSON).</p>
+<pre><code># iOS → App Store Connect / TestFlight
+eas submit --platform ios --latest
+
+# Android → Play Console (internal track by default)
+eas submit --platform android --latest
+</code></pre>
+<h3>iOS via TestFlight — blocked on Apple enrollment</h3>
+<p>TestFlight is the way to get the app on iPhones, but it needs the <strong>paid Apple Developer Program
+($99/yr)</strong>. A <strong>free Apple account has no team</strong> and cannot sign or distribute — so enrollment is
+the prerequisite. Once enrolled:
+1. In <strong>App Store Connect</strong> create the app (bundle id <strong><code>com.nutrisync.app</code></strong>).
+2. Build for iOS and submit:
+   <code>eas build --platform ios --profile production
+   eas submit --platform ios --latest</code>
+   The build appears in <strong>TestFlight</strong> after Apple processing (~15 min).
+3. Add testers. <strong>Internal</strong> testers (your team) install immediately; <strong>External</strong> testing
+   triggers a one-time <strong>Beta App Review</strong>.
+4. Export compliance is pre-answered (<code>ios.config.usesNonExemptEncryption = false</code>), so there's
+   no per-build encryption questionnaire.</p>
+<h3>Android via Play Console (only if publishing to the store)</h3>
+<ol>
+<li>In <strong>Play Console</strong> create the app (package <code>com.nutrisync.app</code>).</li>
+<li>Create a <strong>service account</strong> (Google Cloud → grant it Play Console access), download the JSON,
+   save it as configured in <code>eas.json</code> (git-ignored).</li>
+<li><code>eas submit</code> pushes to the <strong>internal testing</strong> track → add testers by email. (For simple beta
+   testing you can skip all of this and just share the <strong>preview APK</strong> from section 4.)</li>
+</ol>
+<hr />
+<h2>7. Over-the-air (OTA) updates — already wired</h2>
+<p>This part is done. Think of the GitHub Action as a conveyor belt: <strong>push to <code>nutrisync-app</code> →
+the app updates itself</strong> on every installed build, no rebuild and no store review.</p>
+<ul>
+<li>The repo has <code>.github/workflows/eas-update.yml</code>, which runs <code>eas update --branch production</code>
+  on every push (auth via the <code>EXPO_TOKEN</code> secret).</li>
+<li>To push a JS/UI change manually:
+  <code>eas update --branch production --message "onboarding copy fix"</code></li>
+<li>Installed apps (preview APK, TestFlight, production) pick it up on next launch. <strong>Expo Go does
+  not</strong> receive OTA.</li>
+<li><code>runtimeVersion</code> policy is <code>appVersion</code>, so an OTA only lands on builds with a matching app
+  version. Native changes still need a fresh build.</li>
+</ul>
+<hr />
+<h2>8. Store listing assets &amp; metadata (prepare in parallel)</h2>
+<ul>
+<li><strong>App icon</strong> 1024×1024 (no alpha), splash screen — configured under <code>app.json</code>.</li>
+<li><strong>Screenshots</strong> per device size (6.7" iPhone, 5.5", iPad; Android phone/tablet).</li>
+<li>Name, subtitle, description, keywords, support URL, marketing URL
+  (<strong>https://nutrisync-collective.pages.dev</strong>).</li>
+<li><strong>Privacy Policy URL</strong> (required — health app), age rating, data-safety form.</li>
+</ul>
+<h3>Health-data specifics (don't skip — these are review gates)</h3>
+<ul>
+<li><strong>Apple:</strong> a <strong>Privacy Policy</strong> is mandatory; complete <strong>App Privacy</strong> "Nutrition/Health &amp;
+  Fitness" data types; provide HealthKit usage strings (<code>NSHealthShareUsageDescription</code>) once
+  HealthKit is added; HealthKit data must not be used for advertising.</li>
+<li><strong>Apple requires in-app account deletion</strong> — the Settings "Delete account" flow already ships
+  (in-app data delete works today; full auth-record deletion via a service-role Edge Function is
+  pending — see doc 09, §B2).</li>
+<li><strong>Google Play Data safety</strong> form must declare health data collection, encryption in transit,
+  and the deletion path.</li>
+</ul>
+<hr />
+<h2>9. Versioning</h2>
+<ul>
+<li><code>app.json</code> → <code>version</code> is the user-facing version (e.g. <code>1.0.0</code>) and, via the <code>appVersion</code>
+  runtimeVersion policy, also gates which builds an OTA update reaches.</li>
+<li>Build numbers auto-increment via <code>autoIncrement</code> in the production profile.</li>
+<li>Bump <code>version</code> for each store release; use <code>eas update</code> for in-between JS patches.</li>
+</ul>
+<hr />
+<h2>10. Typical release checklist</h2>
+<ol>
+<li><code>npm run typecheck</code> (or CI) is green; confirm <strong>Node ≥ 20.19.4</strong> and <strong>SDK 54</strong>.</li>
+<li>Push to <code>nutrisync-app</code> → the Action ships an OTA to <code>production</code>; smoke test on a preview APK.</li>
+<li><code>eas build --profile production --platform all</code> (iOS needs the paid Apple account).</li>
+<li><code>eas submit --platform ios --latest</code> and/or <code>--platform android --latest</code>.</li>
+<li>iOS: add the build to a TestFlight group; Android: promote internal → closed/production.</li>
+<li>Fill/refresh store metadata, screenshots, privacy answers.</li>
+<li>Submit for review; use <code>eas update --branch production</code> for hotfixes after launch.</li>
+</ol>
+<hr />
+<h2>Reference</h2>
+<ul>
+<li>EAS Build: https://docs.expo.dev/build/introduction/</li>
+<li>EAS Submit: https://docs.expo.dev/submit/introduction/</li>
+<li>EAS Update (OTA): https://docs.expo.dev/eas-update/introduction/</li>
+<li>Internal distribution: https://docs.expo.dev/build/internal-distribution/</li>
+<li>App Store deployment: https://docs.expo.dev/deploy/submit-to-app-stores/</li>
+<li>Apple in-app account deletion policy: https://developer.apple.com/support/offering-account-deletion-in-your-app/</li>
+</ul></div></body></html>

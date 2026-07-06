@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Current Release & Backlog — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Current Release &amp; Backlog</h1>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Release</strong></td>
+<td><strong>v11.3</strong></td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td>6 July 2026</td>
+</tr>
+<tr>
+<td><strong>Web</strong></td>
+<td><code>nutrisync-web-0607_v11.3</code> — live on Cloudflare Pages</td>
+</tr>
+<tr>
+<td><strong>Mobile</strong></td>
+<td><code>0.1.0</code> — Expo SDK 54, over-the-air (<code>production</code> channel)</td>
+</tr>
+<tr>
+<td><strong>Backend</strong></td>
+<td>Supabase (EU) — shared by web + mobile</td>
+</tr>
+</tbody>
+</table>
+<p>This note tracks <strong>what is built and testable right now</strong> (the current release) and <strong>what is still pending</strong> (the backlog). It is versioned to match the app: the release number above equals the deployed web build, and moves with each release.</p>
+<hr />
+<h2>✅ Current release — available for testing now</h2>
+<h3>Web (live)</h3>
+<ul>
+<li><strong>Marketing site</strong> — full commercial site, bilingual EN/ES, waitlist + newsletter capture that persists real signups.</li>
+<li><strong>Web app</strong> (<code>/app.html</code>) — real sign-up / log-in on the live backend; 8-step onboarding (Back on every step, <strong>Start over</strong>, browser-Back aware); daily mood/energy check-in; Home with phase ring + <strong>Cycle Alignment Score</strong>; NutriLog, Movement, Progress, Calendar; Edit Period, Edit Health; Settings, Connected apps, Data &amp; Privacy (JSON export + delete account).</li>
+<li><strong>Navigation</strong> — native <strong>"← Back to site"</strong> exit, 44px back controls throughout, and hub back-paths wired to the browser Back button.</li>
+<li><strong>Prototype mode</strong> — the full web app on demo data, no account needed (from the marketing "See NutriSync in action" section).</li>
+<li><strong>Gated hub</strong> (Team Access, code <code>123456</code>) — Investor &amp; Builder rooms with sticky navigation; Founder Tools (Waitlist, Translations, Change Log); full documentation.</li>
+</ul>
+<h3>Mobile (Expo Go / OTA)</h3>
+<ul>
+<li><strong>1:1 with the Figma prototype</strong> — Welcome → Auth → onboarding wizard (bold <strong>«</strong> back on every step, <strong>Start over</strong>, Android hardware-back handled) → daily "Before we Sync" gate → 5 tabs (Cycle home, NutriLog, Movement, Progress, Calendar) → Edit Period, Edit Health, Notification Center, App &amp; Nutritional Preferences, Connected Devices (behind an OFF feature flag).</li>
+<li><strong>Bilingual EN/ES</strong> with an in-app language selector; canonical values stay English.</li>
+</ul>
+<h3>Backend &amp; admin</h3>
+<ul>
+<li><strong>Supabase (EU)</strong> — Postgres + Auth + Row-Level Security; the CAS engine writes <code>daily_scores</code> in real time for both surfaces.</li>
+<li><strong>Full account deletion</strong> — server-side Edge Function erases data <em>and</em> auth identity.</li>
+<li><strong>Consent / cookie layer</strong> on web (privacy-first defaults).</li>
+<li><strong>Admin MIS console</strong> — live Total Users + DAU/WAU/MAU (aggregate-only, admin-gated).</li>
+<li><strong>Founders' Waitlist dashboard</strong> (Builders hub) — ~140 migrated + live signups; search / filter / per-source counts; <strong>add / edit / delete with confirm + undo</strong>; <strong>CSV export</strong>.</li>
+</ul>
+<h3>How to test</h3>
+<ul>
+<li><strong>Web:</strong> <code>https://nutrisync-collective.pages.dev</code> (marketing) · <code>/app.html</code> (web app). Hub: footer <strong>Team access</strong> → code <code>123456</code>.</li>
+<li><strong>Mobile:</strong> open in <strong>Expo Go</strong> via the tunnel dev server, or install the <strong>Android APK</strong> (<code>eas build --profile preview --platform android</code>). iOS TestFlight is pending Apple enrollment (below).</li>
+<li><strong>Admin:</strong> Builders hub → <strong>Waitlist</strong> / <strong>Admin · MIS</strong> — sign in with a founder account (admin-gated).</li>
+</ul>
+<hr />
+<h2>⬜ Backlog — what's pending</h2>
+<h3>Near-term (no new infrastructure)</h3>
+<ul>
+<li><strong>iOS TestFlight</strong> — blocked on the paid Apple Developer Program ($99/yr); a free account has no signing team.</li>
+<li><strong>Custom domain (F7)</strong> — publish on the branded NutriSync domain (Cloudflare Pages → Custom domains); ~15-min DNS task.</li>
+<li><strong>Branch protection (B1)</strong> — no-force-push / required review on both repos; 2-min GitHub toggle.</li>
+<li><strong>Waitlist → onboarding handoff (F5)</strong> — auto-pre-fill a waitlisted email into signup (capture + admin management already done).</li>
+<li><strong>Admin console (G)</strong> — role tiers, Cloudflare Zero-Trust gating on the admin path; live financial KPIs once billing exists.</li>
+</ul>
+<h3>Product tracks</h3>
+<ul>
+<li><strong>Monetization / subscriptions</strong> — billing (e.g. Stripe) → premium gating + real MRR/churn in the console. Highest revenue impact; unblocks live financial KPIs.</li>
+<li><strong>Community</strong> — feed, cycle-status sharing, streaks (privacy controls already present in settings).</li>
+<li><strong>Native wearable sync (Epic E)</strong> — Apple Health / Health Connect + OAuth providers; foundation + consent UI shipped behind the OFF flag, native adapters need a dev build.</li>
+</ul>
+<h3>Compliance / governance (Epic D remainder)</h3>
+<ul>
+<li>Formal <strong>consent service</strong> (versioned scopes, audit trail) and <strong>onboarding consent</strong> records (D1–D3).</li>
+<li><strong>Retention / minimization</strong> policy (D6); <strong>DPIA / RoPA / DPA</strong> paperwork (D7).</li>
+</ul>
+<h3>Scale-up wave (deferred by design — triggered by B2B contracts)</h3>
+<ul>
+<li><strong>Epic A</strong> — AWS secure landing zone (Zurich region, KMS, private subnets).</li>
+<li><strong>Epic C</strong> — containerized backend (ECS Fargate + Aurora), async workers, caching.</li>
+<li><strong>Epic I</strong> — observability, security ops, disaster-recovery drills.</li>
+</ul>
+<hr />
+<p><em>Full detail: see the </em><em>Platform &amp; Infra Backlog</em><em> (03) and the </em><em>Change Log</em><em> (08) in this hub. This release note is regenerated and re-versioned each release.</em></p></div></body></html>

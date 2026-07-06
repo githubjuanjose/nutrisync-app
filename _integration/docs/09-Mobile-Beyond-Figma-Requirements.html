@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Mobile — Beyond-Figma Requirements — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync Mobile — Requirements beyond the Figma</h1>
+<p>Scope the Figma screens <strong>do not</strong> cover but the briefing commits to. Two families:
+(A) health &amp; sport connectors, and (B) data rights + account lifecycle. Plus (C) the
+cross-cutting mobile capabilities those two imply. Grounded in the Developer Specification
+(§6 CAS, §13 Settings) and the business-case/deck roadmap (wearables strategy, M4→Y3).</p>
+<p><strong>Status as of July 2026.</strong> The visible app is now effectively <strong>1:1 with the Figma prototype</strong> and fully wired to Supabase + CAS on both mobile and web. Of the "beyond-Figma" work below, two data-rights pieces are already <strong>built</strong>: in-app <strong>JSON export</strong> and <strong>delete account</strong> ship today in Settings → Data Privacy. The remaining items are the ones the Figma never showed and that are still open:</p>
+<ul>
+<li><strong>Wearable connectors (A)</strong> are <strong>documented only</strong>. They require a <strong>native development build</strong> — Expo Go cannot load the native HealthKit / Health Connect modules — so nothing here syncs until that build exists. Roadmap: 2028 (Epic E).</li>
+<li><strong>Full account erasure (B2)</strong> works in-app for the user's <em>data</em>, but wiping the underlying <strong>auth record</strong> needs a <strong>service-role Edge Function</strong> (the <code>service_role</code> key must never ship in the client). That function is pending.</li>
+<li><strong>Auth hardening (C)</strong> — 2FA and passkeys — is intentionally deferred.</li>
+</ul>
+<hr />
+<h2>A. Health, wearable &amp; sport connectors</h2>
+<p><strong>Status: documented, not built. Needs a native dev build (not Expo Go).</strong></p>
+<p><strong>Why it matters to the product, not just "integrations":</strong> the CAS algorithm today is fed
+by <em>manual</em> logs — the morning mood/energy gate, Edit Period, and MovementLog (Dev Spec §6.1).
+Connectors let those same signals arrive <strong>automatically and objectively</strong>, which is exactly
+what the deck's "data moat" and "50% churn reduction for connected users" depend on. Each
+connector maps to a specific CAS component:</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Signals pulled</th>
+<th>Feeds CAS component</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Apple Health</strong> + <strong>Apple Watch</strong> (iWatch) — via HealthKit</td>
+<td>HRV, resting HR, sleep, active energy, steps, workouts, <strong>wrist/skin temperature</strong> (Apple Watch Series 8+), blood oxygen, menstrual/cycle data, weight</td>
+<td>Biomarkers (25) · Fitness (20) · Phase Confidence (skin-temp)</td>
+</tr>
+<tr>
+<td>Android <strong>Health Connect</strong> / Google Fit</td>
+<td>same categories on Android</td>
+<td>same</td>
+</tr>
+<tr>
+<td><strong>Oura Ring</strong></td>
+<td>skin-temp trend, HRV readiness, sleep score</td>
+<td>Biomarkers · Phase Confidence</td>
+</tr>
+<tr>
+<td><strong>Garmin</strong> / Fitbit / Whoop</td>
+<td>workouts, HR, sleep, recovery</td>
+<td>Fitness · Biomarkers</td>
+</tr>
+<tr>
+<td><strong>Strava</strong></td>
+<td>runs, rides, workouts (auto-fills MovementLog)</td>
+<td>Fitness · Logging</td>
+</tr>
+<tr>
+<td><strong>CGM</strong> — Dexcom / Abbott Libre</td>
+<td>glucose across the cycle</td>
+<td>Biomarkers (future)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>CAS component reference (see the Developer Spec §6): <strong>C1 Phase Confidence (15) · C2 Biomarkers (25) · C3 Nutrition (30) · C4 Fitness (20) · C5 Logging (10)</strong>. Connectors primarily strengthen C1, C2, C4 and C5.</p>
+</blockquote>
+<h3>A0. The 8 platforms/devices to support (ranked)</h3>
+<p>Chosen by blending 2025 global market share (IDC / Statista) with health-data value for a
+cycle-nutrition app. Apple leads the wearable market (~28% share); Apple, Samsung, Xiaomi,
+Fitbit and Garmin together hold ~62%; Huawei is the #2 smartwatch vendor (25.5M units, 2025).</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Platform / device</th>
+<th>Why it's in the 8</th>
+<th>How we connect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Apple Health / Apple Watch</strong></td>
+<td>Market leader (~28%). HealthKit is the iOS data hub; Apple Watch gives HRV, sleep &amp; wrist temperature.</td>
+<td>HealthKit (native)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Samsung Health / Galaxy Watch</strong></td>
+<td>Top-3 vendor; Galaxy Watch has skin-temp + built-in cycle tracking.</td>
+<td>Health Connect + Samsung Health SDK</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Google / Fitbit (Health Connect)</strong></td>
+<td>Fitbit (Google-owned) is top-5; Health Connect is the Android aggregation layer (replaces Google Fit).</td>
+<td>Health Connect + Fitbit Web API</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Garmin</strong></td>
+<td>Dominant in sport/endurance; rich HRV, sleep, Body Battery, women's-health tracking.</td>
+<td>Garmin Health/Connect API (OAuth2)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Xiaomi (Mi Band / Mi Fitness)</strong></td>
+<td>Wristband volume leader — scale &amp; affordability, very strong in Spain/Europe.</td>
+<td>Health Connect / Mi Fitness</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Huawei Health / Watch</strong></td>
+<td>#2 smartwatch vendor globally (25.5M units, 2025); strong in Europe &amp; Asia.</td>
+<td>Huawei Health Kit</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Oura Ring</strong></td>
+<td>Smart-ring leader; gold-standard skin-temperature + cycle prediction — most femtech-relevant.</td>
+<td>Oura API v2 (OAuth2 + webhook)</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Strava</strong></td>
+<td>Leading sport/activity platform; auto-fills MovementLog with runs, rides &amp; workouts.</td>
+<td>Strava API (OAuth2 + webhook)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Honourable mentions:</em> Whoop (recovery/strain) and CGMs (Dexcom / Abbott Libre) — added later per the deck's Y3 roadmap.</p>
+<blockquote>
+<p><strong>The native-build gatekeeper.</strong> Think of Expo Go as a shared demo phone with a fixed set of apps installed — it can run our JavaScript, but it can't install a <em>new</em> native library like HealthKit on demand. To talk to Apple Health, Health Connect, or a vendor SDK we must compile our <strong>own</strong> binary (a native dev build via EAS) that bundles those modules. That's why every connector below is blocked on the native build, regardless of API readiness.</p>
+</blockquote>
+<h3>A1. OS-native health (priority — MVP+, targeted after the native build lands)</h3>
+<ul>
+<li><strong>iOS: Apple Health (HealthKit)</strong> — the primary iOS integration. Reads data the
+  <strong>Apple Watch</strong> writes into Apple Health (HRV, sleep, skin temperature, workouts, blood
+  oxygen) plus iPhone data. Request read scopes per category with granular consent; use
+  observer queries + background delivery so new samples sync without opening the app.
+  Optionally <strong>write</strong> NutriSync's predicted period/phase back to Apple Health.</li>
+<li><strong>Android: Health Connect</strong> (Google Fit is deprecating) — equivalent read permissions and
+  background sync.</li>
+<li>Auto-map: energy proxy ← HRV + sleep; MovementLog activities ← workouts; Phase Confidence
+  ← skin/wrist temperature trend.</li>
+</ul>
+<h3>A2. Dedicated wearables (Y1–Y3, per deck)</h3>
+<ul>
+<li><strong>Oura</strong> and <strong>Garmin</strong> via their partner/health APIs (OAuth2); <strong>Fitbit/Whoop</strong> optional.</li>
+<li>Cloud-to-cloud pull on a schedule + webhook where offered; store only derived metrics, not
+  raw firehose.</li>
+</ul>
+<h3>A3. Sport / activity apps</h3>
+<ul>
+<li><strong>Strava</strong> (OAuth2 + webhook) and native workouts → auto-populate the <strong>MovementLog</strong>
+  checklist (intensity tags already defined in <code>movement_activity</code>). User confirms/edits.</li>
+</ul>
+<h3>A4. CGM (Series A / Y3)</h3>
+<ul>
+<li><strong>Dexcom</strong> and <strong>Abbott Libre</strong> APIs — glucose curve as an advanced biomarker layer.</li>
+</ul>
+<h3>A5. Connector UX &amp; technical requirements (all new screens, none built yet)</h3>
+<ul>
+<li><strong>"Connections / Integrations" settings screen</strong> (not in Figma): list of providers, connect/
+  disconnect, last-sync time, per-metric toggles, connection health/errors.</li>
+<li><strong>Optional onboarding step</strong>: "Connect a wearable" (skippable) after Consent.</li>
+<li><strong>Permission priming</strong> screens before the OS health prompt (raise grant rates).</li>
+<li>Secure token storage (Keychain / Keystore), token refresh, revoke on disconnect.</li>
+<li>Background sync scheduling; offline queue; de-dup and conflict rules (manual log vs device).</li>
+<li><strong>Attribution/trust rule</strong>: device data augments but never silently overrides a user's manual
+  log — show source badges.</li>
+</ul>
+<hr />
+<h2>B. Data rights &amp; account lifecycle (GDPR, health = special-category data)</h2>
+<p>The Dev Spec names these in §13.5. <strong>Two are already built</strong> (export, in-app delete of the
+user's data); the rest still need full flows, backend, and legal handling. All are
+<strong>MVP / launch-blocking</strong> for an EU health app.</p>
+<h3>B1. Export / "Download my data" — <strong>BUILT (in-app JSON export)</strong></h3>
+<ul>
+<li>Settings → Data Privacy ships a working <strong>in-app JSON export</strong> of the user's data (profile,
+  cycles, all four daily logs, CAS history, preferences) on both mobile and web.</li>
+<li><strong>To extend:</strong> add CSV alongside JSON, cover any connector-derived data once connectors exist,
+  and move large exports to an async job → secure, expiring download link delivered in-app + by
+  email.</li>
+<li>Covers GDPR <strong>right to access</strong> and <strong>data portability</strong>.</li>
+</ul>
+<h3>B2. Delete data / Delete account — <strong>PARTIAL (in-app delete built; auth-record erasure pending)</strong></h3>
+<ul>
+<li>The in-app <strong>delete account</strong> flow ships today and erases the user's Supabase rows (all
+  RLS-scoped to their <code>auth.uid()</code>).</li>
+<li><strong>What's still needed:</strong> wiping the underlying <strong>Supabase Auth record</strong> itself requires a
+  <strong>service-role Edge Function</strong>. The <code>service_role</code> key must never ship client-side (it bypasses
+  RLS), so a server-side function is the correct — and pending — mechanism to complete a true
+  hard delete.</li>
+<li><strong>To harden:</strong> explicit type-to-confirm, a short grace/undo window, and cascade to <strong>revoke all
+  third-party grants</strong> (HealthKit authorization, Strava/Oura/Garmin tokens) once connectors exist,
+  plus purge of exports/backups per retention policy.</li>
+<li><strong>Apple App Store requires in-app account deletion</strong> — the in-app delete already satisfies the
+  submission gate; the service-role function closes the compliance loop.</li>
+</ul>
+<h3>B3. Close / deactivate account (soft) — <em>not built</em></h3>
+<ul>
+<li>Offer <strong>deactivate</strong> (reversible, pauses processing) as a lighter step distinct from delete —
+  reduces accidental hard-deletes and churn-by-mistake.</li>
+</ul>
+<h3>B4. Consent &amp; processing controls (Dev Spec §13.5, §3.8) — <em>partial</em></h3>
+<ul>
+<li>Granular, <strong>withdrawable</strong> toggles: Analytics &amp; crash reports / Personalised insights /
+  Research participation. Withdrawal takes effect immediately and propagates to processors.</li>
+<li>Activity log ("Manage activity log"), cookie/tracking preferences, view Privacy Policy &amp; Terms.</li>
+<li>iOS <strong>App Tracking Transparency</strong> prompt; keep HealthKit data out of any ads/analytics per
+  Apple's HealthKit policy (no selling/advertising use of health data).</li>
+</ul>
+<h3>B5. Rectification &amp; transparency — <em>built (edit) / partial (disclosure)</em></h3>
+<ul>
+<li>Edit personal info (Dev Spec §13.2) satisfies <strong>right to rectification</strong> — the Personal
+  Information screen ships today.</li>
+<li>Clear, per-connector disclosure of what's collected and why (layered privacy notice) is pending
+  the connectors.</li>
+</ul>
+<hr />
+<h2>C. Cross-cutting mobile capabilities implied (also absent from Figma)</h2>
+<ul>
+<li><strong>Auth hardening</strong> (Dev Spec §13.4): TOTP <strong>2FA</strong>, <strong>passkeys / biometric unlock</strong> (Face ID /
+  Touch ID), <strong>active-sessions list with remote log-out per device</strong>. <strong>Intentionally deferred</strong>
+  for now (password auth ships today).</li>
+<li><strong>Push notifications &amp; reminders</strong> (Dev Spec §13.1): an in-app <strong>Notification Center</strong> already
+  ships (a live feed from real cycle/phase/logging state), plus a Notifications &amp; Reminders
+  settings screen. True <strong>OS push delivery</strong> and quiet-hours scheduling are the remaining pieces.</li>
+<li><strong>Permissions matrix</strong>: Health, Notifications, Location (city), Motion, ATT — each with a
+  rationale screen and graceful denial handling. (Health/Motion arrive with the native build.)</li>
+<li><strong>Offline-first sync</strong>: local cache + write queue so the real-time CAS keeps working without
+  signal; reconcile on reconnect.</li>
+<li><strong>Health-data compliance &amp; security</strong>: EU data residency (Phase 1 region is EU), encryption in
+  transit + at rest, HealthKit/Health Connect entitlements, GDPR special-category safeguards, DPA
+  with processors.</li>
+<li><strong>Localisation</strong>: EN + ES at minimum (testers in <strong>Madrid</strong>), metric/imperial units. An
+  <strong>App Preferences</strong> screen (units / week-start / haptics / appearance) already ships on-device.</li>
+<li><strong>Accessibility</strong>: dynamic type, VoiceOver/TalkBack labels, contrast (see accessibility review).</li>
+</ul>
+<hr />
+<h2>Suggested priority for the build</h2>
+<p><strong>Already shipped:</strong> in-app JSON export (B1), in-app account delete (B2, user data), Notification
+Center + reminders UI (C), App Preferences &amp; Nutritional Preferences (C), Personal Information /
+rectification (B5).</p>
+<p><strong>MVP / launch-blocking (next):</strong> service-role Edge Function for full auth-record deletion (B2),
+consent controls + record layer (B4/WF-1), then the native dev build to unlock HealthKit +
+Health Connect (A1).</p>
+<p><strong>Fast-follow (Y1):</strong> Strava + Garmin (A3/A2), Connections screen (A5), deactivate (B3), 2FA +
+biometric unlock (C), offline sync hardening.</p>
+<p><strong>Later (Y2–Y3, per deck):</strong> Oura (A2), CGM (A4), write-back to HealthKit, research-data pipeline.</p>
+<hr />
+<h2>What this adds to the app we're building</h2>
+<p>Screens/modules still to add to the Expo app (the connector set needs the native build):
+<code>Connections</code> (integrations list + per-provider detail), permission-priming screens, an
+onboarding "Connect a wearable" step, and — extending the Data Privacy flow that already
+ships — consent toggles, activity log, and deactivate, plus <strong>Sign-in &amp; Security</strong> hardening
+(2FA, passkeys, sessions). Export and delete are already in place.</p>
+<hr />
+<h2>References</h2>
+<p><strong>Wearable market data (used for the top-8 ranking, §A0):</strong>
+- IDC — Worldwide Wearable Devices Market Share (vendor tracker): https://www.idc.com/promo/wearablevendor/
+- Statista — Wearables market share by vendor, quarterly 2025: https://www.statista.com/statistics/435944/quarterly-wearables-shipments-worldwide-market-share-by-vendor/
+- Statista — Wearables: statistics &amp; facts: https://www.statista.com/topics/1556/wearable-technology/
+- Grand View Research — Wearable Technology Market Size, Share Report: https://www.grandviewresearch.com/industry-analysis/wearable-technology-market</p>
+<p><strong>Connector / platform developer documentation:</strong>
+- Apple HealthKit: https://developer.apple.com/documentation/healthkit
+- Android Health Connect: https://developer.android.com/health-and-fitness/guides/health-connect
+- Samsung Health SDK: https://developer.samsung.com/health
+- Fitbit Web API: https://dev.fitbit.com/build/reference/web-api/
+- Garmin Health API: https://developer.garmin.com/gc-developer-program/health-api/
+- Huawei Health Kit: https://developer.huawei.com/consumer/en/hms/huawei-healthkit/
+- Oura API v2: https://cloud.ouraring.com/v2/docs
+- Strava API: https://developers.strava.com/
+- Dexcom API: https://developer.dexcom.com/ · Abbott Libre: https://libreview.com/</p>
+<p><strong>Internal source documents:</strong>
+- NutriSync Collective — Complete Product &amp; Developer Specification, v1.0 (June 2026): §6 (CAS), §13 (Settings/Privacy).
+- NutriSync investor deck / business case (June 2026): wearables strategy (HealthKit + Google Fit M4, Oura + CGM Y3).</p></div></body></html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Change Log — Web & App — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>Change Log — Web &amp; App (traceability)</h1>
+<p>A single running record of changes across <strong>both surfaces</strong> — the web platform (marketing + web app + hub) and the native mobile apps — plus the backend/platform. It exists so anyone can trace <em>what changed, where, when, and whether it crossed over</em> between web and mobile.</p>
+<p>Sources that feed this log: Design's <code>CHANGELOG.md</code> in each web pack, our integration pass (<code>integrate.py</code>), and the mobile app builds.</p>
+<h2>How web ↔ mobile sync works (read this first)</h2>
+<p>Design ships <strong>web-only</strong> packs (marketing <code>index.html</code> + web <code>app.html</code> + <code>i18n/</code> + <code>hub/</code>). They contain <strong>no mobile code</strong>, so web changes do <strong>not</strong> automatically reach the native app. For every pack we check what actually applies to mobile:</p>
+<table>
+<thead>
+<tr>
+<th>Design change type</th>
+<th>Crosses to mobile?</th>
+<th>What we do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Marketing footer / hero / layout, web-app chrome</td>
+<td>❌ No</td>
+<td>Nothing — web-only, separate native app</td>
+</tr>
+<tr>
+<td>Wording in the shared <code>app</code> section of <code>i18n</code></td>
+<td>✅ Yes</td>
+<td>Re-sync those strings into the mobile i18n bundle</td>
+</tr>
+<tr>
+<td>Brand tokens (phase colours, brand orange, fonts)</td>
+<td>✅ Yes</td>
+<td>Apply to the mobile <code>theme.ts</code></td>
+</tr>
+<tr>
+<td>A new product screen / feature in the app design</td>
+<td>✅ Yes</td>
+<td>Build it natively in the React Native app</td>
+</tr>
+</tbody>
+</table>
+<p>If something crosses over, we ship a fresh <code>nutrisync-app-full.zip</code> (OTA). If nothing does, we say so and only the web is pushed.</p>
+<h2>Who fixes what — Design vs Integration (ownership)</h2>
+<p>Design edits its own <strong>source canvas</strong> and re-exports a fresh compiled web bundle. It cannot ingest our integrated output as a new source, and it cannot produce backend/ops features. So we keep a clean split — Design owns the pixels, we own the wiring — and <code>integrate.py</code> bridges them on every export.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Owner</th>
+<th>Maintained by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web visual / structure / <strong>navigation</strong> (incl. hub room nav)</td>
+<td><strong>Design</strong></td>
+<td>Fix in Design's canvas → re-export</td>
+</tr>
+<tr>
+<td>Backend wiring, consent banner, admin live KPIs, error-hide</td>
+<td><strong>Integration (here)</strong></td>
+<td><code>integrate.py</code> re-applies each export</td>
+</tr>
+<tr>
+<td>Added hub pages (Translations tool, this Change Log, docs CTAs)</td>
+<td><strong>Integration (here)</strong></td>
+<td><code>integrate.py</code></td>
+</tr>
+<tr>
+<td>Mobile app (screens, i18n, logo, theme)</td>
+<td><strong>Mobile repo (here)</strong></td>
+<td><code>nutrisync-app</code> build → OTA</td>
+</tr>
+<tr>
+<td>Shared copy/wording (<code>i18n/*.json</code>)</td>
+<td><strong>Shared</strong></td>
+<td>Founders edit via the Translations page; kept EN-canonical</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rule of thumb:</strong> ask Design only for <strong>design / structure / navigation</strong>. Do <strong>not</strong> ask Design to build the Translations page, Change Log, admin wiring, or consent — those live in the integration layer (and Design can't do the backend ones). Never upload our integrated build back to Design as a "source".</p>
+<h2>Open Design requests (for the next pack)</h2>
+<ol>
+<li>✅ <strong>Hub room navigation</strong> — <em>delivered in the 0607v02.53 pack</em>: room/tab changes now push History, so the browser Back button steps within the hub (tab → room → landing) instead of dropping to the landing.</li>
+<li>✅ <strong>Web onboarding — Back on every step + Start over</strong> — <em>delivered in 0607v02.53</em>: Back on every step, a new "Start over" (resets to step 1, clears answers), and the browser Back button steps the wizard back.</li>
+<li>✅ <strong>Web app — native "Back to site" exit</strong> — <em>delivered in 0607v02.53</em>: sidebar item + brand-rail pill + a Settings row (covers mobile). Our stopgap floating button now <strong>auto-disables</strong> when the native control is present (<code>integrate.py</code> checks for it).</li>
+<li>✅ <strong>Web app — bigger back controls</strong> — <em>delivered in 0607v02.53</em>: in-app back links are now 44px pills; onboarding back is 44px with a 24px chevron.</li>
+<li>✅ <strong>Dev error overlay — root-caused</strong> — <em>resolved in v11.1</em>: the overlay only fires on a real asset miss; Design found the one genuine miss (a Figma-typo'd mood icon, <code>mischevious</code> → <code>mischievous</code>), fixed it, and audited every dynamically-referenced asset — both pages now load with <strong>zero console errors</strong>. The <code>#__bundler_err{display:none}</code> rule is retained deliberately as a production safety net (a debug overlay should never reach users even if an asset regresses); nothing triggers it today.</li>
+</ol>
+<p><em>All Design brief items are now closed.</em></p>
+<h2>Deploy channels</h2>
+<ul>
+<li><strong>Web:</strong> GitHub <code>nutrisync-web</code> → Cloudflare Pages (auto-deploy on push).</li>
+<li><strong>Mobile:</strong> GitHub <code>nutrisync-app</code> → EAS Update (OTA, <code>production</code> channel) on push.</li>
+</ul>
+<hr />
+<h2>Log (newest first)</h2>
+<h3>2026-07-07 · Web pack v11.42 — Basque + Aranese native review DONE</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.42.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0707_v11.42.zip</code> · <code>nutrisync-app-eu-oc-review.zip</code> (mobile OTA)</li>
+<li><strong>✅ Native review complete:</strong> Design's team did the <strong>Basque (eu, 11 corrections)</strong> and <strong>Aranese (oc, 9 corrections)</strong> native-speaker passes — the two production blockers I'd been tracking are now <strong>cleared</strong>. Corrected <code>eu</code>/<code>oc</code> app strings re-bundled into mobile.</li>
+<li><strong>Web:</strong> the web-app onboarding wizard now carries the language selector (all 14 switchable mid-wizard). Re-integrated our layer.</li>
+<li><strong>Mobile:</strong> crossover = corrected <code>eu</code> (5) + <code>oc</code> (4) app strings only; re-bundled.</li>
+<li><strong>Status:</strong> all 14 languages complete AND reviewed → <strong>ready to move into testing.</strong></li>
+</ul>
+<h3>2026-07-07 · Mobile — Welcome fidelity + radial-peach app-wide</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-app-welcome-design-match.zip</code> (mobile OTA)</li>
+<li><strong>Wings mark:</strong> swapped in Design's <strong>real</strong> ink wings asset (<code>nutri_wings_ink.png</code>) — the previous one was a lookalike ("rays + orb"); removed the overlaid orange orb; centered per Design's Welcome frame.</li>
+<li><strong>Background:</strong> replaced the darker linear peach gradient with <strong>Design's exact soft radial-peach</strong> (<code>radial-gradient(circle at 28% 16%, #FDE2D6 → #FBEFE6 → #FFF8F1 → #F9D7BD)</code>), rendered as a real SVG radial via a shared <code>PeachBg</code>. It now sits behind <strong>every screen</strong> (one background behind the navigator; all screens transparent) — Welcome, Login/Create, onboarding, daily gate, main tabs and settings all share it, matching Design's "no screen on the old linear gradient".</li>
+<li>Carries the earlier Welcome/Login <strong>language selector + back nav</strong> and the <strong><code>supabaseKey</code></strong> boot fix.</li>
+</ul>
+<h3>2026-07-07 · Web pack v11.41 + mobile Welcome selector &amp; back-nav</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.41.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0707_v11.41.zip</code> · <code>nutrisync-app-welcome-i18n.zip</code> (mobile OTA)</li>
+<li><strong>Web (Design):</strong> brand <strong>watermarks on every section + footer</strong> (mobile-width QA at 390px; Platform-section mark repositioned), footer disclaimer → <strong>"Made with care in Madrid"</strong> localized in all 12 packs, language-popover polish (scrollable, click/Escape-to-close, full names). Also added the <code>welTo</code>/<code>welP</code> welcome strings to all 12 packs. Re-integrated our layer.</li>
+<li><strong>Mobile (our side — Design handed us the Welcome spec):</strong></li>
+<li><strong>Language selector on the landing</strong> — added to the <strong>Welcome</strong> and <strong>Login/Create</strong> screens (shared <code>LanguagePicker</code>: two ISO pills + dropdown of all available languages). The landing previously had no way to switch language.</li>
+<li><strong>Back navigation</strong> — added a <strong>‹ Back</strong> on the Auth screen (Login/Create → Welcome), which previously had no way back.</li>
+<li>Welcome title/paragraph now use the shared <code>welTo</code>/<code>welP</code> keys (translated in every pack); bundled those keys into the 12 add-on mobile catalogs.</li>
+<li><strong>Also fixed earlier this session:</strong> mobile boot crash <code>supabaseKey is required</code> — the public anon key is now baked into <code>config.ts</code> so the app boots from a fresh clone without <code>.env</code>.</li>
+</ul>
+<h3>2026-07-06 · v11.30 — Japanese live · all 14 languages complete</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.30.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.30.zip</code> · <code>nutrisync-app-i18n-ja.zip</code> (mobile OTA)</li>
+<li><strong>Web:</strong> <strong>Japanese (<code>ja</code>, 日本語)</strong> now live end-to-end. <strong>All 14 languages complete</strong> (EN, ES, FR, DE, IT, NL, EL, CA, EU, GL, VAL, OC, ZH, JA) — app + marketing + prototype. <strong>Unicode/CJK verified</strong> (Postgres round-trip + UTF-8 frontends, no ASCII-only validation).</li>
+<li><strong>Mobile (crossover):</strong> bundled Japanese <code>app</code>, registered <code>ja</code> — mobile now carries all 14 language bundles; CJK renders via the OS font.</li>
+<li><strong>Docs:</strong> added <strong>Hub Access — Zero Trust</strong> guide (<code>14-Hub-Access-Zero-Trust</code>) to Builders → Documentation — how to protect <code>/hub/*</code> with Cloudflare Access (email allowlist, audit log) instead of the client-side code.</li>
+<li><strong>⚠ Native review</strong> still required for Basque + Aranese before production. <strong>CJK web-font</strong> still recommended for Design (ZH/JA polish).</li>
+</ul>
+<h3>2026-07-06 · v11.29 — Back buttons on Founder Tools pages</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.29.zip</code> (supersedes v11.28)</li>
+<li><strong>Builders hub:</strong> the <strong>Waitlist</strong>, <strong>Translations</strong> and <strong>Review</strong> tool pages now have a <strong>‹ Back</strong> control that uses browser history — returns to the Builders room you came from. The Waitlist page's old "← Builders hub" link pointed to <code>full-hub-gated-site.html</code>, which bounced to the marketing start; replaced with history-back (same pattern the Change Log doc already used, which the founders confirmed lands correctly). Docs pages already had ‹ Back.</li>
+<li><strong>Mobile/Platform:</strong> none.</li>
+</ul>
+<h3>2026-07-06 · v11.28 — Founder Tools cards open in-place · Unicode verified</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.28.zip</code> (supersedes v11.27 — includes Chinese)</li>
+<li><strong>Builders hub:</strong> the Founder Tools cards (Waitlist / Review / Translations / Change Log) now open <strong>in the same tab</strong> instead of a new one (<code>target="_blank"</code> removed). They were working, but a new tab is easy to miss / can be popup-blocked — so they felt dead. Confirmed via live test that same-tab clicks aren't intercepted by the room's SPA; browser Back returns to the room.</li>
+<li><strong>Public site:</strong> removed the <strong>"Demo access — use code 123456"</strong> hint from the hub gates (site is public). <code>integrate.py</code> strips it from the compiled bundle; the <code>123456</code> code still works, it's just no longer shown on-screen. Share it out-of-band.</li>
+<li><strong>Platform — Unicode/CJK verified end-to-end:</strong> live round-trip proved Postgres stores CJK (3 bytes/char) + emoji (4 bytes) natively; both frontends are UTF-8 with no ASCII-only input validation on user text. Added <code>backend/unicode-check.sql</code>.</li>
+<li><strong>Mobile:</strong> none.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.27 — Chinese live (web app + mobile)</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.27.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.27.zip</code> · <code>nutrisync-app-i18n-zh.zip</code> (mobile OTA)</li>
+<li><strong>Web:</strong> <strong>Chinese (<code>zh</code>, 简体中文)</strong> now live end-to-end (app + marketing + prototype). <strong>13 of 14 languages complete.</strong></li>
+<li><strong>Mobile (crossover):</strong> bundled Chinese <code>app</code>, registered <code>zh</code> (mobile CJK renders via the OS font automatically). Existing app sections unchanged.</li>
+<li><strong>⚠ CJK web-font (Design):</strong> no explicit CJK web-font (e.g. Noto Sans SC) or system fallback found in the export — Chinese renders via browser system-font fallback (functional, but not a designed CJK face). Re-flagged for Design (Brief §6) as a polish item before ZH/JA go to production.</li>
+<li><strong>Remaining:</strong> Japanese (app + marketing), then the final all-14 verifier pass.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.26 — Aranese marketing (12 European langs complete)</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.26.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.26.zip</code></li>
+<li><strong>Web:</strong> <strong>Aranese marketing</strong> added — Aranese now complete end-to-end. <strong>All 12 European languages done</strong> (EN, ES, FR, DE, IT, NL, EL, CA, EU, GL, VAL, OC).</li>
+<li><strong>Mobile:</strong> <strong>no change</strong> — app-section i18n unchanged; Aranese marketing is web-only.</li>
+<li><strong>⚠ Native review still pending</strong> for Aranese + Basque before production.</li>
+<li><strong>Remaining:</strong> Chinese + Japanese (app + marketing), then Design's final all-14 verifier pass.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.25 — Valencian complete + Aranese live</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.25.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.25.zip</code> · <code>nutrisync-app-i18n-oc.zip</code> (mobile OTA)</li>
+<li><strong>Web:</strong> <strong>Valencian marketing</strong> added (Valencian now complete end-to-end) + <strong>Aranese (<code>oc</code>)</strong> live in the web app (12th language; Gascon-Occitan of Val d'Aran). Aranese marketing pending.</li>
+<li><strong>Mobile (crossover):</strong> bundled Aranese <code>app</code>, registered code <strong><code>oc</code></strong> — <strong>aligned mobile registry <code>oc-aran → oc</code></strong> to match Design's file code (shared <code>ns_locale</code>). Simplified the selector ISO label to <code>code.toUpperCase()</code> (OC, VAL, etc.).</li>
+<li><strong>⚠ Native review REQUIRED before production:</strong> Aranese (low-resource, MT-derived) — tagged <code>native-review-REQUIRED</code> in the file. Basque review also still pending.</li>
+<li><strong>Remaining packs:</strong> Aranese marketing, then Chinese, Japanese, then a final all-14 verifier pass.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.24 — Valencian live (web app + mobile)</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.24.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.24.zip</code> · <code>nutrisync-app-i18n-val.zip</code> (mobile OTA)</li>
+<li><strong>Web:</strong> <strong>Valencian (<code>val</code>)</strong> now live in the web app (11th language) — AVL forms (hui, teua, este…). Valencian marketing pending.</li>
+<li><strong>Mobile (crossover):</strong> bundled Valencian <code>app</code> and registered code <strong><code>val</code></strong>. Note: Design's file code is <code>val</code> — <strong>aligned the mobile registry from <code>va</code> → <code>val</code></strong> so the shared <code>ns_locale</code> matches across web ↔ mobile. Existing app sections unchanged.</li>
+<li><strong>Remaining packs:</strong> Valencian marketing, then Aranese, Chinese, Japanese.</li>
+</ul>
+<h3>2026-07-06 · v11.23 — Docs: back navigation on every page</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.23.zip</code> (supersedes v11.22 — includes Galician + cache <code>_headers</code>)</li>
+<li><strong>Builders hub:</strong> every documentation page now has a <strong>"‹ Back"</strong> control (returns to the previous page via browser history — the card grid or the doc you came from) alongside an <strong>"All documents"</strong> home link. Fixes not being able to navigate back after opening a doc card.</li>
+<li><strong>Mobile/Platform:</strong> none.</li>
+</ul>
+<h3>2026-07-06 · v11.22 — Galician live + cache-busting headers</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.22.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.22.zip</code> · <code>nutrisync-app-i18n-gl.zip</code> (mobile OTA)</li>
+<li><strong>Web:</strong> <strong>Galician (<code>gl</code>)</strong> now live in the web app (10th language). Galician marketing pending.</li>
+<li><strong>Cache fix:</strong> <code>integrate.py</code> now writes a Cloudflare Pages <strong><code>_headers</code></strong> file forcing browsers to <strong>revalidate HTML + <code>/i18n/*</code></strong> on every load (<code>max-age=0, must-revalidate</code>). This stops the stale-<code>app.html</code> issue where new deploys / new language packs didn't appear until a hard-refresh — verified the live app already had all switches and translated correctly; this makes it show without manual cache-clearing.</li>
+<li><strong>Mobile (crossover):</strong> bundled Galician <code>app</code> and registered <code>gl</code>; existing app sections unchanged.</li>
+<li><strong>Remaining packs:</strong> Galician marketing, then Valencian, Aranese, Chinese, Japanese.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.21 — Basque marketing (Basque complete)</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.21.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.21.zip</code></li>
+<li><strong>Web:</strong> <strong>Basque marketing</strong> added — Basque now complete <strong>end-to-end</strong>. 9 languages fully live: EN, ES, FR, DE, IT, NL, EL, CA, EU.</li>
+<li><strong>Mobile:</strong> <strong>no change</strong> — app-section i18n unchanged; Basque marketing is web-only. (Basque native review still pending before production.)</li>
+<li><strong>Remaining packs:</strong> Galician, Valencian, Aranese, Chinese, Japanese.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.20 — Basque live (web app + mobile)</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.20.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.20.zip</code> · <code>nutrisync-app-i18n-eu.zip</code> (mobile OTA)</li>
+<li><strong>Web:</strong> <strong>Basque (<code>eu</code>)</strong> now live in the web app (9th language). Basque marketing pending.</li>
+<li><strong>Mobile (crossover):</strong> bundled the Basque <code>app</code> translation and registered <code>eu</code>; existing app sections unchanged.</li>
+<li><strong>⚠ Native review:</strong> Basque is low-resource — <strong>flag for a native-speaker review pass before production</strong> (same as Aranese). Tagged <code>review: native-review-pending</code> in the file.</li>
+<li><strong>Remaining packs:</strong> Basque marketing, then Galician, Valencian, Aranese, Chinese, Japanese.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.19 — Catalan marketing (Catalan complete)</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.19.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.19.zip</code></li>
+<li><strong>Web:</strong> <strong>Catalan marketing</strong> added — Catalan now complete <strong>end-to-end</strong> (marketing + prototype + web app). 8 languages fully live: EN, ES, FR, DE, IT, NL, EL, CA.</li>
+<li><strong>Mobile:</strong> <strong>no change</strong> — app-section i18n unchanged; Catalan marketing is web-only.</li>
+<li><strong>Remaining packs:</strong> Basque, Aranese, Valencian, Galician, Chinese, Japanese.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.18 — Catalan live (web app + mobile)</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.18.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.18.zip</code> · <code>nutrisync-app-i18n-ca.zip</code> (mobile OTA)</li>
+<li><strong>Web:</strong> <strong>Catalan (<code>ca</code>)</strong> now live in the web app (8th language: EN/ES/FR/DE/IT/NL/EL/CA). Catalan marketing still pending.</li>
+<li><strong>Mobile (crossover):</strong> bundled the Catalan <code>app</code> translation into the app and registered <code>ca</code>; the selector now offers 8 languages. <code>mob.*</code> falls back to English until translated. Existing 7 app sections unchanged.</li>
+<li><strong>Next packs:</strong> Catalan marketing, then Basque, Aranese, Valencian, Galician, Chinese, Japanese.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.17 — Greek &amp; Dutch marketing (7 core langs complete)</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.17.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.17.zip</code></li>
+<li><strong>Web:</strong> <strong>Greek + Dutch marketing</strong> translations added. All <strong>7 core languages</strong> (EN, ES, FR, DE, IT, NL, EL) are now complete <strong>end-to-end</strong> — marketing + phone prototype + web app. Pending packs: CA, EU, GL, VA, Aranés, ZH, JA.</li>
+<li><strong>Mobile:</strong> <strong>no change</strong> — <code>app</code>-section i18n byte-identical for all 7 languages; the new marketing is web-only.</li>
+<li><strong>Note (i18n visibility):</strong> verified the integration does <strong>not</strong> drop web-app translations — our integrated <code>app.html</code> is Design's <code>app.html</code> plus only a <code>&lt;head&gt;</code> consent banner + error-CSS; the i18n fetch/apply code and all language files are intact. If the deployed web app shows only marketing translated, it's a stale/cached <code>app.html</code> or an un-deployed build, not the integration — a clean redeploy + hard-refresh resolves it.</li>
+</ul>
+<h3>2026-07-06 · Mobile selector aligned to ISO codes</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-app-i18n-iso.zip</code> (mobile OTA) · <code>nutrisync-web-0607_v11.16.zip</code> (docs)</li>
+<li><strong>Mobile:</strong> the language selector now shows <strong>ISO codes</strong> on the pills (EN · ES · FR …) to match the web selector; the dropdown shows <strong><code>CODE · Endonym</code></strong> (e.g. <code>FR · Français</code>) so it stays scannable. Aranese shows as <code>OC</code>. Resolves the web↔mobile selector consistency item.</li>
+<li><strong>Web/Platform:</strong> none (Change Log doc only).</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.15 — Italian marketing live</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.15.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.15.zip</code></li>
+<li><strong>Web:</strong> <strong>Italian marketing</strong> translation now live (<code>it.json</code> gained <code>marketing</code> + <code>catalog</code>). Marketing translated: EN, ES, FR, DE, IT. Web-app languages unchanged (7 live). Re-integrated our layer.</li>
+<li><strong>Mobile:</strong> <strong>no change</strong> — <code>app</code>-section i18n is byte-identical to v11.14 for all 7 languages; IT marketing is web-only.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.14 — 7 languages live (web + mobile crossover)</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.14.zip</code> (integrated) · Design raw <code>nutrisync-web-design-0607_v11.14.zip</code> · <code>nutrisync-app-i18n-live.zip</code> (mobile OTA)</li>
+<li><strong>Web:</strong> Design shipped <strong>7 live web-app languages</strong> — EN, ES, FR, DE, IT, NL, EL (<code>i18n/&lt;code&gt;.json</code>) — plus <strong>FR + DE marketing</strong> translations; the selector now uses <strong>ISO-code pills</strong> <code>[EN] + [OS/ES]</code> + a ▾ dropdown, Español as the standing second pill; and a boot error from the 12-language registry was hotfixed. Pending packs: CA, EU, GL, VA, Aranés, ZH, JA (selector reveals each as its pack ships; marketing gates to EN/ES until translated).</li>
+<li><strong>Mobile (real crossover):</strong> bundled the 5 new <code>app</code> translations (FR/DE/IT/NL/EL) into the app and <strong>refreshed EN/ES to Design's latest</strong> (mobile-only <code>mob.*</code> keys preserved). The app selector now offers <strong>only languages that have a bundle</strong> (7 today) and grows automatically as packs land; <code>mob.*</code> strings fall back to English until translated. OS-default only auto-selects a language we can render.</li>
+<li><strong>Open decision:</strong> web selector shows <strong>ISO codes</strong>, mobile shows <strong>endonyms</strong> — pick one for cross-surface consistency.</li>
+</ul>
+<h3>2026-07-06 · v11.7 — Founders' Review Checklist</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.7.zip</code></li>
+<li><strong>Builders hub:</strong> new <strong>Founders' Review Checklist</strong> (<code>hub/review.html</code>) — a structured, interactive review organised by <strong>customer journey → section</strong> (Marketing, Onboarding, Home, Logging, Health &amp; profile, Settings, Cross-cutting). Each section is rated across five dimensions — <strong>Design · Copy/Language · Business logic · Assets · UX/Flow</strong> — with a status (👍 OK / ✏️ Change / 🚫 Blocker / N/A) and a comment. Progress tracking, filter to blockers/changes/unreviewed, and <strong>export to CSV, JSON, and a Markdown action-summary</strong> (machine-readable). Reachable from the <strong>Founder Tools</strong> row (new ✅ Review card). Saves per device.</li>
+<li><strong>Also:</strong> Founder Tools "Translations" card relabelled to "14-language review".</li>
+<li><strong>Mobile/Platform:</strong> none.</li>
+</ul>
+<h3>2026-07-06 · v11.6 — Multilingual to 14 (+ 中文/日本語); mobile + tool built</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.6.zip</code> (web) · <code>nutrisync-app-i18n-14.zip</code> (mobile OTA)</li>
+<li><strong>Scope:</strong> added <strong>Chinese (<code>zh</code>)</strong> and <strong>Japanese (<code>ja</code>)</strong> → <strong>14 languages</strong>. Flagged the <strong>CJK web-font</strong> requirement for Design (Noto Sans SC/JP or system fallback).</li>
+<li><strong>Mobile (done):</strong> <code>LanguageProvider</code> now carries the 14-language registry with <strong>OS-language default</strong> (via <code>expo-localization</code>, required defensively so OTA never crashes) and English fallback per locale; App Preferences shows the <strong>two-pill (English + OS/current) + dropdown</strong> selector. <code>expo-localization</code> added to <code>package.json</code>.</li>
+<li><strong>Builders tool (done):</strong> the Translations page is now a <strong>14-language reviewer</strong> — pick a language, see the MT beside the English source (yellow = still equal to English, pink = blank), filter/only-untranslated, and export that one <code>xx.json</code>.</li>
+<li><strong>Handoff:</strong> 12 skeletons now (<code>…/zh.json</code>, <code>ja.json</code>) + <code>mt_translate.py</code> routes ZH/JA through the from-English engine.</li>
+<li><strong>Platform:</strong> i18n stays English-canonical; each locale falls back to English until its catalog is published.</li>
+</ul>
+<h3>2026-07-06 · v11.5 — Multilingual expanded to 12 (Spain co-official) + MT decided</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.5.zip</code></li>
+<li><strong>Docs:</strong> added the <strong>Spain co-official</strong> languages — Catalan, Basque, Galician, <strong>Valencian</strong>, <strong>Aranese</strong> — bringing the plan to <strong>12 languages</strong>. Locked the <strong>machine-translation-first-pass → native-review</strong> decision, with a per-family engine strategy: European set MT <strong>from English</strong> (Google/DeepL); Iberian set MT <strong>from Spanish</strong> via <strong>Apertium</strong> (Valencian = Catalan <em>valencia</em> variety; Aranese = Occitan; Basque = heaviest review). Updated Design Brief §6 + backlog.</li>
+<li><strong>Handoff:</strong> 10 skeleton locale files now (<code>fr/it/de/nl/el/ca/eu/gl/va/oc-aran.json</code>) plus <code>mt_translate.py</code> — a runnable MT script with per-language engine routing, placeholder + brand-noun protection, and a mismatch-fallback report.</li>
+<li><strong>Web/Mobile:</strong> no functional change yet — spec + scaffolding only.</li>
+</ul>
+<h3>2026-07-06 · v11.4 — Multilingual (7 languages) spec + skeletons</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.4.zip</code></li>
+<li><strong>Docs:</strong> confirmed the <strong>7-language</strong> plan (EN/ES/FR/IT/DE/NL/EL) — selector = two pills (English + OS language, OS default) + dropdown for the rest, alphabetical; fallback to <code>[English][Español]</code> when OS lang is English/unsupported. Written into <strong>Design Brief §6</strong> (with the Design/Integration/Founders ownership split) and added to the Platform Backlog product tracks.</li>
+<li><strong>Handoff:</strong> generated 5 skeleton locale files (<code>fr/it/de/nl/el.json</code>, 613 keys each incl. mobile keys, English placeholders) for Design/the translator to fill.</li>
+<li><strong>Web/Mobile:</strong> no functional change yet — spec + scaffolding only. Translation-source decision (professional vs MT + native review) to lock before content work starts.</li>
+</ul>
+<h3>2026-07-06 · v11.3 — Release Note + backlog refresh</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.3.zip</code> (integrated) · Design raw: <code>nutrisync-web-design-0607_v11.3.zip</code></li>
+<li><strong>Docs:</strong> new <strong>Current Release &amp; Backlog</strong> note (<code>13-Release-Notes</code>) — what's built and testable now vs what's pending, <strong>versioned to the app</strong> (release = deployed web build, currently v11.3 · mobile 0.1.0). Surfaced as a prominent banner at the top of Builders → Documentation and downloadable as a standalone note. Also folded the <strong>waitlist system + CRUD dashboard + DB runbook</strong> into the Platform Backlog (F5, Epic G, product tracks).</li>
+<li><strong>Web:</strong> Design v11.3 is a minor <code>index.html</code> tweak (+49 bytes) over v11.2; <code>app.html</code> and i18n unchanged. Re-integrated our layer.</li>
+<li><strong>Mobile:</strong> <strong>no change</strong> — shared app-section i18n diff = 0.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.2 — auth/onboarding back-to-site pill</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.2.zip</code> (integrated) · Design raw pack: <code>nutrisync-web-design-0607_v11.2.zip</code></li>
+<li><strong>Web:</strong> small polish over v11.1 — Design added a floating <strong>"← Back to site" pill (bottom-right)</strong> on the auth/onboarding screens (also on mobile). Only <code>app.html</code> changed (+150 bytes); <code>index.html</code> and all i18n are byte-identical to v11.1. Re-integrated our layer; stopgap exit still stands down (native present).</li>
+<li><strong>Naming:</strong> Design now prefixes raw packs <code>nutrisync-web-design-0607_vX.Y.zip</code>; our integrated deployable drops the <code>design-</code> (<code>nutrisync-web-0607_vX.Y.zip</code>). Deploy the one <strong>without</strong> <code>design-</code>.</li>
+<li><strong>Mobile:</strong> <strong>no change</strong> — shared app-section i18n diff = 0.</li>
+</ul>
+<h3>2026-07-06 · Web pack v11.1 — error overlay root-caused (brief closed)</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v11.1.zip</code> (Design pack now uses our version naming)</li>
+<li><strong>Web:</strong> Design closed the last brief item — the bundler error overlay was <strong>root-caused, not masked</strong>: the trigger was a single typo'd mood-icon asset (<code>mischevious</code>→<code>mischievous</code>), now fixed; a full asset audit confirms zero console errors on both <code>index.html</code> and <code>app.html</code>. The <code>#__bundler_err{display:none}</code> rule is kept as an intentional safety net. Re-integrated our layer; our own error-hide is now redundant-but-harmless.</li>
+<li><strong>All 5 Design brief items are now closed.</strong></li>
+<li><strong>Mobile:</strong> <strong>no change</strong> — shared app-section i18n diff = 0 (added/removed/changed all empty).</li>
+</ul>
+<h3>2026-07-06 · Web pack (0607v02.53) — Design brief fixes landed</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v10.55.zip</code> (from Design pack <code>Nutrisync marketing website revamp_0607v02.53.zip</code>)</li>
+<li><strong>Web:</strong> Design fixed 4 of the 5 brief items at source — native <strong>Back to site</strong> (sidebar + brand rail + Settings), <strong>44px back controls</strong> everywhere, <strong>web onboarding</strong> Back on every step + Start over + browser-Back, and <strong>hub deeper back paths</strong> (History-based browser Back within the hub). Re-integrated our layer; the stopgap floating exit button now <strong>auto-disables</strong> because the native control is present.</li>
+<li><strong>Still open:</strong> the <code>__bundler_err</code> dev error overlay is <em>still in the export</em> (we keep hiding it) — re-flagged as Open Design request #5.</li>
+<li><strong>Mobile:</strong> <strong>no change</strong> — verified: 2 new shared strings (<code>backToSite</code>, <code>obStartOver</code>) are web-app-only; mobile already has its own <code>mob.startOver</code>. Shared app-section diff otherwise 0.</li>
+</ul>
+<h3>2026-07-06 · Design Brief doc added</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v10.54.zip</code></li>
+<li><strong>Docs:</strong> added <strong>Design Brief — Open Requests</strong> (<code>12-Design-Brief-Open-Requests</code>) to Builders → Documentation — a copy-paste brief of the compiled-bundle fixes for Design (web-app exit, small back buttons, onboarding back/restart, hub nav, error overlay). Mirrors <em>Open Design requests</em> in this log.</li>
+</ul>
+<h3>2026-07-06 · App polish — bigger back arrow + prominent web-app exit</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-app-onboarding-fix2.zip</code> (mobile OTA) · <code>nutrisync-web-0607_v10.53.zip</code> (web)</li>
+<li><strong>Mobile:</strong> the onboarding progress-bar back control is now a bold <strong>«</strong> double-chevron (larger icon + larger tap target) — the old thin chevron was too small to see.</li>
+<li><strong>Web:</strong> added a <strong>prominent "← Back to site" button</strong> to the web app (<code>app.html</code>, top-right, solid coral) so users can always leave the app journeys and return to the marketing site — there was no route back before, and the first (subtle) version was hard to spot. Injected via <code>integrate.py</code>; logged <strong>Open Design request #3</strong> for a proper in-header placement.</li>
+<li><strong>Platform:</strong> none.</li>
+</ul>
+<h3>2026-07-06 · Change Log — build filenames added</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v10.51.zip</code></li>
+<li><strong>Docs:</strong> every log entry now carries a <strong>Build</strong> line naming the package (zip) — and any SQL / Edge Function — it shipped in, for release traceability. Older pre-<code>v10.4x</code> builds are referenced by their actual filenames where tracked.</li>
+</ul>
+<h3>2026-07-06 · Waitlist dashboard — undo/rollback + DB runbook</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v10.50.zip</code></li>
+<li><strong>Builders hub:</strong> every Add / Edit / Delete now runs <strong>confirm → execute → Undo</strong>. A rollback bar appears for ~9s and reverses the action — re-inserts a deleted row (exact copy), restores previous values on an edit, or removes a just-added row. Edits and deletes ask Yes/No first.</li>
+<li><strong>Docs:</strong> added <strong>Database Changes Runbook</strong> (<code>11-DB-Changes-Runbook</code>) to Builders → Documentation — the backup-first rule (snapshot → change → verify → restore) plus the dashboard's in-app undo. Backing convention also lives in <code>backend/DB-CHANGES-RUNBOOK.md</code>.</li>
+<li><strong>Convention:</strong> going forward, every data-/schema-changing SQL we hand over leads with a backup step and ends with a verify step.</li>
+<li><strong>Mobile:</strong> n/a.</li>
+</ul>
+<h3>2026-07-06 · Waitlist dashboard — full CRUD</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v10.49.zip</code> + SQL <code>backend/admin_waitlist_crud.sql</code></li>
+<li><strong>Builders hub:</strong> the Founders' Waitlist dashboard is now editable — <strong>Add signup</strong> (email, name, source, joined date), <strong>Edit</strong> any row, and <strong>Delete</strong> with confirm, alongside the existing search / filter / CSV export. Admin-gated end to end.</li>
+<li><strong>Platform:</strong> new <code>admin_waitlist_crud.sql</code> adds admin-only SELECT/INSERT/UPDATE/DELETE RLS policies on <code>public.waitlist</code> (checks <code>public.admins</code>). Public marketing-form inserts still work; the list stays private to non-admins. The dashboard now reads the table directly (needs row <code>id</code> for edit/delete) and falls back to the read-only <code>admin_waitlist()</code> RPC (with a "read-only" banner) if the CRUD SQL hasn't been run yet.</li>
+<li><strong>Mobile:</strong> n/a.</li>
+</ul>
+<h3>2026-07-06 · Onboarding navigation — mobile fixed, web spec'd</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-app-onboarding-fix.zip</code> (mobile OTA) · <code>nutrisync-web-0607_v10.48.zip</code> (web)</li>
+<li><strong>Mobile:</strong> onboarding now has full back/restart. <strong>Back</strong> works on every step (including the consent step, which previously blocked it); the <strong>Android hardware back</strong> button steps within the wizard instead of leaving the app; and a <strong>"Start over"</strong> control (with a confirm) resets to step 1 and clears answers. New strings <code>mob.startOver</code> / <code>mob.startOverBody</code> added EN + ES. Ships OTA.</li>
+<li><strong>Web:</strong> reviewed <code>app.html</code> — the wizard has step-back logic but Back is inconsistent across steps and there is no "Start over"; and the hub's deeper card/section back-navigation still drops to the landing. Both are in Design's compiled bundle, so logged as <strong>Open Design requests #1 and #2</strong> with precise specs (mirroring the mobile behaviour).</li>
+<li><strong>Platform:</strong> none.</li>
+</ul>
+<h3>2026-07-06 · Waitlist — legacy migration + live capture</h3>
+<ul>
+<li><strong>Build:</strong> live capture <code>nutrisync-web-0607_v10.45.zip</code> · dashboard <code>_v10.46.zip</code> · Founder Tools row <code>_v10.47.zip</code> · SQL <code>backend/admin_waitlist.sql</code> (migration itself run in Supabase, no build)</li>
+<li><strong>Platform:</strong> created <code>public.waitlist</code> (email · joined_at · source, unique on <code>lower(email)</code>, RLS on: anon <strong>insert</strong> allowed, no public read). Migrated <strong>~140 signups</strong> from a legacy Supabase project via a staging table + deduped <code>insert … on conflict do nothing</code>; imported rows tagged <code>source='legacy_import'</code>.</li>
+<li><strong>Web:</strong> the marketing site's waitlist <strong>and</strong> newsletter fields now persist to <code>public.waitlist</code> (tagged <code>marketing_site</code> / <code>newsletter</code>). Wired in <code>integrate.py</code> as a delegated capture-phase listener (the compiled bundle's own <code>{{ }}</code> handlers aren't rewireable), POSTing via PostgREST with the public anon key; shows a lightweight "You're on the list ✓" toast and treats duplicates as already-subscribed.</li>
+<li><strong>Builders hub:</strong> new <strong>Founders' Waitlist dashboard</strong> (<code>hub/waitlist.html</code>) — total + per-source counts, searchable/sortable list of signups, and <strong>CSV export</strong>. Admin-gated: reads via the new <code>admin_waitlist()</code> SECURITY DEFINER function (checks <code>public.admins</code>), so the list stays RLS-private to everyone else.</li>
+<li><strong>Builders room header — "Founder Tools" row:</strong> Waitlist, Translations and Change Log now surface as a distinct card row at the <strong>room-header level</strong> (injected under the Builders tab bar via <code>integrate.py</code>, kept in place across the compiled bundle's re-renders), <em>not</em> inside the Documentation tab — they're tools, not documents. Removed the old banner cards from the Documentation page; the Change Log still appears there as a normal document too.</li>
+<li><strong>Mobile:</strong> n/a.</li>
+</ul>
+<h3>2026-07-06 · Web pack (05072026) — hub room navigation fixed</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0607_v10.44.zip</code> (from Design pack <code>Nutrisync marketing website revamp_05072026.zip</code>)</li>
+<li><strong>Web:</strong> Design delivered the hub navigation fix requested on 07-04. Inside the Investor and Builder rooms the room tabs are now <strong>sticky</strong> (Overview / Business case / MIS · and Overview / Documentation / Admin·MIS / Backlog stay visible while scrolling); a <strong>room switcher</strong> in the header lets you jump Investor↔Builder or "← Back to site" directly; the in-room <strong>"← Overview"</strong> control returns to that room's Overview instead of the landing page; and the <code>123456</code> gate only appears at hub entry, never re-locking on tab/room switches. Re-integrated our layer over the fresh export (consent, admin live KPIs, mobile i18n keys, error-overlay hide, Translations page + docs CTAs, current Change Log).</li>
+<li><strong>Mobile / Platform:</strong> <strong>no change</strong> — verified: nav fix is web-hub-only; shared <code>i18n</code> <code>app</code> diff = 0 strings; no brand-token or new-screen changes. Native app untouched.</li>
+<li><strong>Still open with Design:</strong> strip the <code>__bundler_err</code> dev error overlay at source (we continue to hide it via <code>integrate.py</code>).</li>
+</ul>
+<h3>2026-07-04 · Known issue logged — hub room navigation <em>(resolved 07-06)</em></h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0407_v10.43.zip</code></li>
+<li><strong>Web:</strong> inside the Investor/Builder rooms there's no direct Investor↔Builder switch and the tab bar isn't sticky, so leaving/switching sections forces a return to the landing page. Handled in Design's compiled bundle — spec handed to Design (see <em>Open Design requests</em>).</li>
+<li><strong>Mobile / Platform:</strong> n/a.</li>
+<li><strong>Also added:</strong> the <em>Who fixes what</em> ownership boundary + <em>Open Design requests</em> sections above, and Change Log / Translations cards at the top of the Builder → Documentation tab.</li>
+</ul>
+<h3>2026-07-04 · Web pack v10.40 — footer redesign</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-0407_v10.40.zip</code> (from Design pack <code>Nutrisync marketing website revamp_0407_v10.40.zip</code>)</li>
+<li><strong>Web:</strong> slim 3-row footer (brand + Team Access chips + Product/Company/Legal columns + single "Stay in sync" bar with store badges &amp; socials); bigger header logo. Re-integrated our layer (consent, admin KPIs, i18n keys, Translations page + docs button).</li>
+<li><strong>Mobile:</strong> <strong>no change</strong> — verified: footer is web-only; mobile header logo already enlarged; shared i18n diff = 0 strings.</li>
+<li><strong>Platform:</strong> none.</li>
+</ul>
+<h3>2026-07-04 · Documentation &amp; backlog refresh</h3>
+<ul>
+<li><strong>Build:</strong> part of the 07-04 web builds (<code>nutrisync-web-0407_*</code> series)</li>
+<li><strong>Web:</strong> backlog doc gained Product feature tracks (bilingual, monetization, community, custom domain); Project Status changelog updated; Translations button made prominent at the top of the docs index.</li>
+<li><strong>Mobile:</strong> n/a.</li>
+<li><strong>Platform:</strong> <code>integrate.py</code> established as the one-command re-integration for every Design pack.</li>
+</ul>
+<h3>2026-07-04 · Bilingual EN/ES + Design bilingual pack</h3>
+<ul>
+<li><strong>Build:</strong> Design bilingual pack (integrated web build, 07-04) · mobile via OTA</li>
+<li><strong>Web:</strong> Design's bilingual pack integrated — EN/ES across marketing + web app, decoupled <code>i18n/</code> catalogs, language selector, wearables screen, mobile-fit fixes, 2× logos. Founder <strong>Translations review page</strong> added to the hub.</li>
+<li><strong>Mobile:</strong> full EN/ES i18n wired — <code>LanguageProvider</code> + <code>t()</code>, language selector in App Preferences, <strong>121 strings</strong> translated across every screen (incl. 83 mobile-specific keys added to the shared catalog under <code>app.mob</code>). Shipped OTA.</li>
+<li><strong>Platform:</strong> i18n kept in sync web ↔ mobile via the shared catalog.</li>
+</ul>
+<h3>2026-07-03 · Wave 1 + Epic E foundation</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-stitched.zip</code> (web) · mobile via OTA · SQL <code>backend/admin_kpis.sql</code>, <code>admin_auto_promote.sql</code>, <code>health_connectors.sql</code>, Edge Function <code>delete-account</code></li>
+<li><strong>Mobile:</strong> Edit Health, Notification Center, App/Nutritional Preferences; bigger brand lockup (home + gate); full-account deletion wired; Connected Devices (wearables) foundation behind a feature flag (OFF).</li>
+<li><strong>Platform:</strong> full account deletion <strong>Edge Function</strong> deployed (data + auth erasure); cookie/<strong>consent</strong> layer on web; admin console wired to <strong>live KPIs</strong> (aggregate-only, admin-gated); <code>health_signal</code> + <code>connected_providers</code> schema.</li>
+<li><strong>Web:</strong> consent banner, admin live wiring, error-overlay hidden.</li>
+</ul>
+<h3>2026-07-02 · Web app live + CI/CD</h3>
+<ul>
+<li><strong>Build:</strong> <code>nutrisync-web-latest.zip</code> (initial stitched web) · mobile via OTA</li>
+<li><strong>Web:</strong> Claude Design web app stitched to Supabase; marketing + gated hub live on <code>nutrisync-collective</code>; auto-deploy pipeline (GitHub → Cloudflare Pages).</li>
+<li><strong>Mobile:</strong> OTA pipeline (GitHub → EAS Update) live; Android test build produced.</li>
+<li><strong>Platform:</strong> Supabase (EU) backend serving both surfaces; CAS engine writing <code>daily_scores</code>.</li>
+</ul>
+<hr />
+<h2>How to add an entry</h2>
+<p>When a new web pack lands or a mobile build ships, add a dated block at the top with three lines — <strong>Web</strong>, <strong>Mobile</strong>, <strong>Platform</strong> — noting what changed and, crucially, whether it crossed between surfaces. Include a <strong>Build</strong> line naming the package(s) it shipped in. Keep canonical values English (see the i18n contract).</p>
+<p><strong>Build naming (avoid deploying the wrong file):</strong>
+- <strong>Design raw pack</strong> (input, not deployable on its own): <code>nutrisync-web-design-0607_vX.Y.zip</code>.
+- <strong>Integrated deployable</strong> (what we actually push — Design's pack + our layer via <code>integrate.py</code>): <code>nutrisync-web-0607_vX.Y.zip</code> (no <code>design-</code>).
+- Always deploy the one <strong>without</strong> <code>design-</code>.</p></div></body></html>

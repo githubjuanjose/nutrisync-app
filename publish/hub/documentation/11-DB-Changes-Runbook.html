@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Database Changes Runbook — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>Database Changes — Runbook (backup first)</h1>
+<p><strong>Standing rule:</strong> never run a data- or schema-changing statement against the live Supabase database (import, migration, <code>update</code>, <code>delete</code>, policy change, <code>alter table</code>) without taking a backup first and verifying the result after.</p>
+<p>Every SQL change follows this shape: <strong>backup → change → verify → keep the backup until confirmed, then drop it.</strong></p>
+<h2>1 · Backup (same-database snapshot — instant, no tools)</h2>
+<p>Replace <code>&lt;table&gt;</code> and use today's date in the copy name:</p>
+<pre><code class="language-sql">create table if not exists public.&lt;table&gt;_backup_YYYYMMDD as
+  select * from public.&lt;table&gt;;
+
+select count(*) from public.&lt;table&gt;_backup_YYYYMMDD;   -- confirm the copy
+</code></pre>
+<p>For the important tables, also take an <strong>off-database</strong> copy: Table Editor → open the table → ••• → <strong>Export to CSV</strong>.</p>
+<h2>2 · Restore (if the change goes wrong)</h2>
+<pre><code class="language-sql">-- Option A: put the rows back (id / unique conflicts are skipped)
+insert into public.&lt;table&gt;
+  select * from public.&lt;table&gt;_backup_YYYYMMDD
+  on conflict do nothing;
+
+-- Option B: full swap back to the snapshot
+alter table public.&lt;table&gt;                 rename to &lt;table&gt;_broken;
+alter table public.&lt;table&gt;_backup_YYYYMMDD rename to &lt;table&gt;;
+</code></pre>
+<h2>3 · Clean up (only after the change is confirmed good)</h2>
+<pre><code class="language-sql">drop table if exists public.&lt;table&gt;_backup_YYYYMMDD;
+</code></pre>
+<h2>In-app rollback (Waitlist dashboard)</h2>
+<p>Beyond database backups, the Founders' Waitlist dashboard has a built-in <strong>undo</strong>: every Add, Edit and Delete asks for confirmation, then shows an "Undo" bar for a few seconds that rolls the action back (re-inserts a deleted row, restores previous values on an edit, or removes a just-added row). Database backups remain the durable safety net; the in-app undo is for quick corrections.</p>
+<h2>Notes</h2>
+<ul>
+<li>Snapshots copy <strong>rows only</strong> — not indexes, constraints, RLS policies or triggers. For a data change that's all you need; for a risky schema change, also note the table's policies (<code>select * from pg_policies where tablename = '&lt;table&gt;';</code>) so they can be recreated.</li>
+<li>Keep backup tables short-lived; they are not RLS-protected, so drop them once done.</li>
+</ul></div></body></html>

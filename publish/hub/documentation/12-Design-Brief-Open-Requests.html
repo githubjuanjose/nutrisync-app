@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Design Brief — Open Requests — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>Design Brief — Open Requests</h1>
+<p>Fixes that live in Design's <strong>compiled web bundle</strong> (marketing <code>index.html</code> + web app <code>app.html</code>). We can only patch around these from the integration layer; Design should fix them at the source so they survive each re-export. This is the shareable version of the <em>Open Design requests</em> tracked in the Change Log.</p>
+<p>Hand this straight to Design.</p>
+<blockquote>
+<p><strong>Status:</strong> items 1–5 <strong>closed</strong> ✅ (1–4 in the 0607v02.53 pack; item 5 error overlay root-caused in v11.1). <strong>Item 6 (Multilingual — 14 languages) is NEW and open</strong> — see below.</p>
+</blockquote>
+<hr />
+<h2>1 · Web app — "Back to site" exit ✅ delivered (0607v02.53)</h2>
+<p>From inside the web app journeys there's no way back to the marketing site. Add a clear, persistent control in the app header/sidebar (e.g. on the NutriSync logo, or a menu item) that returns the user to <code>index.html</code>.
+<em>We've added a temporary floating button as a stopgap — please replace it with a proper in-header one.</em></p>
+<h2>2 · Web app — back buttons are too small ✅ delivered (0607v02.53)</h2>
+<p>The in-app back arrows (Edit Period, Edit Health, sub-screens) are tiny and hard to see/tap. Increase the icon size and tap target to a comfortable minimum (~24px icon, ~44px touch target).</p>
+<h2>3 · Web onboarding — Back on every step + Start over ✅ delivered (0607v02.53)</h2>
+<p>The onboarding wizard has step-back logic internally, but the Back control is missing/inconsistent on some steps. Please:</p>
+<ul>
+<li>show <strong>Back</strong> on every step after the first;</li>
+<li>add a <strong>"Start over"</strong> that resets to step 1 and clears entered answers;</li>
+<li>map the <strong>browser Back button</strong> to the previous step instead of leaving the flow.</li>
+</ul>
+<p><em>(Reference: the mobile onboarding already does exactly this — Back on all steps, hardware-Back handled, and a "Start over" with a confirm.)</em></p>
+<h2>4 · Hub navigation — deeper back paths ✅ delivered (0607v02.53)</h2>
+<p>The sticky room tabs + Investor↔Builder switcher (added in the 05/07 pack) work well. Remaining gap: opening a card/section and using in-page back — or the browser Back button — can still drop the user to the site landing. Please:</p>
+<ul>
+<li>make in-page <strong>back</strong> return to the room's previous view (Overview or the card grid), never the landing;</li>
+<li>wire the <strong>browser Back button</strong> to step within the hub rather than exit;</li>
+<li>moving card → card → section should never force a return to Start.</li>
+</ul>
+<h2>5 · Remove the dev error overlay ✅ resolved (v11.1)</h2>
+<p>Root-caused rather than masked: the overlay only fires on a real asset miss, and the one genuine miss (a typo'd mood-icon, <code>mischevious</code>→<code>mischievous</code>) was fixed at source. A full asset audit confirms zero console errors on both pages. The <code>#__bundler_err{display:none}</code> rule is retained deliberately as a production safety net — a debug overlay should never reach users even if an asset regresses.</p>
+<hr />
+<hr />
+<h2>6 · Multilingual — 14 languages (NEW · open)</h2>
+<p>Expand from EN/ES to <strong>14 languages</strong>:
+- <strong>European:</strong> English (<code>en</code>), Spanish (<code>es</code>), French (<code>fr</code>), Italian (<code>it</code>), German (<code>de</code>), Dutch (<code>nl</code>), Greek (<code>el</code>).
+- <strong>Spain co-official:</strong> Catalan (<code>ca</code>), Basque (<code>eu</code>), Galician (<code>gl</code>), <strong>Valencian</strong> (<code>va</code>, a variety of Catalan), <strong>Aranese</strong> (<code>oc-aran</code>, Occitan/Aranese).
+- <strong>East Asian:</strong> Chinese (<code>zh</code>, Simplified), Japanese (<code>ja</code>).</p>
+<p><strong>CJK font requirement:</strong> Chinese and Japanese need <strong>CJK glyph coverage</strong>. Poppins/Inter (Latin) won't render them — on mobile the OS font falls back automatically, but on <strong>web</strong> Design must add a CJK web-font (e.g. Noto Sans SC / Noto Sans JP) or a robust system-font fallback so the app + marketing render correctly. Greek also needs Greek coverage (already flagged).</p>
+<p><strong>Language selector — confirmed UX (marketing nav, web-app login, Settings card):</strong>
+- <strong>Two pills, always visible:</strong> <code>[English]</code> + <code>[OS language]</code>.
+  - The second pill is the <strong>device/OS language</strong> when it's in the supported set, and it is the <strong>default selection</strong> on first load.
+  - <strong>Edge case:</strong> if the OS language is English or unsupported → fall back to the pair <code>[English] [Español]</code> with <strong>English selected</strong>.
+- <strong>A dropdown (▾) beside the pills</strong> lists <strong>the remaining</strong> supported languages, <strong>alphabetically</strong>, to switch to any of them (the chosen one takes the second pill's slot for that session).
+- Persist the choice in <code>localStorage.ns_locale</code> (shared web ↔ app). <strong>Backend values stay canonical English</strong> so CAS/analytics are unaffected.
+- <strong>Greek is non-Latin</strong> — confirm the chosen fonts include Greek glyph coverage.</p>
+<p><strong>Ownership for this feature:</strong>
+- <strong>Design</strong> — the pill + dropdown UX above, in the compiled bundle; and the <strong>professional FR/IT/DE/NL/EL translations</strong> for the customer-facing web (app + marketing + prototype), as done for Spanish.
+- <strong>Integration (here)</strong> — the same selector logic + OS default in the <strong>mobile</strong> app; bundling each new language's <code>app</code> strings into the mobile catalogs (a real crossover); extending the founder <strong>Translations tool</strong> from 2 → 7 languages; <code>integrate.py</code> carries the new locale files and keeps values English-canonical.
+- <strong>Founders</strong> — native review/QA of each language before ship. <strong>Extra review weight</strong> for Basque (<code>eu</code>) and Aranese (<code>oc-aran</code>) — low-resource languages where MT quality is weakest.</p>
+<p><strong>Decision (locked): machine-translation first pass → native review</strong>, generated per language family:
+- <strong>European + East Asian set</strong> (<code>fr/it/de/nl/el/zh/ja</code>): MT <strong>from English</strong> via Google/DeepL.
+- <strong>Spain co-official</strong> (<code>ca/gl/eu/va/oc-aran</code>): MT <strong>from Spanish</strong> via <strong>Apertium</strong> (rule-based, offline) — its Spanish↔Catalan/Galician and Occitan(Aranese) pairs are mature; <strong>Valencian</strong> is produced as the Catalan <em>valencia</em> variety; mainstream engines don't offer Valencian or Aranese at all. <strong>Basque</strong> is low-resource everywhere → heaviest native review.
+- A ready-to-run script (<code>mt_translate.py</code>, in the skeletons pack) does both, protecting interpolation tokens + brand nouns and flagging any string where a placeholder didn't survive.</p>
+<p><strong>OS-default caveat:</strong> device locale detection is reliable for the European set + Catalan/Basque/Galician; <strong>Valencian</strong> and <strong>Aranese</strong> rarely surface as an OS locale, so they'll usually be reached via the dropdown rather than the OS-default pill (Valencian devices typically report Catalan).</p>
+<p><strong>Skeletons provided (12 files):</strong> <code>fr/it/de/nl/el/ca/eu/gl/va/oc-aran/zh/ja.json</code> — same key structure as <code>en.json</code> (613 keys incl. mobile), placeholders. Design/the translator (or <code>mt_translate.py</code>) fills the values in place; the mobile side and the founder tool are ready to receive them.</p>
+<p><strong>Mobile side (done, ours):</strong> the app already ships the 14-language registry with <strong>OS-language default</strong> and the two-pill + dropdown selector; each locale falls back to English until its catalog lands. The founder <strong>Translations tool</strong> is now a 14-language reviewer (pick a language, MT beside English source, per-language export).</p>
+<hr />
+<p><strong>Note on workflow:</strong> the marketing site and web app are the compiled bundle Design exports. Each of the above should be fixed in the <strong>source design</strong>, then re-exported as a normal pack — we re-apply our integration layer (<code>integrate.py</code>) on top. See <em>Change Log → Who fixes what (Design vs Integration)</em> for the ownership split.</p></div></body></html>

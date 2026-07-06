@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Technical Architecture — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Technical Architecture</h1>
+<p><strong>Reality (July 2026):</strong> iOS, Android, and a live web application, all sharing one Supabase (EU) backend, all shipping continuously from GitHub. This document describes what is live today and separates it clearly from the AWS/Cloudflare scale-up target, which is planned, not built.</p>
+<hr />
+<h2>1. The stack today (and why)</h2>
+<h3>Three surfaces, one backend</h3>
+<p>NutriSync runs three surfaces against a single Supabase backend:</p>
+<ol>
+<li><strong>Native mobile apps (iOS + Android)</strong> — React Native on <strong>Expo SDK 54</strong> (React Native 0.81, React 19.1). Requires <strong>Node ≥ 20.19.4</strong>.</li>
+<li><strong>Web application</strong> — the Claude Design compiled UI bundle, genuinely stitched to the same Supabase backend, deployed on Cloudflare Pages.</li>
+<li><strong>Marketing site</strong> — the same Cloudflare Pages deployment, served at the site root.</li>
+</ol>
+<blockquote>
+<p>Analogy: think of Supabase as a single kitchen with three service windows. The mobile apps and the web app are different windows, but they order from the same kitchen and get the same food — a user's cycle, logs, and CAS are identical wherever she signs in.</p>
+</blockquote>
+<p>Expo removes most native build pain via EAS (Build / Submit / Update) — ideal for a lean team. Crucially, <strong>the web app is not Expo Web</strong>: it is a separately built Claude Design bundle that talks to Supabase directly. The two surfaces share a backend and a scoring engine, not a codebase.</p>
+<h3>Backend — Supabase (Phase 1)</h3>
+<p><strong>Supabase</strong> (managed Postgres + Auth + Row-Level Security + Edge Functions), hosted in the <strong>EU region</strong>. Project ref <code>nebkqncvapelrarruyqb</code> (<code>https://nebkqncvapelrarruyqb.supabase.co</code>).</p>
+<ul>
+<li>Postgres is the right home for relational cycle / log / content data.</li>
+<li>Auth + RLS give per-user isolation out of the box — every row is scoped to <code>auth.uid()</code>. Because of this, the <strong>anon/publishable key is public and safe</strong> to embed in both clients; the <code>service_role</code> key must never ship client-side.</li>
+<li>Edge Functions are available for server-side work such as the pending full auth-record deletion.</li>
+</ul>
+<blockquote>
+<p>Ops note: for signup to complete, <strong>"Confirm email" must be turned OFF</strong> in Auth. In-app data deletion (JSON export + delete) is live; deleting the underlying <em>auth record</em> needs a service-role Edge Function, which is pending.</p>
+</blockquote>
+<h3>The CAS engine — the core IP</h3>
+<p>The Cycle Alignment Score is a 0–100 number with five weighted components:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1 Phase Confidence</td>
+<td>15</td>
+</tr>
+<tr>
+<td>C2 Biomarkers</td>
+<td>25</td>
+</tr>
+<tr>
+<td>C3 Nutrition</td>
+<td>30</td>
+</tr>
+<tr>
+<td>C4 Fitness</td>
+<td>20</td>
+</tr>
+<tr>
+<td>C5 Logging</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>It is implemented in <code>src/lib/cas.ts</code> (ported from <code>packages/core/cas.mjs</code>, backed by 34 tests) and <strong>recomputes in real time as the user logs</strong>, writing to <code>daily_scores</code>. The web app runs the same five-component CAS and writes the same table, so the score is consistent across surfaces.</p>
+<blockquote>
+<p>Analogy: the CAS is a fuel gauge that redraws itself the instant you add fuel — check off a phase-aligned meal and the needle moves before you leave the screen.</p>
+</blockquote>
+<h3>Phase model</h3>
+<p><code>cycleDay = today − last_period_start + 1</code>, wrapped to cycle length. Five internal phases (menstrual, follicular, ovulatory, early_luteal, late_luteal) collapse to four display phases (Menstrual, Follicular, Ovulatory, Luteal). Phase colours: menstrual <code>#E8472A</code>, follicular <code>#6B9E6B</code>, ovulatory <code>#D4A017</code>, luteal <code>#7B5EA7</code>. Poppins throughout; brand orange <code>#FF5509</code>, orb gradient <code>#FF9269 → #FF5509</code>.</p>
+<h2>2. High-level system diagram (today)</h2>
+<pre><code>   ┌──────────────────┐   ┌──────────────────┐   ┌──────────────────┐
+   │  iOS app         │   │  Android app     │   │  Web app         │
+   │  Expo SDK 54     │   │  Expo SDK 54     │   │  Claude Design   │
+   │  (RN 0.81)       │   │  (RN 0.81)       │   │  bundle          │
+   └────────┬─────────┘   └────────┬─────────┘   └────────┬─────────┘
+            │                      │                      │
+            │            HTTPS (JWT, anon key)            │
+            └──────────────────────┼──────────────────────┘
+                                   │
+                     ┌─────────────┴───────────────┐
+                     │       Supabase (EU)          │
+                     │  Auth · Postgres + RLS       │
+                     │  Edge Functions              │
+                     │  8 core + 3 content tables   │
+                     │  CAS → daily_scores          │
+                     └──────────────────────────────┘
+
+   Web app + marketing site served from Cloudflare Pages
+   (project: nutrisync-collective)
+</code></pre>
+<h2>3. Data model</h2>
+<p>Eight core tables plus a small content library, all under RLS (every row scoped to the signed-in user):</p>
+<p><strong>Core tables</strong>
+- <code>users</code> — profile, NutriGoal, allergies, health_conditions, preferences.
+- <code>cycles</code> — cycle data (last period start, lengths) used for phase derivation.
+- <code>daily_logs</code> — Edit Period symptom/flow/mood logging.
+- <code>nutrition_checklist</code> — NutriLog checklist state (feeds CAS C3).
+- <code>movement_checklist</code> — Movement Log checklist state (feeds CAS C4).
+- <code>meal_logs</code> — free-text meal entries.
+- <code>daily_scores</code> — the computed CAS per day (written by the real-time recompute).
+- <code>user_phase_averages</code> — per-phase personal baselines (populated as the user accrues cycles).</p>
+<p><strong>Content tables</strong>
+- <code>phase_food</code> — phase-indexed food content.
+- <code>movement_activity</code> — phase-indexed movement content.
+- <code>phase_tip</code> — daily tips / body insights (indexed by cycle day, modulated by NutriGoal).</p>
+<p><strong>Derivation rule (the heart of the app):</strong> <code>cycle_day = today − last_period_start + 1</code>, wrapped to cycle length and mapped to a phase. All Home, NutriLog, Movement, and Notification content keys off this. Phase boundaries personalize as the user logs real data.</p>
+<h2>4. Web application — how it is wired</h2>
+<p>The web app is the Claude Design compiled bundle, <strong>genuinely stitched to Supabase</strong>:</p>
+<ul>
+<li>The Supabase client loads via <code>esm.sh/@supabase/supabase-js@2</code>, with the anon key baked in (public and safe).</li>
+<li>Real sign-up / log-in with session routing: <strong>no session → login · session without a cycle → onboarding · else → home</strong>.</li>
+<li>It reads and writes all eight core tables, runs the same five-component CAS, and writes <code>daily_scores</code>. In-app JSON export and delete are available.</li>
+<li>A leftover dev "bundler error" overlay is hidden in production via <code>#__bundler_err{display:none}</code>; the durable fix is to strip it in the Design export.</li>
+</ul>
+<p><strong>Live URLs (Cloudflare Pages, project <code>nutrisync-collective</code>):</strong>
+- Marketing (root): <code>https://nutrisync-collective.pages.dev</code>
+- Web app: <code>https://nutrisync-collective.pages.dev/app.html</code>
+- Gated hub (investor/builder docs): footer <strong>Team access</strong>, code <code>123456</code>.</p>
+<p>The Cloudflare Access email whitelist was <strong>removed</strong>, so the site is public; it can be re-added via Zero Trust → Access. Two stale artifacts sit unused in the account — an old <code>nutrisync-web.pages.dev</code> project and a broken <code>nutrisync</code> Worker — both deletable, neither in use.</p>
+<h2>5. CI/CD — both tracks live</h2>
+<p>Both deploy pipelines are automated on push.</p>
+<blockquote>
+<p>Analogy: each GitHub Action is a conveyor belt — you push code and the surface rebuilds and ships itself, no manual deploy step.</p>
+</blockquote>
+<p><strong>Mobile</strong> — repo <code>githubjuanjose/nutrisync-app</code>:
+- Action <code>.github/workflows/eas-update.yml</code> runs <code>eas update --branch production</code> (OTA) on every push. Secret: <code>EXPO_TOKEN</code>.
+- EAS project id <code>3b124e7e-e7e8-43ed-a54c-b660a07109dc</code>; <code>app.json updates.url = https://u.expo.dev/3b124e7e-e7e8-43ed-a54c-b660a07109dc</code>; <code>runtimeVersion</code> policy <code>appVersion</code>.
+- Installed builds receive OTA updates. Expo Go does <strong>not</strong>.</p>
+<p><strong>Web</strong> — repo <code>githubjuanjose/nutrisync-web</code>:
+- Action <code>.github/workflows/deploy-web.yml</code> runs <code>wrangler pages deploy publish --project-name=nutrisync-collective</code> on every push to <code>main</code>.
+- Secrets: <code>CLOUDFLARE_API_TOKEN</code> (a <strong>Custom token</strong>: Account · Cloudflare Pages · Edit — the old "Edit Cloudflare Pages" template no longer exists) and <code>CLOUDFLARE_ACCOUNT_ID</code>.
+- This deliberately uses the Action → wrangler direct-upload path, <strong>not</strong> Cloudflare's built-in "Workers Builds" Git integration, which hung.</p>
+<h2>6. Remote testing</h2>
+<ul>
+<li><strong>Android APK (recommended for the Madrid testers):</strong> <code>eas build --profile preview --platform android</code> (internal distribution + <code>buildType: apk</code>). No Apple or Google paid account needed. Produces a shareable download link/QR; once installed, GitHub pushes reach testers OTA.</li>
+<li><strong>iOS TestFlight:</strong> requires the <strong>paid Apple Developer Program ($99/yr)</strong> — a free Apple account has no "team" and cannot sign or distribute. Enrollment is the current blocker. Once enrolled: <code>eas build --platform ios --profile production</code> → <code>eas submit --platform ios --latest</code> → TestFlight (External = one-time Beta App Review). Bundle id <code>com.nutrisync.app</code>; export compliance pre-answered (<code>ios.config.usesNonExemptEncryption = false</code>).</li>
+<li><strong>Expo Go:</strong> local same-WiFi <code>npx expo start</code>, or <code>--tunnel</code> for remote (ngrok — flaky). Expo Go does not receive OTA updates.</li>
+</ul>
+<h2>7. Repository structure</h2>
+<p>There is no monorepo. NutriSync is <strong>two repositories</strong>, each with its own auto-deploy pipeline:</p>
+<ul>
+<li><code>githubjuanjose/nutrisync-app</code> — the mobile app (Expo SDK 54) plus the OTA pipeline.</li>
+<li><code>githubjuanjose/nutrisync-web</code> — the marketing site, the wired web app (a Claude Design bundle, not Expo Web), the gated hub, and the Cloudflare deploy pipeline.</li>
+</ul>
+<h2>8. Privacy &amp; compliance (build-time requirements)</h2>
+<ul>
+<li><strong>Special-category data</strong> (menstrual/health) under GDPR and Swiss FADP. EU residency is met by the Supabase EU project.</li>
+<li><strong>RLS everywhere:</strong> a user can only read/write her own rows — live.</li>
+<li><strong>No selling cycle data; no third-party ad SDKs on health screens.</strong></li>
+<li><strong>Live:</strong> JSON export, in-app delete, RLS. <strong>Pending:</strong> full auth-record deletion (service-role Edge Function) and a formal consent/cookie layer.</li>
+<li>Clinical content review + evidence tagging before publish.</li>
+</ul>
+<h2>9. Scale-up target (planned, NOT built)</h2>
+<p>Phase 1 runs on Supabase (EU) for speed. The scale-up target — for when B2B volume, health-data residency guarantees, and a data flywheel justify the operational cost — is a dedicated cloud footprint:</p>
+<ul>
+<li><strong>AWS</strong> as primary, in the <strong>Zurich region <code>eu-central-2</code></strong> for Swiss/EU health-data residency, behind <strong>Cloudflare</strong> at the edge (CDN / WAF / DDoS / Zero Trust).</li>
+<li>AWS core path: <strong>ALB → ECS Fargate → Aurora Postgres</strong> (private subnet, KMS-encrypted) + <strong>S3</strong> + <strong>Secrets Manager</strong>.</li>
+</ul>
+<p>This is the target architecture, not the current one. Nothing in this section is deployed; Supabase (EU) is the Phase 1 backend by design.</p>
+<h2>10. Build sequence — done vs pending</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAS engine (<code>cas.ts</code>, 34 tests) + real-time recompute → <code>daily_scores</code></td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Phase model + design tokens (colours, Poppins, orb)</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>8 core + 3 content tables with RLS</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>All mobile screens (onboarding → tabs → Edit Period/Health → Notification Center → Settings)</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Web app stitched to Supabase (auth, routing, reads/writes, CAS, export/delete)</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Marketing site + gated hub on Cloudflare Pages</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Mobile OTA CI/CD (EAS Update) + Web CI/CD (wrangler Pages)</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Full auth-record deletion (service-role Edge Function)</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>Consent / cookie layer</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>Admin MIS/KPI console wired to live data (currently static/mock)</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>Observability / security / DR</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>Wearable connectors (native dev build)</td>
+<td>Roadmap 2028</td>
+</tr>
+<tr>
+<td>AWS/Cloudflare scale-up (Zurich <code>eu-central-2</code>)</td>
+<td>Roadmap (target only)</td>
+</tr>
+</tbody>
+</table></div></body></html>

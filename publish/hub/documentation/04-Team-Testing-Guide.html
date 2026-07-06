@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Team Testing & Access Guide — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Team Testing &amp; Access Guide</h1>
+<p>A practical guide for the team — including the testers in <strong>Madrid</strong> — to try NutriSync across all three surfaces: the <strong>live web app</strong>, the <strong>marketing site</strong>, and the <strong>native mobile app</strong> on real phones. Everything is shared over the internet, so it works no matter where each person sits; nobody needs to be on the same Wi-Fi or hold a copy of the code.</p>
+<p>As of <strong>July 2026</strong>, the web surfaces are live and public on Cloudflare Pages, and the mobile app is ready to distribute as a shareable Android APK (or via iOS TestFlight once Apple enrollment is done). This document tells you exactly where to click and what to run.</p>
+<blockquote>
+<p>Analogy for the two mobile paths: <strong>a shareable build (APK / TestFlight) is a sealed product sample</strong> — a tester taps an icon and it just runs, no laptop involved. <strong>Expo Go is screen-sharing your running app</strong> — great while a developer is actively building, but it depends on that developer's machine being on. For the Madrid testers, send a build.</p>
+</blockquote>
+<hr />
+<h2>1. The fastest thing to try: the live web apps</h2>
+<p>There is nothing to install. The whole product is already online as one Cloudflare Pages deployment (project <code>nutrisync-collective</code>):</p>
+<ul>
+<li><strong>Marketing site (root):</strong> https://nutrisync-collective.pages.dev</li>
+<li><strong>Web application:</strong> https://nutrisync-collective.pages.dev/app.html</li>
+<li><strong>Gated hub (investor / builder docs):</strong> open the footer <strong>Team access</strong> link and enter code <strong><code>123456</code></strong>.</li>
+</ul>
+<p>The web app is the Claude Design build <strong>stitched to the same Supabase backend the mobile app uses</strong> — real sign-up and log-in, real cycle onboarding, real logging, and the same Cycle Alignment Score. It reads and writes all eight core tables and supports in-app JSON export and account deletion. So a tester who signs up on the web and a tester who signs up on Android are hitting the exact same database.</p>
+<h3>How a tester uses it</h3>
+<ol>
+<li>Open <strong>https://nutrisync-collective.pages.dev/app.html</strong>.</li>
+<li><strong>Sign up</strong> with an email and password. (Email confirmation is turned off, so sign-up completes immediately — see the note below.)</li>
+<li>Complete the short cycle onboarding. Session routing does the rest: no session → login, a session with no cycle yet → onboarding, otherwise → home.</li>
+<li>Log a day, watch the Sync Score update, explore Progress and the Calendar.</li>
+</ol>
+<blockquote>
+<p><strong>Ops note for whoever administers Supabase:</strong> "Confirm email" must stay <strong>OFF</strong> in Supabase Auth for self-serve sign-up to complete without a mailbox round-trip. The anon key baked into the web bundle is <strong>public and safe</strong> — Row-Level Security scopes every row to the signed-in user, so one tester can never see another's data.</p>
+</blockquote>
+<p>The site is currently <strong>public</strong> (the old Cloudflare Access email whitelist was removed). If you ever need to lock it down for an external audience, it can be re-added via Cloudflare Zero Trust → Access.</p>
+<hr />
+<h2>2. Testing the mobile app — pick a path</h2>
+<p>There are three ways to get NutriSync onto a phone. For non-developers such as the Madrid testers, use <strong>A (Android APK)</strong> first; it is the least friction and needs no paid account.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Best for</th>
+<th>Paid account needed?</th>
+<th>Gets OTA updates?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A. Android APK (EAS Build, preview)</strong></td>
+<td>Any Android tester, distributed team</td>
+<td><strong>No</strong></td>
+<td><strong>Yes</strong> — after install</td>
+</tr>
+<tr>
+<td><strong>B. iOS TestFlight</strong></td>
+<td>iPhone testers</td>
+<td><strong>Yes</strong> — Apple Developer Program ($99/yr)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>C. Expo Go (dev)</strong></td>
+<td>Developers iterating live</td>
+<td>No</td>
+<td><strong>No</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The APK and TestFlight paths install a <strong>real build</strong> of the app, which is what receives over-the-air (OTA) updates when the team pushes code. Expo Go does <strong>not</strong> receive OTA — it only ever runs whatever a developer's machine is currently serving.</p>
+<hr />
+<h2>A. Android APK — recommended for the Madrid testers</h2>
+<p>This is the sealed-sample path: one cloud build produces a downloadable <code>.apk</code> with a share link and QR, and no Apple or Google paid account is required.</p>
+<h3>A1. One-time developer setup</h3>
+<pre><code class="language-bash">npm install -g eas-cli
+eas login                          # use the shared Expo account
+git clone https://github.com/githubjuanjose/nutrisync-app
+cd nutrisync-app
+npm install
+</code></pre>
+<h3>A2. Build the shareable APK</h3>
+<pre><code class="language-bash">eas build --profile preview --platform android
+</code></pre>
+<p>The <code>preview</code> profile is configured for <strong>internal distribution</strong> with <code>buildType: apk</code>. When the cloud build finishes, EAS returns a <strong>download page with a link and QR code</strong>.</p>
+<h3>A3. Send it to the testers</h3>
+<ol>
+<li>Forward the EAS link (or QR) to the Madrid testers.</li>
+<li>On their Android phone they tap the link → download the APK → when prompted, allow <strong>"install from unknown sources"</strong> for their browser or Files app → install.</li>
+<li>Done. The app runs standalone — no laptop, no Wi-Fi pairing.</li>
+</ol>
+<p>After a tester has the APK installed once, <strong>every push to the <code>nutrisync-app</code> repo reaches them over the air</strong> (Section D). They just reopen the app to get the latest JS/UI.</p>
+<hr />
+<h2>B. iOS TestFlight — needs paid Apple enrollment</h2>
+<p>iOS cannot sideload the way Android can, so Apple's <strong>TestFlight</strong> is the route for iPhone testers. The blocker today is enrollment: a <strong>free</strong> Apple account has <strong>no "team"</strong> and cannot sign or distribute a build. You need the <strong>Apple Developer Program ($99/year)</strong> first.</p>
+<p>Once the org is enrolled:</p>
+<pre><code class="language-bash">eas build --platform ios --profile production
+eas submit --platform ios --latest      # uploads to App Store Connect → TestFlight
+</code></pre>
+<ul>
+<li>Bundle id is <code>com.nutrisync.app</code>; export-compliance is pre-answered (<code>ios.config.usesNonExemptEncryption = false</code>), so there's no per-build encryption questionnaire.</li>
+<li>Add testers' emails in TestFlight. <strong>External</strong> testing triggers a one-time Beta App Review; <strong>internal</strong> testers (up to your team) skip it.</li>
+<li>Testers install Apple's <strong>TestFlight</strong> app and accept the invite.</li>
+</ul>
+<p>Until Apple enrollment is complete, point iPhone-only testers at the <strong>web app</strong> (Section 1) so they can still try the product.</p>
+<hr />
+<h2>C. Expo Go — for developers iterating live</h2>
+<p>Expo Go is for the people actively building, not for stakeholder testing.</p>
+<pre><code class="language-bash">cd nutrisync-app
+npx expo start                     # same Wi-Fi: scan the QR with Expo Go
+npx expo start --tunnel            # remote: routes through Expo's servers (ngrok)
+</code></pre>
+<ul>
+<li><strong>Same Wi-Fi:</strong> a QR appears; scan it with <strong>Expo Go</strong> (Android) or the <strong>Camera app</strong> (iOS).</li>
+<li><strong>Across networks:</strong> <code>--tunnel</code> avoids network config but relies on ngrok, which is <strong>flaky and outage-prone</strong> — fine for a quick look, not for a reliable tester session.</li>
+<li><strong>Important:</strong> Expo Go does <strong>not</strong> receive OTA updates and cannot run custom native modules (e.g. the future HealthKit wearable connectors). For anything a tester should keep on their phone, use the APK or TestFlight.</li>
+</ul>
+<hr />
+<h2>D. Instant updates without rebuilding — OTA (already wired)</h2>
+<p>The mobile OTA pipeline is live. Think of the GitHub Action as a conveyor belt: <strong>push code → the app updates itself on every installed build</strong>, no rebuild, no store review.</p>
+<ul>
+<li>The <code>nutrisync-app</code> repo has a GitHub Action (<code>.github/workflows/eas-update.yml</code>) that runs <code>eas update --branch production</code> on every push.</li>
+<li>Any tester on an installed <strong>APK</strong> or <strong>TestFlight</strong> build picks up the change on next launch.</li>
+<li>To push manually:</li>
+</ul>
+<pre><code class="language-bash">eas update --branch production --message &quot;tweak Home screen&quot;
+</code></pre>
+<ul>
+<li>OTA carries JS/UI changes only. Native changes (new SDK, new native module) still need a fresh build.</li>
+</ul>
+<hr />
+<h2>0. Prerequisites (developers only)</h2>
+<p>Testers need nothing but a phone and the link you send. Developers building the app need:</p>
+<ol>
+<li><strong>Node.js ≥ 20.19.4</strong> — https://nodejs.org (the project is on <strong>Expo SDK 54</strong>, which requires Node 20.19.4 or newer; older Node 18 will not work).</li>
+<li><strong>Git</strong> — https://git-scm.com</li>
+<li>A free <strong>Expo account</strong> — https://expo.dev/signup (use the shared org account so builds and OTA go to one place).</li>
+<li><strong>EAS CLI</strong> — <code>npm install -g eas-cli</code>.</li>
+</ol>
+<p>The two repos:
+- <strong><code>githubjuanjose/nutrisync-app</code></strong> — the Expo mobile app + OTA pipeline.
+- <strong><code>githubjuanjose/nutrisync-web</code></strong> — the marketing site + wired web app + gated hub + Cloudflare deploy pipeline.</p>
+<hr />
+<h2>E. "Send to the Madrid team" checklist</h2>
+<ul>
+<li>[ ] Share the web links (marketing + <code>/app.html</code>) and the Team-access code <code>123456</code> for the hub.</li>
+<li>[ ] Confirm Supabase "Confirm email" is <strong>OFF</strong> so sign-ups complete.</li>
+<li>[ ] For Android testers: run <code>eas build --profile preview --platform android</code>, send the APK link/QR.</li>
+<li>[ ] For iPhone testers: once Apple enrollment is done, build + <code>eas submit</code> → invite them on TestFlight. Until then, point them at the web app.</li>
+<li>[ ] Iterate freely — pushes to <code>nutrisync-app</code> reach installed builds over the air; no reinstalls.</li>
+</ul>
+<hr />
+<h2>F. Costs to be aware of</h2>
+<ul>
+<li>Expo account, Expo Go, EAS Update (OTA), Cloudflare Pages, Supabase (Phase 1): <strong>free / current tiers</strong>.</li>
+<li>EAS Build: generous free tier; paid only at high build volume.</li>
+<li><strong>Apple Developer Program: $99/year</strong> — required for any iOS/TestFlight distribution. This is the current iOS blocker.</li>
+<li>Google Play: $25 one-time — only needed to publish to the Play Store, <strong>not</strong> for APK testing.</li>
+</ul>
+<hr />
+<h2>G. Troubleshooting</h2>
+<ul>
+<li><strong>Web sign-up seems to hang</strong> → check that Supabase Auth has "Confirm email" turned <strong>OFF</strong>.</li>
+<li><strong>Android "can't install"</strong> → enable "install unknown apps" for the browser or Files app, then retry the APK.</li>
+<li><strong>Expo Go QR won't load</strong> → use <code>--tunnel</code>; ensure the phone has internet. Remember the tunnel depends on ngrok and can be flaky.</li>
+<li><strong>Tester not getting the latest</strong> → confirm they're on an installed <strong>build</strong> (APK/TestFlight), not Expo Go, which never receives OTA.</li>
+<li><strong>iOS build asks for a team / credentials</strong> → the org isn't enrolled in the Apple Developer Program yet; a free account has no team to sign with.</li>
+<li><strong>SDK mismatch in Expo Go</strong> → make sure everyone is on <strong>Expo SDK 54</strong> and <strong>Node ≥ 20.19.4</strong>.</li>
+</ul></div></body></html>

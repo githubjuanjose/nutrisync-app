@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Product Requirements — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,244,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-weight:300;letter-spacing:4px;font-size:15px;}
+.topbar .brand b{font-weight:800;}
+.topbar a{color:var(--coral-deep);font-weight:700;font-size:13px;text-decoration:none;}
+.navbtns{display:flex;gap:16px;align-items:center;}
+.navbtns a:first-child{padding:5px 12px;border:1px solid var(--line);border-radius:20px;}
+.navbtns a:first-child:hover{border-color:var(--coral);background:var(--cream);}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin:0 0 8px;}
+h2{font-size:25px;font-weight:800;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;}
+h4{font-size:16px;font-weight:800;margin:20px 0 6px;}
+p{margin:10px 0;}
+a{color:var(--coral-deep);}
+strong{font-weight:700;}
+code{background:var(--code);color:#9a3a25;padding:2px 6px;border-radius:6px;font-size:.9em;font-family:'SF Mono',Menlo,Consolas,monospace;}
+pre{background:#241D1A;color:#f4e9e2;padding:16px 18px;border-radius:12px;overflow-x:auto;font-size:13px;line-height:1.55;}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:14px 0;padding:12px 18px;background:var(--cream);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;color:#5d524b;}
+blockquote p{margin:4px 0;}
+ul,ol{margin:10px 0;padding-left:24px;}
+li{margin:5px 0;}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto;}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--coral);color:#fff;font-weight:700;}
+tbody tr:nth-child(even){background:var(--cream);}
+.pill{display:inline-block;background:#FDE6DD;color:var(--coral-deep);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;}
+.card{display:block;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0;text-decoration:none;color:var(--ink);transition:.15s;}
+.card:hover{border-color:var(--coral);background:var(--cream);}
+.card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
+.sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
+</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Product Requirements Document (Phase 1 Beta)</h1>
+<p><strong>Tagline:</strong> Hormonal care made easy — <em>sync your cycle, fuel your mind.</em>
+<strong>Document owner:</strong> Product (Lucia Cebrian, COO)
+<strong>Status:</strong> Built · Phase 1 beta · Live web app + native apps sharing one backend (July 2026)</p>
+<hr />
+<h2>1. Problem</h2>
+<p>Healthcare and mainstream nutrition were designed around male biology. Men run on a roughly 24-hour hormonal cycle; women run on a roughly 28-day cycle with four distinct phases (menstrual, follicular, ovulatory, luteal). "One-size-fits-all" diet and training advice ignores this, leaving women to self-experiment with food and movement across phases — with the cost showing up as later diagnoses, worse outcomes, and everyday frustration.</p>
+<p><strong>The opportunity:</strong> the FemTech market is projected to grow from roughly US$10B (2018) toward roughly US$70B by 2030 (Grand View Research). Existing apps (Flo, Clue, 28, Flo Living) lead on <em>period tracking</em> but only partially cover science-backed cycle-synced nutrition, integrated movement, personalization, and clinician-partnered distribution. That gap is NutriSync's wedge — and, crucially, we now have a working product occupying it rather than a pitch deck describing one.</p>
+<h2>2. Vision</h2>
+<p>A cycle-synced nutrition and movement intelligence companion that adapts daily food, training, and wellbeing guidance to where a woman is in her cycle — grounded in clinical evidence, personalized to her own logged data, and backed by community. The product's core intellectual property is the <strong>CAS (Cycle Alignment Score)</strong>: a single, explainable 0–100 number that tells a user how well her day aligned with her current phase, and recomputes in real time as she logs.</p>
+<h2>3. Target users</h2>
+<p><strong>Primary persona — "Olivia," 25–45, cycle-aware self-optimizer.</strong> She already tracks her period, exercises, and cares about nutrition, and she is tired of generic advice. She wants to know <em>what to eat and how to move today</em>, given her current phase, without doing the research herself.</p>
+<p><strong>Secondary personas:</strong>
+- Women with cycle-related symptoms (PMS, low energy, bloating) seeking relief through nutrition and movement.
+- B2B end-users: female employees reached through employer wellness programs (€35–€50 per employee/year is the B2B unit).</p>
+<p><strong>Validation to date:</strong> 120+ interviews, an early cohort of 100 women (96% cycle-aware, 86% engaged), and 13K+ content views. The current phase moves validation from interviews toward <em>in-product behaviour</em>, with the beta instrumented to observe real logging and CAS engagement.</p>
+<h2>4. Goals &amp; success metrics (Phase 1 beta)</h2>
+<p>The product is built, so success metrics now frame the beta: are real users logging, and does the CAS keep them coming back? These are the north-star signals we watch during the Madrid tester cohort and early beta.</p>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Metric</th>
+<th>Beta target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Daily relevance</td>
+<td>D7 / D30 retention</td>
+<td>D7 ≥ 40%, D30 ≥ 20%</td>
+</tr>
+<tr>
+<td>Habit formation</td>
+<td>Logging streak (meals / symptoms / movement)</td>
+<td>≥ 3 days/week median</td>
+</tr>
+<tr>
+<td>Engagement</td>
+<td>WAU / MAU</td>
+<td>≥ 45%</td>
+</tr>
+<tr>
+<td>CAS engagement</td>
+<td>Users who see their score move after logging</td>
+<td>majority of active users each session</td>
+</tr>
+<tr>
+<td>Monetization signal</td>
+<td>Free → premium intent</td>
+<td>≥ 10% (deck assumption, to be validated)</td>
+</tr>
+</tbody>
+</table>
+<p>North-star metric: <strong>weekly active women completing ≥1 phase-aligned action</strong> (logged a recommended meal, completed a movement item, or read phase guidance) — the action that both drives the CAS and signals real habit.</p>
+<h2>5. Scope — what is built</h2>
+<p>The app is now effectively <strong>1:1 with the Figma prototype</strong>. Every screen below is built, functional on live data, and wired to the Supabase backend and the CAS engine. The same backend powers both the native mobile apps and the live web application, so a user's cycle, logs, and score are identical wherever she signs in.</p>
+<h3>5.1 Onboarding — built</h3>
+<p>Welcome → Auth (sign up / sign in) → a multi-step Wizard that captures cycle data (including the critical <strong>last period start date</strong>), health, nutrition preferences, NutriGoal, Nutri avatar, city, and consent. Answers persist to <code>users</code> and <code>cycles</code>, so every downstream recommendation is filtered to the individual from the first session.</p>
+<h3>5.2 Daily gate — built</h3>
+<p>A "Before we Sync" mood/energy gate that appears once per calendar day on first open, feeding the CAS biomarker and logging components.</p>
+<h3>5.3 Main tabs — built</h3>
+<ul>
+<li><strong>Cycle (Home):</strong> phase ring showing current phase + cycle day, week strip, greeting, and a live Sync Score. A 🔔 in the header opens the Notification Center.</li>
+<li><strong>NutriLog:</strong> daily tip / body insight (changes each day, indexed by cycle day and modulated by NutriGoal), a pre-checked Nutri Basics checklist, and a free-text meal log. Food lists are filtered by diet, allergies, and conditions before display; checking items recomputes the nutrition component of the CAS in real time.</li>
+<li><strong>Movement Log:</strong> phase movement tips plus a pre-checked checklist and free-text log; the highest-intensity item drives the fitness component of the CAS.</li>
+<li><strong>Progress:</strong> CAS summary and component breakdown, history, and cycle insights.</li>
+<li><strong>Calendar:</strong> a phase-coloured month grid with predicted period, legend, and per-day insight.</li>
+</ul>
+<h3>5.4 Edit Period — built</h3>
+<p>Real Figma emotes, flow droplets, and symptom logging (mood-state, pain, digestion, cravings, sleep, energy, and more) writing to <code>daily_logs</code> and feeding biomarkers.</p>
+<h3>5.5 Edit Health / Health Profile — built</h3>
+<p>A NutriGoal carousel (locked until two full cycles are completed), Allergies chips, and Health Conditions chips, writing to <code>users.nutrigoal / allergies / health_conditions</code>.</p>
+<h3>5.6 Notification Center — built</h3>
+<p>A live feed computed from real cycle, phase, and logging state — phase tip, check-in nudge, today's score, and milestones — reached via the 🔔 on the home header. Nothing here is canned; it reflects the user's actual state.</p>
+<h3>5.7 Settings — built</h3>
+<p>A Settings hub plus Personal Information, Sign-in &amp; Security, Data Privacy (JSON export + delete account), Community Privacy, Notifications &amp; Reminders, Choose Your Nutri, <strong>App Preferences</strong> (units, week-start, haptics, appearance — saved on-device), and <strong>Nutritional Preferences</strong> (diet type + allergies, written to <code>users</code>).</p>
+<h3>5.8 Visual polish — built</h3>
+<p>The official Figma NutriBubble orb appears throughout, alongside an animated "looking-around" branded loading screen and real Figma emotes. Poppins is the app-wide typeface; brand orange is <code>#FF5509</code> with an orb gradient <code>#FF9269 → #FF5509</code>.</p>
+<p><strong>Intentionally deferred (known non-Figma gaps):</strong> wearable connectors (native-only, roadmap 2028) and 2FA / passkeys.</p>
+<h2>6. Non-goals (still out of scope)</h2>
+<ul>
+<li>Wearables integration (Apple Health, Samsung Health, Google Fit / Fitbit, Garmin, Oura, and others) — documented, not built; roadmap 2028.</li>
+<li>Menopause module — roadmap 2027.</li>
+<li>Insurer / public-health program integrations.</li>
+<li>Full social network / creator tooling.</li>
+<li>Medical diagnosis or treatment. <strong>NutriSync is wellness guidance, not a medical device</strong> (see §8).</li>
+</ul>
+<h2>7. Cycle-sync content model (the core IP)</h2>
+<p>Guidance adapts to the user's menstrual phase, and phase boundaries personalize from her own logged cycle data rather than a fixed 28-day assumption. Under the hood the CAS uses five internal phases (menstrual, follicular, ovulatory, early_luteal, late_luteal); the user sees four display phases.</p>
+<table>
+<thead>
+<tr>
+<th>Display phase</th>
+<th>Approx. days</th>
+<th>Colour</th>
+<th>Nutrition focus</th>
+<th>Movement focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Menstrual</td>
+<td>1–5</td>
+<td><code>#E8472A</code></td>
+<td>Iron, warming foods, hydration</td>
+<td>Gentle movement, rest</td>
+</tr>
+<tr>
+<td>Follicular</td>
+<td>6–13</td>
+<td><code>#6B9E6B</code></td>
+<td>Fresh/light, complex carbs, protein</td>
+<td>Build intensity, strength</td>
+</tr>
+<tr>
+<td>Ovulatory</td>
+<td>14–16</td>
+<td><code>#D4A017</code></td>
+<td>Anti-inflammatory, fiber</td>
+<td>Peak performance, HIIT</td>
+</tr>
+<tr>
+<td>Luteal</td>
+<td>17–28</td>
+<td><code>#7B5EA7</code></td>
+<td>Magnesium, complex carbs, mood support</td>
+<td>Steady-state, deload late</td>
+</tr>
+</tbody>
+</table>
+<p>The phase is derived as <code>cycleDay = today − last_period_start + 1</code>, wrapped to cycle length. Everything on Home, NutriLog, Movement Log, and the Notification Center keys off this. Content is reviewed by the clinical advisor (Constanza Ramirez Milli) and evidence-tagged before publish.</p>
+<h2>8. Compliance, safety &amp; trust</h2>
+<ul>
+<li><strong>Positioning:</strong> wellness and education, not medical advice; no diagnosis or treatment claims. A disclaimer and "consult a professional" prompts surface for health-flagged inputs.</li>
+<li><strong>GDPR / Swiss FADP:</strong> menstrual and health data are special-category personal data. Explicit consent, data minimization, purpose limitation, right to export and erasure, and EU/CH data residency apply. Phase 1 runs in the Supabase EU region.</li>
+<li><strong>Data protection status:</strong> JSON export and in-app delete are live, and Row-Level Security scopes every row to the signed-in user. Full deletion of the underlying auth record (via a service-role Edge Function) and a formal consent/cookie layer are the remaining pieces, and are on the near-term roadmap.</li>
+<li><strong>Ethical data as a feature:</strong> clear consent, no selling of cycle data, and granular controls are a visible differentiator, not fine print.</li>
+</ul>
+<h2>9. Monetization (context for product gating)</h2>
+<ul>
+<li><strong>B2C:</strong> Free tier + Premium at <strong>€5.99/month</strong>; in-app purchases.</li>
+<li><strong>B2B:</strong> Employer wellness, <strong>€35–€50 per female employee/year</strong>.</li>
+<li><strong>Sponsored expert content.</strong></li>
+<li>Product implication: a clean free/premium gate and an org/seat model for B2B remain the target; the beta prioritizes engagement and retention signal before hardening the paywall.</li>
+</ul>
+<h2>10. Release plan (current reality)</h2>
+<ol>
+<li><strong>Phase 1 beta (now, July 2026):</strong> the full screen set is built and live. Native iOS + Android apps and the web application share one Supabase (EU) backend and the same CAS engine. The web app and marketing site are live on Cloudflare Pages; both mobile and web ship continuously via automated CI/CD (mobile OTA via EAS Update, web via Cloudflare Pages). The immediate focus is remote testing with the <strong>Madrid tester cohort</strong> (Android APK is the recommended distribution; iOS TestFlight is gated on paid Apple Developer enrollment) and instrumenting the beta metrics above.</li>
+<li><strong>Hardening:</strong> complete the data-protection layer (full auth-record deletion, consent/cookie surface), wire the admin MIS/KPI console to live data, and add observability.</li>
+<li><strong>2027 roadmap:</strong> EU expansion, stronger B2B/seat management, menopause module, deeper personalization.</li>
+<li><strong>2028 roadmap:</strong> wearable connectors (native dev build) and US market entry.</li>
+</ol>
+<h2>11. Open questions</h2>
+<ul>
+<li>Depth of the movement module beyond guidance + checklist.</li>
+<li>How much community UGC to ship (currently read + light interaction) vs. full posting.</li>
+<li>Recipe/content sourcing: licensed library vs. original vs. partner-contributed.</li>
+<li>Timing of the paywall and B2B seat model relative to beta engagement signal.</li>
+</ul></div></body></html>
