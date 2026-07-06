@@ -1,0 +1,776 @@
+{
+  "ui": {
+    "boot": "SINKRONIZATZEN…",
+    "rail1": "Sinkronizatu zure zikloa.",
+    "rail2": "Elikatu zure burua.",
+    "protoBadge": "PROTOTIPOA · DEMO DATUAK",
+    "railCopy": "Zure hormonekin batera mugitzen diren elikadura eta mugimendua — egunero, zure zikloaren une zehatzera egokituta.",
+    "loginTitle": "Ongi etorri berriro",
+    "loginSub": "Jarraitu utzi zenuen leku berean.",
+    "email": "Helbide elektronikoa",
+    "password": "Pasahitza",
+    "createPassword": "Sortu pasahitza",
+    "fullName": "Izen-abizenak",
+    "remember": "Gogora nazazu",
+    "forgot": "Pasahitza ahaztu duzu?",
+    "login": "Hasi saioa",
+    "newHere": "Lehen aldia hemen?",
+    "createAccount": "Sortu kontua",
+    "signupSub": "Minutu bat orain — neurrira egindako gidaritza hurrengo egun guztietarako.",
+    "getStarted": "Hasi →",
+    "haveAccount": "Baduzu konturik?",
+    "settingUp": "KONFIGURAZIOA",
+    "obRail1": "Ikas dezagun",
+    "obRail2": "zure erritmoa.",
+    "obRailCopy": "Galdera azkar batzuk, gomendio bakoitza zure gorputzari egokitzeko — ez batez besteko bati.",
+    "obDateNote": "Ziur ez bazaude, gutxi gorabeherakoa nahikoa da — Nutrik zehaztuko du erregistratzen duzun heinean.",
+    "age": "ADINA",
+    "years": "urte",
+    "height": "ALTUERA",
+    "weight": "PISUA",
+    "obOptional": "Aukerakoa — saltatu partekatu nahi ez duzuna.",
+    "obConsentA": "Zikloa eta sintomak",
+    "obConsentADesc": "Zure eguneroko gidaritza elikatzen du.",
+    "obConsentB": "Modu seguruan gordeta",
+    "obConsentBDesc": "Zifratuta, DBEOrekin bat, inoiz ez salduta.",
+    "obAgree": "Pribatutasun-politika eta Baldintzak onartzen ditut, eta ulertzen dut nire datuak nireak izaten jarraitzen dutela.",
+    "continueBtn": "Jarraitu →",
+    "finishSetup": "Amaitu konfigurazioa →",
+    "obSaving": "Zure konfigurazioa gordetzen…",
+    "obErr": "Ezin izan da gorde — egiaztatu konexioa eta saiatu berriro.",
+    "dailyCheckin": "EGUNEROKO ERREGISTROA",
+    "skipToday": "Saltatu gaurkoz",
+    "next": "Hurrengoa →",
+    "syncDay": "Sinkronizatu nire eguna →",
+    "gateTitleMood": "Nola zaude?",
+    "gateSubMood": "Hitz zintzo bat — Nutrik gaurko plana horren arabera doitzen du.",
+    "gateTitleEnergy": "Eta zure energia?",
+    "gateSubEnergy": "Erabat hustuta (1) izatetik geldiezina (5) izatera.",
+    "allsetCopy": "Nutri zure elikadura eta mugimendua pertsonalizatzen ari da zure erantzunetatik. Konfigurazioan alda ditzakezu noiznahi.",
+    "enterApp": "Sartu NutriSync-en →",
+    "settings": "Ezarpenak",
+    "goodMorning": "Egun on",
+    "cycleDay": "Zikloaren eguna",
+    "cycleAlignment": "ZIKLOAREN LERROKATZEA",
+    "editPeriodBtn": "Editatu hilekoa",
+    "editHealthBtn": "Editatu osasuna",
+    "logToday": "Erregistratu gaur ›",
+    "checkedIn": "✓ Erregistratuta",
+    "firstRunStrong": "Zure bidearen 1. eguna.",
+    "firstRunRest": "Zure Zikloaren Lerrokatze Puntuazioa 7 eguneko erregistroen ondoren desblokeatzen da — Nutri dagoeneko pertsonalizatzen ari da zure erantzunetatik.",
+    "todaysFuel": "Gaurko erregaia",
+    "openNutrilog": "Ireki NutriLog ›",
+    "movement": "Mugimendua",
+    "plan": "Planifikatu ›",
+    "nutriInsight": "NUTRIREN OHARRA",
+    "fromDevices": "Zure gailuetatik",
+    "manage": "Kudeatu ›",
+    "deviceNote": "Gaueko sinkronizazioa mugikorreko betarekin iritsiko da — zure irakurketa-baimena prest dago dagoeneko.",
+    "statSleep": "LOA",
+    "statHrv": "HRV",
+    "statRhr": "ATSEDEN-BM",
+    "statSleepNote": "▲ 7 eguneko batez bestekoaren aldean",
+    "statHrvNote": "egonkor",
+    "statRhrNote": "▼ 2 bpm",
+    "demoSyncLine": "Oura Ring · azken sinkronizazioa 6:40",
+    "consentActive": "baimena aktibo",
+    "welcomeInsight": "Ongi etorri! Zure lehen oharra bihar iritsiko da, Nutrik zure egun bat ezagutzen duenean.",
+    "focusWord": "fokua:",
+    "hydration": "Hidratazioa",
+    "glasses": "8 edalontzitatik",
+    "whyFoods": "ZERGATIK ELIKAGAI HAUEK",
+    "logMeal": "Erregistratu otordu hau",
+    "loggedMeal": "✓ Erregistratuta",
+    "today": "GAUR",
+    "thisWeek": "Aste honetan",
+    "lowEnergy": "ENERGIA GUTXIKO EGUNA?",
+    "markDone": "Markatu egindakotzat",
+    "sessionDone": "✓ Saioa osatuta",
+    "mvAlt": "Aldatu 20 minutuko ibilaldi eta luzaketa leunengatik — iraunkortasunak intentsitatea irabazten du, fase guztietan.",
+    "progress": "Aurrerapena",
+    "casLong": "ZIKLOAREN LERROKATZE PUNTUAZIOA",
+    "trend6w": "6 asteko joera",
+    "prCopyDemo": "Elikadurak, mugimenduak eta loak zure hormonen norabide berean egiten dute tira.",
+    "prCopyLive": "Bost puntuazio — fase-konfiantza, biomarkatzaileak, elikadura, sasoia eta iraunkortasuna — erregistro bakoitzarekin eguneratzen dira.",
+    "prDeltaDemo": "▲ +4 aurreko astearen aldean",
+    "prFirst": "Lehen puntuazioa taulan",
+    "prNone": "Puntuazioak erregistratu ahala iritsiko dira",
+    "prOver": "epean:",
+    "prDays": "egun",
+    "brewTitle": "Zure joerak ontzen ari dira",
+    "brewCopy": "Erregistratu 7 egunez eta Nutrik hemen marraztuko ditu zure Lerrokatze Puntuazioa, energia-patroiak eta faseen historia.",
+    "brewDay": "EGUNA",
+    "brewOf": "/ 7",
+    "backToday": "‹ Gaur",
+    "editPeriod": "Editatu hilekoa",
+    "saveLog": "Gorde erregistroa",
+    "flow": "Fluxua",
+    "moodMental": "Aldartea eta buru-egoera",
+    "libido": "Libidoa",
+    "birthControl": "Antisorgailuak",
+    "physSymptoms": "Sintoma fisikoak",
+    "notes": "Oharrak",
+    "notesPh": "Besterik gaurkoaz…",
+    "editHealth": "Editatu osasuna",
+    "yourProfile": "Zure profila",
+    "saveChanges": "Gorde aldaketak",
+    "allergies": "ELIKAGAI-ALERGIAK",
+    "conditions": "DIAGNOSTIKATUTAKO GAIXOTASUNAK",
+    "yourGoal": "ZURE NUTRIGOAL-A",
+    "nextCycle": "Aldaketak hurrengo ziklotik aurrera aplikatuko dira",
+    "yourNutri": "ZURE NUTRI",
+    "notifPush": "Eguneroko erregistro-gogorarazpenak",
+    "notifEmail": "Asteko laburpena postaz",
+    "logout": "Itxi saioa",
+    "langRegion": "Hizkuntza eta eskualdea",
+    "language": "Hizkuntza",
+    "region": "Eskualdea",
+    "phaseHeroFmt": "{PH} FASEA · {D}. EGUNA",
+    "dayWord": "EGUNA",
+    "nlFocusFmt": "Fase honen fokua ({phl}):",
+    "allsetFmt": "Dena prest, {name}!",
+    "bpmUnit": "bpm",
+    "prTrendStart": "ots.",
+    "prTrendEnd": "mar.",
+    "backToSite": "Itzuli webgunera",
+    "obStartOver": "Hasi berriro",
+    "backSettings": "‹ Ezarpenak",
+    "connectedApps": "Konektatutako aplikazioak",
+    "connIntro": "NutriSync-ek zuk baimendutakoa bakarrik irakurtzen du — eta inoiz ez du atzera idazten.",
+    "connSome": "/ 6 konektatuta.",
+    "connNone": "Oraindik ezer ez dago konektatuta.",
+    "connectedPill": "Konektatuta ✓",
+    "connectPill": "Konektatu",
+    "connectedWord": "Konektatuta",
+    "whatReads": "Zer irakurtzen duen NutriSync-ek",
+    "whatReadsDesc": "Konektatutako gailu guztiei aplikatzen zaie. Desaktibatu metrika bat haren sinkronizazioa gelditzeko.",
+    "encTitle": "Zifratuta bidean eta biltegian",
+    "encCopy": "Gailuetako datuek zure erregistroak osatzen dituzte — ez dute inoiz isilean gainidazten zuk sartutakoa. Deskonektatu nahi duzunean; zure historia zurea izaten jarraitzen du.",
+    "backConnections": "‹ Konexioak",
+    "connectWord": "Konektatu",
+    "connectCopy": "NutriSync-ek honako hau irakurriko du zure fase-detekzioa eta Zikloaren Lerrokatze Puntuazioa zorrozteko:",
+    "connectNoteA": "Irakurtzeko soilik. NutriSync-ek ez du inoiz atzera idazten hemen:",
+    "connectNoteB": "eta noiznahi deskonekta dezakezu.",
+    "allowAccess": "Baimendu sarbidea",
+    "notNow": "Orain ez",
+    "dataPrivacy": "Datuak eta pribatutasuna",
+    "privIntro": "Zure datuak zureak dira. Kontrolatu zer erabiltzen den, eta eraman itzazu noiznahi.",
+    "consentHdr": "BAIMENA",
+    "yourData": "ZURE DATUAK",
+    "exportJson": "Esportatu nire datuak",
+    "pdfReport": "Deskargatu PDF txostena",
+    "accountHdr": "KONTUA",
+    "deactivate": "Desaktibatu kontua",
+    "deleteAll": "Ezabatu kontua eta datu guztiak",
+    "delNote": "Ezabatzea behin betikoa da eta 30 egunetan osatzen da.",
+    "security": "Saioa eta segurtasuna",
+    "signinHdr": "SAIOA",
+    "changePw": "Aldatu pasahitza",
+    "passkeys": "Sarbide-gakoak",
+    "setUp": "Konfiguratu",
+    "twofaHdr": "BI FAKTOREKO AUTENTIFIKAZIOA",
+    "authApp": "Autentifikazio-aplikazioa",
+    "twofaOn": "Aktibatuta · zure kontua babesten du",
+    "twofaOff": "Desaktibatuta · aktibatzea gomendatzen dugu",
+    "smsBackup": "Ordezko SMSa",
+    "addNumber": "Gehitu zenbakia ›",
+    "sessionsHdr": "SAIO AKTIBOAK",
+    "thisDevice": "Gailu hau",
+    "revoke": "Baliogabetu",
+    "signOutOthers": "Itxi gainerako saio guztiak",
+    "noteCreds": "Sartu zure helbidea eta pasahitza.",
+    "noteSigningIn": "Saioa hasten…",
+    "noteCreds6": "Sartu helbidea eta pasahitz bat (6+ karaktere).",
+    "noteCreating": "Zure kontua sortzen…",
+    "noteConfirm": "Begiratu posta kontua berresteko, eta gero hasi saioa.",
+    "alertDemoExport": "Demo modua — konektatu backend-a benetako datuak esportatzeko.",
+    "alertDemoDelete": "Demo modua — ez dago ezer ezabatzeko.",
+    "alertConfirmDelete": "Kontua eta datu guztiak ezabatu? Ezin da desegin.",
+    "alertDeleted": "Zure datuak ezabatu dira. Kredentzialen ezabaketa 30 egunetan osatzen da.",
+    "alertDeactivate": "Beta bitartean, desaktibazioa laguntza-taldeak kudeatzen du — idatzi hello@nutrisynccollective.com helbidera.",
+    "alertDemoAccount": "Demo modua — kontu-ekintzek backend bizia behar dute."
+  },
+  "dows": [
+    "IG",
+    "AL",
+    "AR",
+    "AZ",
+    "OG",
+    "OR",
+    "LR"
+  ],
+  "phaseNames": {
+    "menstrual": "Hilekoa",
+    "follicular": "Folikularra",
+    "ovulatory": "Obulazioa",
+    "luteal": "Lutealea"
+  },
+  "navLabels": {
+    "home": "Gaur",
+    "nutrilog": "NutriLog",
+    "movement": "Mugimendua",
+    "progress": "Aurrerapena",
+    "calendar": "Egutegia"
+  },
+  "moodLabels": {
+    "Low": "Behean",
+    "Meh": "Hala-hola",
+    "Okay": "Ondo",
+    "Good": "Oso ondo",
+    "Great": "Bikain"
+  },
+  "phase": {
+    "menstrual": {
+      "headline": "Atseden hartzea produktiboa da.",
+      "copy": "Hormonak beherenean daude — burdinaz aberatsak diren plater beroek eta mugimendu leunak lehen egunetik berreraikitzen zaituzte.",
+      "sideNote": "Energia gutxieneko egunak — joan lasai",
+      "focus": "burdina, folatoak eta plater bero lasaigarriak indarberritzeko.",
+      "nlWhy": "Hilekoak burdina eta magnesioa xurgatzen ditu. Otordu bero eta egosiak erraz digeritzen dira zure gorputzak hilabeteko lanik gogorrena egiten duen bitartean.",
+      "insight": "Energia hileko minimoan dago — babestu zure arratsaldeak eta utzi loari konponketa-lana egiten.",
+      "moveCopy": "Errekuperazio-eguna — yoga leuna edo ibilaldi lasaia.",
+      "chips": [
+        {
+          "label": "15–25 MIN",
+          "hot": true
+        },
+        {
+          "label": "LEUNA",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Yoga leuna",
+      "mvCopy": "Gaur mugimenduak bainu bero baten antza izan behar du — zirkulazioa, ahaleginik gabe.",
+      "mvParts": [
+        {
+          "label": "Arnasketa + katua-behia",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Yin sekuentzia · aldakak eta bizkarra",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Hankak horman gora",
+          "mins": "5 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Ar · Yoga leuna",
+          "state": "Gaur",
+          "today": true
+        },
+        {
+          "label": "Og · Ibilaldi lasaia",
+          "state": "Planifikatuta",
+          "done": false
+        },
+        {
+          "label": "Lr · Luzaketa leunak",
+          "state": "Planifikatuta",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Olo beroa, datilak eta kakaoa",
+          "slot": "Gosaria",
+          "tag": "BURDINA"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Dilista eta ziazerba eltzekaria",
+          "slot": "Bazkaria",
+          "tag": "BURDINA + FOLATOAK"
+        },
+        {
+          "emoji": "🍛",
+          "name": "Izokina, boniatoa eta berdurak",
+          "slot": "Afaria",
+          "tag": "OMEGA-3"
+        }
+      ],
+      "mealWhy": [
+        "Burdina hilekoak kentzen duena ordezkatzen hasten da.",
+        "Folatoek eta burdinak zure odol-erreserba berreraikitzen dute.",
+        "Omega-3ek prostaglandinen karranpak arintzen dituzte."
+      ]
+    },
+    "follicular": {
+      "headline": "Energia igotzen — eraiki lasai.",
+      "copy": "Estrogenoak gora doaz. Otordu fresko eta arinak eta entrenamendu progresiboa dira onenak aste honetan.",
+      "sideNote": "Energia gora doa aste honetan",
+      "focus": "C bitamina, proteina gihartsua eta burdina, energia igotzen den bitartean.",
+      "nlWhy": "Fase folikularrean estrogenoek berreraikitzen dute — burdinak hilekoak erabilitakoa berrezartzen du, eta C bitaminak haren xurgapena bikoizten du.",
+      "insight": "Estrogenoak gora doaz — ikasketak azkarrago finkatzen dira eta entrenamenduak gihar gehiago eraikitzen du aste honetan. Antolatu orain gauza zailak.",
+      "moveCopy": "Energia eraikitzen — ibilaldi bizkorra + core arina.",
+      "chips": [
+        {
+          "label": "20–30 MIN",
+          "hot": true
+        },
+        {
+          "label": "NEURRIZKOA",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Ibilaldi bizkorra + core",
+      "mvCopy": "Hazi pixkanaka estrogenoekin batera — gaur erritmoa intentsitatearen gainetik.",
+      "mvParts": [
+        {
+          "label": "Berotzea · pauso erraza",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Ibilaldi bizkorra · etengabea",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Core zirkuitua · 2 itzuli",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Az · Ibilaldi bizkorra + core",
+          "state": "Gaur",
+          "today": true
+        },
+        {
+          "label": "Or · Indar arina",
+          "state": "Planifikatuta",
+          "done": false
+        },
+        {
+          "label": "Ig · Yoga fluxua",
+          "state": "Planifikatuta",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Gaueko oloa, lihoa eta zitrikoak",
+          "slot": "Gosaria",
+          "tag": "C BITAMINA"
+        },
+        {
+          "emoji": "🥙",
+          "name": "Oilasko-entsalada ale ernamuinduekin",
+          "slot": "Bazkaria",
+          "tag": "PROTEINA GIHARTSUA"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Fideo-katilua tofu eta berdurekin",
+          "slot": "Afaria",
+          "tag": "BURDINA"
+        }
+      ],
+      "mealWhy": [
+        "C bitaminak burdinaren xurgapena indartzen du energia igotzen den bitartean.",
+        "Proteinak estrogeno igokorren gihar-leihoa elikatzen du.",
+        "Burdinak erreserbak berreraikitzen ditu hilekoaren ondoren."
+      ]
+    },
+    "ovulatory": {
+      "headline": "Potentzia gorena, konfiantza gorena.",
+      "copy": "Estrogenoak gorenean daude — bilatu marka pertsonal bat, egin elkarrizketa zaila, eta hartu zinka eta antioxidatzaileak.",
+      "sideNote": "Energia goreneko leihoa — 3 egun geratzen dira",
+      "focus": "zinka, antioxidatzaileak eta omega-3ak obulazioari laguntzeko.",
+      "nlWhy": "Obulazioaren inguruan zure gorputzak beroago funtzionatzen du eta mikroelikagaiak azkarrago erretzen ditu. Zinkak LH gailurra sostengatzen du; antioxidatzaileek obuluaren bidaia babesten dute.",
+      "insight": "Estrogenoak gaur iristen dira gailurrera — konfiantza eta energia soziala gorenean. Antolatu elkarrizketa handia.",
+      "moveCopy": "Potentzia goreneko eguna — HIIT edo pisu astunak.",
+      "chips": [
+        {
+          "label": "30–40 MIN",
+          "hot": true
+        },
+        {
+          "label": "INTENTSITATE ALTUA",
+          "hot": false
+        }
+      ],
+      "mvTitle": "HIIT tarteak",
+      "mvCopy": "Zure gorputza inoiz baino azkarrago errekuperatzen da orain — sakatu intentsitatea gaur, sabaia irabazi duzu.",
+      "mvParts": [
+        {
+          "label": "Berotzea · dinamikoa",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Tarteak · 8 × 40 s gogor / 80 s erraz",
+          "mins": "24 MIN"
+        },
+        {
+          "label": "Lasaitzea · luzaketak",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Al · Indarra",
+          "state": "Eginda",
+          "done": true
+        },
+        {
+          "label": "Az · HIIT tarteak",
+          "state": "Gaur",
+          "today": true
+        },
+        {
+          "label": "Or · Mugikortasuna eta core",
+          "state": "Planifikatuta",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Jogurt grekoa, baia eta kalabaza-pipitak",
+          "slot": "Gosaria",
+          "tag": "ZINKA"
+        },
+        {
+          "emoji": "🥗",
+          "name": "Izokin eta kinoa katilua",
+          "slot": "Bazkaria",
+          "tag": "OMEGA-3"
+        },
+        {
+          "emoji": "🍜",
+          "name": "Salteatua hosto berdeekin",
+          "slot": "Afaria",
+          "tag": "B6 + ZUNTZA"
+        }
+      ],
+      "mealWhy": [
+        "Zinkak LH gailurra sostengatzen du obulazioaren inguruan.",
+        "Omega-3ek ziklo erdiko hantura baretzen dute.",
+        "B6 + zuntzak goreneko estrogenoak garbitzen laguntzen dute."
+      ]
+    },
+    "luteal": {
+      "headline": "Erregai egonkorra, ertz bigunagoak.",
+      "copy": "Progesterona dago aginduan — odol-azukre egonkorrak eta magnesioak energia eta aldartea orekan mantentzen dituzte jaitsieran.",
+      "sideNote": "Moteltzeko astea — erregai egonkorrak laguntzen du",
+      "focus": "magnesioa, B6 eta karbohidrato motelak jaitsiera egonkortzeko.",
+      "nlWhy": "Progesteronak zure metabolismoa %5 inguru igotzen du — erretze motelekin otordu egonkorrek gutizia diruditen beherakadak saihesten dituzte.",
+      "insight": "Serotonina jaisten da progesterona igotzen den bitartean — magnesioz betetako afari batek eta goiz oheratzeak biharkoa aldatzen dute.",
+      "moveCopy": "Neurrizkoa eta etengabea — indarra edo ibilaldi maldatsua.",
+      "chips": [
+        {
+          "label": "25–35 MIN",
+          "hot": true
+        },
+        {
+          "label": "NEURRIZKOA",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Indar egonkorra",
+      "mvCopy": "Mantendu erritmoa arina eta atsedenak zabalak — aste honetan iraunkortasuna marken gainetik.",
+      "mvParts": [
+        {
+          "label": "Berotzea · mugikortasuna",
+          "mins": "6 MIN"
+        },
+        {
+          "label": "Gorputz osoko indarra · 3 itzuli",
+          "mins": "20 MIN"
+        },
+        {
+          "label": "Amaierako ibilaldia · erraza",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Al · Indarra",
+          "state": "Eginda",
+          "done": true
+        },
+        {
+          "label": "Og · Ibilaldi maldatsua",
+          "state": "Gaur",
+          "today": true
+        },
+        {
+          "label": "Ig · Mugikortasuna",
+          "state": "Planifikatuta",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🍳",
+          "name": "Arrautzak, ahuakatea eta hazidun ogia",
+          "slot": "Gosaria",
+          "tag": "B6"
+        },
+        {
+          "emoji": "🥘",
+          "name": "Indioilar eta boniato katilua",
+          "slot": "Bazkaria",
+          "tag": "KARBO MOTELAK"
+        },
+        {
+          "emoji": "🍮",
+          "name": "Chia budina txokolate beltzarekin",
+          "slot": "Afaria",
+          "tag": "MAGNESIOA"
+        }
+      ],
+      "mealWhy": [
+        "B6ak serotonina sostengatzen du progesterona igotzen den bitartean.",
+        "Karbohidrato motelek gutizien atzeko azukre-beherakadak berdintzen dituzte.",
+        "Magnesioak tentsioa askatzen du eta lo sakona prestatzen du."
+      ]
+    }
+  },
+  "ob": [
+    {
+      "q": "Zerk ekarri zaitu NutriSync-era?",
+      "help": "Honek zehazten du Nutrik zer nabarmenduko duen lehenik.",
+      "type": "choice",
+      "key": "obGoal",
+      "opts": [
+        {
+          "k": "Balance my energy",
+          "label": "Nire energia orekatzea"
+        },
+        {
+          "k": "Ease PMS & symptoms",
+          "label": "PMS eta sintomak arintzea"
+        },
+        {
+          "k": "Train smarter with my cycle",
+          "label": "Nire zikloarekin hobeto entrenatzea"
+        },
+        {
+          "k": "Understand my body better",
+          "label": "Nire gorputza hobeto ulertzea"
+        }
+      ]
+    },
+    {
+      "q": "Zenbateraino da erregularra zure zikloa?",
+      "help": "Irregularra ohikoa da — Nutri nolanahi ere egokitzen da.",
+      "type": "choice",
+      "key": "obReg",
+      "opts": [
+        {
+          "k": "Like clockwork",
+          "label": "Erloju baten modukoa"
+        },
+        {
+          "k": "Mostly regular",
+          "label": "Gehienbat erregularra"
+        },
+        {
+          "k": "Pretty unpredictable",
+          "label": "Nahiko ezustekoa"
+        },
+        {
+          "k": "Not sure",
+          "label": "Ez dakit"
+        }
+      ]
+    },
+    {
+      "q": "Noiz hasi zen zure azken hilekoa?",
+      "help": "Honek ainguratzen du zure fase-detekzioa.",
+      "type": "date",
+      "key": "obDate"
+    },
+    {
+      "q": "Zenbat irauten du zure ziklo arruntak?",
+      "help": "Kontatu hileko baten 1. egunetik hurrengoaren 1. egunera.",
+      "type": "choice",
+      "key": "obLen",
+      "opts": [
+        {
+          "k": "21–24 days",
+          "label": "21–24 egun"
+        },
+        {
+          "k": "25–30 days",
+          "label": "25–30 egun"
+        },
+        {
+          "k": "31–35 days",
+          "label": "31–35 egun"
+        },
+        {
+          "k": "Not sure",
+          "label": "Ez dakit"
+        }
+      ]
+    },
+    {
+      "q": "Errespetatu beharreko elikadura-patroirik?",
+      "help": "Otorduak beti egokituko dira zure patroira.",
+      "type": "choice",
+      "key": "obDiet",
+      "opts": [
+        {
+          "k": "No restrictions",
+          "label": "Murrizketarik ez"
+        },
+        {
+          "k": "Vegetarian",
+          "label": "Begetarianoa"
+        },
+        {
+          "k": "Vegan",
+          "label": "Beganoa"
+        },
+        {
+          "k": "Gluten-free",
+          "label": "Glutenik gabea"
+        },
+        {
+          "k": "Dairy-free",
+          "label": "Esnekirik gabea"
+        }
+      ]
+    },
+    {
+      "q": "Zertxobait zure gorputzaz",
+      "help": "Anoak eta energia-beharrak kalibratzeko bakarrik — inoiz ez epaitzeko.",
+      "type": "numbers"
+    },
+    {
+      "q": "Aukeratu zure Nutri",
+      "help": "Zure laguna fase guztietan. Noiznahi alda dezakezu.",
+      "type": "avatar"
+    },
+    {
+      "q": "Zure datuak, zure arauak",
+      "help": "Ezer ez da partekatzen zure baimenik gabe.",
+      "type": "consent"
+    }
+  ],
+  "provSync": {
+    "apple": "sinkronizatuta 6:40",
+    "oura": "sinkronizatuta duela 2 ordu",
+    "garmin": "egunero sinkronizatzen da",
+    "fitbit": "egunero sinkronizatzen da",
+    "whoop": "egunero sinkronizatzen da",
+    "gfit": "egunero sinkronizatzen da"
+  },
+  "provReads": {
+    "apple": "Loa, HRV, atsedeneko bihotz-maiztasuna",
+    "oura": "Lo-faseak, prestutasuna, tenperatura",
+    "garmin": "Entrenamenduak, pausoak, estresa",
+    "fitbit": "Jarduera, loa, bihotz-maiztasuna",
+    "whoop": "Esfortzua, errekuperazioa, lo-zorra",
+    "gfit": "Pausoak, entrenamenduak, kardio-puntuak"
+  },
+  "metricLabels": [
+    "Loaren iraupena eta faseak",
+    "Bihotz-maiztasunaren aldakortasuna",
+    "Atsedeneko bihotz-maiztasuna",
+    "Gorputz-tenperaturaren joera",
+    "Entrenamenduak eta karga",
+    "Pausoak eta eguneroko jarduera"
+  ],
+  "readLists": {
+    "apple": [
+      "Loaren iraupena eta faseak",
+      "Bihotz-aldakortasuna (HRV)",
+      "Atsedeneko maiztasuna",
+      "Entrenamenduak eta energia aktiboa"
+    ],
+    "oura": [
+      "Lo-faseak eta eraginkortasuna",
+      "Prestutasuna eta HRV",
+      "Gorputz-tenperaturaren joera",
+      "Jarduera-mailak"
+    ],
+    "garmin": [
+      "Entrenamenduak eta karga",
+      "Pausoak eta intentsitate-minutuak",
+      "Loa eta estres-puntuazioa"
+    ],
+    "fitbit": [
+      "Jarduera eta pausoak",
+      "Lo-faseak",
+      "Bihotz-maiztasuna"
+    ],
+    "whoop": [
+      "Esfortzua eta errekuperazioa",
+      "Lo-zorra",
+      "HRV eta atsedeneko maiztasuna"
+    ],
+    "gfit": [
+      "Pausoak eta kardio-puntuak",
+      "Entrenamenduak",
+      "Lo-saioak"
+    ]
+  },
+  "consentRows": [
+    {
+      "label": "Ohar pertsonalizatuak",
+      "desc": "Baimendu Nutrik zure erregistroak aztertzea, gidaritza neurrira egiteko."
+    },
+    {
+      "label": "Ikerketa anonimizatua",
+      "desc": "Lagundu identifikaziorik gabeko datuekin emakumeen osasun-ikerketan."
+    },
+    {
+      "label": "Produktuaren berriak",
+      "desc": "Noizbehinkako albisteak NutriSync-en funtzio berriei buruz."
+    }
+  ],
+  "sessions": [
+    {
+      "d": "MacBook Pro · Safari",
+      "loc": "Lisboa, PT · orain",
+      "me": true,
+      "other": false
+    },
+    {
+      "d": "iPhone 15 · NutriSync aplikazioa",
+      "loc": "Lisboa, PT · duela 2 ordu",
+      "me": false,
+      "other": true
+    },
+    {
+      "d": "iPad Air · Safari",
+      "loc": "Porto, PT · mar. 8",
+      "me": false,
+      "other": true
+    }
+  ],
+  "sessionLive": {
+    "d": "Nabigatzaile hau",
+    "loc": "Oraintxe"
+  },
+  "winsDemo": [
+    {
+      "t": "12 eguneko erregistro-bolada",
+      "d": "Zure luzeena orain arte — iragarpenak zorrozten ari dira."
+    },
+    {
+      "t": "Energia +%18 obulazio-asteetan",
+      "d": "Zure azken bi zikloekin alderatuta."
+    },
+    {
+      "t": "3 entrenamendu fasearekin bat",
+      "d": "Asteko saio bakoitza bere leiho aproposean erori da."
+    }
+  ],
+  "calBannerA": "Hurrengo hilekoa data honen inguruan espero da:",
+  "calBannerB": "— Nutrik zure elikadura burdinara eta plater lasaigarrietara bideratuko du bi egun lehenago.",
+  "calBannerNone": "Erregistratu hilekoaren hasiera eta Nutrik hurrengo hilabetea iragarriko du.",
+  "calBannerDemo": "Hurrengo hilekoa martxoaren 24aren inguruan espero da — Nutrik zure elikadura burdinara eta plater lasaigarrietara bideratuko du bi egun lehenago.",
+  "calBannerForming": "Iragarpena osatzen ari da — martxoaren 24ko estimazioa zorrozten da erregistratzen duzun egun bakoitzarekin.",
+  "_meta": {
+    "lang": "eu",
+    "name": "Euskara",
+    "source": "design-v11.20",
+    "review": "native-review-pending"
+  }
+}

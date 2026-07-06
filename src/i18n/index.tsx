@@ -8,6 +8,7 @@ import it from './it.json';
 import nl from './nl.json';
 import el from './el.json';
 import ca from './ca.json';
+import eu from './eu.json';
 
 /**
  * Lightweight i18n for the app. Strings come from the shared catalogs (the `app`
@@ -48,7 +49,7 @@ const SUPPORTED = LANGS.map((l) => l.code);
 
 // Only these have real catalogs today; the rest resolve to English via fallback.
 // (mob.* mobile-only keys fall back to English until translated per language.)
-const BUNDLES: Partial<Record<Lang, any>> = { en, es, fr, de, it, nl, el, ca };
+const BUNDLES: Partial<Record<Lang, any>> = { en, es, fr, de, it, nl, el, ca, eu };
 // The selector only offers languages that actually have a bundle — grows as packs land.
 const AVAILABLE = LANGS.filter((l) => BUNDLES[l.code]);
 const KEY = 'ns_locale'; // same key name/shape the web uses ({ lang })
