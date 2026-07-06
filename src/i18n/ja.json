@@ -1,0 +1,775 @@
+{
+  "ui": {
+    "boot": "同期中…",
+    "rail1": "サイクルと、シンクロしよう。",
+    "rail2": "心と体に、栄養を。",
+    "protoBadge": "プロトタイプ · デモデータ",
+    "railCopy": "ホルモンの動きに合わせた栄養と運動を——サイクルの今この瞬間に合わせて、毎日。",
+    "loginTitle": "おかえりなさい",
+    "loginSub": "前回の続きから始めましょう。",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "createPassword": "パスワードを作成",
+    "fullName": "氏名",
+    "remember": "ログイン状態を保持",
+    "forgot": "パスワードをお忘れですか？",
+    "login": "ログイン",
+    "newHere": "はじめてですか？",
+    "createAccount": "アカウント作成",
+    "signupSub": "今は1分だけ——この先の毎日に、あなた仕様のガイドを。",
+    "getStarted": "はじめる →",
+    "haveAccount": "アカウントをお持ちですか？",
+    "settingUp": "セットアップ",
+    "obRail1": "あなたのリズムを",
+    "obRail2": "教えてください。",
+    "obRailCopy": "いくつかの簡単な質問で、すべての提案を平均値ではなく、あなたの体に合わせます。",
+    "obDateNote": "不確かでも大丈夫——記録するほど Nutri が精度を上げていきます。",
+    "age": "年齢",
+    "years": "歳",
+    "height": "身長",
+    "weight": "体重",
+    "obOptional": "任意です——共有したくない項目はスキップできます。",
+    "obConsentA": "サイクルと症状",
+    "obConsentADesc": "毎日のガイドの土台になります。",
+    "obConsentB": "安全に保管",
+    "obConsentBDesc": "暗号化・GDPR準拠・販売は一切しません。",
+    "obAgree": "プライバシーポリシーと利用規約に同意し、データが常に自分のものであることを理解しました。",
+    "continueBtn": "次へ →",
+    "finishSetup": "セットアップ完了 →",
+    "obSaving": "設定を保存しています…",
+    "obErr": "保存できませんでした——接続を確認して再試行してください。",
+    "dailyCheckin": "毎日のチェックイン",
+    "skipToday": "今日はスキップ",
+    "next": "次へ →",
+    "syncDay": "今日をシンクする →",
+    "gateTitleMood": "今の気分は？",
+    "gateSubMood": "正直なひと言を——Nutri が今日のプランを合わせます。",
+    "gateTitleEnergy": "エネルギーは？",
+    "gateSubEnergy": "空っぽ（1）から絶好調（5）まで。",
+    "allsetCopy": "回答をもとに、Nutri が栄養と運動をパーソナライズしています。設定からいつでも更新できます。",
+    "enterApp": "NutriSync をひらく →",
+    "settings": "設定",
+    "goodMorning": "おはようございます",
+    "cycleDay": "サイクル日",
+    "cycleAlignment": "サイクル同調",
+    "editPeriodBtn": "生理を編集",
+    "editHealthBtn": "健康情報を編集",
+    "logToday": "今日を記録 ›",
+    "checkedIn": "✓ チェックイン済み",
+    "firstRunStrong": "旅の1日目。",
+    "firstRunRest": "サイクル同調スコアは7日間の記録で解放されます——Nutri はすでに回答をもとにパーソナライズ中です。",
+    "todaysFuel": "今日のエネルギー補給",
+    "openNutrilog": "NutriLog をひらく ›",
+    "movement": "ムーブメント",
+    "plan": "プラン ›",
+    "nutriInsight": "NUTRI インサイト",
+    "fromDevices": "デバイスから",
+    "manage": "管理 ›",
+    "deviceNote": "夜間同期はモバイルベータで登場——読み取りの同意はすでに設定済みです。",
+    "statSleep": "睡眠",
+    "statHrv": "HRV",
+    "statRhr": "安静時心拍",
+    "statSleepNote": "▲ 7日平均比",
+    "statHrvNote": "安定",
+    "statRhrNote": "▼ 2 bpm",
+    "demoSyncLine": "Oura Ring · 最終同期 6:40",
+    "consentActive": "同意は有効",
+    "welcomeInsight": "ようこそ！Nutri があなたの1日を知れば、明日には最初のインサイトが届きます。",
+    "focusWord": "フォーカス：",
+    "hydration": "水分補給",
+    "glasses": "/ 8杯",
+    "whyFoods": "なぜこの食材？",
+    "logMeal": "この食事を記録",
+    "loggedMeal": "✓ 記録済み",
+    "today": "今日",
+    "thisWeek": "今週",
+    "lowEnergy": "エネルギー低めの日？",
+    "markDone": "完了にする",
+    "sessionDone": "✓ セッション完了",
+    "mvAlt": "20分のウォーキングとやさしいストレッチに切り替えても◎——どのフェーズでも、継続は強度に勝ります。",
+    "progress": "プログレス",
+    "casLong": "サイクル同調スコア",
+    "trend6w": "6週間トレンド",
+    "prCopyDemo": "栄養・運動・睡眠が、ホルモンと同じ方向に進んでいます。",
+    "prCopyLive": "5つのスコア——フェーズ確度・バイオマーカー・栄養・フィットネス・継続——が記録のたびに更新されます。",
+    "prDeltaDemo": "▲ 先週比 +4",
+    "prFirst": "最初のスコアが登場",
+    "prNone": "記録するほどスコアが増えていきます",
+    "prOver": "·",
+    "prDays": "日間",
+    "brewTitle": "トレンドを醸成中",
+    "brewCopy": "7日間記録すると、サイクル同調スコア、エネルギーパターン、フェーズ履歴がここに描かれます。",
+    "brewDay": "DAY",
+    "brewOf": "/ 7",
+    "backToday": "‹ 今日",
+    "editPeriod": "生理を編集",
+    "saveLog": "記録を保存",
+    "flow": "経血量",
+    "moodMental": "気分とメンタル",
+    "libido": "性欲",
+    "birthControl": "避妊",
+    "physSymptoms": "身体症状",
+    "notes": "メモ",
+    "notesPh": "今日について、ほかには…",
+    "editHealth": "健康情報を編集",
+    "yourProfile": "プロフィール",
+    "saveChanges": "変更を保存",
+    "allergies": "食物アレルギー",
+    "conditions": "診断済みの疾患",
+    "yourGoal": "あなたの NUTRIGOAL",
+    "nextCycle": "変更は次のサイクルから反映されます",
+    "yourNutri": "あなたの NUTRI",
+    "notifPush": "毎日の記録リマインダー",
+    "notifEmail": "週間メールダイジェスト",
+    "logout": "ログアウト",
+    "langRegion": "言語と地域",
+    "language": "言語",
+    "region": "地域",
+    "phaseHeroFmt": "{PH} · {D}日目",
+    "dayWord": "DAY",
+    "nlFocusFmt": "{PH}のフォーカス：",
+    "allsetFmt": "準備完了、{name}さん！",
+    "bpmUnit": "bpm",
+    "prTrendStart": "2月",
+    "prTrendEnd": "3月",
+    "backToSite": "サイトに戻る",
+    "obStartOver": "最初からやり直す",
+    "backSettings": "‹ 設定",
+    "connectedApps": "連携済みアプリ",
+    "connIntro": "NutriSync はあなたが許可したものだけを読み取り、書き戻しは一切しません。",
+    "connSome": "/ 6 連携済み。",
+    "connNone": "まだ何も連携されていません。",
+    "connectedPill": "連携済み ✓",
+    "connectPill": "連携",
+    "connectedWord": "連携済み",
+    "whatReads": "NutriSync が読み取る内容",
+    "whatReadsDesc": "連携中のすべてのデバイスに適用。指標をオフにすると同期が止まります。",
+    "encTitle": "転送中も保存中も暗号化",
+    "encCopy": "デバイスのデータは記録の補完です——入力内容を黙って上書きすることはありません。いつでも解除でき、履歴はあなたのものです。",
+    "backConnections": "‹ 連携",
+    "connectWord": "連携",
+    "connectCopy": "フェーズ検出とサイクル同調スコアの精度向上のため、NutriSync は次を読み取ります：",
+    "connectNoteA": "読み取り専用。NutriSync が",
+    "connectNoteB": "に書き戻すことはなく、いつでも解除できます。",
+    "allowAccess": "アクセスを許可",
+    "notNow": "あとで",
+    "dataPrivacy": "データとプライバシー",
+    "privIntro": "データはあなたのもの。使い道を管理し、いつでも持ち出せます。",
+    "consentHdr": "同意",
+    "yourData": "あなたのデータ",
+    "exportJson": "データをエクスポート",
+    "pdfReport": "PDFレポートをダウンロード",
+    "accountHdr": "アカウント",
+    "deactivate": "アカウントを停止",
+    "deleteAll": "アカウントと全データを削除",
+    "delNote": "削除は取り消せず、30日以内に完了します。",
+    "security": "ログインとセキュリティ",
+    "signinHdr": "ログイン",
+    "changePw": "パスワードを変更",
+    "passkeys": "パスキー",
+    "setUp": "設定する",
+    "twofaHdr": "二要素認証",
+    "authApp": "認証アプリ",
+    "twofaOn": "オン · アカウントを保護中",
+    "twofaOff": "オフ · オンにすることをおすすめします",
+    "smsBackup": "SMSバックアップ",
+    "addNumber": "番号を追加 ›",
+    "sessionsHdr": "アクティブなセッション",
+    "thisDevice": "このデバイス",
+    "revoke": "取り消す",
+    "signOutOthers": "他のセッションをすべてログアウト",
+    "noteCreds": "メールアドレスとパスワードを入力してください。",
+    "noteSigningIn": "ログイン中…",
+    "noteCreds6": "メールアドレスとパスワード（6文字以上）を入力してください。",
+    "noteCreating": "アカウントを作成中…",
+    "noteConfirm": "確認メールをチェックしてから、ログインしてください。",
+    "alertDemoExport": "デモモード——実データのエクスポートにはバックエンド接続が必要です。",
+    "alertDemoDelete": "デモモード——削除するものはありません。",
+    "alertConfirmDelete": "アカウントと全データを削除しますか？この操作は取り消せません。",
+    "alertDeleted": "データを削除しました。認証情報の削除は30日以内に完了します。",
+    "alertDeactivate": "ベータ期間中の停止はサポート経由で——hello@nutrisynccollective.com までご連絡ください。",
+    "alertDemoAccount": "デモモード——アカウント操作には本番バックエンドが必要です。"
+  },
+  "dows": [
+    "日",
+    "月",
+    "火",
+    "水",
+    "木",
+    "金",
+    "土"
+  ],
+  "phaseNames": {
+    "menstrual": "月経期",
+    "follicular": "卵胞期",
+    "ovulatory": "排卵期",
+    "luteal": "黄体期"
+  },
+  "navLabels": {
+    "home": "今日",
+    "nutrilog": "NutriLog",
+    "movement": "ムーブメント",
+    "progress": "プログレス",
+    "calendar": "カレンダー"
+  },
+  "moodLabels": {
+    "Low": "低め",
+    "Meh": "まあまあ",
+    "Okay": "ふつう",
+    "Good": "良い",
+    "Great": "最高"
+  },
+  "phase": {
+    "menstrual": {
+      "headline": "休むことも、前進。",
+      "copy": "ホルモンは最低ライン——鉄分豊富な温かい食事とやさしい運動が、初日から回復を支えます。",
+      "sideNote": "いちばんエネルギーが低い数日間——ゆっくりと",
+      "focus": "鉄分・葉酸・温かく癒やす食事で補給を。",
+      "nlWhy": "生理は鉄とマグネシウムを消耗します。体が今月いちばんの大仕事をこなす間、温かい加熱食は消化にやさしい味方です。",
+      "insight": "エネルギーは月間最低ライン——夜を守り、修復は睡眠に任せましょう。",
+      "moveCopy": "リカバリーの日——リストラティブヨガかゆっくり散歩。",
+      "chips": [
+        {
+          "label": "15〜25分",
+          "hot": true
+        },
+        {
+          "label": "やさしく",
+          "hot": false
+        }
+      ],
+      "mvTitle": "リストラティブヨガ",
+      "mvCopy": "今日の運動は温かいお風呂のように——がんばらずに巡りを良くします。",
+      "mvParts": [
+        {
+          "label": "呼吸 + キャットカウ",
+          "mins": "5分"
+        },
+        {
+          "label": "陰ヨガ · 股関節と背中",
+          "mins": "15分"
+        },
+        {
+          "label": "壁に脚上げ",
+          "mins": "5分"
+        }
+      ],
+      "week": [
+        {
+          "label": "火 · リストラティブヨガ",
+          "state": "今日",
+          "today": true
+        },
+        {
+          "label": "木 · ゆっくり散歩",
+          "state": "予定",
+          "done": false
+        },
+        {
+          "label": "土 · やさしいストレッチ",
+          "state": "予定",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "温かいオートミール、デーツとカカオ",
+          "slot": "朝食",
+          "tag": "鉄分"
+        },
+        {
+          "emoji": "🍲",
+          "name": "レンズ豆とほうれん草の煮込み",
+          "slot": "昼食",
+          "tag": "鉄分 + 葉酸"
+        },
+        {
+          "emoji": "🍛",
+          "name": "サーモン、さつまいもと青菜",
+          "slot": "夕食",
+          "tag": "オメガ3"
+        }
+      ],
+      "mealWhy": [
+        "鉄分が生理で失った分を補い始めます。",
+        "葉酸と鉄が血液の蓄えを再建します。",
+        "オメガ3がプロスタグランジン由来の痛みをやわらげます。"
+      ]
+    },
+    "follicular": {
+      "headline": "エネルギー上昇中——じっくり積み上げて。",
+      "copy": "エストロゲンが上昇。フレッシュで軽い食事と段階的なトレーニングが、今週いちばん効きます。",
+      "sideNote": "今週はエネルギーが戻ってきます",
+      "focus": "エネルギー上昇に合わせて、ビタミンC・赤身タンパク質・鉄分を。",
+      "nlWhy": "卵胞期はエストロゲンが再構築の時期——鉄が生理の消耗を補い、ビタミンCが吸収を2倍にします。",
+      "insight": "エストロゲン上昇中——今週は学びが定着しやすく、筋肉もつきやすい。難しいことは今のうちに。",
+      "moveCopy": "エネルギー構築中——早歩き + 軽い体幹。",
+      "chips": [
+        {
+          "label": "20〜30分",
+          "hot": true
+        },
+        {
+          "label": "ほどほど",
+          "hot": false
+        }
+      ],
+      "mvTitle": "早歩き + 体幹",
+      "mvCopy": "エストロゲンに合わせて少しずつ——今日は強度よりリズムを。",
+      "mvParts": [
+        {
+          "label": "ウォームアップ · 楽なペース",
+          "mins": "5分"
+        },
+        {
+          "label": "早歩き · 一定ペース",
+          "mins": "15分"
+        },
+        {
+          "label": "体幹サーキット · 2周",
+          "mins": "8分"
+        }
+      ],
+      "week": [
+        {
+          "label": "水 · 早歩き + 体幹",
+          "state": "今日",
+          "today": true
+        },
+        {
+          "label": "金 · 軽い筋トレ",
+          "state": "予定",
+          "done": false
+        },
+        {
+          "label": "日 · フローヨガ",
+          "state": "予定",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "オーバーナイトオーツ、亜麻仁と柑橘",
+          "slot": "朝食",
+          "tag": "ビタミンC"
+        },
+        {
+          "emoji": "🥙",
+          "name": "発芽穀物のチキンサラダ",
+          "slot": "昼食",
+          "tag": "赤身タンパク質"
+        },
+        {
+          "emoji": "🍲",
+          "name": "豆腐と青菜のヌードルボウル",
+          "slot": "夕食",
+          "tag": "鉄分"
+        }
+      ],
+      "mealWhy": [
+        "ビタミンCがエネルギー上昇期の鉄吸収を高めます。",
+        "タンパク質がエストロゲン上昇期の筋肉づくりを支えます。",
+        "鉄が生理後の蓄えを満たします。"
+      ]
+    },
+    "ovulatory": {
+      "headline": "パワーも自信も、ピークへ。",
+      "copy": "エストロゲンが頂点——自己ベストを狙い、難しい会話に踏み出し、亜鉛と抗酸化物質で満タンに。",
+      "sideNote": "ピークエネルギーの窓——残り3日",
+      "focus": "排卵をサポートする亜鉛・抗酸化物質・オメガ3。",
+      "nlWhy": "排卵前後は体が熱く回り、微量栄養素の消費も速い。亜鉛がLHサージを支え、抗酸化物質が卵子の旅を守ります。",
+      "insight": "エストロゲンは今日がピーク——自信も社交エネルギーも満タン。大事な話は今日に。",
+      "moveCopy": "パワー全開の日——HIITか高重量。",
+      "chips": [
+        {
+          "label": "30〜40分",
+          "hot": true
+        },
+        {
+          "label": "高強度",
+          "hot": false
+        }
+      ],
+      "mvTitle": "HIITインターバル",
+      "mvCopy": "回復力は今がいちばん——今日は強度を攻めてOK。この上限はあなたが勝ち取ったもの。",
+      "mvParts": [
+        {
+          "label": "ウォームアップ · ダイナミック",
+          "mins": "5分"
+        },
+        {
+          "label": "インターバル · 40秒全力 / 80秒回復 ×8",
+          "mins": "24分"
+        },
+        {
+          "label": "クールダウン · ストレッチ",
+          "mins": "8分"
+        }
+      ],
+      "week": [
+        {
+          "label": "月 · 筋トレ",
+          "state": "完了",
+          "done": true
+        },
+        {
+          "label": "水 · HIITインターバル",
+          "state": "今日",
+          "today": true
+        },
+        {
+          "label": "金 · モビリティと体幹",
+          "state": "予定",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "ギリシャヨーグルト、ベリーとかぼちゃの種",
+          "slot": "朝食",
+          "tag": "亜鉛"
+        },
+        {
+          "emoji": "🥗",
+          "name": "サーモンとキヌアのボウル",
+          "slot": "昼食",
+          "tag": "オメガ3"
+        },
+        {
+          "emoji": "🍜",
+          "name": "青菜たっぷり炒め",
+          "slot": "夕食",
+          "tag": "B6 + 食物繊維"
+        }
+      ],
+      "mealWhy": [
+        "亜鉛が排卵前後のLHサージを支えます。",
+        "オメガ3が周期中盤の炎症を抑えます。",
+        "B6と食物繊維がピークのエストロゲン代謝を助けます。"
+      ]
+    },
+    "luteal": {
+      "headline": "安定した燃料で、角をまるく。",
+      "copy": "プロゲステロンの出番——安定した血糖とマグネシウムが、下り坂のエネルギーと気分を支えます。",
+      "sideNote": "減速の週——安定した燃料が効きます",
+      "focus": "マグネシウム・B6・ゆっくり燃える炭水化物で安定を。",
+      "nlWhy": "プロゲステロンは代謝を約5%引き上げます——ゆっくり燃える安定した食事が、食欲に見える谷を防ぎます。",
+      "insight": "プロゲステロン上昇でセロトニンは低下——マグネシウム豊富な夕食と早めの就寝が、明日の体感を変えます。",
+      "moveCopy": "ほどほどに、着実に——筋トレか坂道ウォーク。",
+      "chips": [
+        {
+          "label": "25〜35分",
+          "hot": true
+        },
+        {
+          "label": "ほどほど",
+          "hot": false
+        }
+      ],
+      "mvTitle": "安定した筋トレ",
+      "mvCopy": "テンポはなめらかに、休憩はたっぷり——今週は記録より継続を。",
+      "mvParts": [
+        {
+          "label": "ウォームアップ · モビリティ",
+          "mins": "6分"
+        },
+        {
+          "label": "全身筋トレ · 3周",
+          "mins": "20分"
+        },
+        {
+          "label": "仕上げのウォーク · 楽に",
+          "mins": "8分"
+        }
+      ],
+      "week": [
+        {
+          "label": "月 · 筋トレ",
+          "state": "完了",
+          "done": true
+        },
+        {
+          "label": "木 · 坂道ウォーク",
+          "state": "今日",
+          "today": true
+        },
+        {
+          "label": "日 · モビリティ",
+          "state": "予定",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🍳",
+          "name": "卵、アボカドと雑穀トースト",
+          "slot": "朝食",
+          "tag": "B6"
+        },
+        {
+          "emoji": "🥘",
+          "name": "ターキーとさつまいものボウル",
+          "slot": "昼食",
+          "tag": "スローカーボ"
+        },
+        {
+          "emoji": "🍮",
+          "name": "ダークチョコのチアプディング",
+          "slot": "夕食",
+          "tag": "マグネシウム"
+        }
+      ],
+      "mealWhy": [
+        "プロゲステロン上昇期のセロトニンをB6が支えます。",
+        "スローカーボが食欲の裏にある血糖の谷をならします。",
+        "マグネシウムが緊張をほどき、深い睡眠へ導きます。"
+      ]
+    }
+  },
+  "ob": [
+    {
+      "q": "NutriSync に来た理由は？",
+      "help": "Nutri が最初に何を優先するかが決まります。",
+      "type": "choice",
+      "key": "obGoal",
+      "opts": [
+        {
+          "k": "Balance my energy",
+          "label": "エネルギーのバランスを整えたい"
+        },
+        {
+          "k": "Ease PMS & symptoms",
+          "label": "PMSと症状をやわらげたい"
+        },
+        {
+          "k": "Train smarter with my cycle",
+          "label": "サイクルに合わせて賢くトレーニングしたい"
+        },
+        {
+          "k": "Understand my body better",
+          "label": "自分の体をもっと知りたい"
+        }
+      ]
+    },
+    {
+      "q": "サイクルは規則的ですか？",
+      "help": "不規則はよくあること——どちらでも Nutri は適応します。",
+      "type": "choice",
+      "key": "obReg",
+      "opts": [
+        {
+          "k": "Like clockwork",
+          "label": "時計のように正確"
+        },
+        {
+          "k": "Mostly regular",
+          "label": "だいたい規則的"
+        },
+        {
+          "k": "Pretty unpredictable",
+          "label": "かなり予測しづらい"
+        },
+        {
+          "k": "Not sure",
+          "label": "わからない"
+        }
+      ]
+    },
+    {
+      "q": "前回の生理はいつ始まりましたか？",
+      "help": "フェーズ検出の基準点になります。",
+      "type": "date",
+      "key": "obDate"
+    },
+    {
+      "q": "サイクルの長さは？",
+      "help": "生理初日から次の生理初日まで数えます。",
+      "type": "choice",
+      "key": "obLen",
+      "opts": [
+        {
+          "k": "21–24 days",
+          "label": "21〜24日"
+        },
+        {
+          "k": "25–30 days",
+          "label": "25〜30日"
+        },
+        {
+          "k": "31–35 days",
+          "label": "31〜35日"
+        },
+        {
+          "k": "Not sure",
+          "label": "わからない"
+        }
+      ]
+    },
+    {
+      "q": "守りたい食事スタイルは？",
+      "help": "食事提案は常にあなたのスタイルに合わせます。",
+      "type": "choice",
+      "key": "obDiet",
+      "opts": [
+        {
+          "k": "No restrictions",
+          "label": "制限なし"
+        },
+        {
+          "k": "Vegetarian",
+          "label": "ベジタリアン"
+        },
+        {
+          "k": "Vegan",
+          "label": "ヴィーガン"
+        },
+        {
+          "k": "Gluten-free",
+          "label": "グルテンフリー"
+        },
+        {
+          "k": "Dairy-free",
+          "label": "乳製品フリー"
+        }
+      ]
+    },
+    {
+      "q": "あなたの体について少しだけ",
+      "help": "分量とエネルギー必要量の調整にだけ使います——評価には使いません。",
+      "type": "numbers"
+    },
+    {
+      "q": "あなたの Nutri を選ぶ",
+      "help": "全フェーズを一緒に歩む相棒。いつでも変更できます。",
+      "type": "avatar"
+    },
+    {
+      "q": "あなたのデータ、あなたのルール",
+      "help": "同意なしに共有されることはありません。",
+      "type": "consent"
+    }
+  ],
+  "provSync": {
+    "apple": "6:40 に同期",
+    "oura": "2時間前に同期",
+    "garmin": "毎日同期",
+    "fitbit": "毎日同期",
+    "whoop": "毎日同期",
+    "gfit": "毎日同期"
+  },
+  "provReads": {
+    "apple": "睡眠、HRV、安静時心拍",
+    "oura": "睡眠ステージ、レディネス、体温",
+    "garmin": "ワークアウト、歩数、ストレス",
+    "fitbit": "アクティビティ、睡眠、心拍",
+    "whoop": "負荷、回復、睡眠負債",
+    "gfit": "歩数、ワークアウト、ハートポイント"
+  },
+  "metricLabels": [
+    "睡眠時間とステージ",
+    "心拍変動",
+    "安静時心拍",
+    "体温トレンド",
+    "ワークアウトとトレーニング負荷",
+    "歩数と日常活動"
+  ],
+  "readLists": {
+    "apple": [
+      "睡眠時間とステージ",
+      "心拍変動（HRV）",
+      "安静時心拍",
+      "ワークアウトと消費エネルギー"
+    ],
+    "oura": [
+      "睡眠ステージと効率",
+      "レディネスとHRV",
+      "体温トレンド",
+      "活動レベル"
+    ],
+    "garmin": [
+      "ワークアウトと負荷",
+      "歩数と運動強度分",
+      "睡眠とストレススコア"
+    ],
+    "fitbit": [
+      "アクティビティと歩数",
+      "睡眠ステージ",
+      "心拍"
+    ],
+    "whoop": [
+      "負荷と回復",
+      "睡眠負債",
+      "HRVと安静時心拍"
+    ],
+    "gfit": [
+      "歩数とハートポイント",
+      "ワークアウト",
+      "睡眠セッション"
+    ]
+  },
+  "consentRows": [
+    {
+      "label": "パーソナライズド・インサイト",
+      "desc": "記録を分析し、あなた仕様のガイドを届けることを Nutri に許可します。"
+    },
+    {
+      "label": "匿名化リサーチ",
+      "desc": "非識別化データで女性の健康研究に貢献します。"
+    },
+    {
+      "label": "プロダクトの最新情報",
+      "desc": "NutriSync の新機能をときどきお知らせします。"
+    }
+  ],
+  "sessions": [
+    {
+      "d": "MacBook Pro · Safari",
+      "loc": "リスボン, PT · 現在",
+      "me": true,
+      "other": false
+    },
+    {
+      "d": "iPhone 15 · NutriSync アプリ",
+      "loc": "リスボン, PT · 2時間前",
+      "me": false,
+      "other": true
+    },
+    {
+      "d": "iPad Air · Safari",
+      "loc": "ポルト, PT · 3月8日",
+      "me": false,
+      "other": true
+    }
+  ],
+  "sessionLive": {
+    "d": "このブラウザ",
+    "loc": "たった今"
+  },
+  "winsDemo": [
+    {
+      "t": "12日連続で記録",
+      "d": "自己最長——予測がどんどん正確に。"
+    },
+    {
+      "t": "排卵週のエネルギー +18%",
+      "d": "直近2サイクルとの比較。"
+    },
+    {
+      "t": "フェーズに合った3回のワークアウト",
+      "d": "今週のすべてのセッションが理想の窓に収まりました。"
+    }
+  ],
+  "calBannerA": "次の生理は",
+  "calBannerB": "頃の見込み——Nutri は2日前から鉄分と癒やしの食事へシフトします。",
+  "calBannerNone": "生理開始日を記録すると、Nutri がひと月先を予測します。",
+  "calBannerDemo": "次の生理は3月24日頃の見込み——Nutri は2日前から鉄分と癒やしの食事へシフトします。",
+  "calBannerForming": "予測を生成中——記録するごとに3月24日の見込みが正確になります。",
+  "_meta": {
+    "lang": "ja",
+    "name": "日本語",
+    "source": "design-v11.30"
+  }
+}
