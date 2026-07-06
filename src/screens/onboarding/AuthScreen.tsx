@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { colors, font, radius, shadow } from '../../theme';
 import { PrimaryButton } from '../../ui/Buttons';
+import { LanguagePicker } from '../../ui/LanguagePicker';
 import { supabase } from '../../lib/supabase';
 import { isSupabaseConfigured } from '../../lib/config';
 import { RootStackParamList } from '../../navigation/types';
@@ -53,6 +54,12 @@ export default function AuthScreen({ route, navigation }: Props) {
   return (
     <LinearGradient colors={[colors.peachTop, '#FBE3D6', colors.peachBottom]} style={styles.fill}>
       <SafeAreaView style={styles.fill}>
+        <View style={styles.header}>
+          <Pressable onPress={() => navigation.goBack()} hitSlop={12} style={styles.backBtn}>
+            <Text style={styles.back}>‹</Text>
+          </Pressable>
+          <LanguagePicker />
+        </View>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.fill}>
           <View style={styles.body}>
             <Text style={styles.h1}>{signup ? t('ui.createAccount', 'Create account') : t('ui.loginTitle', 'Welcome back')}</Text>
@@ -96,6 +103,9 @@ function Field(props: React.ComponentProps<typeof TextInput>) {
 
 const styles = StyleSheet.create({
   fill: { flex: 1 },
+  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 4, height: 44 },
+  backBtn: { width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(255,255,255,0.75)', alignItems: 'center', justifyContent: 'center' },
+  back: { fontSize: 30, color: colors.ink, marginTop: -3 },
   body: { flex: 1, justifyContent: 'center', paddingHorizontal: 26 },
   h1: { fontFamily: font.regular, fontSize: 34, color: colors.ink },
   sub: { fontFamily: font.regular, fontSize: 15, color: colors.muted, marginTop: 6, marginBottom: 26 },

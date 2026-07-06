@@ -188,7 +188,9 @@
     "alertConfirmDelete": "Konto und alle Daten löschen? Das lässt sich nicht rückgängig machen.",
     "alertDeleted": "Deine Daten wurden gelöscht. Die Entfernung der Anmeldedaten ist innerhalb von 30 Tagen abgeschlossen.",
     "alertDeactivate": "Während der Beta läuft die Deaktivierung über den Support — schreib an hello@nutrisynccollective.com.",
-    "alertDemoAccount": "Demo-Modus — Kontoaktionen brauchen das Live-Backend."
+    "alertDemoAccount": "Demo-Modus — Kontoaktionen brauchen das Live-Backend.",
+    "welTo": "Willkommen bei",
+    "welP": "Du bist hier, weil dein Körper Besseres verdient als Rätselraten. Lass uns deine Ernährung und Bewegung mit deinem natürlichen Rhythmus synchronisieren."
   },
   "dows": [
     "SO",

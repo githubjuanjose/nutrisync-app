@@ -188,7 +188,9 @@
     "alertConfirmDelete": "Vols suprimir el compte i totes les dades? No es pot desfer.",
     "alertDeleted": "Les teves dades s'han suprimit. L'eliminació de les credencials es completa en 30 dies.",
     "alertDeactivate": "Durant la beta, la desactivació es gestiona amb suport — escriu a hello@nutrisynccollective.com.",
-    "alertDemoAccount": "Mode demo — les accions del compte necessiten el backend en producció."
+    "alertDemoAccount": "Mode demo — les accions del compte necessiten el backend en producció.",
+    "welTo": "Benvinguda a",
+    "welP": "Ets aquí perquè el teu cos mereix més que suposicions. Sincronitzem la teva nutrició i el teu moviment amb el teu ritme natural."
   },
   "dows": [
     "DG",

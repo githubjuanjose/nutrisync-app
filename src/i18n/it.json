@@ -188,7 +188,9 @@
     "alertConfirmDelete": "Eliminare il tuo account e tutti i dati? Non si può annullare.",
     "alertDeleted": "I tuoi dati sono stati eliminati. La rimozione delle credenziali si completa entro 30 giorni.",
     "alertDeactivate": "Durante la beta la disattivazione passa dal supporto — scrivi a hello@nutrisynccollective.com.",
-    "alertDemoAccount": "Modalità demo — le azioni sull'account richiedono il backend live."
+    "alertDemoAccount": "Modalità demo — le azioni sull'account richiedono il backend live.",
+    "welTo": "Benvenuta su",
+    "welP": "Sei qui perché il tuo corpo merita di meglio delle supposizioni. Sincronizziamo la tua nutrizione e il tuo movimento col tuo ritmo naturale."
   },
   "dows": [
     "DOM",

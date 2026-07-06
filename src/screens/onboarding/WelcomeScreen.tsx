@@ -6,6 +6,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { colors, font } from '../../theme';
 import { NutriOrb } from '../../ui/NutriOrb';
 import { PrimaryButton, SecondaryButton } from '../../ui/Buttons';
+import { LanguagePicker } from '../../ui/LanguagePicker';
 import { RootStackParamList } from '../../navigation/types';
 import { useT } from '../../i18n';
 
@@ -24,12 +25,12 @@ export default function WelcomeScreen({ navigation }: Props) {
         </View>
 
         <View style={styles.copy}>
-          <Text style={styles.h1}>{t('mob.welcomeTo', "Welcome to")}</Text>
+          <Text style={styles.h1}>{t('ui.welTo', t('mob.welcomeTo', 'Welcome to'))}</Text>
           <Text style={[styles.h1, { color: colors.brandOrange }]}>NutriSync</Text>
           <Text style={styles.sub}>
-            You are here because your body deserves better than guesswork. Lets sync your
-            nutrition and movement to your natural rhythm.
+            {t('ui.welP', 'You are here because your body deserves better than guesswork. Lets sync your nutrition and movement to your natural rhythm.')}
           </Text>
+          <LanguagePicker align="center" style={{ marginTop: 18 }} />
         </View>
 
         <View style={styles.actions}>

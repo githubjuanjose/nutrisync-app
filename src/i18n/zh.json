@@ -188,7 +188,9 @@
     "alertConfirmDelete": "删除账号及全部数据？此操作无法撤销。",
     "alertDeleted": "你的数据已删除。登录凭证将在 30 天内完全移除。",
     "alertDeactivate": "测试期间，停用账号请联系支持——hello@nutrisynccollective.com。",
-    "alertDemoAccount": "演示模式——账号操作需要正式后端。"
+    "alertDemoAccount": "演示模式——账号操作需要正式后端。",
+    "welTo": "欢迎来到",
+    "welP": "你来到这里，是因为你的身体值得比猜测更好的答案。让我们把营养与运动同步到你的自然节律。"
   },
   "dows": [
     "周日",

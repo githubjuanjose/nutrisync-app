@@ -188,7 +188,9 @@
     "alertConfirmDelete": "Vòs suprimir eth compde e totes es donades? Non se pòt deshèr.",
     "alertDeleted": "Es tues donades s'an suprimit. Era retirada des credenciaus s'acabe en 30 dies.",
     "alertDeactivate": "Pendent era beta, era desactivacion se gestione damb eth supòrt — escriu a hello@nutrisynccollective.com.",
-    "alertDemoAccount": "Mòde demo — es accions deth compde an besonh deth backend en produccion."
+    "alertDemoAccount": "Mòde demo — es accions deth compde an besonh deth backend en produccion.",
+    "welTo": "Benvenguda en",
+    "welP": "Ès ací pr'amor qu'eth tòn còs se merite mès que suposicions. Sincronizem era tua nutricion e eth tòn movement damb eth tòn ritme naturau."
   },
   "dows": [
     "DG",

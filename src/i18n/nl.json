@@ -188,7 +188,9 @@
     "alertConfirmDelete": "Je account en alle gegevens verwijderen? Dit kan niet ongedaan worden gemaakt.",
     "alertDeleted": "Je gegevens zijn verwijderd. Het verwijderen van inloggegevens is binnen 30 dagen afgerond.",
     "alertDeactivate": "Tijdens de bèta loopt deactivering via support — mail hello@nutrisynccollective.com.",
-    "alertDemoAccount": "Demomodus — accountacties vereisen de live backend."
+    "alertDemoAccount": "Demomodus — accountacties vereisen de live backend.",
+    "welTo": "Welkom bij",
+    "welP": "Je bent hier omdat je lichaam beter verdient dan giswerk. Laten we je voeding en beweging syncen met je natuurlijke ritme."
   },
   "dows": [
     "ZO",

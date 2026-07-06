@@ -188,7 +188,9 @@
     "alertDeactivate": "Pendant la bêta, la désactivation passe par le support — écris à hello@nutrisynccollective.com.",
     "alertDemoAccount": "Mode démo — les actions de compte nécessitent le backend en production.",
     "backToSite": "Retour au site",
-    "obStartOver": "Recommencer"
+    "obStartOver": "Recommencer",
+    "welTo": "Bienvenue sur",
+    "welP": "Tu es ici parce que ton corps mérite mieux que des devinettes. Synchronisons ta nutrition et ton mouvement avec ton rythme naturel."
   },
   "dows": [
     "DIM",
