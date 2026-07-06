@@ -1,0 +1,775 @@
+{
+  "ui": {
+    "boot": "同步中…",
+    "rail1": "同步你的周期。",
+    "rail2": "滋养你的身心。",
+    "protoBadge": "原型 · 演示数据",
+    "railCopy": "营养与运动随你的激素而动——每天都贴合你周期中的确切时刻。",
+    "loginTitle": "欢迎回来",
+    "loginSub": "从你上次停下的地方继续。",
+    "email": "电子邮箱",
+    "password": "密码",
+    "createPassword": "创建密码",
+    "fullName": "姓名",
+    "remember": "记住我",
+    "forgot": "忘记密码？",
+    "login": "登录",
+    "newHere": "第一次来？",
+    "createAccount": "创建账号",
+    "signupSub": "现在只需一分钟——之后每一天都有量身定制的指引。",
+    "getStarted": "开始 →",
+    "haveAccount": "已有账号？",
+    "settingUp": "设置中",
+    "obRail1": "让我们了解",
+    "obRail2": "你的节律。",
+    "obRailCopy": "几个简短的问题，让每一条建议都贴合你的身体——而不是平均值。",
+    "obDateNote": "不确定？估计一下就好——Nutri 会随着你的记录不断校准。",
+    "age": "年龄",
+    "years": "岁",
+    "height": "身高",
+    "weight": "体重",
+    "obOptional": "选填——不想分享的可以跳过。",
+    "obConsentA": "周期与症状",
+    "obConsentADesc": "为你的每日指引提供动力。",
+    "obConsentB": "安全存储",
+    "obConsentBDesc": "加密、符合 GDPR、绝不出售。",
+    "obAgree": "我同意《隐私政策》和《条款》，并了解我的数据始终属于我。",
+    "continueBtn": "继续 →",
+    "finishSetup": "完成设置 →",
+    "obSaving": "正在保存你的设置…",
+    "obErr": "保存失败——请检查网络后重试。",
+    "dailyCheckin": "每日签到",
+    "skipToday": "今天跳过",
+    "next": "下一步 →",
+    "syncDay": "同步我的一天 →",
+    "gateTitleMood": "你感觉怎么样？",
+    "gateSubMood": "一个真实的词——Nutri 会据此调整今天的计划。",
+    "gateTitleEnergy": "你的精力如何？",
+    "gateSubEnergy": "从耗尽（1）到势不可挡（5）。",
+    "allsetCopy": "Nutri 正根据你的回答定制你的营养与运动。你可以随时在设置中更新。",
+    "enterApp": "进入 NutriSync →",
+    "settings": "设置",
+    "goodMorning": "早上好",
+    "cycleDay": "周期日",
+    "cycleAlignment": "周期同步",
+    "editPeriodBtn": "编辑经期",
+    "editHealthBtn": "编辑健康",
+    "logToday": "记录今天 ›",
+    "checkedIn": "✓ 已签到",
+    "firstRunStrong": "你的旅程第 1 天。",
+    "firstRunRest": "记录 7 天后即可解锁你的周期同步分——Nutri 已经在根据你的回答进行个性化。",
+    "todaysFuel": "今日能量补给",
+    "openNutrilog": "打开 NutriLog ›",
+    "movement": "运动",
+    "plan": "计划 ›",
+    "nutriInsight": "NUTRI 洞察",
+    "fromDevices": "来自你的设备",
+    "manage": "管理 ›",
+    "deviceNote": "夜间同步将随移动测试版推出——你的读取授权已就绪。",
+    "statSleep": "睡眠",
+    "statHrv": "HRV",
+    "statRhr": "静息心率",
+    "statSleepNote": "▲ 对比 7 日均值",
+    "statHrvNote": "平稳",
+    "statRhrNote": "▼ 2 bpm",
+    "demoSyncLine": "Oura Ring · 上次同步 6:40",
+    "consentActive": "授权已生效",
+    "welcomeInsight": "欢迎！只要 Nutri 有了你一天的数据，明天你就会收到第一条洞察。",
+    "focusWord": "重点：",
+    "hydration": "补水",
+    "glasses": "/ 8 杯",
+    "whyFoods": "为什么是这些食物",
+    "logMeal": "记录这餐",
+    "loggedMeal": "✓ 已记录",
+    "today": "今天",
+    "thisWeek": "本周",
+    "lowEnergy": "精力不足的一天？",
+    "markDone": "标记完成",
+    "sessionDone": "✓ 训练完成",
+    "mvAlt": "换成 20 分钟散步和轻柔拉伸——在每个阶段，坚持都胜过强度。",
+    "progress": "进度",
+    "casLong": "周期同步分",
+    "trend6w": "6 周趋势",
+    "prCopyDemo": "营养、运动和睡眠正与你的激素朝同一个方向发力。",
+    "prCopyLive": "五项分数——阶段置信度、生物指标、营养、体能与坚持——随每次记录更新。",
+    "prDeltaDemo": "▲ 比上周 +4",
+    "prFirst": "第一个分数上榜",
+    "prNone": "随着记录，分数会陆续出现",
+    "prOver": "· 共",
+    "prDays": "天",
+    "brewTitle": "你的趋势正在酝酿",
+    "brewCopy": "记录 7 天，Nutri 就会在这里绘制你的周期同步分、精力曲线和阶段历史。",
+    "brewDay": "第",
+    "brewOf": "天 / 共 7 天",
+    "backToday": "‹ 今天",
+    "editPeriod": "编辑经期",
+    "saveLog": "保存记录",
+    "flow": "流量",
+    "moodMental": "情绪与心理状态",
+    "libido": "性欲",
+    "birthControl": "避孕",
+    "physSymptoms": "身体症状",
+    "notes": "备注",
+    "notesPh": "关于今天还有什么…",
+    "editHealth": "编辑健康",
+    "yourProfile": "你的资料",
+    "saveChanges": "保存更改",
+    "allergies": "食物过敏",
+    "conditions": "确诊疾病",
+    "yourGoal": "你的 NUTRIGOAL",
+    "nextCycle": "更改将于下个周期生效",
+    "yourNutri": "你的 NUTRI",
+    "notifPush": "每日记录提醒",
+    "notifEmail": "每周邮件摘要",
+    "logout": "退出登录",
+    "langRegion": "语言与地区",
+    "language": "语言",
+    "region": "地区",
+    "phaseHeroFmt": "{PH} · 第 {D} 天",
+    "dayWord": "第",
+    "nlFocusFmt": "{PH}重点：",
+    "allsetFmt": "一切就绪，{name}！",
+    "bpmUnit": "bpm",
+    "prTrendStart": "2月",
+    "prTrendEnd": "3月",
+    "backToSite": "返回官网",
+    "obStartOver": "重新开始",
+    "backSettings": "‹ 设置",
+    "connectedApps": "已连接的应用",
+    "connIntro": "NutriSync 只读取你允许的内容——绝不回写。",
+    "connSome": "/ 6 已连接。",
+    "connNone": "尚未连接任何设备。",
+    "connectedPill": "已连接 ✓",
+    "connectPill": "连接",
+    "connectedWord": "已连接",
+    "whatReads": "NutriSync 读取的内容",
+    "whatReadsDesc": "适用于每台已连接设备。关闭某项指标即可停止其同步。",
+    "encTitle": "传输与存储全程加密",
+    "encCopy": "设备数据是对你记录的补充——绝不会悄悄覆盖你输入的内容。随时可断开；你的历史数据始终属于你。",
+    "backConnections": "‹ 连接",
+    "connectWord": "连接",
+    "connectCopy": "NutriSync 将读取以下内容，以更精准地识别你的阶段并计算周期同步分：",
+    "connectNoteA": "只读。NutriSync 绝不会回写到",
+    "connectNoteB": "，你也可以随时断开连接。",
+    "allowAccess": "允许访问",
+    "notNow": "暂不",
+    "dataPrivacy": "数据与隐私",
+    "privIntro": "你的数据属于你。掌控用途，随时带走。",
+    "consentHdr": "授权",
+    "yourData": "你的数据",
+    "exportJson": "导出我的数据",
+    "pdfReport": "下载 PDF 报告",
+    "accountHdr": "账号",
+    "deactivate": "停用账号",
+    "deleteAll": "删除账号及全部数据",
+    "delNote": "删除不可恢复，将在 30 天内完成。",
+    "security": "登录与安全",
+    "signinHdr": "登录",
+    "changePw": "修改密码",
+    "passkeys": "通行密钥",
+    "setUp": "设置",
+    "twofaHdr": "双重验证",
+    "authApp": "验证器应用",
+    "twofaOn": "已开启 · 保护你的账号",
+    "twofaOff": "未开启 · 建议开启",
+    "smsBackup": "短信备用",
+    "addNumber": "添加号码 ›",
+    "sessionsHdr": "活跃会话",
+    "thisDevice": "本设备",
+    "revoke": "撤销",
+    "signOutOthers": "退出所有其他会话",
+    "noteCreds": "请输入邮箱和密码。",
+    "noteSigningIn": "登录中…",
+    "noteCreds6": "请输入邮箱和密码（至少 6 位）。",
+    "noteCreating": "正在创建你的账号…",
+    "noteConfirm": "请查收邮件确认账号，然后登录。",
+    "alertDemoExport": "演示模式——连接后端后可导出真实数据。",
+    "alertDemoDelete": "演示模式——没有可删除的内容。",
+    "alertConfirmDelete": "删除账号及全部数据？此操作无法撤销。",
+    "alertDeleted": "你的数据已删除。登录凭证将在 30 天内完全移除。",
+    "alertDeactivate": "测试期间，停用账号请联系支持——hello@nutrisynccollective.com。",
+    "alertDemoAccount": "演示模式——账号操作需要正式后端。"
+  },
+  "dows": [
+    "周日",
+    "周一",
+    "周二",
+    "周三",
+    "周四",
+    "周五",
+    "周六"
+  ],
+  "phaseNames": {
+    "menstrual": "月经期",
+    "follicular": "卵泡期",
+    "ovulatory": "排卵期",
+    "luteal": "黄体期"
+  },
+  "navLabels": {
+    "home": "今天",
+    "nutrilog": "NutriLog",
+    "movement": "运动",
+    "progress": "进度",
+    "calendar": "日历"
+  },
+  "moodLabels": {
+    "Low": "低落",
+    "Meh": "一般",
+    "Okay": "还行",
+    "Good": "不错",
+    "Great": "很棒"
+  },
+  "phase": {
+    "menstrual": {
+      "headline": "休息也是生产力。",
+      "copy": "激素处于最低点——温热高铁的餐食与轻柔运动，从第一天起帮你重建。",
+      "sideNote": "精力最低的几天——放轻松",
+      "focus": "铁、叶酸与温暖抚慰的餐食，帮你补足。",
+      "nlWhy": "经期消耗铁和镁。温热熟食易于消化，让身体安心完成这个月最辛苦的工作。",
+      "insight": "精力处于每月最低点——保护好你的夜晚，让睡眠完成修复。",
+      "moveCopy": "恢复日——修复瑜伽或慢走。",
+      "chips": [
+        {
+          "label": "15–25 分钟",
+          "hot": true
+        },
+        {
+          "label": "轻柔",
+          "hot": false
+        }
+      ],
+      "mvTitle": "修复瑜伽",
+      "mvCopy": "今天的运动应该像泡个热水澡——促进循环，毫不费力。",
+      "mvParts": [
+        {
+          "label": "呼吸 + 猫牛式",
+          "mins": "5 分钟"
+        },
+        {
+          "label": "阴瑜伽序列 · 髋与背",
+          "mins": "15 分钟"
+        },
+        {
+          "label": "靠墙抬腿",
+          "mins": "5 分钟"
+        }
+      ],
+      "week": [
+        {
+          "label": "周二 · 修复瑜伽",
+          "state": "今天",
+          "today": true
+        },
+        {
+          "label": "周四 · 慢走",
+          "state": "已计划",
+          "done": false
+        },
+        {
+          "label": "周六 · 轻柔拉伸",
+          "state": "已计划",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "热燕麦粥配椰枣与可可",
+          "slot": "早餐",
+          "tag": "铁"
+        },
+        {
+          "emoji": "🍲",
+          "name": "扁豆菠菜炖菜",
+          "slot": "午餐",
+          "tag": "铁 + 叶酸"
+        },
+        {
+          "emoji": "🍛",
+          "name": "三文鱼、红薯与绿叶菜",
+          "slot": "晚餐",
+          "tag": "OMEGA-3"
+        }
+      ],
+      "mealWhy": [
+        "铁开始补回经期流失的部分。",
+        "叶酸与铁重建你的血液储备。",
+        "Omega-3 缓解前列腺素引起的痉挛。"
+      ]
+    },
+    "follicular": {
+      "headline": "精力上升——稳步进阶。",
+      "copy": "雌激素攀升。清爽轻盈的餐食和渐进式训练，这周效果最好。",
+      "sideNote": "这周精力正在回升",
+      "focus": "维生素 C、瘦蛋白与铁，伴随精力上升。",
+      "nlWhy": "卵泡期雌激素开始重建——铁补回经期的消耗，维生素 C 让吸收翻倍。",
+      "insight": "雌激素上升——这周学得更快、练得更有效。把难事安排在现在。",
+      "moveCopy": "精力构建中——快走 + 轻核心。",
+      "chips": [
+        {
+          "label": "20–30 分钟",
+          "hot": true
+        },
+        {
+          "label": "适中",
+          "hot": false
+        }
+      ],
+      "mvTitle": "快走 + 核心",
+      "mvCopy": "随雌激素逐步加量——今天节奏优先于强度。",
+      "mvParts": [
+        {
+          "label": "热身 · 轻松配速",
+          "mins": "5 分钟"
+        },
+        {
+          "label": "快走 · 匀速",
+          "mins": "15 分钟"
+        },
+        {
+          "label": "核心循环 · 2 组",
+          "mins": "8 分钟"
+        }
+      ],
+      "week": [
+        {
+          "label": "周三 · 快走 + 核心",
+          "state": "今天",
+          "today": true
+        },
+        {
+          "label": "周五 · 轻力量",
+          "state": "已计划",
+          "done": false
+        },
+        {
+          "label": "周日 · 流瑜伽",
+          "state": "已计划",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "隔夜燕麦、亚麻籽与柑橘",
+          "slot": "早餐",
+          "tag": "维生素 C"
+        },
+        {
+          "emoji": "🥙",
+          "name": "鸡肉沙拉配发芽谷物",
+          "slot": "午餐",
+          "tag": "瘦蛋白"
+        },
+        {
+          "emoji": "🍲",
+          "name": "豆腐蔬菜面碗",
+          "slot": "晚餐",
+          "tag": "铁"
+        }
+      ],
+      "mealWhy": [
+        "维生素 C 在精力上升时增强铁的吸收。",
+        "蛋白质喂养雌激素上升期的肌肉窗口。",
+        "铁补足经期后的储备。"
+      ]
+    },
+    "ovulatory": {
+      "headline": "巅峰力量，巅峰自信。",
+      "copy": "雌激素到达顶点——冲个人纪录、进行那场难谈的对话，用锌和抗氧化物加满油。",
+      "sideNote": "巅峰精力窗口——还剩 3 天",
+      "focus": "锌、抗氧化物与 omega-3，为排卵护航。",
+      "nlWhy": "排卵前后身体运转更热，微量营养素消耗更快。锌支持 LH 峰值；抗氧化物守护卵子的旅程。",
+      "insight": "雌激素今天到达顶点——自信与社交能量满格。把重要对话安排在今天。",
+      "moveCopy": "力量巅峰日——HIIT 或大重量。",
+      "chips": [
+        {
+          "label": "30–40 分钟",
+          "hot": true
+        },
+        {
+          "label": "高强度",
+          "hot": false
+        }
+      ],
+      "mvTitle": "HIIT 间歇",
+      "mvCopy": "你的身体此刻恢复最快——今天可以冲强度，这个上限是你赢来的。",
+      "mvParts": [
+        {
+          "label": "热身 · 动态",
+          "mins": "5 分钟"
+        },
+        {
+          "label": "间歇 · 8 × 40 秒冲刺 / 80 秒放松",
+          "mins": "24 分钟"
+        },
+        {
+          "label": "放松 · 拉伸",
+          "mins": "8 分钟"
+        }
+      ],
+      "week": [
+        {
+          "label": "周一 · 力量",
+          "state": "已完成",
+          "done": true
+        },
+        {
+          "label": "周三 · HIIT 间歇",
+          "state": "今天",
+          "today": true
+        },
+        {
+          "label": "周五 · 灵活性与核心",
+          "state": "已计划",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "希腊酸奶、莓果与南瓜籽",
+          "slot": "早餐",
+          "tag": "锌"
+        },
+        {
+          "emoji": "🥗",
+          "name": "三文鱼藜麦碗",
+          "slot": "午餐",
+          "tag": "OMEGA-3"
+        },
+        {
+          "emoji": "🍜",
+          "name": "绿叶蔬菜快炒",
+          "slot": "晚餐",
+          "tag": "B6 + 膳食纤维"
+        }
+      ],
+      "mealWhy": [
+        "锌支持排卵前后的 LH 峰值。",
+        "Omega-3 缓和周期中段的炎症。",
+        "B6 + 膳食纤维帮助代谢顶点的雌激素。"
+      ]
+    },
+    "luteal": {
+      "headline": "平稳供能，柔化棱角。",
+      "copy": "孕激素接管——稳定的血糖和镁，让精力与情绪在回落期保持平衡。",
+      "sideNote": "减速周——平稳供能很有帮助",
+      "focus": "镁、B6 与慢碳水，稳住回落。",
+      "nlWhy": "孕激素让代谢提高约 5%——平稳的慢燃餐食避免那些像馋嘴一样的低谷。",
+      "insight": "孕激素上升时血清素下降——一顿富含镁的晚餐和早点入睡，会改变明天的感受。",
+      "moveCopy": "适中而平稳——力量或坡道快走。",
+      "chips": [
+        {
+          "label": "25–35 分钟",
+          "hot": true
+        },
+        {
+          "label": "适中",
+          "hot": false
+        }
+      ],
+      "mvTitle": "平稳力量",
+      "mvCopy": "保持流畅的节奏和充分的休息——这周坚持优先于突破。",
+      "mvParts": [
+        {
+          "label": "热身 · 灵活性",
+          "mins": "6 分钟"
+        },
+        {
+          "label": "全身力量 · 3 组",
+          "mins": "20 分钟"
+        },
+        {
+          "label": "结束步行 · 轻松",
+          "mins": "8 分钟"
+        }
+      ],
+      "week": [
+        {
+          "label": "周一 · 力量",
+          "state": "已完成",
+          "done": true
+        },
+        {
+          "label": "周四 · 坡道快走",
+          "state": "今天",
+          "today": true
+        },
+        {
+          "label": "周日 · 灵活性",
+          "state": "已计划",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🍳",
+          "name": "鸡蛋、牛油果与谷物吐司",
+          "slot": "早餐",
+          "tag": "B6"
+        },
+        {
+          "emoji": "🥘",
+          "name": "火鸡红薯碗",
+          "slot": "午餐",
+          "tag": "慢碳水"
+        },
+        {
+          "emoji": "🍮",
+          "name": "黑巧克力奇亚布丁",
+          "slot": "晚餐",
+          "tag": "镁"
+        }
+      ],
+      "mealWhy": [
+        "孕激素上升时，B6 支持血清素。",
+        "慢碳水抹平馋嘴背后的血糖低谷。",
+        "镁放松身心，为深睡眠做准备。"
+      ]
+    }
+  },
+  "ob": [
+    {
+      "q": "是什么把你带到 NutriSync？",
+      "help": "这决定 Nutri 优先为你呈现什么。",
+      "type": "choice",
+      "key": "obGoal",
+      "opts": [
+        {
+          "k": "Balance my energy",
+          "label": "平衡我的精力"
+        },
+        {
+          "k": "Ease PMS & symptoms",
+          "label": "缓解经前综合征与症状"
+        },
+        {
+          "k": "Train smarter with my cycle",
+          "label": "顺着周期更聪明地训练"
+        },
+        {
+          "k": "Understand my body better",
+          "label": "更了解我的身体"
+        }
+      ]
+    },
+    {
+      "q": "你的周期规律吗？",
+      "help": "不规律很常见——Nutri 都能适应。",
+      "type": "choice",
+      "key": "obReg",
+      "opts": [
+        {
+          "k": "Like clockwork",
+          "label": "像时钟一样准"
+        },
+        {
+          "k": "Mostly regular",
+          "label": "基本规律"
+        },
+        {
+          "k": "Pretty unpredictable",
+          "label": "相当难预测"
+        },
+        {
+          "k": "Not sure",
+          "label": "不确定"
+        }
+      ]
+    },
+    {
+      "q": "你上次月经是什么时候开始的？",
+      "help": "这是阶段识别的锚点。",
+      "type": "date",
+      "key": "obDate"
+    },
+    {
+      "q": "你的周期通常多长？",
+      "help": "从一次月经第 1 天数到下一次第 1 天。",
+      "type": "choice",
+      "key": "obLen",
+      "opts": [
+        {
+          "k": "21–24 days",
+          "label": "21–24 天"
+        },
+        {
+          "k": "25–30 days",
+          "label": "25–30 天"
+        },
+        {
+          "k": "31–35 days",
+          "label": "31–35 天"
+        },
+        {
+          "k": "Not sure",
+          "label": "不确定"
+        }
+      ]
+    },
+    {
+      "q": "有需要遵循的饮食模式吗？",
+      "help": "餐食推荐会始终贴合你的模式。",
+      "type": "choice",
+      "key": "obDiet",
+      "opts": [
+        {
+          "k": "No restrictions",
+          "label": "无限制"
+        },
+        {
+          "k": "Vegetarian",
+          "label": "素食"
+        },
+        {
+          "k": "Vegan",
+          "label": "纯素"
+        },
+        {
+          "k": "Gluten-free",
+          "label": "无麸质"
+        },
+        {
+          "k": "Dairy-free",
+          "label": "无乳制品"
+        }
+      ]
+    },
+    {
+      "q": "聊聊你的身体",
+      "help": "仅用于校准分量与能量需求——绝不评判。",
+      "type": "numbers"
+    },
+    {
+      "q": "选择你的 Nutri",
+      "help": "陪你走过每个阶段的伙伴。随时可以更换。",
+      "type": "avatar"
+    },
+    {
+      "q": "你的数据，你做主",
+      "help": "未经你同意，绝不分享。",
+      "type": "consent"
+    }
+  ],
+  "provSync": {
+    "apple": "6:40 已同步",
+    "oura": "2 小时前已同步",
+    "garmin": "每日同步",
+    "fitbit": "每日同步",
+    "whoop": "每日同步",
+    "gfit": "每日同步"
+  },
+  "provReads": {
+    "apple": "睡眠、HRV、静息心率",
+    "oura": "睡眠阶段、准备度、体温",
+    "garmin": "训练、步数、压力",
+    "fitbit": "活动、睡眠、心率",
+    "whoop": "负荷、恢复、睡眠欠债",
+    "gfit": "步数、训练、心肺点数"
+  },
+  "metricLabels": [
+    "睡眠时长与阶段",
+    "心率变异性",
+    "静息心率",
+    "体温趋势",
+    "训练与训练负荷",
+    "步数与日常活动"
+  ],
+  "readLists": {
+    "apple": [
+      "睡眠时长与阶段",
+      "心率变异性（HRV）",
+      "静息心率",
+      "训练与活动能量"
+    ],
+    "oura": [
+      "睡眠阶段与效率",
+      "准备度与 HRV",
+      "体温趋势",
+      "活动水平"
+    ],
+    "garmin": [
+      "训练与负荷",
+      "步数与强度分钟",
+      "睡眠与压力分数"
+    ],
+    "fitbit": [
+      "活动与步数",
+      "睡眠阶段",
+      "心率"
+    ],
+    "whoop": [
+      "负荷与恢复",
+      "睡眠欠债",
+      "HRV 与静息心率"
+    ],
+    "gfit": [
+      "步数与心肺点数",
+      "训练",
+      "睡眠时段"
+    ]
+  },
+  "consentRows": [
+    {
+      "label": "个性化洞察",
+      "desc": "允许 Nutri 分析你的记录，提供量身指引。"
+    },
+    {
+      "label": "匿名化研究",
+      "desc": "以去标识化数据支持女性健康研究。"
+    },
+    {
+      "label": "产品动态",
+      "desc": "偶尔发送 NutriSync 新功能消息。"
+    }
+  ],
+  "sessions": [
+    {
+      "d": "MacBook Pro · Safari",
+      "loc": "里斯本, PT · 现在",
+      "me": true,
+      "other": false
+    },
+    {
+      "d": "iPhone 15 · NutriSync 应用",
+      "loc": "里斯本, PT · 2 小时前",
+      "me": false,
+      "other": true
+    },
+    {
+      "d": "iPad Air · Safari",
+      "loc": "波尔图, PT · 3月8日",
+      "me": false,
+      "other": true
+    }
+  ],
+  "sessionLive": {
+    "d": "本浏览器",
+    "loc": "刚刚"
+  },
+  "winsDemo": [
+    {
+      "t": "连续记录 12 天",
+      "d": "你的最长纪录——预测越来越准。"
+    },
+    {
+      "t": "排卵周精力 +18%",
+      "d": "与你最近两个周期相比。"
+    },
+    {
+      "t": "3 次训练契合阶段",
+      "d": "本周每次训练都落在理想窗口。"
+    }
+  ],
+  "calBannerA": "下次月经预计在",
+  "calBannerB": "前后——Nutri 会提前两天把饮食转向铁质和抚慰食物。",
+  "calBannerNone": "记录经期开始日，Nutri 就能预测未来一个月。",
+  "calBannerDemo": "下次月经预计在 3月24日 前后——Nutri 会提前两天把饮食转向铁质和抚慰食物。",
+  "calBannerForming": "预测生成中——你每记录一天，3月24日 的预估就更精准。",
+  "_meta": {
+    "lang": "zh",
+    "name": "中文",
+    "source": "design-v11.27"
+  }
+}
