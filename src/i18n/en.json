@@ -180,7 +180,8 @@
     "alertDeleted": "Your data has been deleted. Sign-in record removal completes within 30 days.",
     "alertDeactivate": "During beta, deactivation is handled by support — email hello@nutrisynccollective.com.",
     "alertDemoAccount": "Demo mode — account actions need the live backend.",
-    "cancel": "Cancel"
+    "backToSite": "Back to site",
+    "obStartOver": "Start over"
   },
   "dows": [
     "SUN",

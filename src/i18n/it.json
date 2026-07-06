@@ -1,0 +1,775 @@
+{
+  "ui": {
+    "boot": "SINCRONIZZAZIONE…",
+    "rail1": "Sincronizza il tuo ciclo.",
+    "rail2": "Nutri la tua mente.",
+    "protoBadge": "PROTOTIPO · DATI DEMO",
+    "railCopy": "Nutrizione e movimento che seguono i tuoi ormoni — personalizzati sul punto esatto del tuo ciclo, ogni giorno.",
+    "loginTitle": "Bentornata",
+    "loginSub": "Riprendi esattamente da dove avevi lasciato.",
+    "email": "Indirizzo e-mail",
+    "password": "Password",
+    "createPassword": "Crea password",
+    "fullName": "Nome completo",
+    "remember": "Ricordami",
+    "forgot": "Password dimenticata?",
+    "login": "Accedi",
+    "newHere": "Prima volta qui?",
+    "createAccount": "Crea account",
+    "signupSub": "Un minuto adesso — indicazioni su misura per tutti i giorni dopo.",
+    "getStarted": "Inizia →",
+    "haveAccount": "Hai già un account?",
+    "settingUp": "CONFIGURAZIONE",
+    "obRail1": "Impariamo",
+    "obRail2": "il tuo ritmo.",
+    "obRailCopy": "Qualche domanda veloce perché ogni consiglio si adatti al tuo corpo — non a una media.",
+    "obDateNote": "Non sei sicura? Una stima va benissimo — Nutri la affina man mano che registri.",
+    "age": "ETÀ",
+    "years": "anni",
+    "height": "ALTEZZA",
+    "weight": "PESO",
+    "obOptional": "Facoltativo — salta ciò che preferisci non condividere.",
+    "obConsentA": "Ciclo e sintomi",
+    "obConsentADesc": "Alimenta le tue indicazioni quotidiane.",
+    "obConsentB": "Archiviazione sicura",
+    "obConsentBDesc": "Crittografato, conforme al GDPR, mai venduto.",
+    "obAgree": "Accetto l'Informativa sulla privacy e i Termini, e capisco che i miei dati restano miei.",
+    "continueBtn": "Continua →",
+    "finishSetup": "Completa la configurazione →",
+    "obSaving": "Salvataggio della configurazione…",
+    "obErr": "Impossibile salvare — controlla la connessione e riprova.",
+    "dailyCheckin": "CHECK-IN QUOTIDIANO",
+    "skipToday": "Salta per oggi",
+    "next": "Avanti →",
+    "syncDay": "Sincronizza la mia giornata →",
+    "gateTitleMood": "Come ti senti?",
+    "gateSubMood": "Una parola sincera — Nutri ci regola il piano di oggi.",
+    "gateTitleEnergy": "E la tua energia?",
+    "gateSubEnergy": "Da a terra (1) a inarrestabile (5).",
+    "allsetCopy": "Nutri sta personalizzando nutrizione e movimento dalle tue risposte. Puoi aggiornarle in qualsiasi momento nelle Impostazioni.",
+    "enterApp": "Entra in NutriSync →",
+    "settings": "Impostazioni",
+    "goodMorning": "Buongiorno",
+    "cycleDay": "Giorno del ciclo",
+    "cycleAlignment": "ALLINEAMENTO DEL CICLO",
+    "editPeriodBtn": "Modifica ciclo",
+    "editHealthBtn": "Modifica salute",
+    "logToday": "Registra oggi ›",
+    "checkedIn": "✓ Registrato",
+    "firstRunStrong": "Giorno 1 del tuo percorso.",
+    "firstRunRest": "Il tuo Punteggio di Allineamento del Ciclo si sblocca dopo 7 giorni di registrazioni — Nutri sta già personalizzando dalle tue risposte.",
+    "todaysFuel": "Il carburante di oggi",
+    "openNutrilog": "Apri NutriLog ›",
+    "movement": "Movimento",
+    "plan": "Pianifica ›",
+    "nutriInsight": "INSIGHT NUTRI",
+    "fromDevices": "Dai tuoi dispositivi",
+    "manage": "Gestisci ›",
+    "deviceNote": "La sincronizzazione notturna arriva con la beta mobile — il tuo consenso di lettura è già impostato.",
+    "statSleep": "SONNO",
+    "statHrv": "HRV",
+    "statRhr": "FC RIPOSO",
+    "statSleepNote": "▲ vs media 7 gg",
+    "statHrvNote": "stabile",
+    "statRhrNote": "▼ 2 bpm",
+    "demoSyncLine": "Oura Ring · ultima sincro 6:40",
+    "consentActive": "consenso attivo",
+    "welcomeInsight": "Benvenuta! Il tuo primo insight arriva domani, appena Nutri avrà una tua giornata nel quadro.",
+    "focusWord": "focus:",
+    "hydration": "Idratazione",
+    "glasses": "su 8 bicchieri",
+    "whyFoods": "PERCHÉ QUESTI ALIMENTI",
+    "logMeal": "Registra questo pasto",
+    "loggedMeal": "✓ Registrato",
+    "today": "OGGI",
+    "thisWeek": "Questa settimana",
+    "lowEnergy": "GIORNATA A BASSA ENERGIA?",
+    "markDone": "Segna come fatto",
+    "sessionDone": "✓ Sessione completata",
+    "mvAlt": "Sostituisci con 20 minuti di camminata e stretching dolce — la costanza batte l'intensità, in ogni fase.",
+    "progress": "Progressi",
+    "casLong": "PUNTEGGIO DI ALLINEAMENTO DEL CICLO",
+    "trend6w": "Tendenza a 6 settimane",
+    "prCopyDemo": "Nutrizione, movimento e sonno tirano nella stessa direzione dei tuoi ormoni.",
+    "prCopyLive": "Cinque punteggi — sicurezza di fase, biomarcatori, nutrizione, forma e costanza — si aggiornano a ogni registrazione.",
+    "prDeltaDemo": "▲ +4 vs settimana scorsa",
+    "prFirst": "Primo punteggio in tabella",
+    "prNone": "I punteggi arrivano registrando",
+    "prOver": "in",
+    "prDays": "giorni",
+    "brewTitle": "Le tue tendenze stanno maturando",
+    "brewCopy": "Registra per 7 giorni e Nutri traccerà qui il tuo Punteggio di Allineamento, i tuoi schemi di energia e la cronologia delle fasi.",
+    "brewDay": "GIORNO",
+    "brewOf": "DI 7",
+    "backToday": "‹ Oggi",
+    "editPeriod": "Modifica ciclo",
+    "saveLog": "Salva registrazione",
+    "flow": "Flusso",
+    "moodMental": "Umore e stato mentale",
+    "libido": "Libido",
+    "birthControl": "Contraccezione",
+    "physSymptoms": "Sintomi fisici",
+    "notes": "Note",
+    "notesPh": "Altro su oggi…",
+    "editHealth": "Modifica salute",
+    "yourProfile": "Il tuo profilo",
+    "saveChanges": "Salva modifiche",
+    "allergies": "ALLERGIE ALIMENTARI",
+    "conditions": "CONDIZIONI DIAGNOSTICATE",
+    "yourGoal": "IL TUO NUTRIGOAL",
+    "nextCycle": "Le modifiche si applicano dal prossimo ciclo",
+    "yourNutri": "IL TUO NUTRI",
+    "notifPush": "Promemoria di registrazione quotidiani",
+    "notifEmail": "Riepilogo settimanale via e-mail",
+    "logout": "Esci",
+    "langRegion": "Lingua e area",
+    "language": "Lingua",
+    "region": "Area",
+    "phaseHeroFmt": "FASE {PH} · GIORNO {D}",
+    "dayWord": "GIORNO",
+    "nlFocusFmt": "Focus della fase {phl}:",
+    "allsetFmt": "Tutto pronto, {name}!",
+    "bpmUnit": "bpm",
+    "prTrendStart": "feb",
+    "prTrendEnd": "mar",
+    "backToSite": "Torna al sito",
+    "obStartOver": "Ricomincia",
+    "backSettings": "‹ Impostazioni",
+    "connectedApps": "App collegate",
+    "connIntro": "NutriSync legge solo ciò che autorizzi — e non scrive mai indietro.",
+    "connSome": "su 6 collegate.",
+    "connNone": "Ancora niente di collegato.",
+    "connectedPill": "Collegata ✓",
+    "connectPill": "Collega",
+    "connectedWord": "Collegata",
+    "whatReads": "Cosa legge NutriSync",
+    "whatReadsDesc": "Vale per ogni dispositivo collegato. Disattiva una metrica per fermarne la sincronizzazione.",
+    "encTitle": "Crittografato in transito e a riposo",
+    "encCopy": "I dati dei dispositivi integrano le tue registrazioni — non sovrascrivono mai in silenzio ciò che inserisci tu. Scollega quando vuoi; la cronologia sincronizzata resta tua.",
+    "backConnections": "‹ Collegamenti",
+    "connectWord": "Collega",
+    "connectCopy": "NutriSync leggerà quanto segue per affinare il rilevamento della fase e il tuo Punteggio di Allineamento del Ciclo:",
+    "connectNoteA": "Sola lettura. NutriSync non scrive mai in",
+    "connectNoteB": "e puoi scollegare in qualsiasi momento.",
+    "allowAccess": "Consenti accesso",
+    "notNow": "Non ora",
+    "dataPrivacy": "Dati e privacy",
+    "privIntro": "I tuoi dati sono tuoi. Controlla cosa viene usato e portali con te quando vuoi.",
+    "consentHdr": "CONSENSO",
+    "yourData": "I TUOI DATI",
+    "exportJson": "Esporta i miei dati",
+    "pdfReport": "Scarica report PDF",
+    "accountHdr": "ACCOUNT",
+    "deactivate": "Disattiva account",
+    "deleteAll": "Elimina account e tutti i dati",
+    "delNote": "L'eliminazione è definitiva e si completa entro 30 giorni.",
+    "security": "Accesso e sicurezza",
+    "signinHdr": "ACCESSO",
+    "changePw": "Cambia password",
+    "passkeys": "Passkey",
+    "setUp": "Configura",
+    "twofaHdr": "AUTENTICAZIONE A DUE FATTORI",
+    "authApp": "App di autenticazione",
+    "twofaOn": "Attiva · protegge il tuo account",
+    "twofaOff": "Disattiva · consigliamo di attivarla",
+    "smsBackup": "SMS di riserva",
+    "addNumber": "Aggiungi numero ›",
+    "sessionsHdr": "SESSIONI ATTIVE",
+    "thisDevice": "Questo dispositivo",
+    "revoke": "Revoca",
+    "signOutOthers": "Esci da tutte le altre sessioni",
+    "noteCreds": "Inserisci e-mail e password.",
+    "noteSigningIn": "Accesso in corso…",
+    "noteCreds6": "Inserisci e-mail e una password (6+ caratteri).",
+    "noteCreating": "Creazione del tuo account…",
+    "noteConfirm": "Controlla l'e-mail per confermare l'account, poi accedi.",
+    "alertDemoExport": "Modalità demo — collega il backend per esportare dati reali.",
+    "alertDemoDelete": "Modalità demo — niente da eliminare.",
+    "alertConfirmDelete": "Eliminare il tuo account e tutti i dati? Non si può annullare.",
+    "alertDeleted": "I tuoi dati sono stati eliminati. La rimozione delle credenziali si completa entro 30 giorni.",
+    "alertDeactivate": "Durante la beta la disattivazione passa dal supporto — scrivi a hello@nutrisynccollective.com.",
+    "alertDemoAccount": "Modalità demo — le azioni sull'account richiedono il backend live."
+  },
+  "dows": [
+    "DOM",
+    "LUN",
+    "MAR",
+    "MER",
+    "GIO",
+    "VEN",
+    "SAB"
+  ],
+  "phaseNames": {
+    "menstrual": "Mestruale",
+    "follicular": "Follicolare",
+    "ovulatory": "Ovulatoria",
+    "luteal": "Luteale"
+  },
+  "navLabels": {
+    "home": "Oggi",
+    "nutrilog": "NutriLog",
+    "movement": "Movimento",
+    "progress": "Progressi",
+    "calendar": "Calendario"
+  },
+  "moodLabels": {
+    "Low": "Giù",
+    "Meh": "Così così",
+    "Okay": "Ok",
+    "Good": "Bene",
+    "Great": "Benissimo"
+  },
+  "phase": {
+    "menstrual": {
+      "headline": "Riposare è produttivo.",
+      "copy": "Gli ormoni sono al minimo — piatti caldi ricchi di ferro e movimento dolce ti ricostruiscono dal primo giorno.",
+      "sideNote": "I giorni con meno energia — vacci piano",
+      "focus": "ferro, folati e piatti caldi confortanti per ricaricarti.",
+      "nlWhy": "Il flusso consuma ferro e magnesio. I pasti caldi e cotti si digeriscono facilmente mentre il tuo corpo fa il lavoro più pesante del mese.",
+      "insight": "L'energia è al minimo mensile — proteggi le tue serate e lascia che il sonno faccia la riparazione.",
+      "moveCopy": "Giornata di recupero — yoga rigenerante o camminata lenta.",
+      "chips": [
+        {
+          "label": "15–25 MIN",
+          "hot": true
+        },
+        {
+          "label": "DOLCE",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Yoga rigenerante",
+      "mvCopy": "Oggi il movimento deve sembrare un bagno caldo — circolazione senza sforzo.",
+      "mvParts": [
+        {
+          "label": "Respirazione + gatto-mucca",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Sequenza yin · fianchi e schiena",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Gambe al muro",
+          "mins": "5 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Mar · Yoga rigenerante",
+          "state": "Oggi",
+          "today": true
+        },
+        {
+          "label": "Gio · Camminata lenta",
+          "state": "In programma",
+          "done": false
+        },
+        {
+          "label": "Sab · Stretching dolce",
+          "state": "In programma",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Avena calda, datteri e cacao",
+          "slot": "Colazione",
+          "tag": "FERRO"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Zuppa di lenticchie e spinaci",
+          "slot": "Pranzo",
+          "tag": "FERRO + FOLATI"
+        },
+        {
+          "emoji": "🍛",
+          "name": "Salmone, patata dolce e verdure",
+          "slot": "Cena",
+          "tag": "OMEGA-3"
+        }
+      ],
+      "mealWhy": [
+        "Il ferro inizia a sostituire ciò che il flusso consuma.",
+        "Folati e ferro ricostruiscono la tua riserva di sangue.",
+        "Gli omega-3 alleviano i crampi da prostaglandine."
+      ]
+    },
+    "follicular": {
+      "headline": "L'energia sale — costruisci con calma.",
+      "copy": "Gli estrogeni salgono. Pasti freschi e leggeri e allenamento progressivo rendono al meglio questa settimana.",
+      "sideNote": "L'energia cresce questa settimana",
+      "focus": "vitamina C, proteine magre e ferro mentre l'energia sale.",
+      "nlWhy": "Nella fase follicolare gli estrogeni ricostruiscono — il ferro ripristina ciò che il ciclo ha usato e la vitamina C ne raddoppia l'assorbimento.",
+      "insight": "Gli estrogeni salgono — l'apprendimento si fissa più in fretta e l'allenamento costruisce più muscolo questa settimana. Metti in agenda le cose difficili adesso.",
+      "moveCopy": "L'energia cresce — camminata veloce + core leggero.",
+      "chips": [
+        {
+          "label": "20–30 MIN",
+          "hot": true
+        },
+        {
+          "label": "MODERATO",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Camminata veloce + core",
+      "mvCopy": "Cresci gradualmente con gli estrogeni — oggi ritmo prima dell'intensità.",
+      "mvParts": [
+        {
+          "label": "Riscaldamento · passo facile",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Camminata veloce · costante",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Circuito core · 2 giri",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Mer · Camminata veloce + core",
+          "state": "Oggi",
+          "today": true
+        },
+        {
+          "label": "Ven · Forza leggera",
+          "state": "In programma",
+          "done": false
+        },
+        {
+          "label": "Dom · Flow di yoga",
+          "state": "In programma",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Overnight oats, lino e agrumi",
+          "slot": "Colazione",
+          "tag": "VITAMINA C"
+        },
+        {
+          "emoji": "🥙",
+          "name": "Insalata di pollo e cereali germogliati",
+          "slot": "Pranzo",
+          "tag": "PROTEINE MAGRE"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Bowl di noodle con tofu e verdure",
+          "slot": "Cena",
+          "tag": "FERRO"
+        }
+      ],
+      "mealWhy": [
+        "La vitamina C potenzia l'assorbimento del ferro mentre l'energia sale.",
+        "Le proteine alimentano la finestra muscolare degli estrogeni in crescita.",
+        "Il ferro ricostruisce le riserve dopo il ciclo."
+      ]
+    },
+    "ovulatory": {
+      "headline": "Massima potenza, massima sicurezza.",
+      "copy": "Gli estrogeni sono al top — punta a un record personale, affronta la conversazione difficile e fai il pieno di zinco e antiossidanti.",
+      "sideNote": "Finestra di picco energetico — ancora 3 giorni",
+      "focus": "zinco, antiossidanti e omega-3 a supporto dell'ovulazione.",
+      "nlWhy": "Intorno all'ovulazione il corpo gira più caldo e brucia i micronutrienti più in fretta. Lo zinco sostiene il picco di LH; gli antiossidanti proteggono il viaggio dell'ovulo.",
+      "insight": "Gli estrogeni raggiungono oggi il picco — sicurezza ed energia sociale al massimo. Fissa la grande conversazione.",
+      "moveCopy": "Giornata di picco — HIIT o carichi pesanti.",
+      "chips": [
+        {
+          "label": "30–40 MIN",
+          "hot": true
+        },
+        {
+          "label": "ALTA INTENSITÀ",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Intervalli HIIT",
+      "mvCopy": "Il tuo corpo recupera al massimo proprio ora — spingi sull'intensità oggi, il tetto te lo sei guadagnato.",
+      "mvParts": [
+        {
+          "label": "Riscaldamento · dinamico",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Intervalli · 8 × 40 s forte / 80 s facile",
+          "mins": "24 MIN"
+        },
+        {
+          "label": "Defaticamento · stretching",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Lun · Forza",
+          "state": "Fatto",
+          "done": true
+        },
+        {
+          "label": "Mer · Intervalli HIIT",
+          "state": "Oggi",
+          "today": true
+        },
+        {
+          "label": "Ven · Mobilità e core",
+          "state": "In programma",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Yogurt greco, frutti di bosco e semi di zucca",
+          "slot": "Colazione",
+          "tag": "ZINCO"
+        },
+        {
+          "emoji": "🥗",
+          "name": "Bowl di salmone e quinoa",
+          "slot": "Pranzo",
+          "tag": "OMEGA-3"
+        },
+        {
+          "emoji": "🍜",
+          "name": "Saltato con verdure a foglia",
+          "slot": "Cena",
+          "tag": "B6 + FIBRE"
+        }
+      ],
+      "mealWhy": [
+        "Lo zinco sostiene il picco di LH intorno all'ovulazione.",
+        "Gli omega-3 mitigano l'infiammazione di metà ciclo.",
+        "B6 + fibre aiutano a smaltire gli estrogeni al picco."
+      ]
+    },
+    "luteal": {
+      "headline": "Energia costante, spigoli più morbidi.",
+      "copy": "Comanda il progesterone — glicemia stabile e magnesio tengono energia e umore in equilibrio durante la discesa.",
+      "sideNote": "Settimana di rallentamento — un'energia costante aiuta",
+      "focus": "magnesio, B6 e carboidrati lenti per stabilizzare la discesa.",
+      "nlWhy": "Il progesterone alza il metabolismo di circa il 5% — pasti costanti a combustione lenta prevengono i cali che sembrano voglie.",
+      "insight": "La serotonina cala mentre il progesterone sale — una cena ricca di magnesio e una serata anticipata cambiano come ti sentirai domani.",
+      "moveCopy": "Moderato e costante — forza o camminata in salita.",
+      "chips": [
+        {
+          "label": "25–35 MIN",
+          "hot": true
+        },
+        {
+          "label": "MODERATO",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Forza costante",
+      "mvCopy": "Tieni il ritmo fluido e i recuperi generosi — questa settimana costanza prima del limite.",
+      "mvParts": [
+        {
+          "label": "Riscaldamento · mobilità",
+          "mins": "6 MIN"
+        },
+        {
+          "label": "Forza total body · 3 giri",
+          "mins": "20 MIN"
+        },
+        {
+          "label": "Camminata finale · facile",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Lun · Forza",
+          "state": "Fatto",
+          "done": true
+        },
+        {
+          "label": "Gio · Camminata in salita",
+          "state": "Oggi",
+          "today": true
+        },
+        {
+          "label": "Dom · Mobilità",
+          "state": "In programma",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🍳",
+          "name": "Uova, avocado e toast ai semi",
+          "slot": "Colazione",
+          "tag": "B6"
+        },
+        {
+          "emoji": "🥘",
+          "name": "Bowl di tacchino e patata dolce",
+          "slot": "Pranzo",
+          "tag": "CARBO LENTI"
+        },
+        {
+          "emoji": "🍮",
+          "name": "Budino di chia al cioccolato fondente",
+          "slot": "Cena",
+          "tag": "MAGNESIO"
+        }
+      ],
+      "mealWhy": [
+        "La B6 sostiene la serotonina mentre il progesterone sale.",
+        "I carboidrati lenti livellano i cali glicemici dietro le voglie.",
+        "Il magnesio scioglie la tensione e prepara il sonno profondo."
+      ]
+    }
+  },
+  "ob": [
+    {
+      "q": "Cosa ti porta su NutriSync?",
+      "help": "Questo orienta ciò che Nutri mette in evidenza per primo.",
+      "type": "choice",
+      "key": "obGoal",
+      "opts": [
+        {
+          "k": "Balance my energy",
+          "label": "Bilanciare la mia energia"
+        },
+        {
+          "k": "Ease PMS & symptoms",
+          "label": "Alleviare SPM e sintomi"
+        },
+        {
+          "k": "Train smarter with my cycle",
+          "label": "Allenarmi meglio col mio ciclo"
+        },
+        {
+          "k": "Understand my body better",
+          "label": "Capire meglio il mio corpo"
+        }
+      ]
+    },
+    {
+      "q": "Quanto è regolare il tuo ciclo?",
+      "help": "L'irregolarità è comune — Nutri si adatta comunque.",
+      "type": "choice",
+      "key": "obReg",
+      "opts": [
+        {
+          "k": "Like clockwork",
+          "label": "Come un orologio"
+        },
+        {
+          "k": "Mostly regular",
+          "label": "Perlopiù regolare"
+        },
+        {
+          "k": "Pretty unpredictable",
+          "label": "Piuttosto imprevedibile"
+        },
+        {
+          "k": "Not sure",
+          "label": "Non lo so"
+        }
+      ]
+    },
+    {
+      "q": "Quando è iniziato il tuo ultimo ciclo?",
+      "help": "È l'ancora del rilevamento della tua fase.",
+      "type": "date",
+      "key": "obDate"
+    },
+    {
+      "q": "Quanto dura il tuo ciclo tipico?",
+      "help": "Conta dal giorno 1 di un ciclo al giorno 1 del successivo.",
+      "type": "choice",
+      "key": "obLen",
+      "opts": [
+        {
+          "k": "21–24 days",
+          "label": "21–24 giorni"
+        },
+        {
+          "k": "25–30 days",
+          "label": "25–30 giorni"
+        },
+        {
+          "k": "31–35 days",
+          "label": "31–35 giorni"
+        },
+        {
+          "k": "Not sure",
+          "label": "Non lo so"
+        }
+      ]
+    },
+    {
+      "q": "Qualche schema alimentare da rispettare?",
+      "help": "I pasti si adatteranno sempre al tuo schema.",
+      "type": "choice",
+      "key": "obDiet",
+      "opts": [
+        {
+          "k": "No restrictions",
+          "label": "Nessuna restrizione"
+        },
+        {
+          "k": "Vegetarian",
+          "label": "Vegetariana"
+        },
+        {
+          "k": "Vegan",
+          "label": "Vegana"
+        },
+        {
+          "k": "Gluten-free",
+          "label": "Senza glutine"
+        },
+        {
+          "k": "Dairy-free",
+          "label": "Senza latticini"
+        }
+      ]
+    },
+    {
+      "q": "Qualcosa sul tuo corpo",
+      "help": "Serve solo a calibrare porzioni e fabbisogno energetico — mai a giudicare.",
+      "type": "numbers"
+    },
+    {
+      "q": "Scegli il tuo Nutri",
+      "help": "La tua compagna in ogni fase. Puoi cambiarla quando vuoi.",
+      "type": "avatar"
+    },
+    {
+      "q": "I tuoi dati, le tue regole",
+      "help": "Niente viene condiviso senza il tuo consenso.",
+      "type": "consent"
+    }
+  ],
+  "provSync": {
+    "apple": "sincronizzato 6:40",
+    "oura": "sincronizzato 2 h fa",
+    "garmin": "sincro quotidiana",
+    "fitbit": "sincro quotidiana",
+    "whoop": "sincro quotidiana",
+    "gfit": "sincro quotidiana"
+  },
+  "provReads": {
+    "apple": "Sonno, HRV, frequenza a riposo",
+    "oura": "Fasi del sonno, readiness, temperatura",
+    "garmin": "Allenamenti, passi, stress",
+    "fitbit": "Attività, sonno, frequenza cardiaca",
+    "whoop": "Sforzo, recupero, debito di sonno",
+    "gfit": "Passi, allenamenti, punti cardio"
+  },
+  "metricLabels": [
+    "Durata e fasi del sonno",
+    "Variabilità della frequenza cardiaca",
+    "Frequenza cardiaca a riposo",
+    "Tendenza della temperatura corporea",
+    "Allenamenti e carico di allenamento",
+    "Passi e attività quotidiana"
+  ],
+  "readLists": {
+    "apple": [
+      "Durata e fasi del sonno",
+      "Variabilità cardiaca (HRV)",
+      "Frequenza a riposo",
+      "Allenamenti ed energia attiva"
+    ],
+    "oura": [
+      "Fasi ed efficienza del sonno",
+      "Readiness e HRV",
+      "Tendenza della temperatura corporea",
+      "Livelli di attività"
+    ],
+    "garmin": [
+      "Allenamenti e carico",
+      "Passi e minuti di intensità",
+      "Sonno e punteggio di stress"
+    ],
+    "fitbit": [
+      "Attività e passi",
+      "Fasi del sonno",
+      "Frequenza cardiaca"
+    ],
+    "whoop": [
+      "Sforzo e recupero",
+      "Debito di sonno",
+      "HRV e frequenza a riposo"
+    ],
+    "gfit": [
+      "Passi e punti cardio",
+      "Allenamenti",
+      "Sessioni di sonno"
+    ]
+  },
+  "consentRows": [
+    {
+      "label": "Insight personalizzati",
+      "desc": "Consenti a Nutri di analizzare le tue registrazioni per indicazioni su misura."
+    },
+    {
+      "label": "Ricerca anonimizzata",
+      "desc": "Contribuisci con dati de-identificati alla ricerca sulla salute femminile."
+    },
+    {
+      "label": "Novità di prodotto",
+      "desc": "Notizie occasionali sulle nuove funzioni di NutriSync."
+    }
+  ],
+  "sessions": [
+    {
+      "d": "MacBook Pro · Safari",
+      "loc": "Lisbona, PT · adesso",
+      "me": true,
+      "other": false
+    },
+    {
+      "d": "iPhone 15 · app NutriSync",
+      "loc": "Lisbona, PT · 2 h fa",
+      "me": false,
+      "other": true
+    },
+    {
+      "d": "iPad Air · Safari",
+      "loc": "Porto, PT · 8 mar",
+      "me": false,
+      "other": true
+    }
+  ],
+  "sessionLive": {
+    "d": "Questo browser",
+    "loc": "Proprio ora"
+  },
+  "winsDemo": [
+    {
+      "t": "12 giorni di registrazioni di fila",
+      "d": "La tua serie più lunga — le previsioni si affinano."
+    },
+    {
+      "t": "Energia +18% nelle settimane ovulatorie",
+      "d": "Rispetto ai tuoi ultimi due cicli."
+    },
+    {
+      "t": "3 allenamenti allineati alla fase",
+      "d": "Ogni sessione della settimana è caduta nella sua finestra ideale."
+    }
+  ],
+  "calBannerA": "Prossimo ciclo previsto intorno al",
+  "calBannerB": "— Nutri sposterà la tua alimentazione su ferro e comfort food due giorni prima.",
+  "calBannerNone": "Registra l'inizio del ciclo e Nutri prevederà il mese in arrivo.",
+  "calBannerDemo": "Prossimo ciclo previsto intorno al 24 marzo — Nutri sposterà la tua alimentazione su ferro e comfort food due giorni prima.",
+  "calBannerForming": "Previsione in formazione — la stima del 24 marzo si affina con ogni giorno registrato.",
+  "_meta": {
+    "lang": "it",
+    "name": "Italiano",
+    "source": "design-v11.14"
+  }
+}

@@ -1,0 +1,775 @@
+{
+  "ui": {
+    "boot": "SYNCHRONISEREN…",
+    "rail1": "Sync je cyclus.",
+    "rail2": "Voed je hoofd.",
+    "protoBadge": "PROTOTYPE · DEMOGEGEVENS",
+    "railCopy": "Voeding en beweging die meebewegen met je hormonen — elke dag afgestemd op precies waar je in je cyclus zit.",
+    "loginTitle": "Welkom terug",
+    "loginSub": "Ga verder waar je gebleven was.",
+    "email": "E-mailadres",
+    "password": "Wachtwoord",
+    "createPassword": "Wachtwoord aanmaken",
+    "fullName": "Volledige naam",
+    "remember": "Onthoud mij",
+    "forgot": "Wachtwoord vergeten?",
+    "login": "Inloggen",
+    "newHere": "Nieuw hier?",
+    "createAccount": "Account aanmaken",
+    "signupSub": "Eén minuut nu — begeleiding op maat voor elke dag daarna.",
+    "getStarted": "Aan de slag →",
+    "haveAccount": "Heb je al een account?",
+    "settingUp": "INSTELLEN",
+    "obRail1": "Laten we",
+    "obRail2": "je ritme leren.",
+    "obRailCopy": "Een paar korte vragen zodat elke aanbeveling bij jouw lichaam past — niet bij een gemiddelde.",
+    "obDateNote": "Niet zeker? Een schatting is prima — Nutri verfijnt het terwijl je logt.",
+    "age": "LEEFTIJD",
+    "years": "jaar",
+    "height": "LENGTE",
+    "weight": "GEWICHT",
+    "obOptional": "Optioneel — sla over wat je liever voor jezelf houdt.",
+    "obConsentA": "Cyclus & symptomen",
+    "obConsentADesc": "De motor achter je dagelijkse begeleiding.",
+    "obConsentB": "Veilig opgeslagen",
+    "obConsentBDesc": "Versleuteld, AVG-conform, nooit verkocht.",
+    "obAgree": "Ik ga akkoord met het Privacybeleid & de Voorwaarden, en begrijp dat mijn gegevens van mij blijven.",
+    "continueBtn": "Doorgaan →",
+    "finishSetup": "Instellen afronden →",
+    "obSaving": "Je instellingen worden opgeslagen…",
+    "obErr": "Opslaan mislukt — controleer je verbinding en probeer opnieuw.",
+    "dailyCheckin": "DAGELIJKSE CHECK-IN",
+    "skipToday": "Vandaag overslaan",
+    "next": "Volgende →",
+    "syncDay": "Sync mijn dag →",
+    "gateTitleMood": "Hoe voel je je?",
+    "gateSubMood": "Eén eerlijk woord — Nutri stemt het plan van vandaag erop af.",
+    "gateTitleEnergy": "En je energie?",
+    "gateSubEnergy": "Van helemaal leeg (1) tot niet te stoppen (5).",
+    "allsetCopy": "Nutri personaliseert je voeding en beweging op basis van je antwoorden. Je kunt ze altijd bijwerken in Instellingen.",
+    "enterApp": "NutriSync openen →",
+    "settings": "Instellingen",
+    "goodMorning": "Goedemorgen",
+    "cycleDay": "Cyclusdag",
+    "cycleAlignment": "CYCLUS-ALIGNMENT",
+    "editPeriodBtn": "Menstruatie bewerken",
+    "editHealthBtn": "Gezondheid bewerken",
+    "logToday": "Vandaag loggen ›",
+    "checkedIn": "✓ Ingecheckt",
+    "firstRunStrong": "Dag 1 van je reis.",
+    "firstRunRest": "Je Cyclus-Alignment-Score wordt ontgrendeld na 7 dagen loggen — Nutri personaliseert al op basis van je antwoorden.",
+    "todaysFuel": "Brandstof voor vandaag",
+    "openNutrilog": "NutriLog openen ›",
+    "movement": "Beweging",
+    "plan": "Plannen ›",
+    "nutriInsight": "NUTRI-INZICHT",
+    "fromDevices": "Van je apparaten",
+    "manage": "Beheren ›",
+    "deviceNote": "Nachtelijke synchronisatie komt met de mobiele bèta — je leestoestemming staat al klaar.",
+    "statSleep": "SLAAP",
+    "statHrv": "HRV",
+    "statRhr": "RUSTHARTSLAG",
+    "statSleepNote": "▲ vs. 7-daags gem.",
+    "statHrvNote": "stabiel",
+    "statRhrNote": "▼ 2 bpm",
+    "demoSyncLine": "Oura Ring · laatst gesynct 6:40",
+    "consentActive": "toestemming actief",
+    "welcomeInsight": "Welkom! Je eerste inzicht komt morgen, zodra Nutri een dag van je in beeld heeft.",
+    "focusWord": "focus:",
+    "hydration": "Hydratatie",
+    "glasses": "van 8 glazen",
+    "whyFoods": "WAAROM DEZE VOEDING",
+    "logMeal": "Deze maaltijd loggen",
+    "loggedMeal": "✓ Gelogd",
+    "today": "VANDAAG",
+    "thisWeek": "Deze week",
+    "lowEnergy": "DAG MET WEINIG ENERGIE?",
+    "markDone": "Markeer als gedaan",
+    "sessionDone": "✓ Sessie voltooid",
+    "mvAlt": "Ruil in voor 20 minuten wandelen en rustig rekken — consistentie verslaat intensiteit, in elke fase.",
+    "progress": "Voortgang",
+    "casLong": "CYCLUS-ALIGNMENT-SCORE",
+    "trend6w": "6-weekse trend",
+    "prCopyDemo": "Voeding, beweging en slaap trekken dezelfde kant op als je hormonen.",
+    "prCopyLive": "Vijf deelscores — fasezekerheid, biomarkers, voeding, fitheid en consistentie — worden bij elke log bijgewerkt.",
+    "prDeltaDemo": "▲ +4 vs. vorige week",
+    "prFirst": "Eerste score op het bord",
+    "prNone": "Scores verschijnen terwijl je logt",
+    "prOver": "over",
+    "prDays": "dagen",
+    "brewTitle": "Je trends zijn aan het rijpen",
+    "brewCopy": "Log 7 dagen en Nutri tekent hier je Cyclus-Alignment-Score, je energiepatronen en je fasegeschiedenis.",
+    "brewDay": "DAG",
+    "brewOf": "VAN 7",
+    "backToday": "‹ Vandaag",
+    "editPeriod": "Menstruatie bewerken",
+    "saveLog": "Log opslaan",
+    "flow": "Bloedverlies",
+    "moodMental": "Stemming & mentale staat",
+    "libido": "Libido",
+    "birthControl": "Anticonceptie",
+    "physSymptoms": "Lichamelijke symptomen",
+    "notes": "Notities",
+    "notesPh": "Nog iets over vandaag…",
+    "editHealth": "Gezondheid bewerken",
+    "yourProfile": "Jouw profiel",
+    "saveChanges": "Wijzigingen opslaan",
+    "allergies": "VOEDSELALLERGIEËN",
+    "conditions": "GEDIAGNOSTICEERDE AANDOENINGEN",
+    "yourGoal": "JOUW NUTRIGOAL",
+    "nextCycle": "Wijzigingen gelden vanaf de volgende cyclus",
+    "yourNutri": "JOUW NUTRI",
+    "notifPush": "Dagelijkse logherinneringen",
+    "notifEmail": "Wekelijkse e-mailsamenvatting",
+    "logout": "Uitloggen",
+    "langRegion": "Taal & regio",
+    "language": "Taal",
+    "region": "Regio",
+    "phaseHeroFmt": "{PH} · DAG {D}",
+    "dayWord": "DAG",
+    "nlFocusFmt": "Focus van de {phl}:",
+    "allsetFmt": "Alles klaar, {name}!",
+    "bpmUnit": "bpm",
+    "prTrendStart": "feb",
+    "prTrendEnd": "mrt",
+    "backToSite": "Terug naar de site",
+    "obStartOver": "Opnieuw beginnen",
+    "backSettings": "‹ Instellingen",
+    "connectedApps": "Gekoppelde apps",
+    "connIntro": "NutriSync leest alleen wat jij toestaat — en schrijft nooit terug.",
+    "connSome": "van 6 gekoppeld.",
+    "connNone": "Nog niets gekoppeld.",
+    "connectedPill": "Gekoppeld ✓",
+    "connectPill": "Koppelen",
+    "connectedWord": "Gekoppeld",
+    "whatReads": "Wat NutriSync leest",
+    "whatReadsDesc": "Geldt voor elk gekoppeld apparaat. Zet een meetwaarde uit om de synchronisatie te stoppen.",
+    "encTitle": "Versleuteld onderweg & in rust",
+    "encCopy": "Apparaatgegevens vullen je logs aan — ze overschrijven nooit stilletjes wat je zelf invoert. Ontkoppel wanneer je wilt; je gesynchroniseerde geschiedenis blijft van jou.",
+    "backConnections": "‹ Koppelingen",
+    "connectWord": "Koppel",
+    "connectCopy": "NutriSync leest het volgende om je fasedetectie en Cyclus-Alignment-Score aan te scherpen:",
+    "connectNoteA": "Alleen-lezen. NutriSync schrijft nooit terug naar",
+    "connectNoteB": "en je kunt altijd ontkoppelen.",
+    "allowAccess": "Toegang toestaan",
+    "notNow": "Niet nu",
+    "dataPrivacy": "Gegevens & privacy",
+    "privIntro": "Jouw gegevens zijn van jou. Bepaal wat er wordt gebruikt en neem ze altijd mee.",
+    "consentHdr": "TOESTEMMING",
+    "yourData": "JOUW GEGEVENS",
+    "exportJson": "Mijn gegevens exporteren",
+    "pdfReport": "PDF-rapport downloaden",
+    "accountHdr": "ACCOUNT",
+    "deactivate": "Account deactiveren",
+    "deleteAll": "Account & alle gegevens verwijderen",
+    "delNote": "Verwijdering is definitief en binnen 30 dagen afgerond.",
+    "security": "Inloggen & beveiliging",
+    "signinHdr": "INLOGGEN",
+    "changePw": "Wachtwoord wijzigen",
+    "passkeys": "Passkeys",
+    "setUp": "Instellen",
+    "twofaHdr": "TWEEFACTORAUTHENTICATIE",
+    "authApp": "Authenticator-app",
+    "twofaOn": "Aan · beschermt je account",
+    "twofaOff": "Uit · we raden aan dit aan te zetten",
+    "smsBackup": "Sms-back-up",
+    "addNumber": "Nummer toevoegen ›",
+    "sessionsHdr": "ACTIEVE SESSIES",
+    "thisDevice": "Dit apparaat",
+    "revoke": "Intrekken",
+    "signOutOthers": "Alle andere sessies uitloggen",
+    "noteCreds": "Vul je e-mail en wachtwoord in.",
+    "noteSigningIn": "Inloggen…",
+    "noteCreds6": "Vul je e-mail en een wachtwoord in (6+ tekens).",
+    "noteCreating": "Je account wordt aangemaakt…",
+    "noteConfirm": "Bevestig je account via de e-mail en log daarna in.",
+    "alertDemoExport": "Demomodus — koppel de backend om echte gegevens te exporteren.",
+    "alertDemoDelete": "Demomodus — niets te verwijderen.",
+    "alertConfirmDelete": "Je account en alle gegevens verwijderen? Dit kan niet ongedaan worden gemaakt.",
+    "alertDeleted": "Je gegevens zijn verwijderd. Het verwijderen van inloggegevens is binnen 30 dagen afgerond.",
+    "alertDeactivate": "Tijdens de bèta loopt deactivering via support — mail hello@nutrisynccollective.com.",
+    "alertDemoAccount": "Demomodus — accountacties vereisen de live backend."
+  },
+  "dows": [
+    "ZO",
+    "MA",
+    "DI",
+    "WO",
+    "DO",
+    "VR",
+    "ZA"
+  ],
+  "phaseNames": {
+    "menstrual": "Menstruatiefase",
+    "follicular": "Folliculaire fase",
+    "ovulatory": "Ovulatiefase",
+    "luteal": "Luteale fase"
+  },
+  "navLabels": {
+    "home": "Vandaag",
+    "nutrilog": "NutriLog",
+    "movement": "Beweging",
+    "progress": "Voortgang",
+    "calendar": "Kalender"
+  },
+  "moodLabels": {
+    "Low": "Laag",
+    "Meh": "Matig",
+    "Okay": "Oké",
+    "Good": "Goed",
+    "Great": "Top"
+  },
+  "phase": {
+    "menstrual": {
+      "headline": "Rusten is productief.",
+      "copy": "Je hormonen zitten op hun laagste punt — warme, ijzerrijke maaltijden en rustige beweging bouwen je vanaf dag één weer op.",
+      "sideNote": "De dagen met de minste energie — doe het rustig aan",
+      "focus": "ijzer, folaat & warme comfortmaaltijden om aan te vullen.",
+      "nlWhy": "Menstruatie trekt ijzer en magnesium weg. Warme, gekookte maaltijden verteren makkelijk terwijl je lichaam zijn zwaarste werk van de maand doet.",
+      "insight": "Je energie zit op haar maandelijkse dieptepunt — bescherm je avonden en laat slaap het herstelwerk doen.",
+      "moveCopy": "Hersteldag — herstellende yoga of een rustige wandeling.",
+      "chips": [
+        {
+          "label": "15–25 MIN",
+          "hot": true
+        },
+        {
+          "label": "RUSTIG",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Herstellende yoga",
+      "mvCopy": "Beweging moet vandaag voelen als een warm bad — doorbloeding zonder inspanning.",
+      "mvParts": [
+        {
+          "label": "Ademhaling + kat-koe",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Yin-reeks · heupen & rug",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Benen tegen de muur",
+          "mins": "5 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Di · Herstellende yoga",
+          "state": "Vandaag",
+          "today": true
+        },
+        {
+          "label": "Do · Rustige wandeling",
+          "state": "Gepland",
+          "done": false
+        },
+        {
+          "label": "Za · Rustig rekken",
+          "state": "Gepland",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Warme havermout, dadels & cacao",
+          "slot": "Ontbijt",
+          "tag": "IJZER"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Linzen-spinaziestoof",
+          "slot": "Lunch",
+          "tag": "IJZER + FOLAAT"
+        },
+        {
+          "emoji": "🍛",
+          "name": "Zalm, zoete aardappel & groenten",
+          "slot": "Diner",
+          "tag": "OMEGA-3"
+        }
+      ],
+      "mealWhy": [
+        "IJzer vult aan wat de menstruatie wegneemt.",
+        "Folaat en ijzer bouwen je bloedvoorraad weer op.",
+        "Omega-3 verzacht prostaglandine-krampen."
+      ]
+    },
+    "follicular": {
+      "headline": "Energie stijgt — bouw rustig op.",
+      "copy": "Oestrogeen klimt. Frisse, lichte maaltijden en progressieve training landen deze week het best.",
+      "sideNote": "Je energie trekt deze week aan",
+      "focus": "vitamine C, magere eiwitten & ijzer terwijl de energie stijgt.",
+      "nlWhy": "In je folliculaire fase bouwt oestrogeen weer op — ijzer herstelt wat je menstruatie gebruikte, en vitamine C verdubbelt de opname.",
+      "insight": "Oestrogeen klimt — leren blijft sneller hangen en training bouwt deze week meer spier op. Plan de zware dingen nu.",
+      "moveCopy": "Energie in opbouw — stevige wandeling + lichte core.",
+      "chips": [
+        {
+          "label": "20–30 MIN",
+          "hot": true
+        },
+        {
+          "label": "GEMIDDELD",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Stevige wandeling + core",
+      "mvCopy": "Bouw geleidelijk op met het oestrogeen — vandaag ritme boven intensiteit.",
+      "mvParts": [
+        {
+          "label": "Warming-up · rustig tempo",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Stevige wandeling · gelijkmatig",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Core-circuit · 2 rondes",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Wo · Stevige wandeling + core",
+          "state": "Vandaag",
+          "today": true
+        },
+        {
+          "label": "Vr · Lichte krachttraining",
+          "state": "Gepland",
+          "done": false
+        },
+        {
+          "label": "Zo · Yogaflow",
+          "state": "Gepland",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Overnight oats, lijnzaad & citrus",
+          "slot": "Ontbijt",
+          "tag": "VITAMINE C"
+        },
+        {
+          "emoji": "🥙",
+          "name": "Kipsalade met gekiemde granen",
+          "slot": "Lunch",
+          "tag": "MAGER EIWIT"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Noedelkom met tofu & groenten",
+          "slot": "Diner",
+          "tag": "IJZER"
+        }
+      ],
+      "mealWhy": [
+        "Vitamine C versterkt de ijzeropname terwijl je energie stijgt.",
+        "Eiwit voedt het spieropbouwvenster van stijgend oestrogeen.",
+        "IJzer vult de voorraden aan na je menstruatie."
+      ]
+    },
+    "ovulatory": {
+      "headline": "Piekkracht, piekzelfvertrouwen.",
+      "copy": "Oestrogeen is op zijn hoogst — ga voor een persoonlijk record, plan het lastige gesprek en tank zink & antioxidanten.",
+      "sideNote": "Venster van piekenergie — nog 3 dagen",
+      "focus": "zink, antioxidanten & omega-3 ter ondersteuning van de eisprong.",
+      "nlWhy": "Rond de eisprong draait je lichaam warmer en verbruikt het micronutriënten sneller. Zink ondersteunt de LH-piek; antioxidanten beschermen de reis van de eicel.",
+      "insight": "Oestrogeen piekt vandaag — zelfvertrouwen en sociale energie zijn op hun hoogst. Plan het grote gesprek.",
+      "moveCopy": "Dag van piekkracht — HIIT of zwaar tillen.",
+      "chips": [
+        {
+          "label": "30–40 MIN",
+          "hot": true
+        },
+        {
+          "label": "HOGE INTENSITEIT",
+          "hot": false
+        }
+      ],
+      "mvTitle": "HIIT-intervallen",
+      "mvCopy": "Je lichaam herstelt nu het snelst — zoek vandaag de intensiteit op, je hebt het plafond verdiend.",
+      "mvParts": [
+        {
+          "label": "Warming-up · dynamisch",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Intervallen · 8 × 40 s hard / 80 s rustig",
+          "mins": "24 MIN"
+        },
+        {
+          "label": "Cooling-down · rekken",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Ma · Kracht",
+          "state": "Gedaan",
+          "done": true
+        },
+        {
+          "label": "Wo · HIIT-intervallen",
+          "state": "Vandaag",
+          "today": true
+        },
+        {
+          "label": "Vr · Mobiliteit & core",
+          "state": "Gepland",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Griekse yoghurt, bessen & pompoenpitten",
+          "slot": "Ontbijt",
+          "tag": "ZINK"
+        },
+        {
+          "emoji": "🥗",
+          "name": "Zalm-quinoakom",
+          "slot": "Lunch",
+          "tag": "OMEGA-3"
+        },
+        {
+          "emoji": "🍜",
+          "name": "Roerbak met bladgroenten",
+          "slot": "Diner",
+          "tag": "B6 + VEZELS"
+        }
+      ],
+      "mealWhy": [
+        "Zink ondersteunt de LH-piek rond de eisprong.",
+        "Omega-3 tempert ontsteking halverwege de cyclus.",
+        "B6 + vezels helpen piekend oestrogeen af te voeren."
+      ]
+    },
+    "luteal": {
+      "headline": "Gelijkmatige brandstof, zachtere randen.",
+      "copy": "Progesteron heeft de leiding — een stabiele bloedsuiker en magnesium houden energie en stemming in balans tijdens het uitbollen.",
+      "sideNote": "Week van vertragen — gelijkmatige brandstof helpt",
+      "focus": "magnesium, B6 & langzame koolhydraten voor een rustige landing.",
+      "nlWhy": "Progesteron verhoogt je stofwisseling met zo'n 5% — gelijkmatige, langzaam brandende maaltijden voorkomen de dips die als trek aanvoelen.",
+      "insight": "Serotonine daalt terwijl progesteron stijgt — een magnesiumrijk diner en vroeg naar bed veranderen hoe morgen voelt.",
+      "moveCopy": "Gematigd & gelijkmatig — kracht of een heuvelachtige wandeling.",
+      "chips": [
+        {
+          "label": "25–35 MIN",
+          "hot": true
+        },
+        {
+          "label": "GEMIDDELD",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Gelijkmatige kracht",
+      "mvCopy": "Houd het tempo soepel en de rust ruim — deze week consistentie boven records.",
+      "mvParts": [
+        {
+          "label": "Warming-up · mobiliteit",
+          "mins": "6 MIN"
+        },
+        {
+          "label": "Full-body kracht · 3 rondes",
+          "mins": "20 MIN"
+        },
+        {
+          "label": "Uitwandelen · rustig",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "Ma · Kracht",
+          "state": "Gedaan",
+          "done": true
+        },
+        {
+          "label": "Do · Heuvelwandeling",
+          "state": "Vandaag",
+          "today": true
+        },
+        {
+          "label": "Zo · Mobiliteit",
+          "state": "Gepland",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🍳",
+          "name": "Eieren, avocado & zadenbrood",
+          "slot": "Ontbijt",
+          "tag": "B6"
+        },
+        {
+          "emoji": "🥘",
+          "name": "Kalkoen-zoete-aardappelkom",
+          "slot": "Lunch",
+          "tag": "LANGZAME KOOLHYDRATEN"
+        },
+        {
+          "emoji": "🍮",
+          "name": "Chiapudding met pure chocolade",
+          "slot": "Diner",
+          "tag": "MAGNESIUM"
+        }
+      ],
+      "mealWhy": [
+        "B6 ondersteunt serotonine terwijl progesteron stijgt.",
+        "Langzame koolhydraten vlakken de bloedsuikerdips achter trek af.",
+        "Magnesium ontspant en bereidt diepe slaap voor."
+      ]
+    }
+  },
+  "ob": [
+    {
+      "q": "Wat brengt je naar NutriSync?",
+      "help": "Dit bepaalt wat Nutri als eerste uitlicht.",
+      "type": "choice",
+      "key": "obGoal",
+      "opts": [
+        {
+          "k": "Balance my energy",
+          "label": "Mijn energie in balans brengen"
+        },
+        {
+          "k": "Ease PMS & symptoms",
+          "label": "PMS & klachten verlichten"
+        },
+        {
+          "k": "Train smarter with my cycle",
+          "label": "Slimmer trainen met mijn cyclus"
+        },
+        {
+          "k": "Understand my body better",
+          "label": "Mijn lichaam beter begrijpen"
+        }
+      ]
+    },
+    {
+      "q": "Hoe regelmatig is je cyclus?",
+      "help": "Onregelmatig is normaal — Nutri past zich hoe dan ook aan.",
+      "type": "choice",
+      "key": "obReg",
+      "opts": [
+        {
+          "k": "Like clockwork",
+          "label": "Als een klok"
+        },
+        {
+          "k": "Mostly regular",
+          "label": "Meestal regelmatig"
+        },
+        {
+          "k": "Pretty unpredictable",
+          "label": "Behoorlijk onvoorspelbaar"
+        },
+        {
+          "k": "Not sure",
+          "label": "Weet ik niet"
+        }
+      ]
+    },
+    {
+      "q": "Wanneer begon je laatste menstruatie?",
+      "help": "Dit verankert je fasedetectie.",
+      "type": "date",
+      "key": "obDate"
+    },
+    {
+      "q": "Hoe lang is je typische cyclus?",
+      "help": "Tel van dag 1 van de ene menstruatie tot dag 1 van de volgende.",
+      "type": "choice",
+      "key": "obLen",
+      "opts": [
+        {
+          "k": "21–24 days",
+          "label": "21–24 dagen"
+        },
+        {
+          "k": "25–30 days",
+          "label": "25–30 dagen"
+        },
+        {
+          "k": "31–35 days",
+          "label": "31–35 dagen"
+        },
+        {
+          "k": "Not sure",
+          "label": "Weet ik niet"
+        }
+      ]
+    },
+    {
+      "q": "Een eetpatroon om rekening mee te houden?",
+      "help": "Maaltijden passen altijd binnen jouw patroon.",
+      "type": "choice",
+      "key": "obDiet",
+      "opts": [
+        {
+          "k": "No restrictions",
+          "label": "Geen beperkingen"
+        },
+        {
+          "k": "Vegetarian",
+          "label": "Vegetarisch"
+        },
+        {
+          "k": "Vegan",
+          "label": "Veganistisch"
+        },
+        {
+          "k": "Gluten-free",
+          "label": "Glutenvrij"
+        },
+        {
+          "k": "Dairy-free",
+          "label": "Zuivelvrij"
+        }
+      ]
+    },
+    {
+      "q": "Iets over je lichaam",
+      "help": "Alleen om porties en energiebehoefte te bepalen — nooit om te oordelen.",
+      "type": "numbers"
+    },
+    {
+      "q": "Kies je Nutri",
+      "help": "Je maatje door elke fase. Je kunt altijd wisselen.",
+      "type": "avatar"
+    },
+    {
+      "q": "Jouw gegevens, jouw regels",
+      "help": "Niets wordt gedeeld zonder jouw akkoord.",
+      "type": "consent"
+    }
+  ],
+  "provSync": {
+    "apple": "gesynct 6:40",
+    "oura": "gesynct 2 u geleden",
+    "garmin": "synct dagelijks",
+    "fitbit": "synct dagelijks",
+    "whoop": "synct dagelijks",
+    "gfit": "synct dagelijks"
+  },
+  "provReads": {
+    "apple": "Slaap, HRV, rusthartslag",
+    "oura": "Slaapfasen, readiness, temperatuur",
+    "garmin": "Workouts, stappen, stress",
+    "fitbit": "Activiteit, slaap, hartslag",
+    "whoop": "Belasting, herstel, slaaptekort",
+    "gfit": "Stappen, workouts, cardiopunten"
+  },
+  "metricLabels": [
+    "Slaapduur & -fasen",
+    "Hartslagvariabiliteit",
+    "Rusthartslag",
+    "Trend lichaamstemperatuur",
+    "Workouts & trainingsbelasting",
+    "Stappen & dagelijkse activiteit"
+  ],
+  "readLists": {
+    "apple": [
+      "Slaapduur & -fasen",
+      "Hartslagvariabiliteit (HRV)",
+      "Rusthartslag",
+      "Workouts & actieve energie"
+    ],
+    "oura": [
+      "Slaapfasen & -efficiëntie",
+      "Readiness & HRV",
+      "Trend lichaamstemperatuur",
+      "Activiteitsniveaus"
+    ],
+    "garmin": [
+      "Workouts & belasting",
+      "Stappen & intensiteitsminuten",
+      "Slaap & stressscore"
+    ],
+    "fitbit": [
+      "Activiteit & stappen",
+      "Slaapfasen",
+      "Hartslag"
+    ],
+    "whoop": [
+      "Belasting & herstel",
+      "Slaaptekort",
+      "HRV & rusthartslag"
+    ],
+    "gfit": [
+      "Stappen & cardiopunten",
+      "Workouts",
+      "Slaapsessies"
+    ]
+  },
+  "consentRows": [
+    {
+      "label": "Gepersonaliseerde inzichten",
+      "desc": "Laat Nutri je logs analyseren voor begeleiding op maat."
+    },
+    {
+      "label": "Geanonimiseerd onderzoek",
+      "desc": "Draag gede-identificeerde gegevens bij aan onderzoek naar vrouwengezondheid."
+    },
+    {
+      "label": "Productupdates",
+      "desc": "Af en toe nieuws over nieuwe NutriSync-functies."
+    }
+  ],
+  "sessions": [
+    {
+      "d": "MacBook Pro · Safari",
+      "loc": "Lissabon, PT · nu",
+      "me": true,
+      "other": false
+    },
+    {
+      "d": "iPhone 15 · NutriSync-app",
+      "loc": "Lissabon, PT · 2 u geleden",
+      "me": false,
+      "other": true
+    },
+    {
+      "d": "iPad Air · Safari",
+      "loc": "Porto, PT · 8 mrt",
+      "me": false,
+      "other": true
+    }
+  ],
+  "sessionLive": {
+    "d": "Deze browser",
+    "loc": "Zojuist"
+  },
+  "winsDemo": [
+    {
+      "t": "12 dagen op rij gelogd",
+      "d": "Je langste reeks tot nu — de voorspellingen worden scherper."
+    },
+    {
+      "t": "Energie +18% in ovulatieweken",
+      "d": "Vergeleken met je laatste twee cycli."
+    },
+    {
+      "t": "3 workouts passend bij de fase",
+      "d": "Elke sessie deze week viel in haar ideale venster."
+    }
+  ],
+  "calBannerA": "Volgende menstruatie verwacht rond",
+  "calBannerB": "— Nutri schakelt je voeding twee dagen vooraf naar ijzer en comfortfood.",
+  "calBannerNone": "Log de start van je menstruatie en Nutri voorspelt de maand vooruit.",
+  "calBannerDemo": "Volgende menstruatie verwacht rond 24 maart — Nutri schakelt je voeding twee dagen vooraf naar ijzer en comfortfood.",
+  "calBannerForming": "Voorspelling in opbouw — je schatting van 24 maart wordt met elke gelogde dag scherper.",
+  "_meta": {
+    "lang": "nl",
+    "name": "Nederlands",
+    "source": "design-v11.14"
+  }
+}

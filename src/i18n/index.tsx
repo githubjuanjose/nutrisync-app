@@ -2,6 +2,11 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import en from './en.json';
 import es from './es.json';
+import fr from './fr.json';
+import de from './de.json';
+import it from './it.json';
+import nl from './nl.json';
+import el from './el.json';
 
 /**
  * Lightweight i18n for the app. Strings come from the shared catalogs (the `app`
@@ -41,7 +46,10 @@ export const LANG_NAME = (c: Lang) => LANGS.find((l) => l.code === c)?.name ?? c
 const SUPPORTED = LANGS.map((l) => l.code);
 
 // Only these have real catalogs today; the rest resolve to English via fallback.
-const BUNDLES: Partial<Record<Lang, any>> = { en, es };
+// (mob.* mobile-only keys fall back to English until translated per language.)
+const BUNDLES: Partial<Record<Lang, any>> = { en, es, fr, de, it, nl, el };
+// The selector only offers languages that actually have a bundle — grows as packs land.
+const AVAILABLE = LANGS.filter((l) => BUNDLES[l.code]);
 const KEY = 'ns_locale'; // same key name/shape the web uses ({ lang })
 
 function lookup(obj: any, path: string): string | undefined {
@@ -56,7 +64,8 @@ function detectOSLang(): Lang {
     const Loc = require('expo-localization');
     const list = typeof Loc.getLocales === 'function' ? Loc.getLocales() : [];
     const code = String(list?.[0]?.languageCode || '').toLowerCase();
-    if ((SUPPORTED as string[]).includes(code)) return code as Lang;
+    // only auto-select a language we can actually render (has a bundle)
+    if (BUNDLES[code as Lang]) return code as Lang;
   } catch {}
   return 'en';
 }
@@ -100,7 +109,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     lookup(BUNDLES[lang], path) ?? lookup(BUNDLES.en, path) ?? fallback ?? path;
 
   return (
-    <I18nContext.Provider value={{ lang, osLang, setLang, langs: LANGS, t }}>
+    <I18nContext.Provider value={{ lang, osLang, setLang, langs: AVAILABLE, t }}>
       {children}
     </I18nContext.Provider>
   );
