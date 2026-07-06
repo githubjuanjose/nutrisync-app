@@ -1,0 +1,776 @@
+{
+  "ui": {
+    "boot": "SINCRONIZANT…",
+    "rail1": "Sincroniza eth tòn cicle.",
+    "rail2": "Neurís era tua ment.",
+    "protoBadge": "PROTOTIP · DONADES DE DEMO",
+    "railCopy": "Nutricion e movement que se mòven damb es tues hormònes — personalizats exactament ath punt deth cicle a on ès, cada dia.",
+    "loginTitle": "Benvenguda un aute còp",
+    "loginSub": "Repren just a on ac deishères.",
+    "email": "Adreça electronica",
+    "password": "Contrasenha",
+    "createPassword": "Crèa ua contrasenha",
+    "fullName": "Nòm complet",
+    "remember": "Bremba'm",
+    "forgot": "As desbrembat era contrasenha?",
+    "login": "Inicia era session",
+    "newHere": "Prumèr còp ací?",
+    "createAccount": "Crèa un compde",
+    "signupSub": "Ua minuta ara — orientacion a mida entà cada dia dempús.",
+    "getStarted": "Comença →",
+    "haveAccount": "Ja as un compde?",
+    "settingUp": "CONFIGURACION",
+    "obRail1": "Aprengam",
+    "obRail2": "eth tòn ritme.",
+    "obRailCopy": "Bères questions rapides entà que cada recomanacion s'ajuste ath tòn còs — non a ua mejana.",
+    "obDateNote": "Non n'ès segura? Ua estimacion ei pro — Nutri l'afine a mesura que registres.",
+    "age": "EDAT",
+    "years": "ans",
+    "height": "NAUTADA",
+    "weight": "PES",
+    "obOptional": "Opcionau — sauta çò que preferisques non compartir.",
+    "obConsentA": "Cicle e simptòmes",
+    "obConsentADesc": "Alimente era tua orientacion diària.",
+    "obConsentB": "Sauvat de manèra segura",
+    "obConsentBDesc": "Chifrat, confòrme ath RGPD, jamès venut.",
+    "obAgree": "Accèpti era Politica de privacitat e es Condicions, e compreni qu'es mies donades demoren mies.",
+    "continueBtn": "Contunha →",
+    "finishSetup": "Acaba era configuracion →",
+    "obSaving": "Sauvant era tua configuracion…",
+    "obErr": "Non s'a pogut sauvar — compròva era connexion e torna-ac a provar.",
+    "dailyCheckin": "REGISTRE DIARI",
+    "skipToday": "Sauta-ac per aué",
+    "next": "Seguent →",
+    "syncDay": "Sincroniza eth mèn dia →",
+    "gateTitleMood": "Com te trapes?",
+    "gateSubMood": "Ua paraula sincèra — Nutri i ajuste eth plan d'aué.",
+    "gateTitleEnergy": "E era tua energia?",
+    "gateSubEnergy": "De plan baisha (1) a imparabla (5).",
+    "allsetCopy": "Nutri ei personalizant era tua nutricion e movement a compdar des tues responses. Les pòdes actualizar quan volgues en Configuracion.",
+    "enterApp": "Entra en NutriSync →",
+    "settings": "Configuracion",
+    "goodMorning": "Bon dia",
+    "cycleDay": "Dia deth cicle",
+    "cycleAlignment": "ALINHAMENT DETH CICLE",
+    "editPeriodBtn": "Edita era règla",
+    "editHealthBtn": "Edita era salut",
+    "logToday": "Registra aué ›",
+    "checkedIn": "✓ Registrat",
+    "firstRunStrong": "Dia 1 deth tòn camin.",
+    "firstRunRest": "Era tua Puntuacion d'Alinhament deth Cicle se desblòque dempús de 7 dies de registres — Nutri ja personalize a compdar des tues responses.",
+    "todaysFuel": "Eth combustible d'aué",
+    "openNutrilog": "Daurís NutriLog ›",
+    "movement": "Movement",
+    "plan": "Planifica ›",
+    "nutriInsight": "APUNT DE NUTRI",
+    "fromDevices": "Des tòns dispositius",
+    "manage": "Gestiona ›",
+    "deviceNote": "Era sincronizacion nocturna arribe damb era beta mobila — eth tòn consentiment de lectura ja ei prèst.",
+    "statSleep": "SÒN",
+    "statHrv": "VFC",
+    "statRhr": "FC REPAUS",
+    "statSleepNote": "▲ vs mejana 7 dies",
+    "statHrvNote": "estable",
+    "statRhrNote": "▼ 2 bpm",
+    "demoSyncLine": "Oura Ring · darrèra sincronizacion 6:40",
+    "consentActive": "consentiment actiu",
+    "welcomeInsight": "Benvenguda! Eth tòn prumèr apunt arribe deman, quan Nutri age un dia tòn en quadre.",
+    "focusWord": "focus:",
+    "hydration": "Idratacion",
+    "glasses": "de 8 veires",
+    "whyFoods": "PERQUÉ AGUESTI ALIMENTS",
+    "logMeal": "Registra aguest minjar",
+    "loggedMeal": "✓ Registrat",
+    "today": "AUÉ",
+    "thisWeek": "Aguesta setmana",
+    "lowEnergy": "DIA DE PÒCA ENERGIA?",
+    "markDone": "Marca coma hèt",
+    "sessionDone": "✓ Session acabada",
+    "mvAlt": "Cambia-ac per 20 minutes de caminada e estiraments doci — era constança guanhe era intensitat, en cada fasa.",
+    "progress": "Progrès",
+    "casLong": "PUNTUACION D'ALINHAMENT DETH CICLE",
+    "trend6w": "Tendéncia de 6 setmanes",
+    "prCopyDemo": "Nutricion, movement e sòn tiren ena madeisha direccion qu'es tues hormònes.",
+    "prCopyLive": "Cinc puntuacions — confiança de fasa, biomarcadors, nutricion, forma fisica e constança — s'actualizen damb cada registre.",
+    "prDeltaDemo": "▲ +4 vs era setmana passada",
+    "prFirst": "Prumèra puntuacion en marcador",
+    "prNone": "Es puntuacions arriben a mesura que registres",
+    "prOver": "en",
+    "prDays": "dies",
+    "brewTitle": "Es tues tendéncies s'estàn formant",
+    "brewCopy": "Registra pendent 7 dies e Nutri traçarà ací era tua Puntuacion d'Alinhament, es tòns patrons d'energia e er istoric de fases.",
+    "brewDay": "DIA",
+    "brewOf": "DE 7",
+    "backToday": "‹ Aué",
+    "editPeriod": "Edita era règla",
+    "saveLog": "Sauva eth registre",
+    "flow": "Flux",
+    "moodMental": "Umor e estat mentau",
+    "libido": "Libido",
+    "birthControl": "Anticoncepcion",
+    "physSymptoms": "Simptòmes fisics",
+    "notes": "Nòtes",
+    "notesPh": "Arren mès sus aué…",
+    "editHealth": "Edita era salut",
+    "yourProfile": "Eth tòn perfil",
+    "saveChanges": "Sauva es cambis",
+    "allergies": "ALLERGIES ALIMENTÀRIES",
+    "conditions": "CONDICIONS DIAGNOSTICADES",
+    "yourGoal": "ETH TÒN NUTRIGOAL",
+    "nextCycle": "Es cambis s'apliquen en cicle que ven",
+    "yourNutri": "ERA TUA NUTRI",
+    "notifPush": "Arrebrembes de registre diaris",
+    "notifEmail": "Resum setmanau per corrèu",
+    "logout": "Barra era session",
+    "langRegion": "Lengua e region",
+    "language": "Lengua",
+    "region": "Region",
+    "phaseHeroFmt": "FASA {PH} · DIA {D}",
+    "dayWord": "DIA",
+    "nlFocusFmt": "Focus dera fasa {phl}:",
+    "allsetFmt": "Tot prèst, {name}!",
+    "bpmUnit": "bpm",
+    "prTrendStart": "her.",
+    "prTrendEnd": "març",
+    "backToSite": "Torna tath web",
+    "obStartOver": "Torna a començar",
+    "backSettings": "‹ Configuracion",
+    "connectedApps": "Aplicacions connectades",
+    "connIntro": "NutriSync sonque liég çò que tu permetes — e jamès non escriu de tornada.",
+    "connSome": "de 6 connectades.",
+    "connNone": "Encara non i a arren connectat.",
+    "connectedPill": "Connectada ✓",
+    "connectPill": "Connècta",
+    "connectedWord": "Connectada",
+    "whatReads": "Qué liég NutriSync",
+    "whatReadsDesc": "S'aplique a cada dispositiu connectat. Desactiva ua metrica entà arturar era sua sincronizacion.",
+    "encTitle": "Chifrat en transit e en repaus",
+    "encCopy": "Es donades des dispositius complèten es tòns registres — jamès non subrescriuen en silenci çò que tu introdusisses. Desconnècta quan volgues; eth tòn istoric demore tòn.",
+    "backConnections": "‹ Connexions",
+    "connectWord": "Connècta",
+    "connectCopy": "NutriSync liegerà çò que seguís entà afinar era deteccion dera tua fasa e era Puntuacion d'Alinhament deth Cicle:",
+    "connectNoteA": "Sonque lectura. NutriSync jamès non escriu en",
+    "connectNoteB": "e pòdes desconnectar quan volgues.",
+    "allowAccess": "Permet er accès",
+    "notNow": "Ara non",
+    "dataPrivacy": "Donades e privacitat",
+    "privIntro": "Es tues donades son tues. Contròla qué s'utilize e pòrta-te-les quan volgues.",
+    "consentHdr": "CONSENTIMENT",
+    "yourData": "ES TUES DONADES",
+    "exportJson": "Expòrta es mies donades",
+    "pdfReport": "Descarga er informe PDF",
+    "accountHdr": "COMPDE",
+    "deactivate": "Desactiva eth compde",
+    "deleteAll": "Suprimís eth compde e totes es donades",
+    "delNote": "Era supression ei definitiva e s'acabe en 30 dies.",
+    "security": "Inici de session e seguretat",
+    "signinHdr": "INICI DE SESSION",
+    "changePw": "Cambia era contrasenha",
+    "passkeys": "Claus d'accès",
+    "setUp": "Configura",
+    "twofaHdr": "AUTENTICACION DE DUS FACTORS",
+    "authApp": "Aplicacion d'autenticacion",
+    "twofaOn": "Activada · protegís eth tòn compde",
+    "twofaOff": "Desactivada · recomanam activar-la",
+    "smsBackup": "SMS de resèrva",
+    "addNumber": "Híge un numèro ›",
+    "sessionsHdr": "SESSIONS ACTIVES",
+    "thisDevice": "Aguest dispositiu",
+    "revoke": "Revòca",
+    "signOutOthers": "Barra totes es autes sessions",
+    "noteCreds": "Introdusís eth corrèu e era contrasenha.",
+    "noteSigningIn": "Iniciant era session…",
+    "noteCreds6": "Introdusís eth corrèu e ua contrasenha (6+ caractèrs).",
+    "noteCreating": "Creant eth tòn compde…",
+    "noteConfirm": "Repassa eth corrèu entà confirmar eth compde e dempús inicia era session.",
+    "alertDemoExport": "Mòde demo — connècta eth backend entà exportar donades reaus.",
+    "alertDemoDelete": "Mòde demo — non i a arren entà suprimir.",
+    "alertConfirmDelete": "Vòs suprimir eth compde e totes es donades? Non se pòt deshèr.",
+    "alertDeleted": "Es tues donades s'an suprimit. Era retirada des credenciaus s'acabe en 30 dies.",
+    "alertDeactivate": "Pendent era beta, era desactivacion se gestione damb eth supòrt — escriu a hello@nutrisynccollective.com.",
+    "alertDemoAccount": "Mòde demo — es accions deth compde an besonh deth backend en produccion."
+  },
+  "dows": [
+    "DG",
+    "DL",
+    "DM",
+    "DC",
+    "DJ",
+    "DV",
+    "DS"
+  ],
+  "phaseNames": {
+    "menstrual": "Menstruau",
+    "follicular": "Folliculara",
+    "ovulatory": "Ovulatòria",
+    "luteal": "Lutèa"
+  },
+  "navLabels": {
+    "home": "Aué",
+    "nutrilog": "NutriLog",
+    "movement": "Movement",
+    "progress": "Progrès",
+    "calendar": "Calendari"
+  },
+  "moodLabels": {
+    "Low": "Baisha",
+    "Meh": "Regular",
+    "Okay": "Ben",
+    "Good": "Fòrça ben",
+    "Great": "Geniau"
+  },
+  "phase": {
+    "menstrual": {
+      "headline": "Repausar ei productiu.",
+      "copy": "Es hormònes son ath punt mès baish — plats cauds rics en hèr e movement doç te tornen a bastir des deth prumèr dia.",
+      "sideNote": "Es dies damb mens energia — vè-i doçament",
+      "focus": "hèr, folats e plats cauds reconfortants entà recuperar-te.",
+      "nlWhy": "Era règla consumís hèr e magnèsi. Es minjars cauds e cuèits se digerissen aisidament mentre eth tòn còs hè eth trabalh mès dur deth mes.",
+      "insight": "Era energia ei ath minim mensuau — protegís es tòns sers e dèisha qu'eth sòn hèsque era reparacion.",
+      "moveCopy": "Dia de recuperacion — ioga restauratiu o passejada lenta.",
+      "chips": [
+        {
+          "label": "15–25 MIN",
+          "hot": true
+        },
+        {
+          "label": "DOÇ",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Ioga restauratiu",
+      "mvCopy": "Aué eth movement a de semblar un banh caud — circulacion sens esfòrç.",
+      "mvParts": [
+        {
+          "label": "Respiracion + gat-vaca",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Sequéncia yin · anques e esquia",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Cames ena paret",
+          "mins": "5 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "DM · Ioga restauratiu",
+          "state": "Aué",
+          "today": true
+        },
+        {
+          "label": "DJ · Passejada lenta",
+          "state": "Planificat",
+          "done": false
+        },
+        {
+          "label": "DS · Estiraments doci",
+          "state": "Planificat",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Civada cauda, dàtils e cacau",
+          "slot": "Desdejuar",
+          "tag": "HÈR"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Estofat de lentilhes e espinacs",
+          "slot": "Dinar",
+          "tag": "HÈR + FOLATS"
+        },
+        {
+          "emoji": "🍛",
+          "name": "Salmon, moniato e verdures",
+          "slot": "Sopar",
+          "tag": "OMEGA-3"
+        }
+      ],
+      "mealWhy": [
+        "Eth hèr comence a remplaçar çò qu'era règla consumís.",
+        "Folats e hèr tornen a bastir era tua resèrva de sang.",
+        "Es omega-3 apasimen es crampes des prostaglandines."
+      ]
+    },
+    "follicular": {
+      "headline": "Era energia puge — bastís doçament.",
+      "copy": "Es estrogèns pugen. Minjars frescs e leugèrs e entrenament progressiu funcionen milhor aguesta setmana.",
+      "sideNote": "Era energia se remonte aguesta setmana",
+      "focus": "vitamina C, proteïna magra e hèr mentre era energia puge.",
+      "nlWhy": "Ena fasa folliculara es estrogèns tornen a bastir — eth hèr restaure çò qu'era règla a despenut e era vitamina C ne dobla era absorcion.",
+      "insight": "Es estrogèns pugen — er aprendissatge s'apègue mès viste e er entrenament bastís mès muscle aguesta setmana. Programa ara es causes dificiles.",
+      "moveCopy": "Era energia se bastís — passejada rapida + core leugèr.",
+      "chips": [
+        {
+          "label": "20–30 MIN",
+          "hot": true
+        },
+        {
+          "label": "MODERAT",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Passejada rapida + core",
+      "mvCopy": "Creish graduaument damb es estrogèns — aué ritme per dessús d'intensitat.",
+      "mvParts": [
+        {
+          "label": "Escauhament · pas aisit",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Passejada rapida · constanta",
+          "mins": "15 MIN"
+        },
+        {
+          "label": "Circuit de core · 2 torns",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "DC · Passejada rapida + core",
+          "state": "Aué",
+          "today": true
+        },
+        {
+          "label": "DV · Fòrça leugèra",
+          "state": "Planificat",
+          "done": false
+        },
+        {
+          "label": "DG · Flux de ioga",
+          "state": "Planificat",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Civada de net, lin e citrics",
+          "slot": "Desdejuar",
+          "tag": "VITAMINA C"
+        },
+        {
+          "emoji": "🥙",
+          "name": "Ensalada de polet damb grans germinats",
+          "slot": "Dinar",
+          "tag": "PROTEÏNA MAGRA"
+        },
+        {
+          "emoji": "🍲",
+          "name": "Bòl de fideus damb tofú e verdures",
+          "slot": "Sopar",
+          "tag": "HÈR"
+        }
+      ],
+      "mealWhy": [
+        "Era vitamina C potencie era absorcion deth hèr mentre era energia puge.",
+        "Era proteïna neurís era hièstra musculara des estrogèns creishents.",
+        "Eth hèr torne a aumplir es resèrves dempús dera règla."
+      ]
+    },
+    "ovulatory": {
+      "headline": "Poténcia maxima, confiança maxima.",
+      "copy": "Es estrogèns son ath cim — perseguís ua marca personau, barra era convèrsa dificila e carga-te de zinc e antioxidants.",
+      "sideNote": "Hièstra d'energia maxima — demoren 3 dies",
+      "focus": "zinc, antioxidants e omega-3 entà sostier era ovulacion.",
+      "nlWhy": "Ath torn dera ovulacion eth tòn còs va mès caud e consumís es micronutrients mès viste. Eth zinc sostie eth pic de LH; es antioxidants protegissen eth viatge der ovul.",
+      "insight": "Es estrogèns arriben aué ath cim — confiança e energia sociau ath maxim. Programa era grana convèrsa.",
+      "moveCopy": "Dia de poténcia maxima — HIIT o pesi pesants.",
+      "chips": [
+        {
+          "label": "30–40 MIN",
+          "hot": true
+        },
+        {
+          "label": "NAUTA INTENSITAT",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Intervaus HIIT",
+      "mvCopy": "Eth tòn còs se recupère mès viste que jamès — sarra era intensitat aué, t'as guanhat eth tet.",
+      "mvParts": [
+        {
+          "label": "Escauhament · dinamic",
+          "mins": "5 MIN"
+        },
+        {
+          "label": "Intervaus · 8 × 40 s fòrt / 80 s aisit",
+          "mins": "24 MIN"
+        },
+        {
+          "label": "Tornada ara calma · estiraments",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "DL · Fòrça",
+          "state": "Hèt",
+          "done": true
+        },
+        {
+          "label": "DC · Intervaus HIIT",
+          "state": "Aué",
+          "today": true
+        },
+        {
+          "label": "DV · Mobilitat e core",
+          "state": "Planificat",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🥣",
+          "name": "Iogurt grèc, fruts arroges e pepites de coja",
+          "slot": "Desdejuar",
+          "tag": "ZINC"
+        },
+        {
+          "emoji": "🥗",
+          "name": "Bòl de salmon e quinoa",
+          "slot": "Dinar",
+          "tag": "OMEGA-3"
+        },
+        {
+          "emoji": "🍜",
+          "name": "Sautat damb verdures de huelha",
+          "slot": "Sopar",
+          "tag": "B6 + FIBRA"
+        }
+      ],
+      "mealWhy": [
+        "Eth zinc sostie eth pic de LH ath torn dera ovulacion.",
+        "Es omega-3 tempèren era inflamacion de miei cicle.",
+        "B6 + fibra ajuden a eliminar es estrogèns ath cim."
+      ]
+    },
+    "luteal": {
+      "headline": "Combustible estable, cantons mès doci.",
+      "copy": "Era progesterona comande — sucre en sang estable e magnèsi mantien energia e umor equilibrats pendent era baishada.",
+      "sideNote": "Setmana de desacceleracion — eth combustible estable ajude",
+      "focus": "magnèsi, B6 e carboïdrats lents entà estabilizar era baishada.",
+      "nlWhy": "Era progesterona puge eth tòn metabolisme près d'un 5% — minjars estables de combustion lenta evíten es baishades que semblen desirs.",
+      "insight": "Era serotonina baishe mentre era progesterona puge — un sopar ric en magnèsi e anar-se'n tà dormir lèu cambien com te sentiràs deman.",
+      "moveCopy": "Moderat e constant — fòrça o passejada damb pujades.",
+      "chips": [
+        {
+          "label": "25–35 MIN",
+          "hot": true
+        },
+        {
+          "label": "MODERAT",
+          "hot": false
+        }
+      ],
+      "mvTitle": "Fòrça constanta",
+      "mvCopy": "Mantien eth ritme fluid e es repausi generosi — aguesta setmana constança per dessús de rècords.",
+      "mvParts": [
+        {
+          "label": "Escauhament · mobilitat",
+          "mins": "6 MIN"
+        },
+        {
+          "label": "Fòrça de tot eth còs · 3 torns",
+          "mins": "20 MIN"
+        },
+        {
+          "label": "Passejada finau · aisida",
+          "mins": "8 MIN"
+        }
+      ],
+      "week": [
+        {
+          "label": "DL · Fòrça",
+          "state": "Hèt",
+          "done": true
+        },
+        {
+          "label": "DJ · Passejada damb pujades",
+          "state": "Aué",
+          "today": true
+        },
+        {
+          "label": "DG · Mobilitat",
+          "state": "Planificat",
+          "done": false
+        }
+      ],
+      "meals": [
+        {
+          "emoji": "🍳",
+          "name": "Ueus, alvocat e torrada de granes",
+          "slot": "Desdejuar",
+          "tag": "B6"
+        },
+        {
+          "emoji": "🥘",
+          "name": "Bòl de piòc e moniato",
+          "slot": "Dinar",
+          "tag": "CARBOÏDRATS LENTS"
+        },
+        {
+          "emoji": "🍮",
+          "name": "Podin de chía damb chocolate nere",
+          "slot": "Sopar",
+          "tag": "MAGNÈSI"
+        }
+      ],
+      "mealWhy": [
+        "Era B6 sostie era serotonina mentre era progesterona puge.",
+        "Es carboïdrats lents aplanissen es baishades de sucre darrèr des desirs.",
+        "Eth magnèsi relaxe e prepare eth sòn prigond."
+      ]
+    }
+  },
+  "ob": [
+    {
+      "q": "Qué te pòrte tà NutriSync?",
+      "help": "Açò oriente çò que Nutri destaque prumèr.",
+      "type": "choice",
+      "key": "obGoal",
+      "opts": [
+        {
+          "k": "Balance my energy",
+          "label": "Equilibrar era mia energia"
+        },
+        {
+          "k": "Ease PMS & symptoms",
+          "label": "Aleugerir era SPM e es simptòmes"
+        },
+        {
+          "k": "Train smarter with my cycle",
+          "label": "Entrenar milhor damb eth mèn cicle"
+        },
+        {
+          "k": "Understand my body better",
+          "label": "Compréner milhor eth mèn còs"
+        }
+      ]
+    },
+    {
+      "q": "Guaire regular ei eth tòn cicle?",
+      "help": "Era irregularitat ei abituau — Nutri s'i adapte parièr.",
+      "type": "choice",
+      "key": "obReg",
+      "opts": [
+        {
+          "k": "Like clockwork",
+          "label": "Coma un relòtge"
+        },
+        {
+          "k": "Mostly regular",
+          "label": "Quasi tostemp regular"
+        },
+        {
+          "k": "Pretty unpredictable",
+          "label": "Pro imprevisible"
+        },
+        {
+          "k": "Not sure",
+          "label": "Non ac sabi"
+        }
+      ]
+    },
+    {
+      "q": "Quan comencèc era tua darrèra règla?",
+      "help": "Açò ancòre era deteccion dera tua fasa.",
+      "type": "date",
+      "key": "obDate"
+    },
+    {
+      "q": "Guaire dure eth tòn cicle abituau?",
+      "help": "Compda deth dia 1 d'ua règla ath dia 1 dera seguenta.",
+      "type": "choice",
+      "key": "obLen",
+      "opts": [
+        {
+          "k": "21–24 days",
+          "label": "21–24 dies"
+        },
+        {
+          "k": "25–30 days",
+          "label": "25–30 dies"
+        },
+        {
+          "k": "31–35 days",
+          "label": "31–35 dies"
+        },
+        {
+          "k": "Not sure",
+          "label": "Non ac sabi"
+        }
+      ]
+    },
+    {
+      "q": "Bèth patron alimentari a respectar?",
+      "help": "Es minjars tostemp s'ajustaràn ath tòn patron.",
+      "type": "choice",
+      "key": "obDiet",
+      "opts": [
+        {
+          "k": "No restrictions",
+          "label": "Sens restriccions"
+        },
+        {
+          "k": "Vegetarian",
+          "label": "Vegetariana"
+        },
+        {
+          "k": "Vegan",
+          "label": "Vegana"
+        },
+        {
+          "k": "Gluten-free",
+          "label": "Sens gluten"
+        },
+        {
+          "k": "Dairy-free",
+          "label": "Sens lactics"
+        }
+      ]
+    },
+    {
+      "q": "Un shinhau sus eth tòn còs",
+      "help": "Sonque servís entà calibrar racions e besonhs d'energia — jamès entà jutjar.",
+      "type": "numbers"
+    },
+    {
+      "q": "Tria era tua Nutri",
+      "help": "Era tua companha en cada fasa. La pòdes cambiar quan volgues.",
+      "type": "avatar"
+    },
+    {
+      "q": "Es tues donades, es tues nòrmes",
+      "help": "Arren non se compartís sens eth tòn vistiplau.",
+      "type": "consent"
+    }
+  ],
+  "provSync": {
+    "apple": "sincronizat 6:40",
+    "oura": "sincronizat hè 2 ores",
+    "garmin": "sincronize cada dia",
+    "fitbit": "sincronize cada dia",
+    "whoop": "sincronize cada dia",
+    "gfit": "sincronize cada dia"
+  },
+  "provReads": {
+    "apple": "Sòn, VFC, frequéncia cardiaca en repaus",
+    "oura": "Fases deth sòn, readiness, temperatura",
+    "garmin": "Entrenaments, passi, estrès",
+    "fitbit": "Activitat, sòn, frequéncia cardiaca",
+    "whoop": "Esfòrç, recuperacion, deficit de sòn",
+    "gfit": "Passi, entrenaments, punts cardio"
+  },
+  "metricLabels": [
+    "Durada e fases deth sòn",
+    "Variabilitat dera frequéncia cardiaca",
+    "Frequéncia cardiaca en repaus",
+    "Tendéncia dera temperatura corporau",
+    "Entrenaments e carga d'entrenament",
+    "Passi e activitat diària"
+  ],
+  "readLists": {
+    "apple": [
+      "Durada e fases deth sòn",
+      "Variabilitat cardiaca (VFC)",
+      "Frequéncia en repaus",
+      "Entrenaments e energia activa"
+    ],
+    "oura": [
+      "Fases e eficiéncia deth sòn",
+      "Readiness e VFC",
+      "Tendéncia dera temperatura corporau",
+      "Nivèus d'activitat"
+    ],
+    "garmin": [
+      "Entrenaments e carga",
+      "Passi e minutes d'intensitat",
+      "Sòn e puntuacion d'estrès"
+    ],
+    "fitbit": [
+      "Activitat e passi",
+      "Fases deth sòn",
+      "Frequéncia cardiaca"
+    ],
+    "whoop": [
+      "Esfòrç e recuperacion",
+      "Deficit de sòn",
+      "VFC e frequéncia en repaus"
+    ],
+    "gfit": [
+      "Passi e punts cardio",
+      "Entrenaments",
+      "Sessions de sòn"
+    ]
+  },
+  "consentRows": [
+    {
+      "label": "Apunts personalizats",
+      "desc": "Permet que Nutri analise es tòns registres entà ajustar era orientacion."
+    },
+    {
+      "label": "Recèrca anonimizada",
+      "desc": "Contribuís damb donades desidentificades ara recèrca en salut femenina."
+    },
+    {
+      "label": "Novetats deth produit",
+      "desc": "Notícies ocasionaus sus naues foncions de NutriSync."
+    }
+  ],
+  "sessions": [
+    {
+      "d": "MacBook Pro · Safari",
+      "loc": "Lisboa, PT · ara",
+      "me": true,
+      "other": false
+    },
+    {
+      "d": "iPhone 15 · app NutriSync",
+      "loc": "Lisboa, PT · hè 2 ores",
+      "me": false,
+      "other": true
+    },
+    {
+      "d": "iPad Air · Safari",
+      "loc": "Porto, PT · 8 de març",
+      "me": false,
+      "other": true
+    }
+  ],
+  "sessionLive": {
+    "d": "Aguest navegador",
+    "loc": "Ara madeish"
+  },
+  "winsDemo": [
+    {
+      "t": "Ratxa de 12 dies registrant",
+      "d": "Era tua mès longa — es prediccions s'afinen."
+    },
+    {
+      "t": "Energia +18% enes setmanes ovulatòries",
+      "d": "Comparat damb es tòns dus darrèri cicles."
+    },
+    {
+      "t": "3 entrenaments ajustats ara fasa",
+      "d": "Cada session dera setmana a queigut ena sua hièstra ideau."
+    }
+  ],
+  "calBannerA": "Pròxima règla prevista ath torn deth",
+  "calBannerB": "— Nutri desplaçarà era tua alimentacion tath hèr e es plats reconfortants dus dies abans.",
+  "calBannerNone": "Registra eth començament dera règla e Nutri predirà eth mes que ven.",
+  "calBannerDemo": "Pròxima règla prevista ath torn deth 24 de març — Nutri desplaçarà era tua alimentacion tath hèr e es plats reconfortants dus dies abans.",
+  "calBannerForming": "Prediccion en marcha — era estimacion deth 24 de març s'afine damb cada dia que registres.",
+  "_meta": {
+    "lang": "oc",
+    "name": "Aranés",
+    "source": "design-v11.25",
+    "review": "native-review-REQUIRED"
+  }
+}

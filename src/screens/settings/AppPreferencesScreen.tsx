@@ -30,8 +30,8 @@ function LanguagePicker() {
   const { lang, osLang, setLang, langs } = useI18n();
   const [open, setOpen] = useState(false);
   const nameOf = (c: Lang) => langs.find((l) => l.code === c)?.name ?? c;
-  // ISO-code label to match the web selector (EN · ES · FR …). Aranese → OC.
-  const isoOf = (c: Lang) => (c === 'oc-aran' ? 'OC' : c.toUpperCase());
+  // ISO-code label to match the web selector (EN · ES · FR · VAL · OC …).
+  const isoOf = (c: Lang) => c.toUpperCase();
   // Second pill = current language if non-English; else the OS language; else Spanish (fallback pair).
   const pill2: Lang = lang !== 'en' ? lang : (osLang !== 'en' ? osLang : 'es');
   const rest = langs

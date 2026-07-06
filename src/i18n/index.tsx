@@ -11,6 +11,7 @@ import ca from './ca.json';
 import eu from './eu.json';
 import gl from './gl.json';
 import val from './val.json';
+import oc from './oc.json';
 
 /**
  * Lightweight i18n for the app. Strings come from the shared catalogs (the `app`
@@ -26,7 +27,7 @@ import val from './val.json';
  */
 export type Lang =
   | 'en' | 'es' | 'fr' | 'it' | 'de' | 'nl' | 'el'
-  | 'ca' | 'eu' | 'gl' | 'val' | 'oc-aran'
+  | 'ca' | 'eu' | 'gl' | 'val' | 'oc'
   | 'zh' | 'ja';
 
 /** Registry: code → endonym (own-language name). Order here is the canonical list. */
@@ -42,7 +43,7 @@ export const LANGS: { code: Lang; name: string }[] = [
   { code: 'eu', name: 'Euskara' },
   { code: 'gl', name: 'Galego' },
   { code: 'val', name: 'Valencià' },
-  { code: 'oc-aran', name: 'Aranés' },
+  { code: 'oc', name: 'Aranés' },
   { code: 'zh', name: '中文' },
   { code: 'ja', name: '日本語' },
 ];
@@ -51,7 +52,7 @@ const SUPPORTED = LANGS.map((l) => l.code);
 
 // Only these have real catalogs today; the rest resolve to English via fallback.
 // (mob.* mobile-only keys fall back to English until translated per language.)
-const BUNDLES: Partial<Record<Lang, any>> = { en, es, fr, de, it, nl, el, ca, eu, gl, val };
+const BUNDLES: Partial<Record<Lang, any>> = { en, es, fr, de, it, nl, el, ca, eu, gl, val, oc };
 // The selector only offers languages that actually have a bundle — grows as packs land.
 const AVAILABLE = LANGS.filter((l) => BUNDLES[l.code]);
 const KEY = 'ns_locale'; // same key name/shape the web uses ({ lang })
