@@ -20,6 +20,7 @@ const INACTIVE = '#6B615C';   // inactive pill text
 const ROW = '#231F20';        // dropdown endonym
 const ROW_ISO = '#B8ADA4';    // dropdown ISO code
 const ROW_ON = '#FDF0E7';     // active/pressed row bg
+const ROW_H = 44;             // fixed row height → dropdown caps cleanly at 4 rows
 
 type Anchor = { x: number; y: number; w: number; h: number };
 
@@ -72,7 +73,8 @@ export function LanguagePicker({ style, align = 'left' }: { style?: StyleProp<Vi
       <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}>
         <Pressable style={styles.backdrop} onPress={() => setOpen(false)}>
           <Pressable style={[styles.card, cardStyle]} onPress={() => {}}>
-            <ScrollView style={{ maxHeight: 240 }} showsVerticalScrollIndicator={true}>
+            {/* Cap at exactly 4 rows (ROW_H * 4) → small, elegant box; the rest scroll. */}
+            <ScrollView style={{ maxHeight: ROW_H * 4 }} showsVerticalScrollIndicator={true}>
               {more.map((l) => {
                 const on = lang === l.code;
                 return (
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
   // dropdown card — anchored under the ••• button (position injected at runtime)
   card: { minWidth: 176, backgroundColor: '#fff', borderWidth: 1, borderColor: BORDER, borderRadius: 14, padding: 4,
     shadowColor: '#000', shadowOpacity: 0.28, shadowRadius: 24, shadowOffset: { width: 0, height: 16 }, elevation: 12 },
-  item: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10, paddingVertical: 10, paddingHorizontal: 12, borderRadius: 9 },
+  item: { height: ROW_H, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10, paddingHorizontal: 12, borderRadius: 9 },
   itemOn: { backgroundColor: ROW_ON },
   itemName: { fontFamily: font.semibold, fontSize: 13, color: ROW },
   itemIso: { fontFamily: font.bold, fontSize: 10, color: ROW_ISO },

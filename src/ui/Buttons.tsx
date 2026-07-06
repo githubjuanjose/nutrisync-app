@@ -37,15 +37,15 @@ export function SecondaryButton({ label, onPress, style }: Props) {
 
 const styles = StyleSheet.create({
   primary: {
-    height: 56,
-    borderRadius: radius.md,
+    height: 58,
+    borderRadius: 999, // fully rounded / semicircular ends (pill)
     alignItems: 'center',
     justifyContent: 'center',
   },
   primaryTxt: { color: colors.white, fontFamily: font.semibold, fontSize: 16 },
   secondary: {
-    height: 56,
-    borderRadius: radius.md,
+    height: 58,
+    borderRadius: 999, // pill
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.white,

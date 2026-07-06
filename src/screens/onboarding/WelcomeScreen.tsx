@@ -45,9 +45,9 @@ export default function WelcomeScreen({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   fill: { flex: 1 },
-  mascot: { flex: 1.2, alignItems: 'center', justifyContent: 'center', paddingTop: 10 },
-  wings: { width: 210, height: 200 },
-  copy: { flex: 1, alignItems: 'center', paddingHorizontal: 40, paddingTop: 4 },
+  mascot: { flex: 0.9, alignItems: 'center', justifyContent: 'center', paddingTop: 0 },
+  wings: { width: 176, height: 168 },
+  copy: { flex: 1, alignItems: 'center', paddingHorizontal: 40, paddingTop: 0 },
   h1: { fontFamily: font.medium, fontSize: 38, lineHeight: 42, color: colors.ink, textAlign: 'center' },
   sub: {
     fontFamily: font.regular,
@@ -57,5 +57,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 16,
   },
-  actions: { paddingHorizontal: 24, paddingBottom: 24 },
+  actions: { paddingHorizontal: 40, paddingBottom: 24 },
 });
