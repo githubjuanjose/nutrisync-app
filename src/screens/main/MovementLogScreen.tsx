@@ -6,6 +6,8 @@ import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
+import { getProfile } from '../../lib/api';
+import { pickVariantIndex } from '../../ui/NutriAvatar';
 import { saveChecklist } from '../../lib/daily';
 import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib/recs';
 
@@ -19,6 +21,13 @@ import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib
 
 const CAT_ORDER = ['Strength', 'Cardio', 'Flexibility & Recovery', 'Daily Movement'];
 const PER_CATEGORY = 6;
+// Official per-Nutri daily-tip characters (approved assets 17 Jul)
+const TIP_CHARS = [
+  require('../../../assets/movementlog/tip-char-1.png'),
+  require('../../../assets/movementlog/tip-char-2.png'),
+  require('../../../assets/movementlog/tip-char-3.png'),
+  require('../../../assets/movementlog/tip-char-4.png'),
+];
 
 export default function MovementLogScreen() {
   const t = useT();
@@ -27,6 +36,7 @@ export default function MovementLogScreen() {
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<'tip' | 'insight'>('tip');
   const [recs, setRecs] = useState<DailyRecs | null>(null);
+  const [charIdx, setCharIdx] = useState(0);
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const [others, setOthers] = useState<string[]>([]);
   const [otherOpen, setOtherOpen] = useState(false);
@@ -34,6 +44,7 @@ export default function MovementLogScreen() {
 
   const load = useCallback(async () => {
     if (!userId) { setLoading(false); return; }
+    getProfile(userId).then((p: any) => setCharIdx(pickVariantIndex(p?.nutri_avatar))).catch(() => {});
     const [r, ck] = await Promise.all([fetchDailyRecs(), fetchCheckedToday(userId, 'movement_checklist')]);
     setRecs(r); setChecked(ck);
     const known = new Set(Object.values(r?.movement_basics ?? {}).flat().map((i) => i.name));
@@ -114,7 +125,7 @@ export default function MovementLogScreen() {
               ) : null}
             </View>
             <Image
-              source={tab === 'tip' ? require('../../../assets/movementlog/tip-character.png') : require('../../../assets/movementlog/insight-character.png')}
+              source={tab === 'tip' ? TIP_CHARS[charIdx] : require('../../../assets/movementlog/insight-character.png')}
               style={styles.character} resizeMode="contain"
             />
           </View>

@@ -6,7 +6,7 @@ import { colors, font, radius } from '../../theme';
 import { useT } from '../../i18n';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
-import { NUTRI_VARIANTS } from '../../ui/NutriAvatar';
+import { NUTRI_VARIANTS, NutriAvatar, pickVariantIndex } from '../../ui/NutriAvatar';
 
 const VARIANTS = [
   { key: 'coral', a: '#FFC27A', b: '#FF5509' },
@@ -47,10 +47,7 @@ export default function NutriAvatarScreen({ navigation }: any) {
       if (!userId) return;
       const { data } = await supabase.from('users').select('nutri_avatar').eq('id', userId).maybeSingle();
       const v = (data as any)?.nutri_avatar;
-      if (v != null) {
-        const n = parseInt(String(v), 10);
-        setSel(!isNaN(n) && NUTRI_VARIANTS[n] ? NUTRI_VARIANTS[n].key : String(v));
-      }
+      if (v != null) setSel(NUTRI_VARIANTS[pickVariantIndex(v)].key);
     })();
   }, [userId]);
   const [busy, setBusy] = useState(false);
@@ -73,9 +70,9 @@ export default function NutriAvatarScreen({ navigation }: any) {
           <Text style={styles.title}>{t('mob.chooseNutri', "Choose Your Nutri")}</Text>
           <Text style={styles.sub}>{t('mob.selectNutri', "Select your Nutri profile")}</Text>
           <View style={styles.grid}>
-            {VARIANTS.map((v) => (
+            {NUTRI_VARIANTS.map((v) => (
               <Pressable key={v.key} onPress={() => setSel(v.key)} style={[styles.cell, sel === v.key && styles.cellOn]}>
-                <Avatar a={v.a} b={v.b} halo={(v as any).halo} />
+                <NutriAvatar variant={v.key} size={112} />
               </Pressable>
             ))}
           </View>

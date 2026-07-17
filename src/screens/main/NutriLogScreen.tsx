@@ -6,6 +6,8 @@ import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
+import { getProfile } from '../../lib/api';
+import { pickVariantIndex } from '../../ui/NutriAvatar';
 import { saveChecklist } from '../../lib/daily';
 import {
   fetchDailyRecs, DailyRecs, orderedCategories, fetchCheckedToday,
@@ -20,6 +22,13 @@ import {
  */
 
 const PER_CATEGORY = 6;
+// Official per-Nutri daily-tip characters (approved assets 17 Jul)
+const TIP_CHARS = [
+  require('../../../assets/nutrilog/tip-char-1.png'),
+  require('../../../assets/nutrilog/tip-char-2.png'),
+  require('../../../assets/nutrilog/tip-char-3.png'),
+  require('../../../assets/nutrilog/tip-char-4.png'),
+];
 const MOODS = ['Low', 'Meh', 'Okay', 'Good', 'Great'];
 const ENERGY = ['Low', 'Low', 'Mid', 'High', 'High'];
 const FLOWS = ['None', 'Light', 'Medium', 'Heavy'];
@@ -32,12 +41,14 @@ export default function NutriLogScreen() {
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<'tip' | 'insight'>('tip');
   const [recs, setRecs] = useState<DailyRecs | null>(null);
+  const [charIdx, setCharIdx] = useState(0);
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const [meals, setMeals] = useState(0);
   const [quick, setQuick] = useState<{ mood: number | null; energy: number | null; flow_level: number | null; pain_symptoms: string[] }>({ mood: null, energy: null, flow_level: null, pain_symptoms: [] });
 
   const load = useCallback(async () => {
     if (!userId) { setLoading(false); return; }
+    getProfile(userId).then((p: any) => setCharIdx(pickVariantIndex(p?.nutri_avatar))).catch(() => {});
     const [r, ck, q, m] = await Promise.all([
       fetchDailyRecs(), fetchCheckedToday(userId, 'nutrition_checklist'), getQuickLog(userId), countMealsToday(userId),
     ]);
@@ -114,7 +125,7 @@ export default function NutriLogScreen() {
               {tab === 'tip' && tip?.why ? <Text style={styles.why}>{tip.why}</Text> : null}
             </View>
             <Image
-              source={tab === 'tip' ? require('../../../assets/nutrilog/tip-character.png') : require('../../../assets/nutrilog/insight-character.png')}
+              source={tab === 'tip' ? TIP_CHARS[charIdx] : require('../../../assets/nutrilog/insight-character.png')}
               style={styles.character} resizeMode="contain"
             />
           </View>

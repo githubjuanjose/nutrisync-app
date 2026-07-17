@@ -74,7 +74,7 @@ export default function MealHistoryScreen() {
               <View style={styles.dotRow}>
                 {week.map((on, i) => (
                   <Image key={i}
-                    source={on ? require('../../../assets/nutrilog/synced.png') : require('../../../assets/nutrilog/no-entry.png')}
+                    source={on ? require('../../../assets/nutrilog/streak-on.png') : require('../../../assets/nutrilog/streak-off.png')}
                     style={styles.dot} />
                 ))}
               </View>
