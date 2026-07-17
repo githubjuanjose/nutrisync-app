@@ -1,0 +1,57 @@
+import { supabase } from './supabase';
+
+/** R2-J data layer — score history + logs for Progress/History/Calendar. */
+
+export type ScoreRow = { date: string; cas_total: number; c1: number; c2: number; c3: number; c4: number; c5: number; phase: string | null; cycle_day: number | null };
+
+export async function fetchScoreHistory(userId: string, days = 365): Promise<ScoreRow[]> {
+  const since = new Date(); since.setDate(since.getDate() - days);
+  const { data } = await supabase.from('daily_scores')
+    .select('date,cas_total,component_1_phase_confidence,component_2_biomarkers,component_3_nutrition,component_4_fitness,component_5_logging,phase,cycle_day')
+    .eq('user_id', userId).gte('date', since.toISOString().slice(0, 10)).order('date', { ascending: true });
+  return ((data as any[]) ?? []).map((d) => ({
+    date: d.date, cas_total: Number(d.cas_total), phase: d.phase, cycle_day: d.cycle_day,
+    c1: Number(d.component_1_phase_confidence), c2: Number(d.component_2_biomarkers),
+    c3: Number(d.component_3_nutrition), c4: Number(d.component_4_fitness), c5: Number(d.component_5_logging),
+  }));
+}
+
+/** Split history into cycles using cycle_day resets; last entry = current cycle. */
+export function splitCycles(rows: ScoreRow[]): ScoreRow[][] {
+  const out: ScoreRow[][] = []; let cur: ScoreRow[] = [];
+  let prev = Infinity;
+  rows.forEach((r) => {
+    const d = r.cycle_day ?? 0;
+    if (d < prev && cur.length) { out.push(cur); cur = []; }
+    cur.push(r); prev = d;
+  });
+  if (cur.length) out.push(cur);
+  return out;
+}
+export const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null);
+
+export async function fetchMoodEnergy(userId: string, days = 120): Promise<{ date: string; mood: number | null; energy: number | null }[]> {
+  const since = new Date(); since.setDate(since.getDate() - days);
+  const { data } = await supabase.from('daily_logs').select('date,mood,energy')
+    .eq('user_id', userId).gte('date', since.toISOString().slice(0, 10)).order('date', { ascending: true });
+  return (data as any[]) ?? [];
+}
+
+/** Cycle Stability (CSS) — long-term mood/energy consistency, NOT today's CAS.
+ *  0..1: low = volatile, high = aligned. Needs ≥7 logged days to mean anything. */
+export function stabilityScore(logs: { mood: number | null; energy: number | null }[]): { score: number | null; n: number } {
+  const vals = logs.filter((l) => l.mood != null && l.energy != null);
+  if (vals.length < 7) return { score: null, n: vals.length };
+  const series = vals.map((v) => (v.mood! + v.energy!) / 2);
+  const m = series.reduce((a, b) => a + b, 0) / series.length;
+  const sd = Math.sqrt(series.reduce((a, b) => a + (b - m) * (b - m), 0) / series.length);
+  // sd 0 → perfectly stable (1.0); sd ≥ 1.6 (on the 1–5 scale) → volatile (0)
+  return { score: Math.max(0, Math.min(1, 1 - sd / 1.6)), n: vals.length };
+}
+
+/** Days with intimacy logged (calendar stars — F4). */
+export async function fetchSexDays(userId: string, fromISO: string): Promise<Set<string>> {
+  const { data } = await supabase.from('daily_logs').select('date,sex_logged')
+    .eq('user_id', userId).gte('date', fromISO).not('sex_logged', 'is', null);
+  return new Set(((data as any[]) ?? []).map((r) => r.date));
+}
