@@ -190,7 +190,12 @@
     "alertDeactivate": "Tijdens de bèta loopt deactivering via support — mail hello@nutrisynccollective.com.",
     "alertDemoAccount": "Demomodus — accountacties vereisen de live backend.",
     "welTo": "Welkom bij",
-    "welP": "Je bent hier omdat je lichaam beter verdient dan giswerk. Laten we je voeding en beweging syncen met je natuurlijke ritme."
+    "welP": "Je bent hier omdat je lichaam beter verdient dan giswerk. Laten we je voeding en beweging syncen met je natuurlijke ritme.",
+    "prCurrent": "Huidig",
+    "prWeekly": "Weekgemiddelde",
+    "prBest": "Beste",
+    "battEmpty": "Leeg",
+    "battFull": "Opgeladen"
   },
   "dows": [
     "ZO",
@@ -769,6 +774,14 @@
   "calBannerNone": "Log de start van je menstruatie en Nutri voorspelt de maand vooruit.",
   "calBannerDemo": "Volgende menstruatie verwacht rond 24 maart — Nutri schakelt je voeding twee dagen vooraf naar ijzer en comfortfood.",
   "calBannerForming": "Voorspelling in opbouw — je schatting van 24 maart wordt met elke gelogde dag scherper.",
+  "condLabels": {
+    "PCOS": "PMOS",
+    "Endometriosis": "Endometriose",
+    "Thyroid": "Schildklier",
+    "Anaemia": "Bloedarmoede",
+    "IBS": "Prikkelbare darm",
+    "None diagnosed": "Geen diagnose"
+  },
   "_meta": {
     "lang": "nl",
     "name": "Nederlands",

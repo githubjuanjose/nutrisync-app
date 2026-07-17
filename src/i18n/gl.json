@@ -190,7 +190,12 @@
     "alertDeactivate": "Durante a beta, a desactivación xestiónase co soporte — escribe a hello@nutrisynccollective.com.",
     "alertDemoAccount": "Modo demo — as accións da conta precisan o backend en produción.",
     "welTo": "Benvida a",
-    "welP": "Estás aquí porque o teu corpo merece algo mellor cás adiviñas. Sincronicemos a túa nutrición e o teu movemento co teu ritmo natural."
+    "welP": "Estás aquí porque o teu corpo merece algo mellor cás adiviñas. Sincronicemos a túa nutrición e o teu movemento co teu ritmo natural.",
+    "prCurrent": "Actual",
+    "prWeekly": "Media semanal",
+    "prBest": "Mellor",
+    "battEmpty": "Esgotada",
+    "battFull": "Cargada"
   },
   "dows": [
     "DOM",
@@ -769,6 +774,14 @@
   "calBannerNone": "Rexistra o inicio da regra e Nutri predirá o mes que vén.",
   "calBannerDemo": "Próxima regra prevista arredor do 24 de marzo — Nutri desprazará a túa alimentación cara ao ferro e os pratos reconfortantes dous días antes.",
   "calBannerForming": "Predición en marcha — a estimación do 24 de marzo afínase con cada día que rexistras.",
+  "condLabels": {
+    "PCOS": "PMOS",
+    "Endometriosis": "Endometriose",
+    "Thyroid": "Tiroide",
+    "Anaemia": "Anemia",
+    "IBS": "Colon irritable",
+    "None diagnosed": "Ningún diagnóstico"
+  },
   "_meta": {
     "lang": "gl",
     "name": "Galego",

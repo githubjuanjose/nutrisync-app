@@ -190,7 +190,12 @@
     "alertDeactivate": "测试期间，停用账号请联系支持——hello@nutrisynccollective.com。",
     "alertDemoAccount": "演示模式——账号操作需要正式后端。",
     "welTo": "欢迎来到",
-    "welP": "你来到这里，是因为你的身体值得比猜测更好的答案。让我们把营养与运动同步到你的自然节律。"
+    "welP": "你来到这里，是因为你的身体值得比猜测更好的答案。让我们把营养与运动同步到你的自然节律。",
+    "prCurrent": "当前",
+    "prWeekly": "周平均",
+    "prBest": "最佳",
+    "battEmpty": "耗尽",
+    "battFull": "满电"
   },
   "dows": [
     "周日",
@@ -769,6 +774,14 @@
   "calBannerNone": "记录经期开始日，Nutri 就能预测未来一个月。",
   "calBannerDemo": "下次月经预计在 3月24日 前后——Nutri 会提前两天把饮食转向铁质和抚慰食物。",
   "calBannerForming": "预测生成中——你每记录一天，3月24日 的预估就更精准。",
+  "condLabels": {
+    "PCOS": "PMOS",
+    "Endometriosis": "子宫内膜异位症",
+    "Thyroid": "甲状腺",
+    "Anaemia": "贫血",
+    "IBS": "肠易激综合征",
+    "None diagnosed": "无确诊"
+  },
   "_meta": {
     "lang": "zh",
     "name": "中文",

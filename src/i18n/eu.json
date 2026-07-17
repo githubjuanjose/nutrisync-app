@@ -190,7 +190,12 @@
     "alertDeactivate": "Beta bitartean, desaktibazioa laguntza-taldeak kudeatzen du — idatzi hello@nutrisynccollective.com helbidera.",
     "alertDemoAccount": "Demo modua — kontu-ekintzek backend bizia behar dute.",
     "welTo": "Ongi etorri",
-    "welP": "Hemen zaude zure gorputzak asmakizunak baino gehiago merezi duelako. Sinkroniza ditzagun zure elikadura eta mugimendua zure erritmo naturalarekin."
+    "welP": "Hemen zaude zure gorputzak asmakizunak baino gehiago merezi duelako. Sinkroniza ditzagun zure elikadura eta mugimendua zure erritmo naturalarekin.",
+    "prCurrent": "Oraingoa",
+    "prWeekly": "Asteko batezbestekoa",
+    "prBest": "Onena",
+    "battEmpty": "Hustuta",
+    "battFull": "Kargatuta"
   },
   "dows": [
     "IG",
@@ -769,6 +774,14 @@
   "calBannerNone": "Erregistratu hilekoaren hasiera eta Nutrik hurrengo hilabetea iragarriko du.",
   "calBannerDemo": "Hurrengo hilekoa martxoaren 24aren inguruan espero da — Nutrik zure elikadura burdinara eta plater lasaigarrietara bideratuko du bi egun lehenago.",
   "calBannerForming": "Iragarpena osatzen ari da — martxoaren 24ko estimazioa zorrozten da erregistratzen duzun egun bakoitzarekin.",
+  "condLabels": {
+    "PCOS": "PMOS",
+    "Endometriosis": "Endometriosia",
+    "Thyroid": "Tiroidea",
+    "Anaemia": "Anemia",
+    "IBS": "Heste narritakorra",
+    "None diagnosed": "Diagnostikorik ez"
+  },
   "_meta": {
     "lang": "eu",
     "name": "Euskara",

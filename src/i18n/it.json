@@ -190,7 +190,12 @@
     "alertDeactivate": "Durante la beta la disattivazione passa dal supporto — scrivi a hello@nutrisynccollective.com.",
     "alertDemoAccount": "Modalità demo — le azioni sull'account richiedono il backend live.",
     "welTo": "Benvenuta su",
-    "welP": "Sei qui perché il tuo corpo merita di meglio delle supposizioni. Sincronizziamo la tua nutrizione e il tuo movimento col tuo ritmo naturale."
+    "welP": "Sei qui perché il tuo corpo merita di meglio delle supposizioni. Sincronizziamo la tua nutrizione e il tuo movimento col tuo ritmo naturale.",
+    "prCurrent": "Attuale",
+    "prWeekly": "Media settimanale",
+    "prBest": "Migliore",
+    "battEmpty": "Scarica",
+    "battFull": "Carica"
   },
   "dows": [
     "DOM",
@@ -769,6 +774,14 @@
   "calBannerNone": "Registra l'inizio del ciclo e Nutri prevederà il mese in arrivo.",
   "calBannerDemo": "Prossimo ciclo previsto intorno al 24 marzo — Nutri sposterà la tua alimentazione su ferro e comfort food due giorni prima.",
   "calBannerForming": "Previsione in formazione — la stima del 24 marzo si affina con ogni giorno registrato.",
+  "condLabels": {
+    "PCOS": "PMOS",
+    "Endometriosis": "Endometriosi",
+    "Thyroid": "Tiroide",
+    "Anaemia": "Anemia",
+    "IBS": "Colon irritabile",
+    "None diagnosed": "Nessuna diagnosi"
+  },
   "_meta": {
     "lang": "it",
     "name": "Italiano",

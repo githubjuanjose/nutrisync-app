@@ -190,7 +190,12 @@
     "backToSite": "Retour au site",
     "obStartOver": "Recommencer",
     "welTo": "Bienvenue sur",
-    "welP": "Tu es ici parce que ton corps mérite mieux que des devinettes. Synchronisons ta nutrition et ton mouvement avec ton rythme naturel."
+    "welP": "Tu es ici parce que ton corps mérite mieux que des devinettes. Synchronisons ta nutrition et ton mouvement avec ton rythme naturel.",
+    "prCurrent": "Actuel",
+    "prWeekly": "Moyenne hebdo",
+    "prBest": "Record",
+    "battEmpty": "À plat",
+    "battFull": "Chargée"
   },
   "dows": [
     "DIM",
@@ -769,6 +774,14 @@
   "calBannerNone": "Consigne le début de tes règles et Nutri prédira le mois à venir.",
   "calBannerDemo": "Prochaines règles attendues vers le 24 mars — Nutri basculera ton alimentation vers le fer et les plats réconfortants deux jours avant.",
   "calBannerForming": "Prédiction en cours — ton estimation du 24 mars s'affine à chaque journée consignée.",
+  "condLabels": {
+    "PCOS": "PMOS",
+    "Endometriosis": "Endométriose",
+    "Thyroid": "Thyroïde",
+    "Anaemia": "Anémie",
+    "IBS": "Côlon irritable",
+    "None diagnosed": "Aucun diagnostic"
+  },
   "_meta": {
     "lang": "fr",
     "name": "Français",

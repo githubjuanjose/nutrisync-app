@@ -190,7 +190,12 @@
     "alertDeactivate": "ベータ期間中の停止はサポート経由で——hello@nutrisynccollective.com までご連絡ください。",
     "alertDemoAccount": "デモモード——アカウント操作には本番バックエンドが必要です。",
     "welTo": "ようこそ",
-    "welP": "あなたがここにいるのは、体が推測よりも良いものに値するから。栄養と運動を、あなた本来のリズムにシンクさせましょう。"
+    "welP": "あなたがここにいるのは、体が推測よりも良いものに値するから。栄養と運動を、あなた本来のリズムにシンクさせましょう。",
+    "prCurrent": "現在",
+    "prWeekly": "週平均",
+    "prBest": "ベスト",
+    "battEmpty": "空",
+    "battFull": "フル充電"
   },
   "dows": [
     "日",
@@ -769,6 +774,14 @@
   "calBannerNone": "生理開始日を記録すると、Nutri がひと月先を予測します。",
   "calBannerDemo": "次の生理は3月24日頃の見込み——Nutri は2日前から鉄分と癒やしの食事へシフトします。",
   "calBannerForming": "予測を生成中——記録するごとに3月24日の見込みが正確になります。",
+  "condLabels": {
+    "PCOS": "PMOS",
+    "Endometriosis": "子宮内膜症",
+    "Thyroid": "甲状腺",
+    "Anaemia": "貧血",
+    "IBS": "過敏性腸症候群",
+    "None diagnosed": "診断なし"
+  },
   "_meta": {
     "lang": "ja",
     "name": "日本語",
