@@ -2,6 +2,8 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainTabs from './MainTabs';
 import MoodEnergyGate from '../screens/main/MoodEnergyGate';
+import MealLogScreen from '../screens/main/MealLogScreen';
+import MealHistoryScreen from '../screens/main/MealHistoryScreen';
 import EditPeriodScreen from '../screens/main/EditPeriodScreen';
 import EditHealthScreen from '../screens/main/EditHealthScreen';
 import NotificationCenterScreen from '../screens/main/NotificationCenterScreen';
@@ -26,6 +28,8 @@ export default function AppStack() {
       <Stack.Screen name="Gate" component={MoodEnergyGate} options={{ presentation: 'modal' }} />
       <Stack.Screen name="EditPeriod" component={EditPeriodScreen} options={{ presentation: 'modal' }} />
       <Stack.Screen name="EditHealth" component={EditHealthScreen} options={{ presentation: 'modal' }} />
+      <Stack.Screen name="MealLog" component={MealLogScreen} />
+      <Stack.Screen name="MealHistory" component={MealHistoryScreen} />
       <Stack.Screen name="NotificationCenter" component={NotificationCenterScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="AppPreferences" component={AppPreferencesScreen} />
