@@ -10,7 +10,7 @@ function Chevron() {
   // Bold double-chevron "«" — clearly visible back affordance.
   return (
     <Svg width={24} height={24} viewBox="0 0 24 24">
-      <Path d="M13 6l-6 6 6 6M19 6l-6 6 6 6" stroke={colors.ink} strokeWidth={2.6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M15 6l-6 6 6 6" stroke={colors.ink} strokeWidth={2.6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
@@ -40,7 +40,9 @@ export function OnboardingLayout({
   nextFull = false, nextDisabled = false, children,
 }: Props) {
   const t = useT();
-  const resolvedNextLabel = nextLabel ?? t('ui.next', 'Next');
+  const rawNextLabel = nextLabel ?? t('ui.next', 'Next');
+  // F14: locales ship 'Next →' — we render our own SVG arrow, so strip trailing arrows.
+  const resolvedNextLabel = rawNextLabel.replace(/\s*[→›»]+\s*$/, '');
   return (
     <View style={styles.fill}>
       <SafeAreaView style={styles.fill} edges={['top', 'bottom']}>
@@ -53,11 +55,8 @@ export function OnboardingLayout({
           </View>
           <View style={styles.headRight}>
             {stepLabel ? <Text style={styles.step}>{stepLabel}</Text> : null}
-            {onRestart ? (
-              <Pressable onPress={onRestart} hitSlop={8} style={styles.restart}>
-                <Text style={styles.restartTxt}>{t('mob.startOver', 'Start over')}</Text>
-              </Pressable>
-            ) : (!stepLabel ? <View style={{ width: 30 }} /> : null)}
+            {/* F15: Start over removed from onboarding per PO feedback */}
+            {!stepLabel ? <View style={{ width: 30 }} /> : null}
           </View>
         </View>
 

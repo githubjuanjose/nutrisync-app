@@ -6,6 +6,7 @@ import { colors, font, radius } from '../../theme';
 import { useT } from '../../i18n';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
+import { NUTRI_VARIANTS } from '../../ui/NutriAvatar';
 
 const VARIANTS = [
   { key: 'coral', a: '#FFC27A', b: '#FF5509' },

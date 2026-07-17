@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Pressable, ScrollView, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { NutriAvatar } from '../../ui/NutriAvatar';
 import { colors, font, radius, shadow } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
 import { PhaseRing } from '../../ui/PhaseRing';
@@ -80,11 +81,9 @@ export default function CycleScreen({ navigation }: any) {
               <Text style={styles.brand}>NUTRISYNC</Text>
             </View>
             <View style={styles.headerRight}>
-              <Pressable style={styles.bell} onPress={() => navigation.navigate('NotificationCenter')}>
-                <Text style={styles.bellIcon}>🔔</Text>
-              </Pressable>
+              {/* F23: bell removed per PO feedback (notifications stay reachable via Settings) */}
               <Pressable style={styles.avatarWrap} onPress={() => navigation.navigate('Settings')}>
-                <Image source={{ uri: 'https://i.pravatar.cc/100?img=47' }} style={styles.avatar} />
+                <NutriAvatar variant={(profile as any)?.nutri_avatar} size={44} />
                 <View style={styles.online} />
               </Pressable>
             </View>
@@ -113,12 +112,12 @@ export default function CycleScreen({ navigation }: any) {
           <View style={styles.actions}>
             <Pressable onPress={() => navigation.navigate('EditPeriod')}>
               <LinearGradient colors={['#F18BA0', '#E4708A']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.pill}>
-                <Text style={styles.pillTxt}>{t('ui.editPeriodBtn', 'edit period')}</Text>
+                <Text style={styles.pillTxt}>{t('mob.logSymptomsBtn', 'Log symptoms')}</Text>
               </LinearGradient>
             </Pressable>
             <Pressable onPress={() => navigation.navigate('EditHealth')}>
               <LinearGradient colors={[colors.orange, colors.orangeLight]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.pill}>
-                <Text style={styles.pillTxt}>{t('ui.editHealthBtn', 'edit health')}</Text>
+                <Text style={styles.pillTxt}>{t('mob.nutriGoalsBtn', 'NutriGoals')}</Text>
               </LinearGradient>
             </Pressable>
           </View>
