@@ -5,11 +5,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { NutriAvatar } from '../../ui/NutriAvatar';
 import { colors, font, radius, shadow } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
-import { PhaseRing } from '../../ui/PhaseRing';
+import { CycleRingInteractive } from '../../ui/CycleRingInteractive';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle, UserRow, CycleRow } from '../../lib/api';
 import { cycleDay, phaseForDay, displayPhase, cycleProgress } from '../../lib/cas';
-import { getTodayLog, getTodayScore } from '../../lib/daily';
+import { getTodayLog, getTodayScore, DailyLog } from '../../lib/daily';
 import { useT } from '../../i18n';
 
 const WINGS = require('../../../assets/nutri-wings.png');
@@ -34,6 +34,7 @@ export default function CycleScreen({ navigation }: any) {
   const [profile, setProfile] = useState<UserRow | null>(null);
   const [cycle, setCycle] = useState<CycleRow | null>(null);
   const [score, setScore] = useState<number | null>(null);
+  const [todayLog, setTodayLog] = useState<DailyLog | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,9 +43,8 @@ export default function CycleScreen({ navigation }: any) {
       if (!userId) { setLoading(false); return; }
       const [p, c, log] = await Promise.all([getProfile(userId), getCurrentCycle(userId), getTodayLog(userId)]);
       if (!m) return;
-      setProfile(p); setCycle(c); setLoading(false);
-      // Daily "Before we Sync" gate — show once per day if mood/energy not logged.
-      if (c && (!log || log.mood == null || log.energy == null)) navigation.navigate('Gate');
+      setProfile(p); setCycle(c); setTodayLog(log); setLoading(false);
+      // F24: the check-in gate never auto-opens — the battery button on the ring opens it.
     })();
     return () => { m = false; };
   }, [userId]);
@@ -52,7 +52,7 @@ export default function CycleScreen({ navigation }: any) {
   // Refresh the CAS score whenever this tab regains focus (after logging).
   useEffect(() => {
     const unsub = navigation.addListener('focus', async () => {
-      if (userId) setScore(await getTodayScore(userId));
+      if (userId) { setScore(await getTodayScore(userId)); setTodayLog(await getTodayLog(userId)); }
     });
     return unsub;
   }, [navigation, userId]);
@@ -106,7 +106,13 @@ export default function CycleScreen({ navigation }: any) {
           </View>
 
           <View style={styles.ringWrap}>
-            <PhaseRing phase={label} phaseLabel={label} day={day} progress={cycleProgress(day, len)} badge={len} />
+            <CycleRingInteractive
+              todayDay={day} cycleLen={len} periodDur={dur}
+              phaseName={(k) => t('phaseNames.' + k, k[0].toUpperCase() + k.slice(1))}
+              phaseForDay={(d) => displayPhase(phaseForDay(d, len, dur))}
+              onEnergyPress={() => navigation.navigate('Gate')}
+              energyLevel={todayLog?.energy ?? null}
+            />
           </View>
 
           <View style={styles.actions}>
