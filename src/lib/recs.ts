@@ -91,6 +91,28 @@ export async function countMealsToday(userId: string): Promise<number> {
   return count ?? 0;
 }
 
+/** R2-D · free-text movement log (movement_logs table; falls back to no-op if the migration hasn't run). */
+export async function saveMovementText(userId: string, description: string, ctx?: { day?: number; phase?: string }) {
+  const { error } = await supabase.from('movement_logs').insert({
+    user_id: userId, date: todayISO(), description,
+    cycle_day: ctx?.day ?? null, phase: ctx?.phase ?? null,
+  });
+  if (error) throw error;
+}
+
+export type MovementLogRow = { id: number; date: string; description: string; phase: string | null };
+export async function fetchMovementHistory(userId: string, days = 30): Promise<{ logs: MovementLogRow[]; checks: { date: string; item_name: string; category_tag: string | null; phase?: string | null }[] }> {
+  const since = new Date(); since.setDate(since.getDate() - days);
+  const iso = since.toISOString().slice(0, 10);
+  const [l, c] = await Promise.all([
+    supabase.from('movement_logs').select('id,date,description,phase')
+      .eq('user_id', userId).gte('date', iso).order('date', { ascending: false }),
+    supabase.from('movement_checklist').select('date,item_name,category_tag,phase')
+      .eq('user_id', userId).gte('date', iso).eq('checked', true).order('date', { ascending: false }),
+  ]);
+  return { logs: (l.data as MovementLogRow[]) ?? [], checks: (c.data as any[]) ?? [] };
+}
+
 /** Simple food search over the content DB (barcode scan is a future feature). */
 export async function searchFoods(q: string): Promise<{ id: string; name: string; category: string }[]> {
   if (!q.trim()) return [];

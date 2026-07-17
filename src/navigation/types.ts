@@ -14,6 +14,8 @@ export type RootStackParamList = {
   EditNutriGoal: undefined;
   MealLog: undefined;
   MealHistory: undefined;
+  LogMovement: undefined;
+  MovementHistory: undefined;
   NotificationCenter: undefined;
   // Settings
   SettingsProfile: undefined;
