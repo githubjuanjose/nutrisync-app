@@ -19,6 +19,7 @@ export type RootStackParamList = {
   NotificationCenter: undefined;
   // Settings
   SettingsProfile: undefined;
+  CycleHealth: undefined;
   Security: undefined;
   DataPrivacy: undefined;
   CommunityPrivacy: undefined;

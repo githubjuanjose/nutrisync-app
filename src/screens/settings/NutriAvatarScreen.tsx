@@ -42,6 +42,17 @@ export default function NutriAvatarScreen({ navigation }: any) {
   const t = useT();
   const { userId } = useSession();
   const [sel, setSel] = useState('coral');
+  React.useEffect(() => {
+    (async () => {
+      if (!userId) return;
+      const { data } = await supabase.from('users').select('nutri_avatar').eq('id', userId).maybeSingle();
+      const v = (data as any)?.nutri_avatar;
+      if (v != null) {
+        const n = parseInt(String(v), 10);
+        setSel(!isNaN(n) && NUTRI_VARIANTS[n] ? NUTRI_VARIANTS[n].key : String(v));
+      }
+    })();
+  }, [userId]);
   const [busy, setBusy] = useState(false);
 
   const save = async () => {
@@ -85,8 +96,8 @@ const styles = StyleSheet.create({
   title: { fontFamily: font.bold, fontSize: 24, color: colors.ink, marginTop: 6 },
   sub: { fontFamily: font.regular, fontSize: 14, color: colors.muted, marginTop: 4 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: 30, gap: 16 },
-  cell: { width: '46%', aspectRatio: 1, borderRadius: radius.lg, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'transparent' },
-  cellOn: { borderColor: colors.coral, backgroundColor: '#FFF3EE' },
+  cell: { width: '46%', aspectRatio: 1, borderRadius: 999, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'transparent' },  // F42: circular
+  cellOn: { borderColor: colors.coral },  // F42: thin red circular outline only
   save: { backgroundColor: '#F6A99A', height: 52, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', marginBottom: 20 },
   saveTxt: { fontFamily: font.semibold, fontSize: 16, color: '#fff' },
 });
