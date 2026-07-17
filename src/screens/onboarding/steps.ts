@@ -70,7 +70,14 @@ export const STEPS: Step[] = [
   {
     kind: 'question', id: 'nutritionDiet', section: 'Nutritional Prefrences',
     question: 'Do you follow any specific nutrition plan?',
-    options: opt(['Balanced Diet', 'Keto', 'Vegetarian', 'Low Carb', 'Pescatarian', 'Vegan', 'No diet']),
+    options: opt(['Balanced Diet', 'Keto', 'Vegetarian', 'Low Carb', 'Pescatarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'No diet', 'Other']),
+    stepLabel: '1/1', progress: 1,
+  },
+
+  {
+    kind: 'question', id: 'nutriGoal', section: 'Your NutriGoal',
+    question: "What's your primary goal?",
+    options: opt(['Reduce physical PMS symptoms', 'Feel more emotionally balanced', 'More stable energy throughout my cycle', 'Fewer PMS mood crashes']),
     stepLabel: '1/1', progress: 1,
   },
 

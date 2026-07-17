@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ActivityIndicator, PanResponder } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
@@ -9,9 +9,20 @@ import { useT } from '../../i18n';
 const VALUES = [5, 4, 3, 2, 1];
 
 function Scale({ value, onSelect, tint }: { value: number | null; onSelect: (v: number) => void; tint: 'mood' | 'energy' }) {
+  // F25 — slide to log: drag up raises the value, drag down lowers it (taps still work).
+  const start = React.useRef({ y: 0, v: 3 });
+  const pan = React.useRef(PanResponder.create({
+    onMoveShouldSetPanResponder: (_e, g) => Math.abs(g.dy) > 8,
+    onPanResponderGrant: (e) => { start.current = { y: e.nativeEvent.pageY, v: value ?? 3 }; },
+    onPanResponderMove: (e) => {
+      const delta = Math.round((start.current.y - e.nativeEvent.pageY) / 26);
+      const v = Math.max(1, Math.min(5, start.current.v + delta));
+      if (v !== value) onSelect(v);
+    },
+  })).current;
   const base = tint === 'mood' ? '#4E7B4E' : colors.coral;
   return (
-    <View style={{ alignItems: 'center', gap: 10 }}>
+    <View style={{ alignItems: 'center', gap: 10 }} {...pan.panHandlers}>
       {VALUES.map((v) => {
         const on = value != null && v <= value;
         // graduated shade: lower values slightly lighter

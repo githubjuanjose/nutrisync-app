@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable, Platform, BackHandler, Alert } from 'react-native';
+import { Animated, Easing } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Svg, { Path } from 'react-native-svg';
@@ -8,6 +9,18 @@ import { RootStackParamList } from '../../navigation/types';
 import { OnboardingLayout } from './OnboardingLayout';
 import { SelectList } from '../../ui/SelectList';
 import { NutriOrb } from '../../ui/NutriOrb';
+
+/** F18 — the Nutri floats subtly on the onboarding screens (gentle 3.2s loop). */
+function Floaty({ children }: { children: React.ReactNode }) {
+  const y = React.useRef(new Animated.Value(0)).current;
+  React.useEffect(() => {
+    Animated.loop(Animated.sequence([
+      Animated.timing(y, { toValue: -7, duration: 1600, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
+      Animated.timing(y, { toValue: 0, duration: 1600, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
+    ])).start();
+  }, [y]);
+  return <Animated.View style={{ transform: [{ translateY: y }] }}>{children}</Animated.View>;
+}
 import { STEPS, Step } from './steps';
 import { supabase } from '../../lib/supabase';
 import { saveOnboarding } from '../../lib/api';
@@ -24,7 +37,7 @@ const toISO = (d: Date) => d.toISOString().slice(0, 10);
 function HaloOrb({ size = 180 }: { size?: number }) {
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center', height: size + 20 }}>
-      <NutriOrb size={size * 1.15} withHalo />
+      <Floaty><NutriOrb size={size * 1.15} withHalo /></Floaty>
     </View>
   );
 }
@@ -82,6 +95,11 @@ export default function OnboardingWizard({ navigation }: Props) {
 
   // Persist onboarding to Supabase, then enter the app.
   const finish = async () => {
+    // F20: persist the selected NutriGoal (drives the recommendation engine ranking)
+    try {
+      const g = (answers['nutriGoal'] ?? [])[0];
+      if (g && userId) { const { supabase } = require('../../lib/supabase'); await supabase.from('users').update({ nutrigoal: g }).eq('id', userId); }
+    } catch {}
     setSaveErr('');
     setSaving(true);
     try {
