@@ -266,12 +266,13 @@
     "Eggs": "Huevos"
   },
   "condLabels": {
-    "PCOS": "SOP",
+    "PCOS": "PMOS",
     "Endometriosis": "Endometriosis",
     "Thyroid": "Tiroides",
     "Anaemia": "Anemia",
     "IBS": "SII",
-    "None diagnosed": "Ninguna diagnosticada"
+    "None diagnosed": "Ninguna diagnosticada",
+    "PMOS": "PMOS"
   },
   "goalLabels": {
     "Balance my energy": "Equilibrar mi energía",

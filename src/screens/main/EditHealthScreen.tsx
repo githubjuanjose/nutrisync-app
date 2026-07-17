@@ -17,9 +17,11 @@ const NUTRIGOALS = [
   'Fewer PMS mood crashes',
 ];
 const ALLERGIES = ['Milk', 'Eggs', 'Fish', 'Shellfish', 'Peanuts', 'Tree nuts', 'Wheat', 'Soy'];
-const CONDITIONS = ['Adenomyosis', 'Irregular Cycles', 'Hypothyroidism', 'PCOS', 'Endometriosis', "Hashimoto's", 'Heavy menstrual bleeding', 'Hyperthyroidism'];
+// PCOS was officially renamed PMOS (polyendocrine metabolic ovarian syndrome, May 2026).
+// We display PMOS; norm() aliases the legacy 'pcos' token so previously saved logs still match.
+const CONDITIONS = ['Adenomyosis', 'Irregular Cycles', 'Hypothyroidism', 'PMOS', 'Endometriosis', "Hashimoto's", 'Heavy menstrual bleeding', 'Hyperthyroidism'];
 
-const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').replace(/^pcos$/, 'pmos');
 /** A chip is "on" if its normalized token is in the stored array. */
 const has = (arr: string[], label: string) => arr.map(norm).includes(norm(label));
 const toggleTok = (arr: string[], label: string) => {

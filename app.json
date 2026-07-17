@@ -6,25 +6,37 @@
     "orientation": "portrait",
     "scheme": "nutrisync",
     "userInterfaceStyle": "light",
-    "runtimeVersion": { "policy": "appVersion" },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
     "updates": {
       "url": "https://u.expo.dev/3b124e7e-e7e8-43ed-a54c-b660a07109dc",
       "fallbackToCacheTimeout": 0
     },
     "extra": {
-      "eas": { "projectId": "3b124e7e-e7e8-43ed-a54c-b660a07109dc" }
+      "eas": {
+        "projectId": "3b124e7e-e7e8-43ed-a54c-b660a07109dc"
+      }
     },
     "splash": {
       "backgroundColor": "#FCF1EC",
       "resizeMode": "contain"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.nutrisync.app",
-      "config": { "usesNonExemptEncryption": false }
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
-    "android": { "package": "com.nutrisync.app" },
-    "plugins": ["expo-font"]
+    "android": {
+      "package": "com.nutrisync.app"
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
