@@ -6,7 +6,6 @@
     "orientation": "portrait",
     "scheme": "nutrisync",
     "userInterfaceStyle": "light",
-    "newArchEnabled": false,
     "runtimeVersion": { "policy": "appVersion" },
     "updates": {
       "url": "https://u.expo.dev/3b124e7e-e7e8-43ed-a54c-b660a07109dc",
