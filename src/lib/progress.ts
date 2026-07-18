@@ -55,3 +55,12 @@ export async function fetchSexDays(userId: string, fromISO: string): Promise<Set
     .eq('user_id', userId).gte('date', fromISO).not('sex_logged', 'is', null);
   return new Set(((data as any[]) ?? []).map((r) => r.date));
 }
+
+/** R3-17: sex days WITH protection type — calendar shows ★ (protected) vs ☆ (unprotected). */
+export async function fetchSexDayTypes(userId: string, fromISO: string): Promise<Map<string, 'protected' | 'unprotected'>> {
+  const { data } = await supabase.from('daily_logs').select('date,sex_logged')
+    .eq('user_id', userId).gte('date', fromISO).not('sex_logged', 'is', null);
+  const m = new Map<string, 'protected' | 'unprotected'>();
+  for (const r of (data as any[]) ?? []) m.set(r.date, r.sex_logged === 'unprotected' ? 'unprotected' : 'protected');
+  return m;
+}
