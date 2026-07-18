@@ -3,7 +3,26 @@ import { View, Text, StyleSheet, TextInput, Pressable, Platform, BackHandler, Al
 import { Animated, Easing } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Path, Circle, Rect } from 'react-native-svg';
+
+/** R3-56 (F6): red outline consent icons per the wireframe — no emojis. */
+function ConsentIcon({ name }: { name: string }) {
+  const p = { stroke: '#E4572E', strokeWidth: 1.8, fill: 'none' as const, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
+  return (
+    <Svg width={26} height={26} viewBox="0 0 24 24">
+      {name === 'cycle' ? (<>
+        <Circle cx={12} cy={12} r={8.2} {...p} />
+        <Path d="M12 3.8v3M12 17.2v3M3.8 12h3M17.2 12h3" {...p} />
+      </>) : name === 'salad' ? (<>
+        <Path d="M4 12h16c0 4.4-3.6 7.5-8 7.5S4 16.4 4 12z" {...p} />
+        <Path d="M8 12c0-3 1.5-5.5 4-7 2.5 1.5 4 4 4 7" {...p} />
+      </>) : (<>
+        <Rect x={6} y={10.5} width={12} height={8.5} rx={2} {...p} />
+        <Path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" {...p} />
+      </>)}
+    </Svg>
+  );
+}
 import { colors, font, radius, shadow } from '../../theme';
 import { RootStackParamList } from '../../navigation/types';
 import { OnboardingLayout } from './OnboardingLayout';
@@ -111,6 +130,7 @@ export default function OnboardingWizard({ navigation }: Props) {
         email: user.email ?? undefined,
         city: city.trim() || undefined,
         lastPeriodStart: toISO(periodDate ?? new Date()),
+        dietOther: (answers['nutritionDiet'] ?? [])[0] === 'Other' ? (dietOther.trim() || undefined) : undefined,
       });
       // Onboarding complete → the session-aware navigator swaps to the main app.
       await refreshOnboarding();
@@ -121,10 +141,19 @@ export default function OnboardingWizard({ navigation }: Props) {
     }
   };
 
+  const [dietOther, setDietOther] = useState('');
+
+  // R3-52: 'None of the above' is exclusive — picking it clears the rest,
+  // picking a condition clears it.
+  const EXCLUSIVE = 'None of the above';
   const toggle = (id: string, value: string, multi?: boolean) =>
     setAnswers((p) => {
       const cur = p[id] ?? [];
-      if (multi) return { ...p, [id]: cur.includes(value) ? cur.filter((v) => v !== value) : [...cur, value] };
+      if (multi) {
+        if (value === EXCLUSIVE) return { ...p, [id]: cur.includes(EXCLUSIVE) ? [] : [EXCLUSIVE] };
+        const nxt = cur.includes(value) ? cur.filter((v) => v !== value) : [...cur.filter((v) => v !== EXCLUSIVE), value];
+        return { ...p, [id]: nxt };
+      }
       return { ...p, [id]: [value] };
     });
 
@@ -147,6 +176,15 @@ export default function OnboardingWizard({ navigation }: Props) {
         ) : null}
         <View style={{ marginTop: 22 }}>
           <SelectList options={step.options} selected={sel} multi={step.multi} onToggle={(v) => toggle(step.id, v, step.multi)} />
+          {step.id === 'nutritionDiet' && sel.includes('Other') ? (
+            /* R3-54: tell us the diet — input directly under the list, never covered */
+            <TextInput
+              value={dietOther} onChangeText={setDietOther}
+              placeholder={t('mob.dietOtherPh', 'Tell us the plan you follow…')}
+              placeholderTextColor={colors.faint} returnKeyType="done"
+              style={styles.otherInput}
+            />
+          ) : null}
         </View>
       </OnboardingLayout>
     );
@@ -233,9 +271,9 @@ export default function OnboardingWizard({ navigation }: Props) {
   // ---- Consent ----
   if (step.kind === 'consent') {
     const pillars = [
-      { icon: '★', title: 'Your Cycle and Symptoms', desc: 'To sync meals and movement to your phase.' },
-      { icon: '🥗', title: 'Goals & Prefrences', desc: 'To tailor recommendations to you.' },
-      { icon: '🔒', title: 'Stored Securely', desc: 'Encrypted, never sold, deletable any time.' },
+      { icon: 'cycle', title: 'Your Cycle and Symptoms', desc: 'To sync meals and movement to your phase.' },
+      { icon: 'salad', title: 'Goals & Prefrences', desc: 'To tailor recommendations to you.' },
+      { icon: 'lock', title: 'Stored Securely', desc: 'Encrypted, never sold, deletable any time.' },
     ];
     return (
       <OnboardingLayout progress={1} onBack={back} onRestart={restart} nextFull nextLabel="Agree and Continue" onNext={next} nextDisabled={!agree}>
@@ -247,7 +285,7 @@ export default function OnboardingWizard({ navigation }: Props) {
         <View style={{ marginTop: 20, gap: 12 }}>
           {pillars.map((p) => (
             <View key={p.title} style={styles.pillar}>
-              <Text style={styles.pillarIcon}>{p.icon}</Text>
+              <ConsentIcon name={p.icon} />
               <View style={{ flex: 1 }}>
                 <Text style={styles.pillarTitle}>{p.title}</Text>
                 <Text style={styles.pillarDesc}>{p.desc}</Text>
@@ -324,6 +362,7 @@ const styles = StyleSheet.create({
   dateBtn: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: colors.white, borderRadius: radius.md, paddingHorizontal: 18, height: 58, marginTop: 26, ...shadow.card },
   dateTxt: { fontFamily: font.medium, fontSize: 15, color: colors.ink },
   saveErr: { fontFamily: font.medium, fontSize: 13, color: colors.coralDeep, textAlign: 'center', marginTop: 14 },
+  otherInput: { backgroundColor: colors.white, borderRadius: radius.md, height: 52, paddingHorizontal: 16, marginTop: 12, fontFamily: font.regular, fontSize: 14.5, color: colors.ink, ...shadow.card },
   // consent pillars
   pillar: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: colors.white, borderRadius: radius.md, padding: 16, borderWidth: 1, borderColor: '#F3D9C9' },
   pillarIcon: { fontSize: 18, color: colors.coral, width: 24, textAlign: 'center' },

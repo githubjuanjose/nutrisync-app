@@ -9,6 +9,7 @@ export const PERIOD_DURATION: Record<string, number> = {
 export const DIET: Record<string, string> = {
   'Balanced Diet': 'balanced', Keto: 'keto', Vegetarian: 'vegetarian', 'Low Carb': 'low_carb',
   Pescatarian: 'pescatarian', Vegan: 'vegan', 'No diet': 'none',
+  'Gluten-free': 'gluten_free', 'Dairy-free': 'dairy_free', Other: 'other',
 };
 export const CONTRACEPTION: Record<string, string> = {
   yes: 'yes_currently', past: 'not_anymore', never: 'never',
@@ -20,7 +21,7 @@ const first = (a?: string[]) => (a && a.length ? a[0] : undefined);
 export function buildPayloads(
   userId: string,
   answers: Record<string, string[]>,
-  extra: { firstName?: string; email?: string; city?: string; lastPeriodStart: string }
+  extra: { firstName?: string; email?: string; city?: string; lastPeriodStart: string; dietOther?: string }
 ) {
   const usersRow = {
     id: userId,
@@ -28,6 +29,7 @@ export function buildPayloads(
     email: extra.email ?? null,
     city: extra.city ?? null,
     diet_type: DIET[first(answers.nutritionDiet) ?? ''] ?? 'none',
+    diet_other: extra.dietOther ?? null,   // R3-54: free-text when diet = Other
     health_conditions: (answers.healthCondition ?? [])
       .filter((v) => v !== 'None of the above')
       .map((v) => v.toLowerCase().replace(/\s+/g, '_')),

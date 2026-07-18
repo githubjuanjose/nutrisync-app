@@ -49,7 +49,7 @@ export const STEPS: Step[] = [
   {
     kind: 'question', id: 'healthCondition', section: 'Health Condition',
     question: 'Have you ever been diagnosed with any of the following conditions?',
-    options: opt(['Fibroids', 'Endometriosis', 'PCOS', 'Ovarian Cysts', 'Infertility', 'Perimenopause', 'None of the above']),
+    options: opt(['Fibroids', 'Endometriosis', 'PMOS', 'Ovarian Cysts', 'Infertility', 'Perimenopause', 'None of the above']),
     multi: true, stepLabel: '2/4', progress: 0.5,
   },
   {
@@ -77,7 +77,7 @@ export const STEPS: Step[] = [
   {
     kind: 'question', id: 'nutriGoal', section: 'Your NutriGoal',
     question: "What's your primary goal?",
-    options: opt(['Reduce physical PMS symptoms', 'Feel more emotionally balanced', 'More stable energy throughout my cycle', 'Fewer PMS mood crashes']),
+    options: opt(['Reduce physical PMS symptoms', 'Feel more emotionally balanced', 'More stable energy throughout my cycle']),  // R3-55: three goals
     stepLabel: '1/1', progress: 1,
   },
 
