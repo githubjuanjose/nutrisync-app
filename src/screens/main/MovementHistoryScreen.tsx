@@ -83,7 +83,7 @@ export default function MovementHistoryScreen() {
               <View style={styles.dotRow}>
                 {week.map((on, i) => (
                   <Image key={i}
-                    source={on ? require('../../../assets/nutrilog/streak-on.png') : require('../../../assets/nutrilog/streak-off.png')}
+                    source={on ? require('../../../assets/nutrilog/streak-on.png') : require('../../../assets/nutris/blue.png')  /* R3-39: blue Nutri marks a missed day */}
                     style={styles.dot} />
                 ))}
               </View>

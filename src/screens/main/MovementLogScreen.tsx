@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, Image, TextInput } from 'react-native';
+import Svg, { Path, Circle } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors, font, radius, shadow } from '../../theme';
@@ -18,6 +19,21 @@ import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib
  * feeds workout_logged/CAS via saveChecklist — checking more items never
  * inflates the score (POs' Scoring Rule 1).
  */
+
+/* R3-41 (f47): line icons above Workouts / Steps — no emojis */
+const DumbbellIcon = () => (
+  <Svg width={20} height={20} viewBox="0 0 24 24">
+    <Path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10" stroke="#E4572E" strokeWidth={1.9} strokeLinecap="round" />
+  </Svg>
+);
+const StepsIcon = () => (
+  <Svg width={20} height={20} viewBox="0 0 24 24">
+    <Path d="M7 3c2 0 3 1.6 3 3.4 0 1.8-.8 3-2.4 3S5 8.2 5 6.4C5 4.6 5.6 3 7 3Z" stroke="#E4572E" strokeWidth={1.6} fill="none" />
+    <Path d="M6 11.5h3.4c.3 1.8-.2 3.5-1.7 3.5s-2-1.7-1.7-3.5Z" stroke="#E4572E" strokeWidth={1.5} fill="none" />
+    <Path d="M17 9c2 0 3 1.6 3 3.4 0 1.8-.8 3-2.4 3S15 14.2 15 12.4c0-1.8.6-3.4 2-3.4Z" stroke="#E4572E" strokeWidth={1.6} fill="none" />
+    <Path d="M16 17.5h3.4c.3 1.8-.2 3.5-1.7 3.5s-2-1.7-1.7-3.5Z" stroke="#E4572E" strokeWidth={1.5} fill="none" />
+  </Svg>
+);
 
 const CAT_ORDER = ['Strength', 'Cardio', 'Flexibility & Recovery', 'Daily Movement'];
 const PER_CATEGORY = 6;
@@ -98,8 +114,13 @@ export default function MovementLogScreen() {
   return (
     <View style={styles.fill}>
       <SafeAreaView style={styles.fill} edges={['top']}>
+        {/* R3-43: Movement History surfaced from the tab */}
         <View style={styles.header}>
+          <View style={{ width: 86 }} />
           <Text style={styles.headerTitle}>{t('mob.today', 'Today')}</Text>
+          <Pressable onPress={() => nav.navigate('MovementHistory')} hitSlop={8} style={styles.histLink}>
+            <Text style={styles.histLinkTxt}>{t('mob.history', 'History')} ›</Text>
+          </Pressable>
         </View>
         <View style={styles.tabs}>
           {(['tip', 'insight'] as const).map((k) => (
@@ -132,12 +153,12 @@ export default function MovementLogScreen() {
 
           <View style={styles.statRow}>
             <View style={styles.stat}>
-              <Text style={styles.statTag}>SESSION</Text>
+              <View style={styles.statHead}><DumbbellIcon /><Text style={styles.statTag}>SESSION</Text></View>
               <Text style={styles.statVal}>{workoutsDone > 0 ? '1 / 1' : '0 / 1'}</Text>
               <Text style={styles.statLbl}>{t('mob.workouts', 'Workouts')}</Text>
             </View>
             <View style={styles.stat}>
-              <Text style={styles.statTag}>STEPS</Text>
+              <View style={styles.statHead}><StepsIcon /><Text style={styles.statTag}>STEPS</Text></View>
               <Text style={styles.statVal}>—</Text>
               <Text style={styles.statLbl}>{t('mob.stepsSync', 'Syncs with devices')}</Text>
             </View>
@@ -147,7 +168,10 @@ export default function MovementLogScreen() {
             <View style={styles.quote}><Text style={styles.quoteTxt}>“{ins.quote}”</Text></View>
           ) : null}
 
-          <Text style={styles.section}>{t('mob.checkOffMove', 'Check off your movement for today')}</Text>
+          {/* R3-41 (f47/f48): section header + score subheading */}
+          <Text style={styles.section}>{t('mob.movementBasics', 'Movement basics')}</Text>
+          <Text style={styles.sectionSub}>{t('mob.checkOffMove', 'Check off your movement for today')}</Text>
+          <Text style={styles.sectionNote}>{t('mob.boostsScore', 'Each one boosts your cycle sync score')}</Text>
           {cats.map(([c, items]) => (
             <View key={c} style={styles.group}>
               <Text style={styles.groupTitle}>{c}</Text>
@@ -192,8 +216,9 @@ export default function MovementLogScreen() {
           )}
         </ScrollView>
 
+        {/* R3-42: primary CTA lifted ABOVE the floating tab bar (was hidden under it) */}
         <Pressable style={styles.cta} onPress={() => nav.navigate('LogMovement')}>
-          <Text style={styles.ctaTxt}>+ {t('mob.logMovement', 'Log Movement')}</Text>
+          <Text style={styles.ctaTxt}>+ {t('mob.logTodaysMovement', "Log Today's Movement")}</Text>
         </Pressable>
       </SafeAreaView>
     </View>
@@ -202,8 +227,13 @@ export default function MovementLogScreen() {
 
 const styles = StyleSheet.create({
   fill: { flex: 1, backgroundColor: 'transparent' },
-  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingTop: 4 },
+  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 4, paddingHorizontal: 18 },
   headerTitle: { fontFamily: font.semibold, fontSize: 17, color: colors.ink },
+  histLink: { width: 86, alignItems: 'flex-end' },
+  histLinkTxt: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
+  statHead: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  sectionSub: { fontFamily: font.medium, fontSize: 13.5, color: colors.ink, marginTop: 2 },
+  sectionNote: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2, marginBottom: 8 },
   tabs: { flexDirection: 'row', marginHorizontal: 18, marginTop: 12, backgroundColor: '#F6EEE7', borderRadius: radius.pill, padding: 4, gap: 4 },
   tab: { flex: 1, height: 38, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
   tabOn: { backgroundColor: colors.white, ...shadow.card },
@@ -236,6 +266,7 @@ const styles = StyleSheet.create({
   otherInput: { flex: 1, backgroundColor: colors.white, borderRadius: radius.pill, height: 46, paddingHorizontal: 16, fontFamily: font.regular, fontSize: 14, color: colors.ink, ...shadow.card },
   otherAdd: { width: 46, height: 46, borderRadius: 23, backgroundColor: colors.coral, alignItems: 'center', justifyContent: 'center' },
   otherAddTxt: { color: '#fff', fontFamily: font.bold, fontSize: 16 },
-  cta: { position: 'absolute', left: 20, right: 20, bottom: 18, backgroundColor: colors.coral, borderRadius: radius.pill, height: 52, alignItems: 'center', justifyContent: 'center', ...shadow.card },
+  // R3-42: bottom 84 — the floating tab bar was hiding this CTA
+  cta: { position: 'absolute', left: 20, right: 20, bottom: 84, backgroundColor: colors.coral, borderRadius: radius.pill, height: 52, alignItems: 'center', justifyContent: 'center', ...shadow.card },
   ctaTxt: { fontFamily: font.semibold, fontSize: 15, color: '#fff' },
 });

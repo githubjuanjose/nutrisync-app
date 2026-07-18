@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, Image } from 'react-native';
+import Svg, { Path, Circle } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { colors, font, radius, shadow } from '../../theme';
@@ -29,6 +30,20 @@ const TIP_CHARS = [
   require('../../../assets/nutrilog/tip-char-3.png'),
   require('../../../assets/nutrilog/tip-char-4.png'),
 ];
+/* R3-40 (f43): little line icons above the FUEL / VITALITY stats — no emojis */
+const MealIcon = () => (
+  <Svg width={20} height={20} viewBox="0 0 24 24">
+    <Circle cx={12} cy={12} r={9} stroke="#E4572E" strokeWidth={1.8} fill="none" />
+    <Circle cx={12} cy={12} r={4.5} stroke="#E4572E" strokeWidth={1.6} fill="none" />
+    <Path d="M2.5 7v5M4.6 7v5M3.55 12v5" stroke="#E4572E" strokeWidth={1.5} strokeLinecap="round" />
+  </Svg>
+);
+const DropIcon = () => (
+  <Svg width={20} height={20} viewBox="0 0 24 24">
+    <Path d="M12 3 C12 3 5.5 11 5.5 15.5 a6.5 6.5 0 0 0 13 0 C18.5 11 12 3 12 3 Z" stroke="#E4572E" strokeWidth={1.8} fill="none" strokeLinejoin="round" />
+  </Svg>
+);
+
 const MOODS = ['Low', 'Meh', 'Okay', 'Good', 'Great'];
 const ENERGY = ['Low', 'Low', 'Mid', 'High', 'High'];
 const FLOWS = ['None', 'Light', 'Medium', 'Heavy'];
@@ -101,8 +116,13 @@ export default function NutriLogScreen() {
   return (
     <View style={styles.fill}>
       <SafeAreaView style={styles.fill} edges={['top']}>
+        {/* R3-39: Meal History surfaced from the tab */}
         <View style={styles.header}>
+          <View style={{ width: 86 }} />
           <Text style={styles.headerTitle}>{t('mob.today', 'Today')}</Text>
+          <Pressable onPress={() => nav.navigate('MealHistory')} hitSlop={8} style={styles.histLink}>
+            <Text style={styles.histLinkTxt}>{t('mob.history', 'History')} ›</Text>
+          </Pressable>
         </View>
         <View style={styles.tabs}>
           {(['tip', 'insight'] as const).map((k) => (
@@ -133,12 +153,12 @@ export default function NutriLogScreen() {
           {tab === 'tip' ? (
             <View style={styles.statRow}>
               <View style={styles.stat}>
-                <Text style={styles.statTag}>FUEL</Text>
+                <View style={styles.statHead}><MealIcon /><Text style={styles.statTag}>FUEL</Text></View>
                 <Text style={styles.statVal}>{meals} / 3</Text>
                 <Text style={styles.statLbl}>{t('mob.mealsLogged', 'Meals Logged')}</Text>
               </View>
               <View style={styles.stat}>
-                <Text style={styles.statTag}>VITALITY</Text>
+                <View style={styles.statHead}><DropIcon /><Text style={styles.statTag}>VITALITY</Text></View>
                 <Text style={styles.statVal}>1.8 L</Text>
                 <Text style={styles.statLbl}>{t('mob.hydrationRec', 'Hydration Rec')}</Text>
               </View>
@@ -206,8 +226,11 @@ export default function NutriLogScreen() {
 
 const styles = StyleSheet.create({
   fill: { flex: 1, backgroundColor: 'transparent' },
-  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingTop: 4 },
+  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 4, paddingHorizontal: 18 },
   headerTitle: { fontFamily: font.semibold, fontSize: 17, color: colors.ink },
+  histLink: { width: 86, alignItems: 'flex-end' },
+  histLinkTxt: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
+  statHead: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   tabs: { flexDirection: 'row', marginHorizontal: 18, marginTop: 12, backgroundColor: '#F6EEE7', borderRadius: radius.pill, padding: 4, gap: 4 },
   tab: { flex: 1, height: 38, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
   tabOn: { backgroundColor: colors.white, ...shadow.card },
@@ -242,6 +265,7 @@ const styles = StyleSheet.create({
   box: { width: 20, height: 20 },
   rowTxt: { fontFamily: font.regular, fontSize: 14, color: colors.ink },
   rowTxtOn: { color: colors.muted, textDecorationLine: 'line-through' },
-  cta: { position: 'absolute', left: 20, right: 20, bottom: 18, backgroundColor: colors.coral, borderRadius: radius.pill, height: 52, alignItems: 'center', justifyContent: 'center', ...shadow.card },
+  // R3-38: bottom 84 — the floating tab bar sits at bottom 10–72 and was HIDING this CTA
+  cta: { position: 'absolute', left: 20, right: 20, bottom: 84, backgroundColor: colors.coral, borderRadius: radius.pill, height: 52, alignItems: 'center', justifyContent: 'center', ...shadow.card },
   ctaTxt: { fontFamily: font.semibold, fontSize: 15, color: '#fff' },
 });
