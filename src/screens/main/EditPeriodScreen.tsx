@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndicator, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndicator, Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path } from 'react-native-svg';
 import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
-import { saveEditPeriod } from '../../lib/daily';
+import { saveEditPeriod, getTodayLog } from '../../lib/daily';
 import { ChipGroup } from '../../ui/Chips';
 import { useT } from '../../i18n';
+
+/**
+ * R3-14/15/16/17 (f27–f30):
+ *  • header shows TODAY's real date (was hardcoded "March 11th, 2026")
+ *  • soft peach gradient background (was dark)
+ *  • pencil in the header → full-screen notes editor (keyboard never covers it)
+ *  • today's saved log is RELOADED on open, and save errors surface instead of
+ *    being swallowed — logging is visibly persistent now
+ */
 
 /* ---------- Mood faces — exact emotes extracted from the Figma edit-period design ---------- */
 const EMOTE: Record<string, any> = {
@@ -55,7 +65,24 @@ export default function EditPeriodScreen({ navigation }: any) {
   const [birth, setBirth] = useState<string[]>([]);
   const [sex, setSex] = useState<string[]>([]);
   const [notes, setNotes] = useState('');
+  const [notesOpen, setNotesOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+
+  // R3-17: reload today's saved log so reopening shows what you logged
+  useEffect(() => {
+    if (!userId) return;
+    getTodayLog(userId).then((l: any) => {
+      if (!l) return;
+      if (l.flow_level != null) setFlow(l.flow_level);
+      if (Array.isArray(l.mood_state)) setMoods(l.mood_state);
+      setSym({ pain: l.pain_symptoms ?? [], digestion: l.digestion_symptoms ?? [], cravings: l.cravings ?? [], skin: l.skin_symptoms ?? [] });
+      if (l.sleep_quality) setSleep([l.sleep_quality]);
+      if (l.libido != null) setLibido(l.libido);
+      if (l.sex_logged === 'protected') setSex(['Protected']);
+      if (l.sex_logged === 'unprotected') setSex(['Unprotected']);
+      if (l.period_notes) setNotes(l.period_notes);
+    }).catch(() => {});
+  }, [userId]);
 
   const toggle = (arr: string[], set: (v: string[]) => void, v: string) =>
     set(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);
@@ -79,23 +106,32 @@ export default function EditPeriodScreen({ navigation }: any) {
         period_notes: notes.trim() || null,
       });
       navigation.goBack();
-    } catch {
-      navigation.goBack();
+    } catch (e: any) {
+      // R3-17: never pretend a failed save worked
+      setSaving(false);
+      Alert.alert(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
     }
   };
 
+  const todayLabel = new Date().toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' });
+
   return (
     <View style={styles.fill}>
+      <LinearGradient colors={['#FCF1EC', '#FBE7DB', '#F6D6C2']} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.header}>
           <Pressable onPress={() => navigation.goBack()} style={styles.iconBtn}><Text style={styles.x}>✕</Text></Pressable>
           <View style={{ alignItems: 'center' }}>
             <Text style={styles.title}>{t('mob.period', "Period")}</Text>
-            <Text style={styles.date}>March 11th, 2026</Text>
+            <Text style={styles.date}>{todayLabel}</Text>
           </View>
-          <Pressable onPress={save} style={styles.iconBtn}>
-            {saving ? <ActivityIndicator color={colors.coral} /> : <Text style={styles.tick}>✓</Text>}
-          </Pressable>
+          <View style={{ flexDirection: 'row' }}>
+            {/* f29: notes entry at the top — opens a dedicated editor */}
+            <Pressable onPress={() => setNotesOpen(true)} style={styles.iconBtn}><Text style={styles.pencil}>✎</Text></Pressable>
+            <Pressable onPress={save} style={styles.iconBtn}>
+              {saving ? <ActivityIndicator color={colors.coral} /> : <Text style={styles.tick}>✓</Text>}
+            </Pressable>
+          </View>
         </View>
 
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 60 }} showsVerticalScrollIndicator={false}>
@@ -175,6 +211,27 @@ export default function EditPeriodScreen({ navigation }: any) {
             <Text style={styles.saveTxt}>{saving ? 'Saving…' : t('ui.saveLog', 'Save')}</Text>
           </Pressable>
         </ScrollView>
+
+        {/* f29: full-screen notes editor — keyboard can never cover the input */}
+        {notesOpen && (
+          <View style={styles.notesOverlay}>
+            <LinearGradient colors={['#FCF1EC', '#FBE7DB']} style={StyleSheet.absoluteFill} />
+            <SafeAreaView style={{ flex: 1 }} edges={['top', 'bottom']}>
+              <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+                <View style={styles.header}>
+                  <Pressable onPress={() => setNotesOpen(false)} style={styles.iconBtn}><Text style={styles.x}>✕</Text></Pressable>
+                  <Text style={styles.title}>{t('mob.notes', 'Add notes')}</Text>
+                  <Pressable onPress={() => setNotesOpen(false)} style={styles.iconBtn}><Text style={styles.tick}>✓</Text></Pressable>
+                </View>
+                <TextInput
+                  value={notes} onChangeText={setNotes} autoFocus multiline
+                  placeholder={t('mob.descPh', 'Enter a description...')} placeholderTextColor={colors.faint}
+                  style={styles.notesFull}
+                />
+              </KeyboardAvoidingView>
+            </SafeAreaView>
+          </View>
+        )}
       </SafeAreaView>
     </View>
   );
@@ -186,6 +243,9 @@ const styles = StyleSheet.create({
   iconBtn: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' },
   x: { fontSize: 20, color: colors.ink },
   tick: { fontSize: 20, color: colors.coral, fontFamily: font.bold },
+  pencil: { fontSize: 18, color: colors.ink },
+  notesOverlay: { ...StyleSheet.absoluteFillObject, zIndex: 20 },
+  notesFull: { flex: 1, margin: 18, backgroundColor: '#fff', borderRadius: radius.lg, padding: 16, fontFamily: font.regular, fontSize: 15, color: colors.ink, textAlignVertical: 'top', ...shadow.card },
   title: { fontFamily: font.bold, fontSize: 22, color: colors.ink },
   date: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2 },
   card: { backgroundColor: colors.white, borderRadius: radius.lg, padding: 16, marginTop: 14, ...shadow.card },

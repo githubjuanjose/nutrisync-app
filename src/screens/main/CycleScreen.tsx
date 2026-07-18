@@ -112,6 +112,7 @@ export default function CycleScreen({ navigation }: any) {
               phaseForDay={(d) => displayPhase(phaseForDay(d, len, dur))}
               onEnergyPress={() => navigation.navigate('Gate')}
               energyLevel={todayLog?.energy ?? null}
+              loggedToday={todayLog?.energy != null}
             />
           </View>
 
@@ -168,7 +169,8 @@ const styles = StyleSheet.create({
   actions: { flexDirection: 'row', justifyContent: 'center', gap: 14, marginTop: 18 },
   pill: { paddingHorizontal: 26, height: 46, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
   pillTxt: { fontFamily: font.semibold, fontSize: 14, color: colors.white },
-  scoreCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.white, marginHorizontal: 22, marginTop: 22, borderRadius: radius.lg, padding: 20, ...shadow.card },
+  // R3-09: rounded, shadowed card consistent with the rest of Home
+  scoreCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.white, marginHorizontal: 22, marginTop: 22, borderRadius: 24, padding: 20, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 6 },
   scoreLabel: { fontFamily: font.bold, fontSize: 16, color: colors.ink },
   scoreHint: { fontFamily: font.regular, fontSize: 12.5, color: colors.muted, marginTop: 3 },
   scoreVal: { fontFamily: font.bold, fontSize: 34, color: colors.coral },

@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ActivityIndicator, PanResponder } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Pressable, Image, ActivityIndicator, PanResponder, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import { colors, font, radius } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { saveMoodEnergy } from '../../lib/daily';
+import { getProfile } from '../../lib/api';
+import { NutriAvatar } from '../../ui/NutriAvatar';
 import { useT } from '../../i18n';
+
+/**
+ * R3-12 (F9) — matched to the founders' corrected references
+ * (`correct-versions/MOOD SCORE (1).png` + `ENERGY SCORE (1).png`):
+ * soft peach gradient background (was dark grey), the user's CHOSEN Nutri in
+ * the header (was a random placeholder photo), slide-to-log hardened (capture
+ * phase so drags starting on a pill still work), save errors surfaced.
+ */
 
 const VALUES = [5, 4, 3, 2, 1];
 
@@ -13,6 +24,7 @@ function Scale({ value, onSelect, tint }: { value: number | null; onSelect: (v: 
   const start = React.useRef({ y: 0, v: 3 });
   const pan = React.useRef(PanResponder.create({
     onMoveShouldSetPanResponder: (_e, g) => Math.abs(g.dy) > 8,
+    onMoveShouldSetPanResponderCapture: (_e, g) => Math.abs(g.dy) > 8,
     onPanResponderGrant: (e) => { start.current = { y: e.nativeEvent.pageY, v: value ?? 3 }; },
     onPanResponderMove: (e) => {
       const delta = Math.round((start.current.y - e.nativeEvent.pageY) / 26);
@@ -46,6 +58,12 @@ export default function MoodEnergyGate({ navigation }: any) {
   const [mood, setMood] = useState<number | null>(null);
   const [energy, setEnergy] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
+  const [nutri, setNutri] = useState<any>(null);
+
+  useEffect(() => {
+    if (!userId) return;
+    getProfile(userId).then((p: any) => setNutri(p?.nutri_avatar ?? null)).catch(() => {});
+  }, [userId]);
 
   const onNext = async () => {
     if (!stepEnergy) { setStepEnergy(true); return; }
@@ -54,8 +72,9 @@ export default function MoodEnergyGate({ navigation }: any) {
     try {
       await saveMoodEnergy(userId, mood, energy);
       navigation.goBack();
-    } catch {
-      navigation.goBack();
+    } catch (e: any) {
+      setBusy(false);
+      Alert.alert(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
     }
   };
 
@@ -64,6 +83,7 @@ export default function MoodEnergyGate({ navigation }: any) {
 
   return (
     <View style={styles.fill}>
+      <LinearGradient colors={['#FCF1EC', '#FBE7DB', '#F6D6C2']} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top', 'bottom']}>
         <View style={styles.header}>
           <View>
@@ -73,7 +93,7 @@ export default function MoodEnergyGate({ navigation }: any) {
             </View>
             <Text style={styles.title}>{t('mob.beforeSync', "Before we Sync...")}</Text>
           </View>
-          <Image source={{ uri: 'https://i.pravatar.cc/100?img=47' }} style={styles.avatar} />
+          <NutriAvatar variant={nutri} size={46} />
         </View>
 
         <View style={styles.track}>
