@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { SettingsIcon } from '../../ui/SettingsIcons';
 import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { exportUserData, deleteAccount } from '../../lib/account';
@@ -51,7 +52,7 @@ export default function DataPrivacyScreen({ navigation }: any) {
   );
   const RightRow = ({ icon, label, onPress }: { icon: string; label: string; onPress?: () => void }) => (
     <Pressable onPress={onPress} style={styles.rightRow}>
-      <Text style={styles.rowIcon}>{icon}</Text><Text style={styles.rowLabel}>{label}</Text><Text style={styles.chev}>›</Text>
+      <SettingsIcon name={icon} size={20} /><Text style={styles.rowLabel}>{label}</Text><Text style={styles.chev}>›</Text>
     </Pressable>
   );
 
@@ -64,7 +65,7 @@ export default function DataPrivacyScreen({ navigation }: any) {
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           <View style={styles.banner}>
-            <Text style={styles.bannerTxt}>🔒 Your health data is encrypted and never sold. You control what's shared below.</Text>
+            <View style={{flexDirection:'row',gap:8,alignItems:'flex-start'}}><SettingsIcon name="lock" size={18} /><Text style={[styles.bannerTxt,{flex:1}]}>Your health data is encrypted and never sold. You control what's shared below.</Text></View>
           </View>
 
           <Text style={styles.sectionTitle}>{t('mob.dataPermissions', "DATA PERMISSIONS")}</Text>
@@ -76,7 +77,7 @@ export default function DataPrivacyScreen({ navigation }: any) {
 
           <Text style={styles.sectionTitle}>{t('mob.yourDataRights', "YOUR DATA RIGHTS")}</Text>
           <View style={styles.card}>
-            <RightRow icon="⬇️" label={busy ? 'Preparing…' : t('ui.exportJson', 'Download my data')} onPress={onExport} />
+            <RightRow icon="download" label={busy ? 'Preparing…' : t('ui.exportJson', 'Download my data')} onPress={onExport} />
             <RightRow icon="📄" label="View privacy policy" />
             <RightRow icon="🗂️" label="Manage activity log" />
             <RightRow icon="🍪" label="Cookie preferences" />

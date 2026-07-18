@@ -49,10 +49,15 @@ export default function CycleScreen({ navigation }: any) {
     return () => { m = false; };
   }, [userId]);
 
-  // Refresh the CAS score whenever this tab regains focus (after logging).
+  // Refresh score + log + profile whenever this tab regains focus (after
+  // logging, or after changing the Nutri in Settings — R3-46 propagation).
   useEffect(() => {
     const unsub = navigation.addListener('focus', async () => {
-      if (userId) { setScore(await getTodayScore(userId)); setTodayLog(await getTodayLog(userId)); }
+      if (userId) {
+        setScore(await getTodayScore(userId));
+        setTodayLog(await getTodayLog(userId));
+        getProfile(userId).then(setProfile).catch(() => {});
+      }
     });
     return unsub;
   }, [navigation, userId]);

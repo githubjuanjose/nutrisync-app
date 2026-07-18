@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { SettingsIcon } from '../../ui/SettingsIcons';
 import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { useT } from '../../i18n';
@@ -11,9 +12,9 @@ export default function SecurityScreen({ navigation }: any) {
   const email = session?.user.email ?? 'you@email.com';
 
   const TFA = [
-    { icon: '🔑', label: 'Authenticator App', status: 'Disabled' },
-    { icon: '💬', label: 'SMS Verification', status: 'Disabled' },
-    { icon: '☺', label: 'Face ID / Touch ID', status: 'Disabled' },
+    { icon: 'key', label: 'Authenticator App', status: 'Disabled' },
+    { icon: 'sms', label: 'SMS Verification', status: 'Disabled' },
+    { icon: 'faceid', label: 'Face ID / Touch ID', status: 'Disabled' },
   ];
 
   return (
@@ -44,18 +45,17 @@ export default function SecurityScreen({ navigation }: any) {
           <Text style={styles.sectionTitle}>{t('ui.sessionsHdr', 'ACTIVE SESSIONS')}</Text>
           <View style={styles.card}>
             <View style={[styles.row, styles.rowBorder]}>
-              <Text style={styles.rowIcon}>📱</Text>
+              <SettingsIcon name="phone" size={20} />
               <View style={{ flex: 1 }}><Text style={styles.rowLabel}>iPhone 15 Pro</Text><Text style={styles.sub}>{t('mob.currentDevice', "Current device")}</Text></View>
               <Text style={styles.active}>{t('mob.activeWord', "Active")}</Text>
             </View>
             <View style={styles.row}>
-              <Text style={styles.rowIcon}>💻</Text>
+              <SettingsIcon name="laptop" size={20} />
               <View style={{ flex: 1 }}><Text style={styles.rowLabel}>MacBook Pro</Text><Text style={styles.sub}>2 hours ago</Text></View>
               <Text style={styles.logout}>{t('ui.logout', 'Log Out')}</Text>
             </View>
           </View>
 
-          <Text style={styles.note}>2FA and passkeys are on the roadmap (see the Beyond-Figma requirements doc).</Text>
         </ScrollView>
       </SafeAreaView>
     </View>

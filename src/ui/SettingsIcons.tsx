@@ -21,6 +21,12 @@ export function SettingsIcon({ name, size = 20, color }: { name: string; size?: 
     bell: (<><Path d="M6 17h12l-1.5-2v-4a4.5 4.5 0 0 0-9 0v4L6 17z" {...p} /><Path d="M10.3 19.5a1.8 1.8 0 0 0 3.4 0" {...p} /></>),
     nutrition: (<><Path d="M12 20c-4 0-6.5-2.6-6.5-6.2C5.5 9 9 5.6 12 4c3 1.6 6.5 5 6.5 9.8C18.5 17.4 16 20 12 20z" {...p} /><Path d="M12 20V9" {...p} /></>),
     nutri: (<><Circle cx={12} cy={12} r={7} {...p} /><Circle cx={9.8} cy={10.8} r={0.9} fill={color ?? colors.ink} /><Circle cx={14.2} cy={10.8} r={0.9} fill={color ?? colors.ink} /><Path d="M9.8 14a3 3 0 0 0 4.4 0" {...p} /></>),
+    key: (<><Circle cx={8} cy={12} r={3.2} {...p} /><Path d="M11.2 12H20M17 12v3M14.5 12v2" {...p} /></>),
+    sms: (<><Path d="M4 5h16v11H10l-4 3.5V16H4V5z" {...p} /><Path d="M8 9h8M8 12h5" {...p} /></>),
+    faceid: (<><Path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16" {...p} /><Circle cx={9.3} cy={10} r={0.9} fill={color ?? colors.ink} /><Circle cx={14.7} cy={10} r={0.9} fill={color ?? colors.ink} /><Path d="M9.5 14.2a3.4 3.4 0 0 0 5 0" {...p} /></>),
+    phone: (<><Rect x={7.5} y={3.5} width={9} height={17} rx={2.2} {...p} /><Path d="M10.8 18.4h2.4" {...p} /></>),
+    laptop: (<><Rect x={5} y={5.5} width={14} height={9.5} rx={1.5} {...p} /><Path d="M3 18.5h18" {...p} /></>),
+    download: (<><Path d="M12 4v10M8.5 10.5 12 14l3.5-3.5" {...p} /><Path d="M5 17v2.5h14V17" {...p} /></>),
     feedback: (<><Path d="M4 6h16v10H9l-5 4V6z" {...p} /><Path d="M8 10h8M8 12.8h5" {...p} /></>),
   };
   return <Svg width={size} height={size} viewBox="0 0 24 24">{I[name] ?? I.gear}</Svg>;

@@ -20,6 +20,7 @@ export type RootStackParamList = {
   // Settings
   SettingsProfile: undefined;
   CycleHealth: undefined;
+  Feedback: undefined;
   CASHistory: undefined;
   Security: undefined;
   DataPrivacy: undefined;

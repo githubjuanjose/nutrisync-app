@@ -95,6 +95,6 @@ const styles = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: 30, gap: 16 },
   cell: { width: '46%', aspectRatio: 1, borderRadius: 999, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'transparent' },  // F42: circular
   cellOn: { borderColor: colors.coral },  // F42: thin red circular outline only
-  save: { backgroundColor: '#F6A99A', height: 52, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', marginBottom: 20 },
+  save: { backgroundColor: colors.coral  /* R3-45: full-opacity brand colour */, height: 52, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', marginBottom: 20 },
   saveTxt: { fontFamily: font.semibold, fontSize: 16, color: '#fff' },
 });

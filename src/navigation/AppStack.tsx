@@ -6,6 +6,7 @@ import MealLogScreen from '../screens/main/MealLogScreen';
 import MealHistoryScreen from '../screens/main/MealHistoryScreen';
 import LogMovementScreen from '../screens/main/LogMovementScreen';
 import MovementHistoryScreen from '../screens/main/MovementHistoryScreen';
+import FeedbackScreen from '../screens/settings/FeedbackScreen';
 import CycleHealthScreen from '../screens/settings/CycleHealthScreen';
 import CASHistoryScreen from '../screens/main/CASHistoryScreen';
 import EditPeriodScreen from '../screens/main/EditPeriodScreen';
@@ -43,6 +44,7 @@ export default function AppStack() {
       <Stack.Screen name="ConnectedDevices" component={ConnectedDevicesScreen} />
       <Stack.Screen name="PersonalInfo" component={PersonalInfoScreen} />
       <Stack.Screen name="CycleHealth" component={CycleHealthScreen} />
+      <Stack.Screen name="Feedback" component={FeedbackScreen} />
       <Stack.Screen name="CASHistory" component={CASHistoryScreen} />
       <Stack.Screen name="Security" component={SecurityScreen} />
       <Stack.Screen name="DataPrivacy" component={DataPrivacyScreen} />

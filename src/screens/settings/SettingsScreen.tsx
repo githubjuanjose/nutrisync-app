@@ -29,7 +29,7 @@ const SECTIONS: { title: string; rows: Row[] }[] = [
     { icon: 'bell', label: 'Notifications & Reminders', route: 'Notifications' },
     { icon: 'nutrition', label: 'Nutritional Preferences', route: 'NutritionalPreferences' },
     { icon: 'nutri', label: 'Choose Your Nutri', route: 'NutriAvatar' },
-    { icon: 'feedback', label: 'Send Feedback', route: '__feedback' },
+    { icon: 'feedback', label: 'Send Feedback', route: 'Feedback' },
   ]},
 ];
 
@@ -84,7 +84,7 @@ export default function SettingsScreen({ navigation }: any) {
                 {s.rows.filter((r) => !r.flag || isEnabled(r.flag)).map((r, i, arr) => (
                   <Pressable
                     key={r.label}
-                    onPress={() => r.route === '__feedback' ? Linking.openURL('mailto:hello@nutrisynccollective.com?subject=NutriSync%20feedback') : r.route && navigation.navigate(r.route)}
+                    onPress={() => r.route && navigation.navigate(r.route)}
                     style={[styles.row, i < arr.length - 1 && styles.rowBorder]}
                   >
                     <View style={{ width: 26 }}><SettingsIcon name={r.icon} /></View>

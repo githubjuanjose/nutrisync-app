@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { SettingsIcon } from '../../ui/SettingsIcons';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
 
@@ -29,7 +30,7 @@ export default function CommunityPrivacyScreen({ navigation }: any) {
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           <View style={styles.banner}>
-            <Text style={styles.bannerTxt}>👥 Being part of the community keeps you motivated. Customise what parts of your journey others can see.</Text>
+            <View style={{flexDirection:'row',gap:8,alignItems:'flex-start'}}><SettingsIcon name="community" size={18} color="#2D6A4F" /><Text style={[styles.bannerTxt,{flex:1}]}>Being part of the community keeps you motivated. Customise what parts of your journey others can see.</Text></View>
           </View>
 
           <Text style={styles.sectionTitle}>{t('mob.profileVisibility', "PROFILE VISIBILITY")}</Text>
@@ -64,8 +65,8 @@ const styles = StyleSheet.create({
   headerBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 4 },
   back: { fontSize: 30, color: colors.ink, width: 24 },
   headerTitle: { fontFamily: font.semibold, fontSize: 17, color: colors.ink },
-  banner: { backgroundColor: '#FDECE6', borderRadius: radius.md, padding: 14 },
-  bannerTxt: { fontFamily: font.regular, fontSize: 12.5, color: colors.body, lineHeight: 18 },
+  banner: { backgroundColor: '#E8F7F0', borderRadius: radius.md, padding: 14 },
+  bannerTxt: { fontFamily: font.regular, fontSize: 12.5, color: '#2D6A4F', lineHeight: 18 },
   sectionTitle: { fontFamily: font.semibold, fontSize: 11, letterSpacing: 1, color: colors.muted, marginTop: 20, marginBottom: 8, marginLeft: 4 },
   card: { backgroundColor: colors.white, borderRadius: radius.lg, paddingHorizontal: 16, ...shadow.card },
   toggleRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#F4EBE3' },
