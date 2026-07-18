@@ -49,6 +49,25 @@ export function stabilityScore(logs: { mood: number | null; energy: number | nul
   return { score: Math.max(0, Math.min(1, 1 - sd / 1.6)), n: vals.length };
 }
 
+/** R3-34: per-metric stability % from a 1–5 series (sd 0 → 100%, sd ≥1.6 → 0%). */
+export function seriesStability(vals: number[]): number | null {
+  if (vals.length < 7) return null;
+  const m = vals.reduce((a, b) => a + b, 0) / vals.length;
+  const sd = Math.sqrt(vals.reduce((a, b) => a + (b - m) * (b - m), 0) / vals.length);
+  return Math.round(Math.max(0, Math.min(1, 1 - sd / 1.6)) * 100);
+}
+
+/** R3-34: % of the last `days` logged days with any PMS/pain symptom recorded. */
+export async function fetchPmsRate(userId: string, days = 7): Promise<number | null> {
+  const since = new Date(); since.setDate(since.getDate() - days);
+  const { data } = await supabase.from('daily_logs').select('date,pain_symptoms')
+    .eq('user_id', userId).gte('date', since.toISOString().slice(0, 10));
+  const rows = (data as any[]) ?? [];
+  if (rows.length < 3) return null;                       // honest: needs a few logged days
+  const withSym = rows.filter((r) => Array.isArray(r.pain_symptoms) && r.pain_symptoms.length > 0).length;
+  return Math.round((withSym / rows.length) * 100);
+}
+
 /** Days with intimacy logged (calendar stars — F4). */
 export async function fetchSexDays(userId: string, fromISO: string): Promise<Set<string>> {
   const { data } = await supabase.from('daily_logs').select('date,sex_logged')
