@@ -181,7 +181,8 @@
     "alertDeactivate": "Durante la beta, la desactivación la gestiona el equipo — escribe a hello@nutrisynccollective.com.",
     "alertDemoAccount": "Modo demo — las acciones de cuenta necesitan el backend en vivo.",
     "backToSite": "Volver al sitio",
-    "obStartOver": "Empezar de nuevo"
+    "obStartOver": "Empezar de nuevo",
+    "saving": "Guardando…"
   },
   "dows": [
     "DOM",
@@ -408,129 +409,119 @@
   "calBannerA": "Próxima regla prevista alrededor del",
   "calBannerB": "— Nutri adaptará tu alimentación a hierro y platos reconfortantes dos días antes.",
   "calBannerNone": "Registra el inicio de tu regla y Nutri predecirá el mes que viene.",
-  "ob": [
-    {
-      "q": "¿Qué te trae a NutriSync?",
-      "help": "Esto define lo primero que Nutri destaca.",
-      "type": "choice",
-      "key": "obGoal",
-      "opts": [
-        {
-          "k": "Balance my energy",
-          "label": "Equilibrar mi energía"
-        },
-        {
-          "k": "Ease PMS & symptoms",
-          "label": "Aliviar el SPM y los síntomas"
-        },
-        {
-          "k": "Train smarter with my cycle",
-          "label": "Entrenar mejor con mi ciclo"
-        },
-        {
-          "k": "Understand my body better",
-          "label": "Entender mejor mi cuerpo"
-        }
-      ]
+  "ob": {
+    "accurate": "Sé lo más precisa posible para que NutriSync te dé resultados a tu medida.",
+    "sec": {
+      "cycle_info": "Información del ciclo",
+      "health_condition": "Condición de salud",
+      "hormonal_contraceptives": "Anticonceptivos hormonales",
+      "nutritional_preferences": "Preferencias nutricionales",
+      "your_nutrigoal": "Tu NutriGoal"
     },
-    {
-      "q": "¿Qué tan regular es tu ciclo?",
-      "help": "Ser irregular es común — Nutri se adapta igual.",
-      "type": "choice",
-      "key": "obReg",
-      "opts": [
-        {
-          "k": "Like clockwork",
-          "label": "Como un reloj"
-        },
-        {
-          "k": "Mostly regular",
-          "label": "Bastante regular"
-        },
-        {
-          "k": "Pretty unpredictable",
-          "label": "Bastante impredecible"
-        },
-        {
-          "k": "Not sure",
-          "label": "No estoy segura"
-        }
-      ]
+    "cycleLength": {
+      "q": "¿Cuánto dura tu ciclo menstrual medio?",
+      "h": "Desde el primer día de una regla hasta el primer día de la siguiente.",
+      "opt": {
+        "less_than_21_days": "Menos de 21 días",
+        "21_25_days": "21-25 días",
+        "26_30_days": "26-30 días",
+        "31_35_days": "31-35 días",
+        "other_not_sure": "otro/no estoy segura"
+      }
     },
-    {
-      "q": "¿Cuándo empezó tu última regla?",
-      "help": "Esto ancla la detección de tu fase.",
-      "type": "date",
-      "key": "obDate"
+    "periodLength": {
+      "q": "¿Cuántos días suele durar tu regla?",
+      "opt": {
+        "1_2_days": "1 - 2 días",
+        "3_4_days": "3 - 4 días",
+        "5_7_days": "5 - 7 días",
+        "7_8_days": "7 - 8 días",
+        "more_than_8_days": "más de 8 días"
+      }
     },
-    {
-      "q": "¿Cuánto dura tu ciclo habitualmente?",
-      "help": "Cuenta desde el día 1 de una regla hasta el día 1 de la siguiente.",
-      "type": "choice",
-      "key": "obLen",
-      "opts": [
-        {
-          "k": "21–24 days",
-          "label": "21–24 días"
-        },
-        {
-          "k": "25–30 days",
-          "label": "25–30 días"
-        },
-        {
-          "k": "31–35 days",
-          "label": "31–35 días"
-        },
-        {
-          "k": "Not sure",
-          "label": "No estoy segura"
-        }
-      ]
+    "healthCondition": {
+      "q": "¿Te han diagnosticado alguna vez alguna de estas condiciones?",
+      "opt": {
+        "fibroids": "Miomas",
+        "endometriosis": "Endometriosis",
+        "pmos": "PMOS",
+        "ovarian_cysts": "Quistes ováricos",
+        "infertility": "Infertilidad",
+        "perimenopause": "Perimenopausia",
+        "none_of_the_above": "Ninguna de las anteriores"
+      }
     },
-    {
-      "q": "¿Algún patrón de alimentación a respetar?",
-      "help": "Las comidas siempre se ajustarán a tu patrón.",
-      "type": "choice",
-      "key": "obDiet",
-      "opts": [
-        {
-          "k": "No restrictions",
-          "label": "Sin restricciones"
-        },
-        {
-          "k": "Vegetarian",
-          "label": "Vegetariana"
-        },
-        {
-          "k": "Vegan",
-          "label": "Vegana"
-        },
-        {
-          "k": "Gluten-free",
-          "label": "Sin gluten"
-        },
-        {
-          "k": "Dairy-free",
-          "label": "Sin lácteos"
-        }
-      ]
+    "contraceptives": {
+      "q": "¿Usas anticoncepción hormonal?",
+      "d": "Como la píldora, el DIU hormonal, el implante, el parche o el anillo. Cambia tu ciclo natural, así que Nutri se adapta a ello.",
+      "dh": "la píldora, el DIU hormonal, el implante, el parche o el anillo.",
+      "opt": {
+        "yes": "Sí, actualmente",
+        "yes_sub": "Estoy usando un método hormonal ahora mismo",
+        "past": "Ya no",
+        "past_sub": "He usado uno antes, pero ya no",
+        "never": "Nunca",
+        "never_sub": "Nunca he usado anticoncepción hormonal"
+      }
     },
-    {
-      "q": "Un poco sobre tu cuerpo",
-      "help": "Solo se usa para calibrar porciones y necesidades de energía — nunca para juzgar.",
-      "type": "numbers"
+    "nutritionDiet": {
+      "q": "¿Sigues algún plan de nutrición concreto?",
+      "opt": {
+        "balanced_diet": "Dieta equilibrada",
+        "keto": "Keto",
+        "vegetarian": "Vegetariana",
+        "low_carb": "Baja en carbohidratos",
+        "pescatarian": "Pescetariana",
+        "vegan": "Vegana",
+        "gluten_free": "Sin gluten",
+        "dairy_free": "Sin lácteos",
+        "no_diet": "Sin dieta",
+        "other": "Otro"
+      }
     },
-    {
-      "q": "Elige tu Nutri",
-      "help": "Tu compañera en cada fase. Puedes cambiarla cuando quieras.",
-      "type": "avatar"
+    "nutriGoal": {
+      "q": "¿Cuál es tu objetivo principal?",
+      "opt": {
+        "reduce_physical_pms_symptoms": "Reducir los síntomas físicos del SPM",
+        "feel_more_emotionally_balanced": "Sentirme más equilibrada emocionalmente",
+        "more_stable_energy_throughout_my_cycle": "Energía más estable durante todo mi ciclo"
+      }
     },
-    {
-      "q": "Tus datos, tus reglas",
-      "help": "Nada se comparte sin tu permiso.",
-      "type": "consent"
+    "beta": {
+      "start": "Empezamos",
+      "sub": "¡Bienvenida a la beta de NutriSync! Eres de las primeras en probarla. Unas preguntas iniciales nos ayudan a dar forma a lo que viene, así que algunas funciones están aún en camino.",
+      "info": "Tu feedback guía directamente lo que construimos. ¿Ves algo? Toca",
+      "info2": "cuando quieras en Ajustes."
+    },
+    "period": {
+      "h": "Es la respuesta más importante de todas: con ella calculamos tu fase cada día.",
+      "pick": "Toca para elegir una fecha"
+    },
+    "city": {
+      "h": "¡Esto ayuda a NutriSync a localizar los consejos y entenderte mejor!"
+    },
+    "consent": {
+      "hero": "Tus datos siguen siendo tuyos",
+      "sub": "Solo recogemos lo necesario para personalizar tu guía de ciclo.",
+      "p1t": "Tu ciclo y tus síntomas",
+      "p1d": "Para sincronizar comidas y movimiento con tu fase.",
+      "p2t": "Objetivos y preferencias",
+      "p2d": "Para adaptar las recomendaciones a ti.",
+      "p3t": "Guardado de forma segura",
+      "p3d": "Cifrado, nunca se vende y se puede borrar en cualquier momento.",
+      "agree1": "Acepto la",
+      "and": "y los",
+      "agree2": " de NutriSync, y consiento el tratamiento de mis datos de salud para personalizar mi guía.",
+      "req": "(Obligatorio)",
+      "research": "Usar mis datos anonimizados para mejorar NutriSync y la investigación en salud femenina.",
+      "opt": "(Opcional)",
+      "cta": "Aceptar y continuar"
+    },
+    "done": {
+      "sub": "Nutri ha creado tu primer plan de fase a partir de tus respuestas. Tu guía personalizada de nutrición y movimiento está lista.",
+      "note": "Puedes actualizar estas respuestas cuando quieras en Ajustes."
     }
-  ],
+  },
   "phase": {
     "menstrual": {
       "headline": "Descansar es productivo.",

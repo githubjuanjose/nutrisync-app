@@ -195,7 +195,8 @@
     "prWeekly": "Weekgemiddelde",
     "prBest": "Beste",
     "battEmpty": "Leeg",
-    "battFull": "Opgeladen"
+    "battFull": "Opgeladen",
+    "saving": "Opslaan…"
   },
   "dows": [
     "ZO",
@@ -536,129 +537,119 @@
       ]
     }
   },
-  "ob": [
-    {
-      "q": "Wat brengt je naar NutriSync?",
-      "help": "Dit bepaalt wat Nutri als eerste uitlicht.",
-      "type": "choice",
-      "key": "obGoal",
-      "opts": [
-        {
-          "k": "Balance my energy",
-          "label": "Mijn energie in balans brengen"
-        },
-        {
-          "k": "Ease PMS & symptoms",
-          "label": "PMS & klachten verlichten"
-        },
-        {
-          "k": "Train smarter with my cycle",
-          "label": "Slimmer trainen met mijn cyclus"
-        },
-        {
-          "k": "Understand my body better",
-          "label": "Mijn lichaam beter begrijpen"
-        }
-      ]
+  "ob": {
+    "accurate": "Wees zo nauwkeurig mogelijk zodat NutriSync je resultaten op maat kan geven.",
+    "sec": {
+      "cycle_info": "Cyclus-info",
+      "health_condition": "Gezondheidstoestand",
+      "hormonal_contraceptives": "Hormonale anticonceptie",
+      "nutritional_preferences": "Voedingsvoorkeuren",
+      "your_nutrigoal": "Jouw NutriGoal"
     },
-    {
-      "q": "Hoe regelmatig is je cyclus?",
-      "help": "Onregelmatig is normaal — Nutri past zich hoe dan ook aan.",
-      "type": "choice",
-      "key": "obReg",
-      "opts": [
-        {
-          "k": "Like clockwork",
-          "label": "Als een klok"
-        },
-        {
-          "k": "Mostly regular",
-          "label": "Meestal regelmatig"
-        },
-        {
-          "k": "Pretty unpredictable",
-          "label": "Behoorlijk onvoorspelbaar"
-        },
-        {
-          "k": "Not sure",
-          "label": "Weet ik niet"
-        }
-      ]
+    "cycleLength": {
+      "q": "Hoe lang is je gemiddelde menstruatiecyclus?",
+      "h": "Van de eerste dag van een menstruatie tot de eerste dag van de volgende.",
+      "opt": {
+        "less_than_21_days": "Minder dan 21 dagen",
+        "21_25_days": "21-25 dagen",
+        "26_30_days": "26-30 dagen",
+        "31_35_days": "31-35 dagen",
+        "other_not_sure": "anders/niet zeker"
+      }
     },
-    {
-      "q": "Wanneer begon je laatste menstruatie?",
-      "help": "Dit verankert je fasedetectie.",
-      "type": "date",
-      "key": "obDate"
+    "periodLength": {
+      "q": "Hoeveel dagen duurt je menstruatie meestal?",
+      "opt": {
+        "1_2_days": "1 - 2 dagen",
+        "3_4_days": "3 - 4 dagen",
+        "5_7_days": "5 - 7 dagen",
+        "7_8_days": "7 - 8 dagen",
+        "more_than_8_days": "meer dan 8 dagen"
+      }
     },
-    {
-      "q": "Hoe lang is je typische cyclus?",
-      "help": "Tel van dag 1 van de ene menstruatie tot dag 1 van de volgende.",
-      "type": "choice",
-      "key": "obLen",
-      "opts": [
-        {
-          "k": "21–24 days",
-          "label": "21–24 dagen"
-        },
-        {
-          "k": "25–30 days",
-          "label": "25–30 dagen"
-        },
-        {
-          "k": "31–35 days",
-          "label": "31–35 dagen"
-        },
-        {
-          "k": "Not sure",
-          "label": "Weet ik niet"
-        }
-      ]
+    "healthCondition": {
+      "q": "Is bij jou ooit een van de volgende aandoeningen vastgesteld?",
+      "opt": {
+        "fibroids": "Vleesbomen",
+        "endometriosis": "Endometriose",
+        "pmos": "PMOS",
+        "ovarian_cysts": "Eierstokcysten",
+        "infertility": "Onvruchtbaarheid",
+        "perimenopause": "Perimenopauze",
+        "none_of_the_above": "Geen van bovenstaande"
+      }
     },
-    {
-      "q": "Een eetpatroon om rekening mee te houden?",
-      "help": "Maaltijden passen altijd binnen jouw patroon.",
-      "type": "choice",
-      "key": "obDiet",
-      "opts": [
-        {
-          "k": "No restrictions",
-          "label": "Geen beperkingen"
-        },
-        {
-          "k": "Vegetarian",
-          "label": "Vegetarisch"
-        },
-        {
-          "k": "Vegan",
-          "label": "Veganistisch"
-        },
-        {
-          "k": "Gluten-free",
-          "label": "Glutenvrij"
-        },
-        {
-          "k": "Dairy-free",
-          "label": "Zuivelvrij"
-        }
-      ]
+    "contraceptives": {
+      "q": "Gebruik je hormonale anticonceptie?",
+      "d": "Zoals de pil, het hormoonspiraaltje, het implantaat, de pleister of de ring. Het verandert je natuurlijke cyclus, dus Nutri past zich daarop aan.",
+      "dh": "de pil, het hormoonspiraaltje, het implantaat, de pleister of de ring.",
+      "opt": {
+        "yes": "Ja, momenteel",
+        "yes_sub": "Ik gebruik nu een hormonale methode",
+        "past": "Niet meer",
+        "past_sub": "Ik heb er eerder een gebruikt, maar nu niet meer",
+        "never": "Nooit",
+        "never_sub": "Ik heb nooit hormonale anticonceptie gebruikt"
+      }
     },
-    {
-      "q": "Iets over je lichaam",
-      "help": "Alleen om porties en energiebehoefte te bepalen — nooit om te oordelen.",
-      "type": "numbers"
+    "nutritionDiet": {
+      "q": "Volg je een specifiek voedingsplan?",
+      "opt": {
+        "balanced_diet": "Gebalanceerd dieet",
+        "keto": "Keto",
+        "vegetarian": "Vegetarisch",
+        "low_carb": "Koolhydraatarm",
+        "pescatarian": "Pescotarisch",
+        "vegan": "Veganistisch",
+        "gluten_free": "Glutenvrij",
+        "dairy_free": "Zuivelvrij",
+        "no_diet": "Geen dieet",
+        "other": "Anders"
+      }
     },
-    {
-      "q": "Kies je Nutri",
-      "help": "Je maatje door elke fase. Je kunt altijd wisselen.",
-      "type": "avatar"
+    "nutriGoal": {
+      "q": "Wat is je belangrijkste doel?",
+      "opt": {
+        "reduce_physical_pms_symptoms": "Fysieke PMS-klachten verminderen",
+        "feel_more_emotionally_balanced": "Me emotioneel meer in balans voelen",
+        "more_stable_energy_throughout_my_cycle": "Stabielere energie gedurende mijn hele cyclus"
+      }
     },
-    {
-      "q": "Jouw gegevens, jouw regels",
-      "help": "Niets wordt gedeeld zonder jouw akkoord.",
-      "type": "consent"
+    "beta": {
+      "start": "Aan de slag",
+      "sub": "Welkom bij de NutriSync-bèta! Je bent een van de eersten die hem probeert. Een paar vragen helpen ons vormgeven wat er komt — sommige functies zijn nog onderweg.",
+      "info": "Jouw feedback stuurt direct wat we bouwen. Zie je iets? Tik op",
+      "info2": "wanneer je wilt in Instellingen."
+    },
+    "period": {
+      "h": "Dit is het allerbelangrijkste antwoord — hiermee berekenen we elke dag je fase.",
+      "pick": "Tik om een datum te kiezen"
+    },
+    "city": {
+      "h": "Dit helpt NutriSync om tips te lokaliseren en jou beter te begrijpen!"
+    },
+    "consent": {
+      "hero": "Jouw gegevens blijven van jou",
+      "sub": "We verzamelen alleen wat nodig is om je cyclusbegeleiding te personaliseren.",
+      "p1t": "Je cyclus en symptomen",
+      "p1d": "Om maaltijden en beweging met je fase te synchroniseren.",
+      "p2t": "Doelen & voorkeuren",
+      "p2d": "Om aanbevelingen op jou af te stemmen.",
+      "p3t": "Veilig opgeslagen",
+      "p3d": "Versleuteld, nooit verkocht, altijd te verwijderen.",
+      "agree1": "Ik ga akkoord met NutriSyncs",
+      "and": "en",
+      "agree2": ", en geef toestemming voor de verwerking van mijn gezondheidsgegevens om mijn begeleiding te personaliseren.",
+      "req": "(Verplicht)",
+      "research": "Gebruik mijn geanonimiseerde gegevens om NutriSync en onderzoek naar vrouwengezondheid te verbeteren.",
+      "opt": "(Optioneel)",
+      "cta": "Akkoord en doorgaan"
+    },
+    "done": {
+      "sub": "Nutri heeft je eerste faseplan gemaakt op basis van je antwoorden. Je persoonlijke voedings- en bewegingsbegeleiding staat klaar.",
+      "note": "Je kunt deze antwoorden altijd bijwerken in Instellingen."
     }
-  ],
+  },
   "provSync": {
     "apple": "gesynct 6:40",
     "oura": "gesynct 2 u geleden",

@@ -195,7 +195,8 @@
     "prWeekly": "週平均",
     "prBest": "ベスト",
     "battEmpty": "空",
-    "battFull": "フル充電"
+    "battFull": "フル充電",
+    "saving": "保存中…"
   },
   "dows": [
     "日",
@@ -536,129 +537,119 @@
       ]
     }
   },
-  "ob": [
-    {
-      "q": "NutriSync に来た理由は？",
-      "help": "Nutri が最初に何を優先するかが決まります。",
-      "type": "choice",
-      "key": "obGoal",
-      "opts": [
-        {
-          "k": "Balance my energy",
-          "label": "エネルギーのバランスを整えたい"
-        },
-        {
-          "k": "Ease PMS & symptoms",
-          "label": "PMSと症状をやわらげたい"
-        },
-        {
-          "k": "Train smarter with my cycle",
-          "label": "サイクルに合わせて賢くトレーニングしたい"
-        },
-        {
-          "k": "Understand my body better",
-          "label": "自分の体をもっと知りたい"
-        }
-      ]
+  "ob": {
+    "accurate": "NutriSync があなたに合った結果をお届けできるよう、できるだけ正確に入力してください。",
+    "sec": {
+      "cycle_info": "周期の情報",
+      "health_condition": "健康状態",
+      "hormonal_contraceptives": "ホルモン避妊",
+      "nutritional_preferences": "食事の好み",
+      "your_nutrigoal": "あなたの NutriGoal"
     },
-    {
-      "q": "サイクルは規則的ですか？",
-      "help": "不規則はよくあること——どちらでも Nutri は適応します。",
-      "type": "choice",
-      "key": "obReg",
-      "opts": [
-        {
-          "k": "Like clockwork",
-          "label": "時計のように正確"
-        },
-        {
-          "k": "Mostly regular",
-          "label": "だいたい規則的"
-        },
-        {
-          "k": "Pretty unpredictable",
-          "label": "かなり予測しづらい"
-        },
-        {
-          "k": "Not sure",
-          "label": "わからない"
-        }
-      ]
+    "cycleLength": {
+      "q": "平均的な月経周期はどのくらいですか？",
+      "h": "生理初日から次の生理初日までの日数です。",
+      "opt": {
+        "less_than_21_days": "21日未満",
+        "21_25_days": "21〜25日",
+        "26_30_days": "26〜30日",
+        "31_35_days": "31〜35日",
+        "other_not_sure": "その他／わからない"
+      }
     },
-    {
-      "q": "前回の生理はいつ始まりましたか？",
-      "help": "フェーズ検出の基準点になります。",
-      "type": "date",
-      "key": "obDate"
+    "periodLength": {
+      "q": "生理は通常何日間続きますか？",
+      "opt": {
+        "1_2_days": "1〜2日",
+        "3_4_days": "3〜4日",
+        "5_7_days": "5〜7日",
+        "7_8_days": "7〜8日",
+        "more_than_8_days": "8日以上"
+      }
     },
-    {
-      "q": "サイクルの長さは？",
-      "help": "生理初日から次の生理初日まで数えます。",
-      "type": "choice",
-      "key": "obLen",
-      "opts": [
-        {
-          "k": "21–24 days",
-          "label": "21〜24日"
-        },
-        {
-          "k": "25–30 days",
-          "label": "25〜30日"
-        },
-        {
-          "k": "31–35 days",
-          "label": "31〜35日"
-        },
-        {
-          "k": "Not sure",
-          "label": "わからない"
-        }
-      ]
+    "healthCondition": {
+      "q": "次のいずれかの診断を受けたことがありますか？",
+      "opt": {
+        "fibroids": "子宮筋腫",
+        "endometriosis": "子宮内膜症",
+        "pmos": "PMOS",
+        "ovarian_cysts": "卵巣嚢腫",
+        "infertility": "不妊",
+        "perimenopause": "更年期移行期",
+        "none_of_the_above": "どれにも当てはまらない"
+      }
     },
-    {
-      "q": "守りたい食事スタイルは？",
-      "help": "食事提案は常にあなたのスタイルに合わせます。",
-      "type": "choice",
-      "key": "obDiet",
-      "opts": [
-        {
-          "k": "No restrictions",
-          "label": "制限なし"
-        },
-        {
-          "k": "Vegetarian",
-          "label": "ベジタリアン"
-        },
-        {
-          "k": "Vegan",
-          "label": "ヴィーガン"
-        },
-        {
-          "k": "Gluten-free",
-          "label": "グルテンフリー"
-        },
-        {
-          "k": "Dairy-free",
-          "label": "乳製品フリー"
-        }
-      ]
+    "contraceptives": {
+      "q": "ホルモン避妊を使用していますか？",
+      "d": "ピル、ホルモン付加IUD、インプラント、パッチ、リングなどです。自然な周期が変わるため、Nutri はそれに合わせて調整します。",
+      "dh": "ピル、ホルモン付加IUD、インプラント、パッチ、リング",
+      "opt": {
+        "yes": "はい、現在使用中",
+        "yes_sub": "現在ホルモン避妊法を使用しています",
+        "past": "今は使っていない",
+        "past_sub": "以前使っていましたが、今は使っていません",
+        "never": "一度もない",
+        "never_sub": "ホルモン避妊を使ったことはありません"
+      }
     },
-    {
-      "q": "あなたの体について少しだけ",
-      "help": "分量とエネルギー必要量の調整にだけ使います——評価には使いません。",
-      "type": "numbers"
+    "nutritionDiet": {
+      "q": "特定の食事プランに従っていますか？",
+      "opt": {
+        "balanced_diet": "バランスの良い食事",
+        "keto": "ケト",
+        "vegetarian": "ベジタリアン",
+        "low_carb": "低糖質",
+        "pescatarian": "ペスカタリアン",
+        "vegan": "ヴィーガン",
+        "gluten_free": "グルテンフリー",
+        "dairy_free": "乳製品フリー",
+        "no_diet": "特になし",
+        "other": "その他"
+      }
     },
-    {
-      "q": "あなたの Nutri を選ぶ",
-      "help": "全フェーズを一緒に歩む相棒。いつでも変更できます。",
-      "type": "avatar"
+    "nutriGoal": {
+      "q": "一番の目標は何ですか？",
+      "opt": {
+        "reduce_physical_pms_symptoms": "PMSの身体症状を軽減したい",
+        "feel_more_emotionally_balanced": "気持ちをもっと安定させたい",
+        "more_stable_energy_throughout_my_cycle": "周期を通してエネルギーを安定させたい"
+      }
     },
-    {
-      "q": "あなたのデータ、あなたのルール",
-      "help": "同意なしに共有されることはありません。",
-      "type": "consent"
+    "beta": {
+      "start": "はじめる",
+      "sub": "NutriSync ベータ版へようこそ！あなたは最初に試すユーザーのひとりです。いくつかの質問が今後の開発の方向性を決める助けになります。一部の機能は準備中です。",
+      "info": "あなたのフィードバックが開発を直接導きます。何か気づいたら、設定からいつでも",
+      "info2": "をタップしてください。"
+    },
+    "period": {
+      "h": "これは最も重要な回答です。毎日のフェーズ計算の基礎になります。",
+      "pick": "タップして日付を選択"
+    },
+    "city": {
+      "h": "これにより NutriSync がアドバイスを地域に合わせ、あなたをより深く理解できます！"
+    },
+    "consent": {
+      "hero": "あなたのデータはあなたのもの",
+      "sub": "周期ガイダンスのパーソナライズに必要な情報だけを収集します。",
+      "p1t": "あなたの周期と症状",
+      "p1d": "食事と運動をフェーズに同期させるため。",
+      "p2t": "目標と好み",
+      "p2d": "おすすめをあなたに合わせるため。",
+      "p3t": "安全に保管",
+      "p3d": "暗号化され、販売されることはなく、いつでも削除できます。",
+      "agree1": "NutriSync の",
+      "and": "と",
+      "agree2": "に同意し、ガイダンスのパーソナライズのために健康データの処理に同意します。",
+      "req": "（必須）",
+      "research": "匿名化されたデータを NutriSync と女性の健康研究の向上に使用する。",
+      "opt": "（任意）",
+      "cta": "同意して続ける"
+    },
+    "done": {
+      "sub": "Nutri があなたの回答から最初のフェーズプランを作成しました。あなた専用の栄養と運動のガイダンスの準備ができました。",
+      "note": "これらの回答は設定からいつでも更新できます。"
     }
-  ],
+  },
   "provSync": {
     "apple": "6:40 に同期",
     "oura": "2時間前に同期",

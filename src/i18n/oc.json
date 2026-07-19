@@ -195,7 +195,8 @@
     "prWeekly": "Mejana setmanau",
     "prBest": "Milhor",
     "battEmpty": "Descargada",
-    "battFull": "Cargada"
+    "battFull": "Cargada",
+    "saving": "En tot guardar…"
   },
   "dows": [
     "DG",
@@ -536,129 +537,119 @@
       ]
     }
   },
-  "ob": [
-    {
-      "q": "Qué te pòrte tà NutriSync?",
-      "help": "Açò oriente çò que Nutri destaque prumèr.",
-      "type": "choice",
-      "key": "obGoal",
-      "opts": [
-        {
-          "k": "Balance my energy",
-          "label": "Equilibrar era mia energia"
-        },
-        {
-          "k": "Ease PMS & symptoms",
-          "label": "Aleugerir era SPM e es simptòmes"
-        },
-        {
-          "k": "Train smarter with my cycle",
-          "label": "Entrenar milhor damb eth mèn cicle"
-        },
-        {
-          "k": "Understand my body better",
-          "label": "Compréner milhor eth mèn còs"
-        }
-      ]
+  "ob": {
+    "accurate": "Sigues tan precisa coma pogues entà que NutriSync te balhe resultats a mida.",
+    "sec": {
+      "cycle_info": "Informacion deth cicle",
+      "health_condition": "Condicion de salut",
+      "hormonal_contraceptives": "Anticonceptius hormonaus",
+      "nutritional_preferences": "Preferéncies nutricionaus",
+      "your_nutrigoal": "Eth tòn NutriGoal"
     },
-    {
-      "q": "Guaire regular ei eth tòn cicle?",
-      "help": "Era irregularitat ei abituau — Nutri s'i adapte parièr.",
-      "type": "choice",
-      "key": "obReg",
-      "opts": [
-        {
-          "k": "Like clockwork",
-          "label": "Coma un relòtge"
-        },
-        {
-          "k": "Mostly regular",
-          "label": "Quasi tostemp regular"
-        },
-        {
-          "k": "Pretty unpredictable",
-          "label": "Pro imprevisible"
-        },
-        {
-          "k": "Not sure",
-          "label": "Non ac sabi"
-        }
-      ]
+    "cycleLength": {
+      "q": "Guaire dure eth tòn cicle menstruau de mejana?",
+      "h": "Deth prumèr dia d'ua règla enquath prumèr dia dera seguenta.",
+      "opt": {
+        "less_than_21_days": "Mens de 21 dies",
+        "21_25_days": "21-25 dies",
+        "26_30_days": "26-30 dies",
+        "31_35_days": "31-35 dies",
+        "other_not_sure": "aute/non sò segura"
+      }
     },
-    {
-      "q": "Quan comencèc era tua darrèra règla?",
-      "help": "Açò ancòre era deteccion dera tua fasa.",
-      "type": "date",
-      "key": "obDate"
+    "periodLength": {
+      "q": "Guairi dies sòl durar era tua règla?",
+      "opt": {
+        "1_2_days": "1 - 2 dies",
+        "3_4_days": "3 - 4 dies",
+        "5_7_days": "5 - 7 dies",
+        "7_8_days": "7 - 8 dies",
+        "more_than_8_days": "mès de 8 dies"
+      }
     },
-    {
-      "q": "Guaire dure eth tòn cicle abituau?",
-      "help": "Compda deth dia 1 d'ua règla ath dia 1 dera seguenta.",
-      "type": "choice",
-      "key": "obLen",
-      "opts": [
-        {
-          "k": "21–24 days",
-          "label": "21–24 dies"
-        },
-        {
-          "k": "25–30 days",
-          "label": "25–30 dies"
-        },
-        {
-          "k": "31–35 days",
-          "label": "31–35 dies"
-        },
-        {
-          "k": "Not sure",
-          "label": "Non ac sabi"
-        }
-      ]
+    "healthCondition": {
+      "q": "T'an diagnosticat bèth còp ua d'aguestes condicions?",
+      "opt": {
+        "fibroids": "Miòmes",
+        "endometriosis": "Endometriòsi",
+        "pmos": "PMOS",
+        "ovarian_cysts": "Quistes ovarics",
+        "infertility": "Infertilitat",
+        "perimenopause": "Perimenopausa",
+        "none_of_the_above": "Cap des anteriores"
+      }
     },
-    {
-      "q": "Bèth patron alimentari a respectar?",
-      "help": "Es minjars tostemp s'ajustaràn ath tòn patron.",
-      "type": "choice",
-      "key": "obDiet",
-      "opts": [
-        {
-          "k": "No restrictions",
-          "label": "Sens restriccions"
-        },
-        {
-          "k": "Vegetarian",
-          "label": "Vegetariana"
-        },
-        {
-          "k": "Vegan",
-          "label": "Vegana"
-        },
-        {
-          "k": "Gluten-free",
-          "label": "Sens gluten"
-        },
-        {
-          "k": "Dairy-free",
-          "label": "Sens lactics"
-        }
-      ]
+    "contraceptives": {
+      "q": "Emplegues anticoncepcion hormonau?",
+      "d": "Coma era pilula, eth DIU hormonau, er implant, eth pegat o er anèth. Càmbie eth tòn cicle naturau, atau que Nutri s'i adapte.",
+      "dh": "era pilula, eth DIU hormonau, er implant, eth pegat o er anèth.",
+      "opt": {
+        "yes": "Òc, actuaument",
+        "yes_sub": "Sò a emplegar un metòde hormonau ara madeish",
+        "past": "Ja non",
+        "past_sub": "N'è emplegat un abantes, mès ja non",
+        "never": "Jamès",
+        "never_sub": "Non è jamès emplegat anticoncepcion hormonau"
+      }
     },
-    {
-      "q": "Un shinhau sus eth tòn còs",
-      "help": "Sonque servís entà calibrar racions e besonhs d'energia — jamès entà jutjar.",
-      "type": "numbers"
+    "nutritionDiet": {
+      "q": "Seguisses bèth plan de nutricion concrèt?",
+      "opt": {
+        "balanced_diet": "Dieta equilibrada",
+        "keto": "Keto",
+        "vegetarian": "Vegetariana",
+        "low_carb": "Baisha en carbohidrats",
+        "pescatarian": "Pescetariana",
+        "vegan": "Vegana",
+        "gluten_free": "Sense gluten",
+        "dairy_free": "Sense lactics",
+        "no_diet": "Sense dieta",
+        "other": "Aute"
+      }
     },
-    {
-      "q": "Tria era tua Nutri",
-      "help": "Era tua companha en cada fasa. La pòdes cambiar quan volgues.",
-      "type": "avatar"
+    "nutriGoal": {
+      "q": "Quin ei eth tòn objectiu principau?",
+      "opt": {
+        "reduce_physical_pms_symptoms": "Redusir es simptòmes fisics deth SPM",
+        "feel_more_emotionally_balanced": "Sentir-me mès equilibrada emocionaument",
+        "more_stable_energy_throughout_my_cycle": "Energia mès establa pendent tot eth cicle"
+      }
     },
-    {
-      "q": "Es tues donades, es tues nòrmes",
-      "help": "Arren non se compartís sens eth tòn vistiplau.",
-      "type": "consent"
+    "beta": {
+      "start": "Comencem",
+      "sub": "Benvenguda ara beta de NutriSync! Ès des prumères a provar-la. Bères questions mos ajuden a dar forma ath que ven — bères foncions son encara en camin.",
+      "info": "Eth tòn feedback guide dirèctament çò que bastim. Ves quauquarren? Tòca",
+      "info2": "quan volgues en Configuracion."
+    },
+    "period": {
+      "h": "Ei era responsa mès importanta de totes: damb aguesta calculam era tua fasa cada dia.",
+      "pick": "Tòca entà causir ua data"
+    },
+    "city": {
+      "h": "Açò ajude a NutriSync a localizar es conselhs e a compréner-te melhor!"
+    },
+    "consent": {
+      "hero": "Es tues dades seguissen essent tues",
+      "sub": "Sonque recuelhem çò de besonh entà personalizar era tua guida de cicle.",
+      "p1t": "Eth tòn cicle e es tòns simptòmes",
+      "p1d": "Entà sincronizar minjars e movement damb era tua fasa.",
+      "p2t": "Objectius e preferéncies",
+      "p2d": "Entà adaptar es recomanacions a tu.",
+      "p3t": "Guardat de forma segura",
+      "p3d": "Chifrat, non se ven jamès, se pòt esfaçar en tot moment.",
+      "agree1": "Accèpti era",
+      "and": "e es",
+      "agree2": " de NutriSync, e consentisqui eth tractament des mies dades de salut entà personalizar era mia guida.",
+      "req": "(Obligatòri)",
+      "research": "Emplegar es mies dades anonimizades entà melhorar NutriSync e era recèrca en salut femenina.",
+      "opt": "(Opcionau)",
+      "cta": "Acceptar e seguir"
+    },
+    "done": {
+      "sub": "Nutri a creat eth tòn prumèr plan de fasa a partir des tues responses. Era tua guida personalizada de nutricion e movement ei prèsta.",
+      "note": "Pòdes actualizar aguestes responses quan volgues en Configuracion."
     }
-  ],
+  },
   "provSync": {
     "apple": "sincronizat as 6:40",
     "oura": "sincronizat hè 2 ores",

@@ -195,7 +195,8 @@
     "prWeekly": "Wochenschnitt",
     "prBest": "Bestwert",
     "battEmpty": "Erschöpft",
-    "battFull": "Aufgeladen"
+    "battFull": "Aufgeladen",
+    "saving": "Speichern…"
   },
   "dows": [
     "SO",
@@ -536,129 +537,119 @@
       ]
     }
   },
-  "ob": [
-    {
-      "q": "Was führt dich zu NutriSync?",
-      "help": "Das bestimmt, was Nutri zuerst hervorhebt.",
-      "type": "choice",
-      "key": "obGoal",
-      "opts": [
-        {
-          "k": "Balance my energy",
-          "label": "Meine Energie ausbalancieren"
-        },
-        {
-          "k": "Ease PMS & symptoms",
-          "label": "PMS & Symptome lindern"
-        },
-        {
-          "k": "Train smarter with my cycle",
-          "label": "Klüger mit meinem Zyklus trainieren"
-        },
-        {
-          "k": "Understand my body better",
-          "label": "Meinen Körper besser verstehen"
-        }
-      ]
+  "ob": {
+    "accurate": "Sei so genau wie möglich, damit NutriSync dir maßgeschneiderte Ergebnisse liefern kann.",
+    "sec": {
+      "cycle_info": "Zyklus-Infos",
+      "health_condition": "Gesundheitszustand",
+      "hormonal_contraceptives": "Hormonelle Verhütung",
+      "nutritional_preferences": "Ernährungspräferenzen",
+      "your_nutrigoal": "Dein NutriGoal"
     },
-    {
-      "q": "Wie regelmäßig ist dein Zyklus?",
-      "help": "Unregelmäßig ist normal — Nutri passt sich so oder so an.",
-      "type": "choice",
-      "key": "obReg",
-      "opts": [
-        {
-          "k": "Like clockwork",
-          "label": "Wie ein Uhrwerk"
-        },
-        {
-          "k": "Mostly regular",
-          "label": "Meist regelmäßig"
-        },
-        {
-          "k": "Pretty unpredictable",
-          "label": "Ziemlich unberechenbar"
-        },
-        {
-          "k": "Not sure",
-          "label": "Weiß ich nicht"
-        }
-      ]
+    "cycleLength": {
+      "q": "Wie lang ist dein durchschnittlicher Menstruationszyklus?",
+      "h": "Vom ersten Tag einer Periode bis zum ersten Tag der nächsten.",
+      "opt": {
+        "less_than_21_days": "Weniger als 21 Tage",
+        "21_25_days": "21-25 Tage",
+        "26_30_days": "26-30 Tage",
+        "31_35_days": "31-35 Tage",
+        "other_not_sure": "anders/nicht sicher"
+      }
     },
-    {
-      "q": "Wann hat deine letzte Periode begonnen?",
-      "help": "Das ist der Anker deiner Phasenerkennung.",
-      "type": "date",
-      "key": "obDate"
+    "periodLength": {
+      "q": "Wie viele Tage dauert deine Periode normalerweise?",
+      "opt": {
+        "1_2_days": "1 - 2 Tage",
+        "3_4_days": "3 - 4 Tage",
+        "5_7_days": "5 - 7 Tage",
+        "7_8_days": "7 - 8 Tage",
+        "more_than_8_days": "mehr als 8 Tage"
+      }
     },
-    {
-      "q": "Wie lang ist dein typischer Zyklus?",
-      "help": "Zähle von Tag 1 einer Periode bis Tag 1 der nächsten.",
-      "type": "choice",
-      "key": "obLen",
-      "opts": [
-        {
-          "k": "21–24 days",
-          "label": "21–24 Tage"
-        },
-        {
-          "k": "25–30 days",
-          "label": "25–30 Tage"
-        },
-        {
-          "k": "31–35 days",
-          "label": "31–35 Tage"
-        },
-        {
-          "k": "Not sure",
-          "label": "Weiß ich nicht"
-        }
-      ]
+    "healthCondition": {
+      "q": "Wurde bei dir jemals eine der folgenden Erkrankungen diagnostiziert?",
+      "opt": {
+        "fibroids": "Myome",
+        "endometriosis": "Endometriose",
+        "pmos": "PMOS",
+        "ovarian_cysts": "Eierstockzysten",
+        "infertility": "Unfruchtbarkeit",
+        "perimenopause": "Perimenopause",
+        "none_of_the_above": "Keine davon"
+      }
     },
-    {
-      "q": "Gibt es ein Essmuster zu beachten?",
-      "help": "Die Mahlzeiten richten sich immer nach deinem Muster.",
-      "type": "choice",
-      "key": "obDiet",
-      "opts": [
-        {
-          "k": "No restrictions",
-          "label": "Keine Einschränkungen"
-        },
-        {
-          "k": "Vegetarian",
-          "label": "Vegetarisch"
-        },
-        {
-          "k": "Vegan",
-          "label": "Vegan"
-        },
-        {
-          "k": "Gluten-free",
-          "label": "Glutenfrei"
-        },
-        {
-          "k": "Dairy-free",
-          "label": "Ohne Milchprodukte"
-        }
-      ]
+    "contraceptives": {
+      "q": "Verwendest du hormonelle Verhütung?",
+      "d": "Zum Beispiel die Pille, die Hormonspirale, das Implantat, das Pflaster oder den Ring. Sie verändert deinen natürlichen Zyklus, Nutri passt sich entsprechend an.",
+      "dh": "die Pille, die Hormonspirale, das Implantat, das Pflaster oder den Ring.",
+      "opt": {
+        "yes": "Ja, aktuell",
+        "yes_sub": "Ich verwende gerade eine hormonelle Methode",
+        "past": "Nicht mehr",
+        "past_sub": "Ich habe früher eine verwendet, aber nicht mehr",
+        "never": "Nie",
+        "never_sub": "Ich habe nie hormonell verhütet"
+      }
     },
-    {
-      "q": "Ein wenig über deinen Körper",
-      "help": "Dient nur der Kalibrierung von Portionen und Energiebedarf — nie der Bewertung.",
-      "type": "numbers"
+    "nutritionDiet": {
+      "q": "Folgst du einem bestimmten Ernährungsplan?",
+      "opt": {
+        "balanced_diet": "Ausgewogene Ernährung",
+        "keto": "Keto",
+        "vegetarian": "Vegetarisch",
+        "low_carb": "Low Carb",
+        "pescatarian": "Pescetarisch",
+        "vegan": "Vegan",
+        "gluten_free": "Glutenfrei",
+        "dairy_free": "Laktosefrei",
+        "no_diet": "Keine Diät",
+        "other": "Andere"
+      }
     },
-    {
-      "q": "Wähle deinen Nutri",
-      "help": "Dein Begleiter durch jede Phase. Du kannst jederzeit wechseln.",
-      "type": "avatar"
+    "nutriGoal": {
+      "q": "Was ist dein Hauptziel?",
+      "opt": {
+        "reduce_physical_pms_symptoms": "Körperliche PMS-Symptome reduzieren",
+        "feel_more_emotionally_balanced": "Mich emotional ausgeglichener fühlen",
+        "more_stable_energy_throughout_my_cycle": "Stabilere Energie über meinen ganzen Zyklus"
+      }
     },
-    {
-      "q": "Deine Daten, deine Regeln",
-      "help": "Nichts wird ohne dein Okay geteilt.",
-      "type": "consent"
+    "beta": {
+      "start": "Los geht's",
+      "sub": "Willkommen bei der NutriSync-Beta! Du gehörst zu den Ersten, die sie ausprobieren. Ein paar Fragen helfen uns, das Kommende zu gestalten — einige Funktionen sind noch unterwegs.",
+      "info": "Dein Feedback bestimmt direkt, was wir bauen. Fällt dir etwas auf? Tippe",
+      "info2": "jederzeit in den Einstellungen."
+    },
+    "period": {
+      "h": "Das ist die wichtigste Antwort überhaupt — damit berechnen wir jeden Tag deine Phase.",
+      "pick": "Tippe, um ein Datum zu wählen"
+    },
+    "city": {
+      "h": "Das hilft NutriSync, Tipps zu lokalisieren und dich besser zu verstehen!"
+    },
+    "consent": {
+      "hero": "Deine Daten bleiben deine",
+      "sub": "Wir erfassen nur, was nötig ist, um deine Zyklus-Begleitung zu personalisieren.",
+      "p1t": "Dein Zyklus und deine Symptome",
+      "p1d": "Um Mahlzeiten und Bewegung mit deiner Phase zu synchronisieren.",
+      "p2t": "Ziele & Präferenzen",
+      "p2d": "Um Empfehlungen auf dich zuzuschneiden.",
+      "p3t": "Sicher gespeichert",
+      "p3d": "Verschlüsselt, nie verkauft, jederzeit löschbar.",
+      "agree1": "Ich akzeptiere NutriSyncs",
+      "and": "und",
+      "agree2": " und willige in die Verarbeitung meiner Gesundheitsdaten zur Personalisierung meiner Begleitung ein.",
+      "req": "(Erforderlich)",
+      "research": "Meine anonymisierten Daten nutzen, um NutriSync und die Frauengesundheitsforschung zu verbessern.",
+      "opt": "(Optional)",
+      "cta": "Zustimmen und fortfahren"
+    },
+    "done": {
+      "sub": "Nutri hat aus deinen Antworten deinen ersten Phasenplan erstellt. Deine persönliche Ernährungs- & Bewegungsbegleitung ist bereit.",
+      "note": "Du kannst diese Antworten jederzeit in den Einstellungen ändern."
     }
-  ],
+  },
   "provSync": {
     "apple": "synchronisiert 6:40 Uhr",
     "oura": "synchronisiert vor 2 Std.",

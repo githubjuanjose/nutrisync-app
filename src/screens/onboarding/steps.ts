@@ -68,7 +68,7 @@ export const STEPS: Step[] = [
   },
 
   {
-    kind: 'question', id: 'nutritionDiet', section: 'Nutritional Prefrences',
+    kind: 'question', id: 'nutritionDiet', section: 'Nutritional Preferences',
     question: 'Do you follow any specific nutrition plan?',
     options: opt(['Balanced Diet', 'Keto', 'Vegetarian', 'Low Carb', 'Pescatarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'No diet', 'Other']),
     stepLabel: '1/1', progress: 1,

@@ -195,7 +195,8 @@
     "prWeekly": "Media settimanale",
     "prBest": "Migliore",
     "battEmpty": "Scarica",
-    "battFull": "Carica"
+    "battFull": "Carica",
+    "saving": "Salvataggio…"
   },
   "dows": [
     "DOM",
@@ -536,129 +537,119 @@
       ]
     }
   },
-  "ob": [
-    {
-      "q": "Cosa ti porta su NutriSync?",
-      "help": "Questo orienta ciò che Nutri mette in evidenza per primo.",
-      "type": "choice",
-      "key": "obGoal",
-      "opts": [
-        {
-          "k": "Balance my energy",
-          "label": "Bilanciare la mia energia"
-        },
-        {
-          "k": "Ease PMS & symptoms",
-          "label": "Alleviare SPM e sintomi"
-        },
-        {
-          "k": "Train smarter with my cycle",
-          "label": "Allenarmi meglio col mio ciclo"
-        },
-        {
-          "k": "Understand my body better",
-          "label": "Capire meglio il mio corpo"
-        }
-      ]
+  "ob": {
+    "accurate": "Sii il più precisa possibile così NutriSync potrà darti risultati su misura.",
+    "sec": {
+      "cycle_info": "Info sul ciclo",
+      "health_condition": "Condizione di salute",
+      "hormonal_contraceptives": "Contraccettivi ormonali",
+      "nutritional_preferences": "Preferenze nutrizionali",
+      "your_nutrigoal": "Il tuo NutriGoal"
     },
-    {
-      "q": "Quanto è regolare il tuo ciclo?",
-      "help": "L'irregolarità è comune — Nutri si adatta comunque.",
-      "type": "choice",
-      "key": "obReg",
-      "opts": [
-        {
-          "k": "Like clockwork",
-          "label": "Come un orologio"
-        },
-        {
-          "k": "Mostly regular",
-          "label": "Perlopiù regolare"
-        },
-        {
-          "k": "Pretty unpredictable",
-          "label": "Piuttosto imprevedibile"
-        },
-        {
-          "k": "Not sure",
-          "label": "Non lo so"
-        }
-      ]
+    "cycleLength": {
+      "q": "Quanto dura in media il tuo ciclo mestruale?",
+      "h": "Dal primo giorno di una mestruazione al primo giorno della successiva.",
+      "opt": {
+        "less_than_21_days": "Meno di 21 giorni",
+        "21_25_days": "21-25 giorni",
+        "26_30_days": "26-30 giorni",
+        "31_35_days": "31-35 giorni",
+        "other_not_sure": "altro/non sono sicura"
+      }
     },
-    {
-      "q": "Quando è iniziato il tuo ultimo ciclo?",
-      "help": "È l'ancora del rilevamento della tua fase.",
-      "type": "date",
-      "key": "obDate"
+    "periodLength": {
+      "q": "Quanti giorni dura di solito la tua mestruazione?",
+      "opt": {
+        "1_2_days": "1 - 2 giorni",
+        "3_4_days": "3 - 4 giorni",
+        "5_7_days": "5 - 7 giorni",
+        "7_8_days": "7 - 8 giorni",
+        "more_than_8_days": "più di 8 giorni"
+      }
     },
-    {
-      "q": "Quanto dura il tuo ciclo tipico?",
-      "help": "Conta dal giorno 1 di un ciclo al giorno 1 del successivo.",
-      "type": "choice",
-      "key": "obLen",
-      "opts": [
-        {
-          "k": "21–24 days",
-          "label": "21–24 giorni"
-        },
-        {
-          "k": "25–30 days",
-          "label": "25–30 giorni"
-        },
-        {
-          "k": "31–35 days",
-          "label": "31–35 giorni"
-        },
-        {
-          "k": "Not sure",
-          "label": "Non lo so"
-        }
-      ]
+    "healthCondition": {
+      "q": "Ti è mai stata diagnosticata una delle seguenti condizioni?",
+      "opt": {
+        "fibroids": "Fibromi",
+        "endometriosis": "Endometriosi",
+        "pmos": "PMOS",
+        "ovarian_cysts": "Cisti ovariche",
+        "infertility": "Infertilità",
+        "perimenopause": "Perimenopausa",
+        "none_of_the_above": "Nessuna delle precedenti"
+      }
     },
-    {
-      "q": "Qualche schema alimentare da rispettare?",
-      "help": "I pasti si adatteranno sempre al tuo schema.",
-      "type": "choice",
-      "key": "obDiet",
-      "opts": [
-        {
-          "k": "No restrictions",
-          "label": "Nessuna restrizione"
-        },
-        {
-          "k": "Vegetarian",
-          "label": "Vegetariana"
-        },
-        {
-          "k": "Vegan",
-          "label": "Vegana"
-        },
-        {
-          "k": "Gluten-free",
-          "label": "Senza glutine"
-        },
-        {
-          "k": "Dairy-free",
-          "label": "Senza latticini"
-        }
-      ]
+    "contraceptives": {
+      "q": "Usi la contraccezione ormonale?",
+      "d": "Come la pillola, la spirale ormonale, l'impianto, il cerotto o l'anello. Cambia il tuo ciclo naturale, quindi Nutri si adatta di conseguenza.",
+      "dh": "la pillola, la spirale ormonale, l'impianto, il cerotto o l'anello.",
+      "opt": {
+        "yes": "Sì, attualmente",
+        "yes_sub": "Sto usando un metodo ormonale in questo momento",
+        "past": "Non più",
+        "past_sub": "Ne ho usato uno in passato, ma non più",
+        "never": "Mai",
+        "never_sub": "Non ho mai usato contraccezione ormonale"
+      }
     },
-    {
-      "q": "Qualcosa sul tuo corpo",
-      "help": "Serve solo a calibrare porzioni e fabbisogno energetico — mai a giudicare.",
-      "type": "numbers"
+    "nutritionDiet": {
+      "q": "Segui un piano alimentare specifico?",
+      "opt": {
+        "balanced_diet": "Dieta equilibrata",
+        "keto": "Keto",
+        "vegetarian": "Vegetariana",
+        "low_carb": "Low carb",
+        "pescatarian": "Pescetariana",
+        "vegan": "Vegana",
+        "gluten_free": "Senza glutine",
+        "dairy_free": "Senza latticini",
+        "no_diet": "Nessuna dieta",
+        "other": "Altro"
+      }
     },
-    {
-      "q": "Scegli il tuo Nutri",
-      "help": "La tua compagna in ogni fase. Puoi cambiarla quando vuoi.",
-      "type": "avatar"
+    "nutriGoal": {
+      "q": "Qual è il tuo obiettivo principale?",
+      "opt": {
+        "reduce_physical_pms_symptoms": "Ridurre i sintomi fisici della sindrome premestruale",
+        "feel_more_emotionally_balanced": "Sentirmi più equilibrata emotivamente",
+        "more_stable_energy_throughout_my_cycle": "Energia più stabile durante tutto il ciclo"
+      }
     },
-    {
-      "q": "I tuoi dati, le tue regole",
-      "help": "Niente viene condiviso senza il tuo consenso.",
-      "type": "consent"
+    "beta": {
+      "start": "Iniziamo",
+      "sub": "Benvenuta nella beta di NutriSync! Sei tra le prime a provarla. Alcune domande iniziali ci aiutano a dare forma a ciò che verrà, quindi alcune funzioni sono ancora in arrivo.",
+      "info": "Il tuo feedback guida direttamente ciò che costruiamo. Noti qualcosa? Tocca",
+      "info2": "in qualsiasi momento nelle Impostazioni."
+    },
+    "period": {
+      "h": "È la risposta più importante di tutte: con questa calcoliamo la tua fase ogni giorno.",
+      "pick": "Tocca per scegliere una data"
+    },
+    "city": {
+      "h": "Questo aiuta NutriSync a localizzare i consigli e a capirti meglio!"
+    },
+    "consent": {
+      "hero": "I tuoi dati restano tuoi",
+      "sub": "Raccogliamo solo ciò che serve per personalizzare la tua guida del ciclo.",
+      "p1t": "Il tuo ciclo e i tuoi sintomi",
+      "p1d": "Per sincronizzare pasti e movimento con la tua fase.",
+      "p2t": "Obiettivi e preferenze",
+      "p2d": "Per adattare i consigli a te.",
+      "p3t": "Archiviati in sicurezza",
+      "p3d": "Crittografati, mai venduti, eliminabili in qualsiasi momento.",
+      "agree1": "Accetto la",
+      "and": "e i",
+      "agree2": " di NutriSync, e acconsento al trattamento dei miei dati sanitari per personalizzare la mia guida.",
+      "req": "(Obbligatorio)",
+      "research": "Usa i miei dati anonimizzati per migliorare NutriSync e la ricerca sulla salute femminile.",
+      "opt": "(Facoltativo)",
+      "cta": "Accetta e continua"
+    },
+    "done": {
+      "sub": "Nutri ha creato il tuo primo piano di fase dalle tue risposte. La tua guida personalizzata di nutrizione e movimento è pronta.",
+      "note": "Puoi aggiornare queste risposte in qualsiasi momento nelle Impostazioni."
     }
-  ],
+  },
   "provSync": {
     "apple": "sincronizzato 6:40",
     "oura": "sincronizzato 2 h fa",

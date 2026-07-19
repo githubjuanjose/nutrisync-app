@@ -195,7 +195,8 @@
     "prWeekly": "Mitjana setmanal",
     "prBest": "Millor",
     "battEmpty": "Esgotada",
-    "battFull": "Carregada"
+    "battFull": "Carregada",
+    "saving": "Desant…"
   },
   "dows": [
     "DG",
@@ -536,129 +537,119 @@
       ]
     }
   },
-  "ob": [
-    {
-      "q": "Què et porta a NutriSync?",
-      "help": "Això orienta el que la Nutri destaca primer.",
-      "type": "choice",
-      "key": "obGoal",
-      "opts": [
-        {
-          "k": "Balance my energy",
-          "label": "Equilibrar la meva energia"
-        },
-        {
-          "k": "Ease PMS & symptoms",
-          "label": "Alleujar la SPM i els símptomes"
-        },
-        {
-          "k": "Train smarter with my cycle",
-          "label": "Entrenar millor amb el meu cicle"
-        },
-        {
-          "k": "Understand my body better",
-          "label": "Entendre millor el meu cos"
-        }
-      ]
+  "ob": {
+    "accurate": "Sigues tan precisa com puguis perquè NutriSync et doni resultats a mida.",
+    "sec": {
+      "cycle_info": "Informació del cicle",
+      "health_condition": "Condició de salut",
+      "hormonal_contraceptives": "Anticonceptius hormonals",
+      "nutritional_preferences": "Preferències nutricionals",
+      "your_nutrigoal": "El teu NutriGoal"
     },
-    {
-      "q": "Com de regular és el teu cicle?",
-      "help": "La irregularitat és habitual — la Nutri s'hi adapta igualment.",
-      "type": "choice",
-      "key": "obReg",
-      "opts": [
-        {
-          "k": "Like clockwork",
-          "label": "Com un rellotge"
-        },
-        {
-          "k": "Mostly regular",
-          "label": "Força regular"
-        },
-        {
-          "k": "Pretty unpredictable",
-          "label": "Força imprevisible"
-        },
-        {
-          "k": "Not sure",
-          "label": "No ho sé"
-        }
-      ]
+    "cycleLength": {
+      "q": "Quant dura el teu cicle menstrual mitjà?",
+      "h": "Des del primer dia d'una regla fins al primer dia de la següent.",
+      "opt": {
+        "less_than_21_days": "Menys de 21 dies",
+        "21_25_days": "21-25 dies",
+        "26_30_days": "26-30 dies",
+        "31_35_days": "31-35 dies",
+        "other_not_sure": "altre/no n'estic segura"
+      }
     },
-    {
-      "q": "Quan va començar la teva última regla?",
-      "help": "Això ancora la detecció de la teva fase.",
-      "type": "date",
-      "key": "obDate"
+    "periodLength": {
+      "q": "Quants dies sol durar la teva regla?",
+      "opt": {
+        "1_2_days": "1 - 2 dies",
+        "3_4_days": "3 - 4 dies",
+        "5_7_days": "5 - 7 dies",
+        "7_8_days": "7 - 8 dies",
+        "more_than_8_days": "més de 8 dies"
+      }
     },
-    {
-      "q": "Quant dura el teu cicle habitual?",
-      "help": "Compta del dia 1 d'una regla al dia 1 de la següent.",
-      "type": "choice",
-      "key": "obLen",
-      "opts": [
-        {
-          "k": "21–24 days",
-          "label": "21–24 dies"
-        },
-        {
-          "k": "25–30 days",
-          "label": "25–30 dies"
-        },
-        {
-          "k": "31–35 days",
-          "label": "31–35 dies"
-        },
-        {
-          "k": "Not sure",
-          "label": "No ho sé"
-        }
-      ]
+    "healthCondition": {
+      "q": "T'han diagnosticat mai alguna d'aquestes condicions?",
+      "opt": {
+        "fibroids": "Miomes",
+        "endometriosis": "Endometriosi",
+        "pmos": "PMOS",
+        "ovarian_cysts": "Quists ovàrics",
+        "infertility": "Infertilitat",
+        "perimenopause": "Perimenopausa",
+        "none_of_the_above": "Cap de les anteriors"
+      }
     },
-    {
-      "q": "Algun patró alimentari a respectar?",
-      "help": "Els àpats sempre s'ajustaran al teu patró.",
-      "type": "choice",
-      "key": "obDiet",
-      "opts": [
-        {
-          "k": "No restrictions",
-          "label": "Sense restriccions"
-        },
-        {
-          "k": "Vegetarian",
-          "label": "Vegetariana"
-        },
-        {
-          "k": "Vegan",
-          "label": "Vegana"
-        },
-        {
-          "k": "Gluten-free",
-          "label": "Sense gluten"
-        },
-        {
-          "k": "Dairy-free",
-          "label": "Sense lactis"
-        }
-      ]
+    "contraceptives": {
+      "q": "Fas servir anticoncepció hormonal?",
+      "d": "Com la píndola, el DIU hormonal, l'implant, el pegat o l'anell. Canvia el teu cicle natural, així que la Nutri s'hi adapta.",
+      "dh": "la píndola, el DIU hormonal, l'implant, el pegat o l'anell.",
+      "opt": {
+        "yes": "Sí, actualment",
+        "yes_sub": "Estic fent servir un mètode hormonal ara mateix",
+        "past": "Ja no",
+        "past_sub": "N'he fet servir abans, però ja no",
+        "never": "Mai",
+        "never_sub": "No he fet servir mai anticoncepció hormonal"
+      }
     },
-    {
-      "q": "Una mica sobre el teu cos",
-      "help": "Només serveix per calibrar racions i necessitats d'energia — mai per jutjar.",
-      "type": "numbers"
+    "nutritionDiet": {
+      "q": "Segueixes algun pla de nutrició concret?",
+      "opt": {
+        "balanced_diet": "Dieta equilibrada",
+        "keto": "Keto",
+        "vegetarian": "Vegetariana",
+        "low_carb": "Baixa en carbohidrats",
+        "pescatarian": "Pescetariana",
+        "vegan": "Vegana",
+        "gluten_free": "Sense gluten",
+        "dairy_free": "Sense lactis",
+        "no_diet": "Sense dieta",
+        "other": "Altres"
+      }
     },
-    {
-      "q": "Tria la teva Nutri",
-      "help": "La teva companya a cada fase. Pots canviar-la quan vulguis.",
-      "type": "avatar"
+    "nutriGoal": {
+      "q": "Quin és el teu objectiu principal?",
+      "opt": {
+        "reduce_physical_pms_symptoms": "Reduir els símptomes físics de la SPM",
+        "feel_more_emotionally_balanced": "Sentir-me més equilibrada emocionalment",
+        "more_stable_energy_throughout_my_cycle": "Energia més estable durant tot el cicle"
+      }
     },
-    {
-      "q": "Les teves dades, les teves normes",
-      "help": "Res no es comparteix sense el teu vistiplau.",
-      "type": "consent"
+    "beta": {
+      "start": "Comencem",
+      "sub": "Benvinguda a la beta de NutriSync! Ets de les primeres a provar-la. Unes quantes preguntes ens ajuden a donar forma al que ve — algunes funcions encara estan en camí.",
+      "info": "El teu feedback guia directament el que construïm. Veus alguna cosa? Toca",
+      "info2": "quan vulguis a Configuració."
+    },
+    "period": {
+      "h": "És la resposta més important de totes: amb aquesta calculem la teva fase cada dia.",
+      "pick": "Toca per triar una data"
+    },
+    "city": {
+      "h": "Això ajuda NutriSync a localitzar els consells i entendre't millor!"
+    },
+    "consent": {
+      "hero": "Les teves dades segueixen sent teves",
+      "sub": "Només recollim el necessari per personalitzar la teva guia de cicle.",
+      "p1t": "El teu cicle i els teus símptomes",
+      "p1d": "Per sincronitzar àpats i moviment amb la teva fase.",
+      "p2t": "Objectius i preferències",
+      "p2d": "Per adaptar les recomanacions a tu.",
+      "p3t": "Desat de forma segura",
+      "p3d": "Xifrat, mai es ven i es pot esborrar en qualsevol moment.",
+      "agree1": "Accepto la",
+      "and": "i els",
+      "agree2": " de NutriSync, i consento el tractament de les meves dades de salut per personalitzar la meva guia.",
+      "req": "(Obligatori)",
+      "research": "Fer servir les meves dades anonimitzades per millorar NutriSync i la recerca en salut femenina.",
+      "opt": "(Opcional)",
+      "cta": "Acceptar i continuar"
+    },
+    "done": {
+      "sub": "La Nutri ha creat el teu primer pla de fase a partir de les teves respostes. La teva guia personalitzada de nutrició i moviment ja està a punt.",
+      "note": "Pots actualitzar aquestes respostes quan vulguis a Configuració."
     }
-  ],
+  },
   "provSync": {
     "apple": "sincronitzat 6:40",
     "oura": "sincronitzat fa 2 h",

@@ -181,7 +181,8 @@
     "alertDeactivate": "During beta, deactivation is handled by support — email hello@nutrisynccollective.com.",
     "alertDemoAccount": "Demo mode — account actions need the live backend.",
     "backToSite": "Back to site",
-    "obStartOver": "Start over"
+    "obStartOver": "Start over",
+    "saving": "Saving…"
   },
   "dows": [
     "SUN",
@@ -608,5 +609,118 @@
     "loginDetails": "LOGIN DETAILS",
     "startOver": "Start over",
     "startOverBody": "This clears your answers so far and takes you back to the first step."
+  },
+  "ob": {
+    "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",
+    "sec": {
+      "cycle_info": "Cycle Info",
+      "health_condition": "Health Condition",
+      "hormonal_contraceptives": "Hormonal Contraceptives",
+      "nutritional_preferences": "Nutritional Preferences",
+      "your_nutrigoal": "Your NutriGoal"
+    },
+    "cycleLength": {
+      "q": "How long is your average menstrual cycle?",
+      "h": "From the first day of one period to the first day of the next.",
+      "opt": {
+        "less_than_21_days": "Less than 21 days",
+        "21_25_days": "21-25 days",
+        "26_30_days": "26-30 days",
+        "31_35_days": "31-35 days",
+        "other_not_sure": "other/not sure"
+      }
+    },
+    "periodLength": {
+      "q": "How many days does your period usually last?",
+      "opt": {
+        "1_2_days": "1 - 2 days",
+        "3_4_days": "3 - 4 days",
+        "5_7_days": "5 - 7 days",
+        "7_8_days": "7 - 8 days",
+        "more_than_8_days": "more than 8 days"
+      }
+    },
+    "healthCondition": {
+      "q": "Have you ever been diagnosed with any of the following conditions?",
+      "opt": {
+        "fibroids": "Fibroids",
+        "endometriosis": "Endometriosis",
+        "pmos": "PMOS",
+        "ovarian_cysts": "Ovarian Cysts",
+        "infertility": "Infertility",
+        "perimenopause": "Perimenopause",
+        "none_of_the_above": "None of the above"
+      }
+    },
+    "contraceptives": {
+      "q": "Do you use hormonal contraception?",
+      "d": "Such as the pill, hormonal IUD, implant, patch or ring. It changes your natural cycle, so Nutri adapts to it accordingly.",
+      "dh": "the pill, hormonal IUD, implant, patch or ring.",
+      "opt": {
+        "yes": "Yes, currently",
+        "yes_sub": "I'm using a hormonal method right now",
+        "past": "Not anymore",
+        "past_sub": "I've used one before, but not anymore",
+        "never": "Never",
+        "never_sub": "I've never used hormonal contraception"
+      }
+    },
+    "nutritionDiet": {
+      "q": "Do you follow any specific nutrition plan?",
+      "opt": {
+        "balanced_diet": "Balanced Diet",
+        "keto": "Keto",
+        "vegetarian": "Vegetarian",
+        "low_carb": "Low Carb",
+        "pescatarian": "Pescatarian",
+        "vegan": "Vegan",
+        "gluten_free": "Gluten-free",
+        "dairy_free": "Dairy-free",
+        "no_diet": "No diet",
+        "other": "Other"
+      }
+    },
+    "nutriGoal": {
+      "q": "What's your primary goal?",
+      "opt": {
+        "reduce_physical_pms_symptoms": "Reduce physical PMS symptoms",
+        "feel_more_emotionally_balanced": "Feel more emotionally balanced",
+        "more_stable_energy_throughout_my_cycle": "More stable energy throughout my cycle"
+      }
+    },
+    "beta": {
+      "start": "Lets get Started",
+      "sub": "Welcome to the NutriSync beta! You're among the first to try it. A few onboarding questions help us shape what's coming next, so some features are still on the way.",
+      "info": "Your feedback directly guides what we build. Spot something? Tap",
+      "info2": "anytime in Settings."
+    },
+    "period": {
+      "h": "This is the single most important answer — it's how we work out your phase each day.",
+      "pick": "Tap to choose a date"
+    },
+    "city": {
+      "h": "This helps NutriSync localise tips and get a better understanding of you!"
+    },
+    "consent": {
+      "hero": "Your data stays yours",
+      "sub": "We only collect what's needed to personalise your cycle guidance.",
+      "p1t": "Your Cycle and Symptoms",
+      "p1d": "To sync meals and movement to your phase.",
+      "p2t": "Goals & Preferences",
+      "p2d": "To tailor recommendations to you.",
+      "p3t": "Stored Securely",
+      "p3d": "Encrypted, never sold, deletable any time.",
+      "agree1": "I agree to NutriSync's",
+      "and": "and",
+      "agree2": ", and consent to the processing of my health data to personalise my guidance.",
+      "req": "(Required)",
+      "research": "Use my anonymised data to improve NutriSync and women's health research.",
+      "opt": "(Optional)",
+      "cta": "Agree and Continue"
+    },
+    "done": {
+      "sub": "Nutri has built your first phase plan from your answers. Your personalised nutrition & movement guidance is ready.",
+      "note": "You can update these answers anytime in Settings."
+    }
   }
 }

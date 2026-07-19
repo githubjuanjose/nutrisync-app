@@ -158,24 +158,36 @@ export default function OnboardingWizard({ navigation }: Props) {
     });
 
   // ---- Question step ----
+  // F1 (Wave 1): all onboarding copy renders through ob.* i18n keys with the
+  // English text as fallback. Canonical option VALUES stay English — only the
+  // displayed labels translate, so onboardingMap / Supabase parity is untouched.
+  const kk = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
   if (step.kind === 'question') {
     const sel = answers[step.id] ?? [];
+    const opts = step.options.map((o) => ({
+      ...o,
+      label: t(`ob.${step.id}.opt.${kk(o.value)}`, o.label),
+      sub: o.sub ? t(`ob.${step.id}.opt.${kk(o.value)}_sub`, o.sub) : o.sub,
+    }));
     return (
       <OnboardingLayout
         progress={step.progress} stepLabel={step.stepLabel}
         onBack={back} onRestart={restart} onNext={next} nextDisabled={sel.length === 0}
       >
-        <Text style={styles.section}>{step.section}</Text>
-        {step.sectionItalic ? <Text style={styles.sectionItalic}>{step.sectionItalic}</Text> : null}
-        <Text style={styles.question}>{step.question}</Text>
-        {step.helper ? <Text style={styles.helper}>{step.helper}</Text> : null}
+        <Text style={styles.section}>{t(`ob.sec.${kk(step.section)}`, step.section)}</Text>
+        {step.sectionItalic ? <Text style={styles.sectionItalic}>{t('ob.accurate', step.sectionItalic)}</Text> : null}
+        <Text style={styles.question}>{t(`ob.${step.id}.q`, step.question)}</Text>
+        {step.helper ? <Text style={styles.helper}>{t(`ob.${step.id}.h`, step.helper)}</Text> : null}
         {step.description ? (
           <View style={{ marginTop: 10, marginBottom: 4 }}>
-            <Highlighted text={step.description.text} highlight={step.description.highlight} />
+            <Highlighted
+              text={t(`ob.${step.id}.d`, step.description.text)}
+              highlight={t(`ob.${step.id}.dh`, step.description.highlight ?? '')}
+            />
           </View>
         ) : null}
         <View style={{ marginTop: 22 }}>
-          <SelectList options={step.options} selected={sel} multi={step.multi} onToggle={(v) => toggle(step.id, v, step.multi)} />
+          <SelectList options={opts} selected={sel} multi={step.multi} onToggle={(v) => toggle(step.id, v, step.multi)} />
           {step.id === 'nutritionDiet' && sel.includes('Other') ? (
             /* R3-54: tell us the diet — input directly under the list, never covered */
             <TextInput
@@ -193,21 +205,20 @@ export default function OnboardingWizard({ navigation }: Props) {
   // ---- Beta welcome ----
   if (step.kind === 'betaWelcome') {
     return (
-      <OnboardingLayout progress={1} showBack={false} nextFull nextLabel="Lets get Started" onNext={next}>
+      <OnboardingLayout progress={1} showBack={false} nextFull nextLabel={t('ob.beta.start', "Lets get Started")} onNext={next}>
         <View style={{ alignItems: 'center', marginTop: 10 }}>
           <HaloOrb size={170} />
           <Text style={styles.eyebrow}>BETA</Text>
           <Text style={styles.hero}>{t('mob.earlyTester', "You're an early tester")}</Text>
           <Text style={{ fontSize: 26, marginTop: 6 }}>❤️</Text>
           <Text style={styles.heroSub}>
-            Welcome to the NutriSync beta! You're among the first to try it. A few onboarding
-            questions help us shape what's coming next, so some features are still on the way.
+            {t('ob.beta.sub', "Welcome to the NutriSync beta! You're among the first to try it. A few onboarding questions help us shape what's coming next, so some features are still on the way.")}
           </Text>
           <View style={styles.infoCard}>
             <Text style={{ fontSize: 18, marginRight: 10 }}>💡</Text>
             <Text style={styles.infoTxt}>
-              Your feedback directly guides what we build. Spot something? Tap{' '}
-              <Text style={{ color: colors.coral, fontFamily: font.semibold }}>{t('mob.sendFeedback', "Send feedback")}</Text> anytime in Settings.
+              {t('ob.beta.info', 'Your feedback directly guides what we build. Spot something? Tap')}{' '}
+              <Text style={{ color: colors.coral, fontFamily: font.semibold }}>{t('mob.sendFeedback', "Send feedback")}</Text> {t('ob.beta.info2', 'anytime in Settings.')}
             </Text>
           </View>
         </View>
@@ -220,15 +231,15 @@ export default function OnboardingWizard({ navigation }: Props) {
     return (
       <OnboardingLayout progress={step.progress} stepLabel={step.stepLabel} onBack={back} onRestart={restart} onNext={next} nextDisabled={!periodDate}>
         <Text style={styles.section}>{t('mob.cycleInfo', "Cycle Info")}</Text>
-        <Text style={styles.sectionItalic}>Be as accurate as possible so NutriSync can give you tailored results.</Text>
+        <Text style={styles.sectionItalic}>{t('ob.accurate', 'Be as accurate as possible so NutriSync can give you tailored results.')}</Text>
         <Text style={styles.question}>{t('mob.lastPeriodStart', "When did your last period start?")}</Text>
-        <Text style={styles.helper}>This is the single most important answer — it's how we work out your phase each day.</Text>
+        <Text style={styles.helper}>{t('ob.period.h', "This is the single most important answer — it's how we work out your phase each day.")}</Text>
         <Pressable style={styles.dateBtn} onPress={() => setShowPicker(true)}>
           <Svg width={18} height={18} viewBox="0 0 24 24">
             <Path d="M7 2v3M17 2v3M3.5 9h17M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" stroke={colors.coral} strokeWidth={1.8} fill="none" strokeLinecap="round" />
           </Svg>
           <Text style={[styles.dateTxt, !periodDate && { color: colors.faint }]}>
-            {periodDate ? fmtDate(periodDate) : 'Tap to choose a date'}
+            {periodDate ? fmtDate(periodDate) : t('ob.period.pick', 'Tap to choose a date')}
           </Text>
         </Pressable>
         {showPicker && (
@@ -253,7 +264,7 @@ export default function OnboardingWizard({ navigation }: Props) {
       <OnboardingLayout progress={step.progress} stepLabel={step.stepLabel} onBack={back} onRestart={restart} onNext={next} nextDisabled={!city.trim()}>
         <Text style={styles.section}>{t('mob.almostThere', "Almost there")}</Text>
         <Text style={styles.question}>{t('mob.whereBased', "And finally, where are you based?")}</Text>
-        <Text style={styles.helper}>This helps NutriSync localise tips and get a better understanding of you!</Text>
+        <Text style={styles.helper}>{t('ob.city.h', 'This helps NutriSync localise tips and get a better understanding of you!')}</Text>
         <View style={styles.cityInput}>
           <Svg width={18} height={18} viewBox="0 0 24 24">
             <Path d="M12 22s7-6.6 7-12a7 7 0 10-14 0c0 5.4 7 12 7 12z" fill={colors.coral} />
@@ -271,16 +282,16 @@ export default function OnboardingWizard({ navigation }: Props) {
   // ---- Consent ----
   if (step.kind === 'consent') {
     const pillars = [
-      { icon: 'cycle', title: 'Your Cycle and Symptoms', desc: 'To sync meals and movement to your phase.' },
-      { icon: 'salad', title: 'Goals & Prefrences', desc: 'To tailor recommendations to you.' },
-      { icon: 'lock', title: 'Stored Securely', desc: 'Encrypted, never sold, deletable any time.' },
+      { icon: 'cycle', title: t('ob.consent.p1t', 'Your Cycle and Symptoms'), desc: t('ob.consent.p1d', 'To sync meals and movement to your phase.') },
+      { icon: 'salad', title: t('ob.consent.p2t', 'Goals & Preferences'), desc: t('ob.consent.p2d', 'To tailor recommendations to you.') },
+      { icon: 'lock', title: t('ob.consent.p3t', 'Stored Securely'), desc: t('ob.consent.p3d', 'Encrypted, never sold, deletable any time.') },
     ];
     return (
-      <OnboardingLayout progress={1} onBack={back} onRestart={restart} nextFull nextLabel="Agree and Continue" onNext={next} nextDisabled={!agree}>
+      <OnboardingLayout progress={1} onBack={back} onRestart={restart} nextFull nextLabel={t('ob.consent.cta', 'Agree and Continue')} onNext={next} nextDisabled={!agree}>
         <View style={{ alignItems: 'center' }}>
           <HaloOrb size={150} />
-          <Text style={styles.hero}>You're data stays yours</Text>
-          <Text style={styles.heroSub}>We only collect what's needed to personalise your cycle guidance.</Text>
+          <Text style={styles.hero}>{t('ob.consent.hero', 'Your data stays yours')}</Text>
+          <Text style={styles.heroSub}>{t('ob.consent.sub', "We only collect what's needed to personalise your cycle guidance.")}</Text>
         </View>
         <View style={{ marginTop: 20, gap: 12 }}>
           {pillars.map((p) => (
@@ -296,13 +307,12 @@ export default function OnboardingWizard({ navigation }: Props) {
         <View style={{ marginTop: 16, gap: 12 }}>
           <ConsentRow checked={agree} onToggle={() => setAgree(!agree)}>
             <Text style={styles.consentTxt}>
-              I agree to NutriSync's <Text style={styles.link}>{t('mob.privacyPolicy', "Privacy Policy")}</Text> and <Text style={styles.link}>{t('mob.terms', "Terms")}</Text>,
-              and consent to the processing of my health data to personalise my guidance. <Text style={styles.req}>(Required)</Text>
+              {t('ob.consent.agree1', "I agree to NutriSync's")} <Text style={styles.link}>{t('mob.privacyPolicy', "Privacy Policy")}</Text> {t('ob.consent.and', 'and')} <Text style={styles.link}>{t('mob.terms', "Terms")}</Text>{t('ob.consent.agree2', ', and consent to the processing of my health data to personalise my guidance.')} <Text style={styles.req}>{t('ob.consent.req', '(Required)')}</Text>
             </Text>
           </ConsentRow>
           <ConsentRow checked={research} onToggle={() => setResearch(!research)}>
             <Text style={styles.consentTxt}>
-              Use my anonymised data to improve NutriSync and women's health reaserch. <Text style={styles.opt}>(Optional)</Text>
+              {t('ob.consent.research', "Use my anonymised data to improve NutriSync and women's health research.")} <Text style={styles.opt}>{t('ob.consent.opt', '(Optional)')}</Text>
             </Text>
           </ConsentRow>
         </View>
@@ -314,18 +324,17 @@ export default function OnboardingWizard({ navigation }: Props) {
   return (
     <OnboardingLayout
       progress={1} onBack={back} onRestart={restart} nextFull
-      nextLabel={saving ? 'Saving…' : t('ui.enterApp', 'Enter NutriSync')} onNext={finish} nextDisabled={saving}
+      nextLabel={saving ? t('ui.saving', 'Saving…') : t('ui.enterApp', 'Enter NutriSync')} onNext={finish} nextDisabled={saving}
     >
       <View style={{ alignItems: 'center', marginTop: 20 }}>
         <HaloOrb size={200} />
         <Text style={styles.eyebrow}>{t('mob.welcomeCaps', "WELCOME")}</Text>
         <Text style={styles.hero}>{t('mob.allSet', "You're all set!")}</Text>
         <Text style={styles.heroSub}>
-          Nutri has built your first phase plan from your answers. Your personalised nutrition &
-          movement guidance is ready.
+          {t('ob.done.sub', 'Nutri has built your first phase plan from your answers. Your personalised nutrition & movement guidance is ready.')}
         </Text>
         {saveErr ? <Text style={styles.saveErr}>{saveErr}</Text> : null}
-        <Text style={styles.footNote}>you can update these answers anytime in settings.</Text>
+        <Text style={styles.footNote}>{t('ob.done.note', 'You can update these answers anytime in Settings.')}</Text>
       </View>
     </OnboardingLayout>
   );

@@ -195,7 +195,8 @@
     "prWeekly": "Asteko batezbestekoa",
     "prBest": "Onena",
     "battEmpty": "Hustuta",
-    "battFull": "Kargatuta"
+    "battFull": "Kargatuta",
+    "saving": "Gordetzen…"
   },
   "dows": [
     "IG",
@@ -536,129 +537,119 @@
       ]
     }
   },
-  "ob": [
-    {
-      "q": "Zerk ekarri zaitu NutriSync-era?",
-      "help": "Honek zehazten du Nutrik zer nabarmenduko duen lehenik.",
-      "type": "choice",
-      "key": "obGoal",
-      "opts": [
-        {
-          "k": "Balance my energy",
-          "label": "Nire energia orekatzea"
-        },
-        {
-          "k": "Ease PMS & symptoms",
-          "label": "PMS eta sintomak arintzea"
-        },
-        {
-          "k": "Train smarter with my cycle",
-          "label": "Nire zikloarekin hobeto entrenatzea"
-        },
-        {
-          "k": "Understand my body better",
-          "label": "Nire gorputza hobeto ulertzea"
-        }
-      ]
+  "ob": {
+    "accurate": "Izan ahalik eta zehatzena, NutriSync-ek neurriko emaitzak eman diezazkizun.",
+    "sec": {
+      "cycle_info": "Zikloaren informazioa",
+      "health_condition": "Osasun-egoera",
+      "hormonal_contraceptives": "Antisorgailu hormonalak",
+      "nutritional_preferences": "Elikadura-lehentasunak",
+      "your_nutrigoal": "Zure NutriGoal-a"
     },
-    {
-      "q": "Zenbateraino da erregularra zure zikloa?",
-      "help": "Irregularra ohikoa da — Nutri nolanahi ere egokitzen da.",
-      "type": "choice",
-      "key": "obReg",
-      "opts": [
-        {
-          "k": "Like clockwork",
-          "label": "Erloju baten modukoa"
-        },
-        {
-          "k": "Mostly regular",
-          "label": "Gehienbat erregularra"
-        },
-        {
-          "k": "Pretty unpredictable",
-          "label": "Nahiko aurreikusezina"
-        },
-        {
-          "k": "Not sure",
-          "label": "Ez dakit"
-        }
-      ]
+    "cycleLength": {
+      "q": "Zenbat irauten du zure batez besteko hilekoaren zikloak?",
+      "h": "Hileko baten lehen egunetik hurrengoaren lehen egunera arte.",
+      "opt": {
+        "less_than_21_days": "21 egun baino gutxiago",
+        "21_25_days": "21-25 egun",
+        "26_30_days": "26-30 egun",
+        "31_35_days": "31-35 egun",
+        "other_not_sure": "beste bat/ez nago ziur"
+      }
     },
-    {
-      "q": "Noiz hasi zen zure azken hilekoa?",
-      "help": "Honek ainguratzen du zure fase-detekzioa.",
-      "type": "date",
-      "key": "obDate"
+    "periodLength": {
+      "q": "Zenbat egun irauten du normalean zure hilekoak?",
+      "opt": {
+        "1_2_days": "1 - 2 egun",
+        "3_4_days": "3 - 4 egun",
+        "5_7_days": "5 - 7 egun",
+        "7_8_days": "7 - 8 egun",
+        "more_than_8_days": "8 egun baino gehiago"
+      }
     },
-    {
-      "q": "Zenbat irauten du zure ziklo arruntak?",
-      "help": "Kontatu hileko baten 1. egunetik hurrengoaren 1. egunera.",
-      "type": "choice",
-      "key": "obLen",
-      "opts": [
-        {
-          "k": "21–24 days",
-          "label": "21–24 egun"
-        },
-        {
-          "k": "25–30 days",
-          "label": "25–30 egun"
-        },
-        {
-          "k": "31–35 days",
-          "label": "31–35 egun"
-        },
-        {
-          "k": "Not sure",
-          "label": "Ez dakit"
-        }
-      ]
+    "healthCondition": {
+      "q": "Inoiz diagnostikatu al dizute honako egoera hauetakoren bat?",
+      "opt": {
+        "fibroids": "Miomak",
+        "endometriosis": "Endometriosia",
+        "pmos": "PMOS",
+        "ovarian_cysts": "Obulutegiko kisteak",
+        "infertility": "Antzutasuna",
+        "perimenopause": "Perimenopausia",
+        "none_of_the_above": "Aurreko bat ere ez"
+      }
     },
-    {
-      "q": "Errespetatu beharreko elikadura-patroirik?",
-      "help": "Otorduak beti egokituko dira zure patroira.",
-      "type": "choice",
-      "key": "obDiet",
-      "opts": [
-        {
-          "k": "No restrictions",
-          "label": "Murrizketarik ez"
-        },
-        {
-          "k": "Vegetarian",
-          "label": "Begetarianoa"
-        },
-        {
-          "k": "Vegan",
-          "label": "Beganoa"
-        },
-        {
-          "k": "Gluten-free",
-          "label": "Glutenik gabea"
-        },
-        {
-          "k": "Dairy-free",
-          "label": "Esnekirik gabea"
-        }
-      ]
+    "contraceptives": {
+      "q": "Antisorgailu hormonalik erabiltzen al duzu?",
+      "d": "Adibidez pilula, DIU hormonala, inplantea, partxea edo eraztuna. Zure ziklo naturala aldatzen du, eta Nutri horretara egokitzen da.",
+      "dh": "pilula, DIU hormonala, inplantea, partxea edo eraztuna.",
+      "opt": {
+        "yes": "Bai, orain",
+        "yes_sub": "Metodo hormonal bat erabiltzen ari naiz orain",
+        "past": "Jada ez",
+        "past_sub": "Lehen erabili nuen, baina jada ez",
+        "never": "Inoiz ez",
+        "never_sub": "Ez dut inoiz antisorgailu hormonalik erabili"
+      }
     },
-    {
-      "q": "Zertxobait zure gorputzaz",
-      "help": "Anoak eta energia-beharrak kalibratzeko bakarrik — inoiz ez epaitzeko.",
-      "type": "numbers"
+    "nutritionDiet": {
+      "q": "Elikadura-plan zehatzen bat jarraitzen al duzu?",
+      "opt": {
+        "balanced_diet": "Dieta orekatua",
+        "keto": "Keto",
+        "vegetarian": "Begetarianoa",
+        "low_carb": "Karbohidrato gutxikoa",
+        "pescatarian": "Peszetarianoa",
+        "vegan": "Beganoa",
+        "gluten_free": "Glutenik gabea",
+        "dairy_free": "Esnekirik gabea",
+        "no_diet": "Dietarik ez",
+        "other": "Beste bat"
+      }
     },
-    {
-      "q": "Aukeratu zure Nutri",
-      "help": "Zure laguna fase guztietan. Noiznahi alda dezakezu.",
-      "type": "avatar"
+    "nutriGoal": {
+      "q": "Zein da zure helburu nagusia?",
+      "opt": {
+        "reduce_physical_pms_symptoms": "PMSaren sintoma fisikoak murriztea",
+        "feel_more_emotionally_balanced": "Emozionalki orekatuago sentitzea",
+        "more_stable_energy_throughout_my_cycle": "Energia egonkorragoa ziklo osoan zehar"
+      }
     },
-    {
-      "q": "Zure datuak, zure arauak",
-      "help": "Ezer ez da partekatzen zure baimenik gabe.",
-      "type": "consent"
+    "beta": {
+      "start": "Has gaitezen",
+      "sub": "Ongi etorri NutriSync beta bertsiora! Probatzen duten lehenengoetakoa zara. Hasierako galdera batzuek datorrena moldatzen laguntzen digute — funtzio batzuk oraindik bidean daude.",
+      "info": "Zure iritziak zuzenean gidatzen du eraikitzen duguna. Zerbait ikusi duzu? Sakatu",
+      "info2": "nahi duzunean Ezarpenetan."
+    },
+    "period": {
+      "h": "Erantzunik garrantzitsuena da: horrekin kalkulatzen dugu zure fasea egunero.",
+      "pick": "Sakatu data bat aukeratzeko"
+    },
+    "city": {
+      "h": "Honek NutriSync-i aholkuak lokalizatzen eta zu hobeto ulertzen laguntzen dio!"
+    },
+    "consent": {
+      "hero": "Zure datuak zureak dira beti",
+      "sub": "Zure ziklo-gidaritza pertsonalizatzeko behar duguna baino ez dugu jasotzen.",
+      "p1t": "Zure zikloa eta sintomak",
+      "p1d": "Otorduak eta mugimendua zure fasearekin sinkronizatzeko.",
+      "p2t": "Helburuak eta lehentasunak",
+      "p2d": "Gomendioak zuri egokitzeko.",
+      "p3t": "Modu seguruan gordeta",
+      "p3d": "Zifratuta, inoiz ez da saltzen, edonoiz ezaba daiteke.",
+      "agree1": "Onartzen ditut NutriSync-en",
+      "and": "eta",
+      "agree2": ", eta baimena ematen dut nire osasun-datuak tratatzeko, nire gidaritza pertsonalizatzeko.",
+      "req": "(Beharrezkoa)",
+      "research": "Nire datu anonimizatuak erabiltzea NutriSync eta emakumeen osasunari buruzko ikerketa hobetzeko.",
+      "opt": "(Aukerakoa)",
+      "cta": "Onartu eta jarraitu"
+    },
+    "done": {
+      "sub": "Nutrik zure lehen fase-plana sortu du zure erantzunetatik. Zure elikadura- eta mugimendu-gidaritza pertsonalizatua prest dago.",
+      "note": "Erantzun hauek edonoiz alda ditzakezu Ezarpenetan."
     }
-  ],
+  },
   "provSync": {
     "apple": "6:40an sinkronizatuta",
     "oura": "sinkronizatuta duela 2 ordu",

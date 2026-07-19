@@ -195,7 +195,8 @@
     "prWeekly": "周平均",
     "prBest": "最佳",
     "battEmpty": "耗尽",
-    "battFull": "满电"
+    "battFull": "满电",
+    "saving": "保存中…"
   },
   "dows": [
     "周日",
@@ -536,129 +537,119 @@
       ]
     }
   },
-  "ob": [
-    {
-      "q": "是什么把你带到 NutriSync？",
-      "help": "这决定 Nutri 优先为你呈现什么。",
-      "type": "choice",
-      "key": "obGoal",
-      "opts": [
-        {
-          "k": "Balance my energy",
-          "label": "平衡我的精力"
-        },
-        {
-          "k": "Ease PMS & symptoms",
-          "label": "缓解经前综合征与症状"
-        },
-        {
-          "k": "Train smarter with my cycle",
-          "label": "顺着周期更聪明地训练"
-        },
-        {
-          "k": "Understand my body better",
-          "label": "更了解我的身体"
-        }
-      ]
+  "ob": {
+    "accurate": "请尽量准确填写，这样 NutriSync 才能为你提供量身定制的结果。",
+    "sec": {
+      "cycle_info": "周期信息",
+      "health_condition": "健康状况",
+      "hormonal_contraceptives": "激素避孕",
+      "nutritional_preferences": "饮食偏好",
+      "your_nutrigoal": "你的 NutriGoal"
     },
-    {
-      "q": "你的周期规律吗？",
-      "help": "不规律很常见——Nutri 都能适应。",
-      "type": "choice",
-      "key": "obReg",
-      "opts": [
-        {
-          "k": "Like clockwork",
-          "label": "像时钟一样准"
-        },
-        {
-          "k": "Mostly regular",
-          "label": "基本规律"
-        },
-        {
-          "k": "Pretty unpredictable",
-          "label": "相当难预测"
-        },
-        {
-          "k": "Not sure",
-          "label": "不确定"
-        }
-      ]
+    "cycleLength": {
+      "q": "你的平均月经周期有多长？",
+      "h": "从一次月经的第一天到下一次月经的第一天。",
+      "opt": {
+        "less_than_21_days": "少于 21 天",
+        "21_25_days": "21-25 天",
+        "26_30_days": "26-30 天",
+        "31_35_days": "31-35 天",
+        "other_not_sure": "其他/不确定"
+      }
     },
-    {
-      "q": "你上次月经是什么时候开始的？",
-      "help": "这是阶段识别的锚点。",
-      "type": "date",
-      "key": "obDate"
+    "periodLength": {
+      "q": "你的经期通常持续几天？",
+      "opt": {
+        "1_2_days": "1 - 2 天",
+        "3_4_days": "3 - 4 天",
+        "5_7_days": "5 - 7 天",
+        "7_8_days": "7 - 8 天",
+        "more_than_8_days": "超过 8 天"
+      }
     },
-    {
-      "q": "你的周期通常多长？",
-      "help": "从一次月经第 1 天数到下一次第 1 天。",
-      "type": "choice",
-      "key": "obLen",
-      "opts": [
-        {
-          "k": "21–24 days",
-          "label": "21–24 天"
-        },
-        {
-          "k": "25–30 days",
-          "label": "25–30 天"
-        },
-        {
-          "k": "31–35 days",
-          "label": "31–35 天"
-        },
-        {
-          "k": "Not sure",
-          "label": "不确定"
-        }
-      ]
+    "healthCondition": {
+      "q": "你是否曾被诊断出以下任何一种情况？",
+      "opt": {
+        "fibroids": "子宫肌瘤",
+        "endometriosis": "子宫内膜异位症",
+        "pmos": "PMOS",
+        "ovarian_cysts": "卵巢囊肿",
+        "infertility": "不孕",
+        "perimenopause": "围绝经期",
+        "none_of_the_above": "以上都没有"
+      }
     },
-    {
-      "q": "有需要遵循的饮食模式吗？",
-      "help": "餐食推荐会始终贴合你的模式。",
-      "type": "choice",
-      "key": "obDiet",
-      "opts": [
-        {
-          "k": "No restrictions",
-          "label": "无限制"
-        },
-        {
-          "k": "Vegetarian",
-          "label": "素食"
-        },
-        {
-          "k": "Vegan",
-          "label": "纯素"
-        },
-        {
-          "k": "Gluten-free",
-          "label": "无麸质"
-        },
-        {
-          "k": "Dairy-free",
-          "label": "无乳制品"
-        }
-      ]
+    "contraceptives": {
+      "q": "你使用激素避孕吗？",
+      "d": "例如避孕药、激素宫内节育器、皮下埋植、避孕贴或阴道环。它会改变你的自然周期，Nutri 会相应地进行调整。",
+      "dh": "避孕药、激素宫内节育器、皮下埋植、避孕贴或阴道环",
+      "opt": {
+        "yes": "是，目前在用",
+        "yes_sub": "我目前正在使用激素避孕方法",
+        "past": "已停用",
+        "past_sub": "以前用过，但现在不用了",
+        "never": "从未",
+        "never_sub": "我从未使用过激素避孕"
+      }
     },
-    {
-      "q": "聊聊你的身体",
-      "help": "仅用于校准分量与能量需求——绝不评判。",
-      "type": "numbers"
+    "nutritionDiet": {
+      "q": "你是否遵循某种特定的饮食计划？",
+      "opt": {
+        "balanced_diet": "均衡饮食",
+        "keto": "生酮饮食",
+        "vegetarian": "素食",
+        "low_carb": "低碳水",
+        "pescatarian": "鱼素食",
+        "vegan": "纯素食",
+        "gluten_free": "无麸质",
+        "dairy_free": "无乳制品",
+        "no_diet": "没有特定饮食",
+        "other": "其他"
+      }
     },
-    {
-      "q": "选择你的 Nutri",
-      "help": "陪你走过每个阶段的伙伴。随时可以更换。",
-      "type": "avatar"
+    "nutriGoal": {
+      "q": "你的主要目标是什么？",
+      "opt": {
+        "reduce_physical_pms_symptoms": "减轻经前综合征的身体症状",
+        "feel_more_emotionally_balanced": "情绪更平衡",
+        "more_stable_energy_throughout_my_cycle": "整个周期内精力更稳定"
+      }
     },
-    {
-      "q": "你的数据，你做主",
-      "help": "未经你同意，绝不分享。",
-      "type": "consent"
+    "beta": {
+      "start": "开始吧",
+      "sub": "欢迎来到 NutriSync 测试版！你是最早试用的用户之一。几个入门问题将帮助我们塑造未来的功能——有些功能还在路上。",
+      "info": "你的反馈直接决定我们构建什么。发现问题？随时在设置中点击",
+      "info2": "。"
+    },
+    "period": {
+      "h": "这是最重要的一个答案——我们每天靠它计算你所处的周期阶段。",
+      "pick": "点击选择日期"
+    },
+    "city": {
+      "h": "这有助于 NutriSync 本地化建议并更好地了解你！"
+    },
+    "consent": {
+      "hero": "你的数据始终属于你",
+      "sub": "我们只收集为你个性化周期指导所需的信息。",
+      "p1t": "你的周期和症状",
+      "p1d": "让饮食和运动与你的周期阶段同步。",
+      "p2t": "目标与偏好",
+      "p2d": "为你量身定制建议。",
+      "p3t": "安全存储",
+      "p3d": "加密存储，绝不出售，可随时删除。",
+      "agree1": "我同意 NutriSync 的",
+      "and": "和",
+      "agree2": "，并同意处理我的健康数据以个性化我的指导。",
+      "req": "（必选）",
+      "research": "使用我的匿名数据来改进 NutriSync 和女性健康研究。",
+      "opt": "（可选）",
+      "cta": "同意并继续"
+    },
+    "done": {
+      "sub": "Nutri 已根据你的回答生成了你的第一个阶段计划。你的个性化营养与运动指导已准备就绪。",
+      "note": "你可以随时在设置中更新这些回答。"
     }
-  ],
+  },
   "provSync": {
     "apple": "6:40 已同步",
     "oura": "2 小时前已同步",
