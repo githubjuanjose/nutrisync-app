@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
 import { SettingsIcon } from '../../ui/SettingsIcons';
+import { GoalOrb } from '../../ui/GoalOrb';
 import { ChipGroup } from '../../ui/Chips';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
@@ -15,11 +16,6 @@ const NUTRIGOALS = [   // R3-55 (F4): three goals — 'Fewer PMS mood crashes' r
   'Reduce physical PMS symptoms',
   'Feel more emotionally balanced',
   'More stable energy throughout my Cycle',
-];
-const GOAL_GRADS: [string, string, string][] = [
-  ['#FFB27A', '#F5641E', '#9E6BB0'],
-  ['#F9C2CE', '#E8748C', '#8C5FA8'],
-  ['#FFD59E', '#F0A03A', '#D4632B'],
 ];
 const ALLERGIES = ['Milk', 'Eggs', 'Fish', 'Shellfish', 'Peanuts', 'Tree nuts', 'Wheat', 'Soy'];
 // PCOS was officially renamed PMOS (polyendocrine metabolic ovarian syndrome, May 2026).
@@ -117,13 +113,8 @@ export default function EditHealthScreen({ navigation }: any) {
               <Text style={[styles.arrow, goalLocked && styles.arrowOff]}>‹</Text>
             </Pressable>
             <View {...swipe.panHandlers}>
-              <LinearGradient
-                colors={GOAL_GRADS[goalIdx % GOAL_GRADS.length]}
-                start={{ x: 0.2, y: 0 }} end={{ x: 0.9, y: 1 }}
-                style={styles.orb}
-              >
-                <Text style={styles.goalText}>{NUTRIGOALS[goalIdx]}</Text>
-              </LinearGradient>
+              {/* R4-F11: exact wireframe radial gradients per goal */}
+              <GoalOrb index={goalIdx} label={NUTRIGOALS[goalIdx]} size={200} />
             </View>
             <Pressable onPress={() => cycleGoal(1)} hitSlop={12} style={styles.arrowBtn}>
               <Text style={[styles.arrow, goalLocked && styles.arrowOff]}>›</Text>

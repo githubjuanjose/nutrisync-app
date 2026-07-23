@@ -58,6 +58,13 @@ export const radius = {
 
 export const spacing = (n: number) => n * 4;
 
+/** R4-f2: shared screen background — full coral glow at the very top, fading
+ *  to white; the transition is concentrated near the top per the wireframe. */
+export const screenGrad = {
+  colors: ['#FE5936', '#FFD9CB', '#FFF6F1', '#FFFFFF'],
+  locations: [0, 0.22, 0.5, 0.9],
+};
+
 export const shadow = {
   card: {
     shadowColor: '#B4402A',

@@ -44,7 +44,7 @@ export default function MainTabs() {
         },
         tabBarItemStyle: { justifyContent: 'center', alignItems: 'center' },
         tabBarIcon: ({ color }) => (
-          <Image source={ICONS[route.name]} style={{ width: 34, height: 30, tintColor: color }} resizeMode="contain" />
+          <Image source={ICONS[route.name]} style={{ width: 40, height: 35, tintColor: color }} resizeMode="contain" />
         ),
       })}
     >

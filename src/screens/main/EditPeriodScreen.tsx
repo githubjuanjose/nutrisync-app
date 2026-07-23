@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndic
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path } from 'react-native-svg';
-import { colors, font, radius, shadow } from '../../theme';
+import { colors, font, radius, shadow, screenGrad } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { saveEditPeriod, getTodayLog, recomputeCAS } from '../../lib/daily';
 import { startNewCycle } from '../../lib/api';
@@ -142,7 +142,7 @@ export default function EditPeriodScreen({ navigation }: any) {
 
   return (
     <View style={styles.fill}>
-      <LinearGradient colors={['#FCF1EC', '#FBE7DB', '#F6D6C2']} style={StyleSheet.absoluteFill} />
+      <LinearGradient colors={screenGrad.colors as any} locations={screenGrad.locations as any} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top']}>
         <View style={styles.header}>
           <Pressable onPress={() => navigation.goBack()} style={styles.iconBtn}><Text style={styles.x}>✕</Text></Pressable>

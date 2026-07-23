@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, Pressable, ScrollView, ActivityIndicator
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NutriAvatar } from '../../ui/NutriAvatar';
-import { colors, font, radius, shadow } from '../../theme';
+import { colors, font, radius, shadow, screenGrad } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
 import { CycleRingInteractive } from '../../ui/CycleRingInteractive';
 import { useSession } from '../../state/SessionProvider';
@@ -78,6 +78,8 @@ export default function CycleScreen({ navigation }: any) {
 
   return (
     <View style={styles.fill}>
+      {/* R4-f2: coral-to-white screen gradient */}
+      <LinearGradient colors={screenGrad.colors as any} locations={screenGrad.locations as any} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top']}>
         <ScrollView contentContainerStyle={{ paddingBottom: 30 }} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>

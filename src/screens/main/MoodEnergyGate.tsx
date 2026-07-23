@@ -23,11 +23,11 @@ function Scale({ value, onSelect, tint }: { value: number | null; onSelect: (v: 
   // F25 — slide to log: drag up raises the value, drag down lowers it (taps still work).
   const start = React.useRef({ y: 0, v: 3 });
   const pan = React.useRef(PanResponder.create({
-    onMoveShouldSetPanResponder: (_e, g) => Math.abs(g.dy) > 8,
-    onMoveShouldSetPanResponderCapture: (_e, g) => Math.abs(g.dy) > 8,
+    onMoveShouldSetPanResponder: (_e, g) => Math.abs(g.dy) > 3,
+    onMoveShouldSetPanResponderCapture: (_e, g) => Math.abs(g.dy) > 3,
     onPanResponderGrant: (e) => { start.current = { y: e.nativeEvent.pageY, v: value ?? 3 }; },
     onPanResponderMove: (e) => {
-      const delta = Math.round((start.current.y - e.nativeEvent.pageY) / 26);
+      const delta = Math.round((start.current.y - e.nativeEvent.pageY) / 22);
       const v = Math.max(1, Math.min(5, start.current.v + delta));
       if (v !== value) onSelect(v);
     },

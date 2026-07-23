@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, Image } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { colors, font, radius, shadow } from '../../theme';
+import { colors, font, radius, shadow, screenGrad } from '../../theme';
 import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
@@ -115,6 +116,8 @@ export default function NutriLogScreen() {
 
   return (
     <View style={styles.fill}>
+      {/* R4-f2: coral-to-white screen gradient */}
+      <LinearGradient colors={screenGrad.colors as any} locations={screenGrad.locations as any} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top']}>
         {/* R3-39: Meal History surfaced from the tab */}
         <View style={styles.header}>
