@@ -777,5 +777,25 @@
     "lang": "el",
     "name": "Ελληνικά",
     "source": "design-v11.14"
+  },
+  "mob": {
+    "avgByPhase": "Μέσο σκορ ανά φάση",
+    "best": "ρεκόρ",
+    "calendar": "Ημερολόγιο",
+    "current": "Τρέχων",
+    "cycleAlignmentScore": "ΣΚΟΡ ΕΥΘΥΓΡΑΜΜΙΣΗΣ ΚΥΚΛΟΥ",
+    "dayShort": "ΗΜΕΡΑ",
+    "days": "ημέρες",
+    "flow": "Ροή",
+    "healthConditionsCaps": "ΔΙΑΓΝΩΣΜΕΝΕΣ ΠΑΘΗΣΕΙΣ",
+    "highest": "υψηλή",
+    "lastCycle": "Προηγούμενος κύκλος",
+    "logged": "καταγράφηκε",
+    "lowest": "Πεσμένα",
+    "movementLbl": "Κίνηση",
+    "notesBtn": "Σημειώσεις",
+    "nutrition": "ΔΙΑΤΡΟΦΗ",
+    "other": "Άλλο",
+    "today": "ΣΗΜΕΡΑ"
   }
 }

@@ -777,5 +777,23 @@
     "lang": "fr",
     "name": "Français",
     "source": "design-v11.14"
+  },
+  "mob": {
+    "avgByPhase": "Score moyen par phase",
+    "best": "record",
+    "calendar": "Calendrier",
+    "current": "En cours",
+    "cycleAlignmentScore": "SCORE D'ALIGNEMENT DU CYCLE",
+    "dayShort": "JOUR",
+    "days": "jours",
+    "flow": "Flux",
+    "healthConditionsCaps": "PATHOLOGIES DIAGNOSTIQUÉES",
+    "highest": "haute",
+    "lastCycle": "Cycle précédent",
+    "logged": "noté",
+    "lowest": "Bas",
+    "movementLbl": "Mouvement",
+    "other": "Autre",
+    "today": "AUJOURD'HUI"
   }
 }

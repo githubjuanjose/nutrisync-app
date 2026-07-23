@@ -777,5 +777,24 @@
     "lang": "ja",
     "name": "日本語",
     "source": "design-v11.30"
+  },
+  "mob": {
+    "avgByPhase": "フェーズ別平均スコア",
+    "best": "ベスト",
+    "calendar": "カレンダー",
+    "current": "現在",
+    "cycleAlignmentScore": "サイクル同調スコア",
+    "days": "日間",
+    "flow": "経血量",
+    "healthConditionsCaps": "診断済みの疾患",
+    "highest": "高",
+    "lastCycle": "前回のサイクル",
+    "logged": "記録済み",
+    "lowest": "低め",
+    "movementLbl": "ムーブメント",
+    "notesBtn": "メモ",
+    "nutrition": "栄養",
+    "other": "その他",
+    "today": "今日"
   }
 }

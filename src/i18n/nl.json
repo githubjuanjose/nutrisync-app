@@ -777,5 +777,25 @@
     "lang": "nl",
     "name": "Nederlands",
     "source": "design-v11.14"
+  },
+  "mob": {
+    "avgByPhase": "Gemiddelde score per fase",
+    "best": "record",
+    "calendar": "Kalender",
+    "current": "Huidig",
+    "cycleAlignmentScore": "CYCLUS-ALIGNMENT-SCORE",
+    "dayShort": "DAG",
+    "days": "dagen",
+    "flow": "Bloedverlies",
+    "healthConditionsCaps": "GEDIAGNOSTICEERDE AANDOENINGEN",
+    "highest": "hoog",
+    "lastCycle": "Vorige cyclus",
+    "logged": "gelogd",
+    "lowest": "Laag",
+    "movementLbl": "Beweging",
+    "notesBtn": "Notities",
+    "nutrition": "VOEDING",
+    "other": "Anders",
+    "today": "VANDAAG"
   }
 }

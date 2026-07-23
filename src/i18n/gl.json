@@ -777,5 +777,25 @@
     "lang": "gl",
     "name": "Galego",
     "source": "design-v11.22"
+  },
+  "mob": {
+    "avgByPhase": "Puntuación media por fase",
+    "best": "récord",
+    "calendar": "Calendario",
+    "current": "Actual",
+    "cycleAlignmentScore": "PUNTUACIÓN DE ALIÑAMENTO DO CICLO",
+    "dayShort": "DÍA",
+    "days": "días",
+    "flow": "Fluxo",
+    "healthConditionsCaps": "CONDICIÓNS DIAGNOSTICADAS",
+    "highest": "alta",
+    "lastCycle": "Ciclo anterior",
+    "logged": "rexistrado",
+    "lowest": "Baixa",
+    "movementLbl": "Movemento",
+    "notesBtn": "Notas",
+    "nutrition": "NUTRICIÓN",
+    "other": "Outro",
+    "today": "HOXE"
   }
 }

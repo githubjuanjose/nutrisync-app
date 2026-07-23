@@ -777,5 +777,25 @@
     "lang": "it",
     "name": "Italiano",
     "source": "design-v11.14"
+  },
+  "mob": {
+    "avgByPhase": "Punteggio medio per fase",
+    "best": "record",
+    "calendar": "Calendario",
+    "current": "In corso",
+    "cycleAlignmentScore": "PUNTEGGIO DI ALLINEAMENTO DEL CICLO",
+    "dayShort": "GIORNO",
+    "days": "giorni",
+    "flow": "Flusso",
+    "healthConditionsCaps": "CONDIZIONI DIAGNOSTICATE",
+    "highest": "alta",
+    "lastCycle": "Ciclo precedente",
+    "logged": "registrato",
+    "lowest": "Giù",
+    "movementLbl": "Movimento",
+    "notesBtn": "Note",
+    "nutrition": "NUTRIZIONE",
+    "other": "Altro",
+    "today": "OGGI"
   }
 }

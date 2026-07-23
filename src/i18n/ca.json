@@ -777,5 +777,24 @@
     "lang": "ca",
     "name": "Català",
     "source": "design-v11.18"
+  },
+  "mob": {
+    "avgByPhase": "Puntuació mitjana per fase",
+    "best": "rècord",
+    "calendar": "Calendari",
+    "current": "Actual",
+    "cycleAlignmentScore": "PUNTUACIÓ D'ALINEACIÓ DEL CICLE",
+    "dayShort": "DIA",
+    "days": "dies",
+    "flow": "Fluix",
+    "healthConditionsCaps": "CONDICIONS DIAGNOSTICADES",
+    "highest": "alta",
+    "lastCycle": "Cicle anterior",
+    "logged": "registrat",
+    "lowest": "Baixa",
+    "movementLbl": "Moviment",
+    "nutrition": "NUTRICIÓ",
+    "other": "Altres",
+    "today": "AVUI"
   }
 }

@@ -778,5 +778,24 @@
     "name": "Aranés",
     "source": "design-v11.42",
     "review": "native-reviewed"
+  },
+  "mob": {
+    "avgByPhase": "Puntuacion mejana per fasa",
+    "best": "rècord",
+    "calendar": "Calendari",
+    "current": "Actuau",
+    "cycleAlignmentScore": "PUNTUACION D'ALINHAMENT DETH CICLE",
+    "dayShort": "DIA",
+    "days": "dies",
+    "flow": "Flux",
+    "healthConditionsCaps": "CONDICIONS DIAGNOSTICADES",
+    "highest": "nauta",
+    "lastCycle": "Cicle anterior",
+    "logged": "registrat",
+    "lowest": "Baisha",
+    "notesBtn": "Nòtes",
+    "nutrition": "NUTRICION",
+    "other": "Aute",
+    "today": "AUÉ"
   }
 }
