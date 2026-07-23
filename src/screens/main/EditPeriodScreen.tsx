@@ -150,9 +150,14 @@ export default function EditPeriodScreen({ navigation }: any) {
             <Text style={styles.title}>{t('mob.period', "Period")}</Text>
             <Text style={styles.date}>{todayLabel}</Text>
           </View>
-          <View style={{ flexDirection: 'row' }}>
-            {/* f29: notes entry at the top — opens a dedicated editor */}
-            <Pressable onPress={() => setNotesOpen(true)} style={styles.iconBtn}><Text style={styles.pencil}>✎</Text></Pressable>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+            {/* R5-f3: wireframe btn-notes pill (white pill + pencil + "Notes") */}
+            <Pressable onPress={() => setNotesOpen(true)} style={styles.notesBtn}>
+              <Svg width={16} height={16} viewBox="0 0 18 18">
+                <Path d="M9.75 15.25H15.75M15.88 4.6a1.6 1.6 0 0 0-2.26-2.26L3.6 12.35a1 1 0 0 0-.25.42l-.99 3.26a.25.25 0 0 0 .31.31l3.26-.99a1 1 0 0 0 .42-.25L15.88 4.6Z" stroke="#25292A" strokeWidth={1.8} strokeLinecap="round" fill="none" />
+              </Svg>
+              <Text style={styles.notesBtnTxt}>{t('mob.notesBtn', 'Notes')}</Text>
+            </Pressable>
             <Pressable onPress={save} style={styles.iconBtn}>
               {saving ? <ActivityIndicator color={colors.coral} /> : <Text style={styles.tick}>✓</Text>}
             </Pressable>
@@ -233,11 +238,8 @@ export default function EditPeriodScreen({ navigation }: any) {
             </View>
           </View>
 
-          {/* Notes */}
-          <View style={styles.card}>
-            <Text style={styles.h}>{t('mob.notes', "Add notes")}</Text>
-            <TextInput value={notes} onChangeText={setNotes} placeholder={t('mob.descPh', "Enter a description...")} placeholderTextColor={colors.faint} multiline style={styles.notes} />
-          </View>
+          {/* R5-f4: bottom "Add notes" card removed — notes live behind the
+              header Notes button only (single entry point) */}
 
           <Pressable onPress={save} disabled={saving} style={styles.saveBtn}>
             <Text style={styles.saveTxt}>{saving ? 'Saving…' : t('ui.saveLog', 'Save')}</Text>
@@ -327,6 +329,9 @@ const styles = StyleSheet.create({
   x: { fontSize: 20, color: colors.ink },
   tick: { fontSize: 20, color: colors.coral, fontFamily: font.bold },
   pencil: { fontSize: 18, color: colors.ink },
+  // R5-f3: btn-notes pill
+  notesBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#fff', borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 15, height: 30, paddingHorizontal: 12 },
+  notesBtnTxt: { fontFamily: font.semibold, fontSize: 12.5, color: '#25292A' },
   notesOverlay: { ...StyleSheet.absoluteFillObject, zIndex: 20 },
   notesFull: { flex: 1, margin: 18, backgroundColor: '#fff', borderRadius: radius.lg, padding: 16, fontFamily: font.regular, fontSize: 15, color: colors.ink, textAlignVertical: 'top', ...shadow.card },
   title: { fontFamily: font.bold, fontSize: 22, color: colors.ink },

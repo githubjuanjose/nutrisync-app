@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Svg, { Defs, RadialGradient, Stop, Rect } from 'react-native-svg';
+import Svg, { Defs, RadialGradient, Stop, Rect, Circle as SvgCircle } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
@@ -141,11 +141,28 @@ export default function CalendarScreen({ navigation }: any) {
     return <Text style={mini ? styles.miniStar : styles.star}>{kind === 'protected' ? '★' : '☆'}</Text>;
   };
 
-  // R4-F14: neutral #FFFAF9 date circles (phase colour moved to the f15 badge);
-  // R4-f15: mini cycle-day badge at the top-left of every date, tinted by phase
-  // (menstrual keeps the wireframe's own gradient), so the month reads as a
-  // cycle map without colouring the dates themselves.
-  const CD_MENSTRUAL: [string, string, ...string[]] = ['#DE2A2A', '#CA4848', '#CE4A49', '#FF664F'];
+  // R4-F14 + R5-F17: neutral #FFFAF9 date circles with dark numbers (month AND year);
+  // R5-f18: cycle-day badges use per-phase RADIAL gradients from the round-5 spec.
+  const BADGE_GRAD: Record<P4, [string, string]> = {   // [inside, outside]
+    menstrual: ['#C9354E', '#FF7A59'],
+    follicular: ['#9BC19E', '#89AC8C'],
+    ovulatory: ['#FFAB40', '#E9870A'],
+    luteal: ['#AD70B1', '#E0749A'],
+  };
+  const PhaseBadge = ({ p, n }: { p: P4; n: number }) => (
+    <View style={styles.cdBadge}>
+      <Svg width={15} height={15} style={StyleSheet.absoluteFill}>
+        <Defs>
+          <RadialGradient id={`pb${p}`} cx="50%" cy="50%" r="50%">
+            <Stop offset="0%" stopColor={BADGE_GRAD[p][0]} />
+            <Stop offset="100%" stopColor={BADGE_GRAD[p][1]} />
+          </RadialGradient>
+        </Defs>
+        <SvgCircle cx={7.5} cy={7.5} r={7.5} fill={`url(#pb${p})`} />
+      </Svg>
+      <Text style={styles.cdTxt}>{n}</Text>
+    </View>
+  );
   const DayCell = ({ d, mini }: { d: Date | null; mini?: boolean }) => {
     if (!d) return <View style={[styles.cell, mini && styles.cellMini]} />;
     const p = phaseOf(d);
@@ -154,10 +171,11 @@ export default function CalendarScreen({ navigation }: any) {
     const faded = filter && p !== filter;
     const col = p ? PAL[p] : '#E7DCD3';
     if (mini) {
+      // R5-F17: year view goes neutral too — cream circles, dark numbers
       return (
         <View style={[styles.cellMini, { opacity: faded ? 0.15 : 1 }]}>
-          <View style={[styles.miniC, future ? { borderWidth: 1, borderColor: col } : { backgroundColor: col }]}>
-            <Text style={[styles.miniN, future && { color: col }]}>{d.getDate()}</Text>
+          <View style={[styles.miniC, styles.miniNeutral, future && { opacity: 0.7 }]}>
+            <Text style={styles.miniN}>{d.getDate()}</Text>
           </View>
           <Star d={d} mini />
         </View>
@@ -176,18 +194,8 @@ export default function CalendarScreen({ navigation }: any) {
               <Text style={styles.dayTxtNeutral}>{d.getDate()}</Text>
             </View>
           )}
-          {/* f15: cycle-day badge, top-left, phase-coloured */}
-          {cd != null ? (
-            p === 'menstrual' ? (
-              <LinearGradient colors={CD_MENSTRUAL} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.cdBadge}>
-                <Text style={styles.cdTxt}>{cd}</Text>
-              </LinearGradient>
-            ) : (
-              <View style={[styles.cdBadge, { backgroundColor: col }]}>
-                <Text style={styles.cdTxt}>{cd}</Text>
-              </View>
-            )
-          ) : null}
+          {/* R5-f18: cycle-day badge with the per-phase radial gradient */}
+          {cd != null && p ? <PhaseBadge p={p} n={cd} /> : null}
         </View>
         <View style={styles.starRow}><Star d={d} /></View>
       </View>
@@ -406,8 +414,9 @@ const styles = StyleSheet.create({
   // R4-F14/f15
   dayNeutral: { backgroundColor: '#FFFAF9', borderWidth: 1, borderColor: '#F0E4DC' },
   dayTxtNeutral: { fontFamily: font.semibold, fontSize: 13, color: colors.ink },
-  cdBadge: { position: 'absolute', top: -4, left: -6, minWidth: 15, height: 15, borderRadius: 8, paddingHorizontal: 2, alignItems: 'center', justifyContent: 'center' },
+  cdBadge: { position: 'absolute', top: -4, left: -6, width: 15, height: 15, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
   cdTxt: { fontFamily: font.bold, fontSize: 8, color: '#fff' },
+  miniNeutral: { backgroundColor: '#FFFAF9', borderWidth: 0.5, borderColor: '#EDDFD6' },  // R5-F17
   starRow: { height: 11, marginTop: 1, alignItems: 'center', justifyContent: 'center' },
   star: { fontSize: 9, color: '#E9A23B' },
   yearHeadRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 2 },

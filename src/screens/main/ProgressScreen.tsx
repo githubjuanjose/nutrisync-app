@@ -147,7 +147,8 @@ export default function ProgressScreen({ navigation }: any) {
       body: t('mob.c2Body', "How well your logged signals match your expected phase patterns. Log Energy Stability, Mood, and PMS Symptoms daily — accuracy (and this score) improves as you complete more full cycles.") },
     { v: todayRow.c3, max: 30, l: t('mob.nutrition', 'Nutrition'), title: t('mob.nutrition', 'Nutrition'),
       body: t('mob.c3Body', "Based entirely on your Nutri Basics checklist. Keep checking off your daily items to hold it at full marks.") },
-    { v: todayRow.c4, max: 20, l: t('mob.recovery', 'Recovery'), title: t('mob.recovery', 'Recovery'),
+    /* R5-F24: renamed Recovery → Movement (founders) */
+    { v: todayRow.c4, max: 20, l: t('mob.movementLbl', 'Movement'), title: t('mob.movementLbl', 'Movement'),
       body: t('mob.c4Body', "Movement is pass/fail: logging just one exercise in a day earns full credit. Log at least one Movement Log entry daily to close the gap. No need for more than one.") },
     { v: todayRow.c5, max: 10, l: t('mob.logging', 'Logging'), title: t('mob.logging', 'Logging'),
       body: t('mob.c5Body', "Tracks how consistently you're logging overall, separate from your checklists. Add more Meal Log and Movement Log notes. Consistency matters more than volume here.") },
@@ -181,13 +182,12 @@ export default function ProgressScreen({ navigation }: any) {
   const proge = (d: number) => Math.max(0.05, Math.exp(-Math.pow(d - (len - 7), 2) / 30));
   const lh    = (d: number) => Math.max(0.04, Math.exp(-Math.pow(d - (len - 14), 2) / 4) * 1.0);
   const fsh   = (d: number) => Math.max(0.05, Math.exp(-Math.pow(d - (len - 15), 2) / 12) * 0.6 + Math.exp(-Math.pow(d - 2, 2) / 18) * 0.3);
-  // R4-F19: wireframe palette — Estrogen yellow, LH red/coral, FSH orange,
-  // Progesterone light mauve
+  // R5-F6: exact hex palette from the round-5 spec
   const HORM: [string, (d: number) => number, string][] = [
-    [t('mob.estrogen', 'Estrogen'), estro, '#F3C64F'],
-    [t('mob.lh', 'LH'), lh, '#E0442A'],
-    [t('mob.fsh', 'FSH'), fsh, '#F0813C'],
-    [t('mob.progesterone', 'Progesterone'), proge, '#CDB4DB'],
+    [t('mob.estrogen', 'Estrogen'), estro, '#FF5343'],      // FF5343E5 (≈90%)
+    [t('mob.lh', 'LH'), lh, '#FF5343'],
+    [t('mob.fsh', 'FSH'), fsh, '#FF7926'],
+    [t('mob.progesterone', 'Progesterone'), proge, '#FFC049'],
   ];
   // f37: Mon–Sun labels for this week's window, today highlighted
   const dowIdx = (new Date().getDay() + 6) % 7; // 0 = Monday
