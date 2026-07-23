@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Defs, RadialGradient, Stop, Rect } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
@@ -140,7 +141,11 @@ export default function CalendarScreen({ navigation }: any) {
     return <Text style={mini ? styles.miniStar : styles.star}>{kind === 'protected' ? '★' : '☆'}</Text>;
   };
 
-  // R3-23: number inside a solid phase-coloured circle; future = outline
+  // R4-F14: neutral #FFFAF9 date circles (phase colour moved to the f15 badge);
+  // R4-f15: mini cycle-day badge at the top-left of every date, tinted by phase
+  // (menstrual keeps the wireframe's own gradient), so the month reads as a
+  // cycle map without colouring the dates themselves.
+  const CD_MENSTRUAL: [string, string, ...string[]] = ['#DE2A2A', '#CA4848', '#CE4A49', '#FF664F'];
   const DayCell = ({ d, mini }: { d: Date | null; mini?: boolean }) => {
     if (!d) return <View style={[styles.cell, mini && styles.cellMini]} />;
     const p = phaseOf(d);
@@ -158,17 +163,32 @@ export default function CalendarScreen({ navigation }: any) {
         </View>
       );
     }
+    const cd = dayOf(d);
     return (
       <View style={[styles.cell, { opacity: faded ? 0.25 : 1 }]}>
-        {isToday ? (
-          <LinearGradient colors={['#FF7600', '#FD400C']} style={styles.dayC}>
-            <Text style={styles.dayTxtOn}>{d.getDate()}</Text>
-          </LinearGradient>
-        ) : (
-          <View style={[styles.dayC, future ? { borderWidth: 1.5, borderColor: col, backgroundColor: 'transparent' } : { backgroundColor: col }]}>
-            <Text style={[styles.dayTxtOn, future && { color: col }]}>{d.getDate()}</Text>
-          </View>
-        )}
+        <View>
+          {isToday ? (
+            <LinearGradient colors={['#FF7600', '#FD400C']} style={styles.dayC}>
+              <Text style={styles.dayTxtOn}>{d.getDate()}</Text>
+            </LinearGradient>
+          ) : (
+            <View style={[styles.dayC, styles.dayNeutral, future && { opacity: 0.75 }]}>
+              <Text style={styles.dayTxtNeutral}>{d.getDate()}</Text>
+            </View>
+          )}
+          {/* f15: cycle-day badge, top-left, phase-coloured */}
+          {cd != null ? (
+            p === 'menstrual' ? (
+              <LinearGradient colors={CD_MENSTRUAL} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.cdBadge}>
+                <Text style={styles.cdTxt}>{cd}</Text>
+              </LinearGradient>
+            ) : (
+              <View style={[styles.cdBadge, { backgroundColor: col }]}>
+                <Text style={styles.cdTxt}>{cd}</Text>
+              </View>
+            )
+          ) : null}
+        </View>
         <View style={styles.starRow}><Star d={d} /></View>
       </View>
     );
@@ -194,7 +214,18 @@ export default function CalendarScreen({ navigation }: any) {
         <ScrollView contentContainerStyle={{ padding: 18, paddingTop: 6, paddingBottom: 110 }} showsVerticalScrollIndicator={false}>
           {view === 'month' ? (
             <>
-              <LinearGradient colors={['#FB8A4E', '#F4633A']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.hero}>
+              <View style={[styles.hero, { overflow: 'hidden' }]}>
+                {/* R4-F13: wireframe radial — FF7000 core (to 23%) -> FF5509 edge */}
+                <Svg style={StyleSheet.absoluteFill} width="100%" height="100%">
+                  <Defs>
+                    <RadialGradient id="calHero" cx="50%" cy="38%" r="85%">
+                      <Stop offset="0%" stopColor="#FF7000" />
+                      <Stop offset="23%" stopColor="#FF7000" />
+                      <Stop offset="100%" stopColor="#FF5509" />
+                    </RadialGradient>
+                  </Defs>
+                  <Rect x="0" y="0" width="100%" height="100%" fill="url(#calHero)" />
+                </Svg>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <View>
                     <Text style={styles.heroSmall}>{t('mob.today', 'Today')} · {today.toLocaleDateString(undefined, { day: 'numeric', month: 'long' })}</Text>
@@ -224,7 +255,7 @@ export default function CalendarScreen({ navigation }: any) {
                   {/* R3-21: period communicated as a range */}
                   <View style={styles.heroStat}><Text style={styles.heroStatLbl}>{t('mob.avgPeriod', 'Avg period')}</Text><Text style={styles.heroStatVal}>{dur}–{dur + 1} {t('mob.days', 'days')}</Text></View>
                 </View>
-              </LinearGradient>
+              </View>
 
               <View style={styles.toggleRow}>
                 {(['month', 'year'] as const).map((v) => (
@@ -372,6 +403,11 @@ const styles = StyleSheet.create({
   cell: { width: `${100 / 7}%`, alignItems: 'center', paddingVertical: 6 },
   dayC: { width: 30, height: 30, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
   dayTxtOn: { fontFamily: font.semibold, fontSize: 13, color: '#fff' },
+  // R4-F14/f15
+  dayNeutral: { backgroundColor: '#FFFAF9', borderWidth: 1, borderColor: '#F0E4DC' },
+  dayTxtNeutral: { fontFamily: font.semibold, fontSize: 13, color: colors.ink },
+  cdBadge: { position: 'absolute', top: -4, left: -6, minWidth: 15, height: 15, borderRadius: 8, paddingHorizontal: 2, alignItems: 'center', justifyContent: 'center' },
+  cdTxt: { fontFamily: font.bold, fontSize: 8, color: '#fff' },
   starRow: { height: 11, marginTop: 1, alignItems: 'center', justifyContent: 'center' },
   star: { fontSize: 9, color: '#E9A23B' },
   yearHeadRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 2 },

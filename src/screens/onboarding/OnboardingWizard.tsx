@@ -45,6 +45,7 @@ import { supabase } from '../../lib/supabase';
 import { saveOnboarding } from '../../lib/api';
 import { useSession } from '../../state/SessionProvider';
 import { useT } from '../../i18n';
+import { GoalCarousel } from '../../ui/GoalOrb';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Onboarding'>;
 
@@ -114,11 +115,6 @@ export default function OnboardingWizard({ navigation }: Props) {
 
   // Persist onboarding to Supabase, then enter the app.
   const finish = async () => {
-    // F20: persist the selected NutriGoal (drives the recommendation engine ranking)
-    try {
-      const g = (answers['nutriGoal'] ?? [])[0];
-      if (g && userId) { const { supabase } = require('../../lib/supabase'); await supabase.from('users').update({ nutrigoal: g }).eq('id', userId); }
-    } catch {}
     setSaveErr('');
     setSaving(true);
     try {
@@ -132,6 +128,14 @@ export default function OnboardingWizard({ navigation }: Props) {
         lastPeriodStart: toISO(periodDate ?? new Date()),
         dietOther: (answers['nutritionDiet'] ?? [])[0] === 'Other' ? (dietOther.trim() || undefined) : undefined,
       });
+      // F20 (fixed in R4-r4c): persist the selected NutriGoal with the REAL user
+      // id — the old block referenced an undefined `userId` and its catch{}
+      // swallowed the ReferenceError, so the goal silently never saved.
+      const g = (answers['nutriGoal'] ?? [])[0];
+      if (g) {
+        const { error: gErr } = await supabase.from('users').update({ nutrigoal: g }).eq('id', user.id);
+        if (gErr) throw gErr;
+      }
       // Onboarding complete → the session-aware navigator swaps to the main app.
       await refreshOnboarding();
     } catch (e: any) {
@@ -187,7 +191,12 @@ export default function OnboardingWizard({ navigation }: Props) {
           </View>
         ) : null}
         <View style={{ marginTop: 22 }}>
+          {step.id === 'nutriGoal' ? (
+            /* R4-F1: goal step is a swipeable gradient bubble, not a list */
+            <GoalCarousel options={opts as any} selected={sel} onSelect={(v) => toggle(step.id, v, false)} />
+          ) : (
           <SelectList options={opts} selected={sel} multi={step.multi} onToggle={(v) => toggle(step.id, v, step.multi)} />
+          )}
           {step.id === 'nutritionDiet' && sel.includes('Other') ? (
             /* R3-54: tell us the diet — input directly under the list, never covered */
             <TextInput
