@@ -8,6 +8,7 @@ import { getProfile } from '../../lib/api';
 import { NutriOrb } from '../../ui/NutriOrb';
 import { isEnabled, FlagKey } from '../../lib/flags';
 import { useT } from '../../i18n';
+import Constants from 'expo-constants';
 import { Linking } from 'react-native';
 import { SettingsIcon } from '../../ui/SettingsIcons';
 import { NutriAvatar } from '../../ui/NutriAvatar';
@@ -99,6 +100,11 @@ export default function SettingsScreen({ navigation }: any) {
           <Pressable onPress={signOut} style={styles.signOut}>
             <Text style={styles.signOutTxt}>{t('ui.logout', 'Sign Out')}</Text>
           </Pressable>
+
+          {/* R5 follow-up: visible app version — so testers can confirm they're
+              on the current build before filing feedback (half of Round 5 was
+              already-fixed items seen on a stale build). */}
+          <Text style={styles.verTxt}>NutriSync v{Constants.expoConfig?.version ?? '—'}</Text>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -106,6 +112,7 @@ export default function SettingsScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
+  verTxt: { fontFamily: font.regular, fontSize: 11.5, color: colors.faint, textAlign: 'center', marginTop: 16, marginBottom: 6 },
   fill: { flex: 1, backgroundColor: 'transparent' },
   fillC: { flex: 1, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center' },
   headerBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 4 },
