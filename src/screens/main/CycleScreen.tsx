@@ -8,7 +8,7 @@ import { LoadingView } from '../../ui/LoadingView';
 import { CycleRingInteractive } from '../../ui/CycleRingInteractive';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle, UserRow, CycleRow } from '../../lib/api';
-import { cycleDay, phaseForDay, displayPhase, cycleProgress } from '../../lib/cas';
+import { cycleDay, cycleDayActual, phaseForDay, displayPhase, cycleProgress } from '../../lib/cas';
 import { getTodayLog, getTodayScore, DailyLog } from '../../lib/daily';
 import { useT } from '../../i18n';
 
@@ -65,7 +65,7 @@ export default function CycleScreen({ navigation }: any) {
   const week = weekAroundToday();
   const len = cycle?.cycle_length ?? 28;
   const dur = cycle?.period_duration ?? 5;
-  const day = cycle ? cycleDay(cycle.last_period_start_date, new Date(), len) : 1;
+  const day = cycle ? cycleDayActual(cycle.last_period_start_date, new Date()) : 1;
   const phase = phaseForDay(day, len, dur);
   const label = displayPhase(phase);
   const firstName = profile?.first_name ?? 'there';

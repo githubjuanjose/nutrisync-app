@@ -1,6 +1,6 @@
 import { supabase } from './supabase';
 import { getProfile, getCurrentCycle } from './api';
-import { cycleDay, phaseForDay, displayPhase, computeDailyCAS, Intensity } from './cas';
+import { cycleDay, cycleDayActual, phaseForDay, displayPhase, computeDailyCAS, Intensity } from './cas';
 
 export const todayISO = () => new Date().toISOString().slice(0, 10);
 
@@ -12,6 +12,11 @@ const rank: Record<Intensity, number> = { rest: 0, low: 1, moderate: 2, high: 3 
 export type DailyLog = {
   date: string; mood: number | null; energy: number | null; workout_logged: string | null;
   sleep_quality: string | null; appetite: number | null; flow_level: number | null;
+  // R4-F10: rich Edit-Period fields — selected so reopening the screen can prefill
+  mood_state?: string[] | null; pain_symptoms?: string[] | null;
+  digestion_symptoms?: string[] | null; cravings?: string[] | null;
+  skin_symptoms?: string[] | null; libido?: number | null;
+  sex_logged?: string | null; period_notes?: string | null;
 };
 
 /** Sleep-quality label → 1–5 for scoring (§9.3). */
@@ -20,8 +25,12 @@ export const SLEEP_TO_SCORE: Record<string, number> = {
 };
 
 export async function getTodayLog(userId: string): Promise<DailyLog | null> {
+  // R4-F10: include the rich fields — without them the Edit Period screen's
+  // prefill always came back empty and "symptoms don't save" (they saved, but
+  // were never reloaded).
   const { data } = await supabase
-    .from('daily_logs').select('date,mood,energy,workout_logged,sleep_quality,appetite,flow_level')
+    .from('daily_logs')
+    .select('date,mood,energy,workout_logged,sleep_quality,appetite,flow_level,mood_state,pain_symptoms,digestion_symptoms,cravings,skin_symptoms,libido,sex_logged,period_notes')
     .eq('user_id', userId).eq('date', todayISO()).maybeSingle();
   return (data as DailyLog) ?? null;
 }
@@ -58,7 +67,7 @@ async function cycleCtx(userId: string) {
   const cycle = await getCurrentCycle(userId);
   if (!cycle) return null;
   const len = cycle.cycle_length ?? 28;
-  const day = cycleDay(cycle.last_period_start_date, new Date(), len);
+  const day = cycleDayActual(cycle.last_period_start_date, new Date());
   const phase5 = phaseForDay(day, len, cycle.period_duration ?? 5);
   return { day, phase5, phaseUI: displayPhase(phase5), len };
 }

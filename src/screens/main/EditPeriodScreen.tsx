@@ -5,7 +5,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path } from 'react-native-svg';
 import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
-import { saveEditPeriod, getTodayLog } from '../../lib/daily';
+import { saveEditPeriod, getTodayLog, recomputeCAS } from '../../lib/daily';
+import { startNewCycle } from '../../lib/api';
 import { ChipGroup } from '../../ui/Chips';
 import { useT } from '../../i18n';
 
@@ -67,6 +68,30 @@ export default function EditPeriodScreen({ navigation }: any) {
   const [notes, setNotes] = useState('');
   const [notesOpen, setNotesOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  // R4-f31: log a new period start → starts a new cycle at Day 1
+  const [lpOpen, setLpOpen] = useState(false);
+  const [lpMonth, setLpMonth] = useState(() => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 1); });
+  const [lpSel, setLpSel] = useState<Date | null>(null);
+  const [lpSaving, setLpSaving] = useState(false);
+
+  const startCycle = async () => {
+    if (!userId || !lpSel || lpSaving) return;
+    setLpSaving(true);
+    try {
+      const iso = `${lpSel.getFullYear()}-${String(lpSel.getMonth() + 1).padStart(2, '0')}-${String(lpSel.getDate()).padStart(2, '0')}`;
+      await startNewCycle(userId, iso);
+      await recomputeCAS(userId);
+      setLpOpen(false); setLpSel(null);
+      Alert.alert(
+        t('mob.periodLogged', 'Period logged'),
+        t('mob.cycleRestarted', 'A new cycle has started from the date you picked. Your averages now use your real cycle lengths.')
+      );
+    } catch (e: any) {
+      Alert.alert(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
+    } finally {
+      setLpSaving(false);
+    }
+  };
 
   // R3-17: reload today's saved log so reopening shows what you logged
   useEffect(() => {
@@ -135,6 +160,13 @@ export default function EditPeriodScreen({ navigation }: any) {
         </View>
 
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 60 }} showsVerticalScrollIndicator={false}>
+          {/* R4-f31: log period → new cycle starts on the chosen date */}
+          <Pressable onPress={() => setLpOpen(true)} style={styles.lpBtn}>
+            <Droplet size={16} color="#fff" />
+            <Text style={styles.lpTxt}>{t('mob.logPeriod', 'Log period')}</Text>
+            <Text style={styles.lpSub}>{t('mob.logPeriodSub', 'starts a new cycle')}</Text>
+          </Pressable>
+
           {/* Flow */}
           <View style={styles.card}>
             <Text style={styles.h}>{t('ui.flow', 'Flow')}</Text>
@@ -212,6 +244,57 @@ export default function EditPeriodScreen({ navigation }: any) {
           </Pressable>
         </ScrollView>
 
+        {/* R4-f31: mini calendar — pick the day the period started */}
+        {lpOpen && (() => {
+          const today = new Date(); today.setHours(0, 0, 0, 0);
+          const y = lpMonth.getFullYear(), m = lpMonth.getMonth();
+          const off = new Date(y, m, 1).getDay(); // Sunday-first (D2)
+          const nDays = new Date(y, m + 1, 0).getDate();
+          const cells: (Date | null)[] = [
+            ...Array.from({ length: off }, () => null),
+            ...Array.from({ length: nDays }, (_, i) => new Date(y, m, i + 1)),
+          ];
+          const monthLabel = lpMonth.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+          return (
+            <View style={styles.notesOverlay}>
+              <Pressable style={StyleSheet.absoluteFill} onPress={() => setLpOpen(false)}>
+                <View style={{ flex: 1, backgroundColor: 'rgba(28,23,21,.45)' }} />
+              </Pressable>
+              <View style={styles.lpSheet}>
+                <Text style={styles.lpTitle}>{t('mob.whenPeriodStart', 'When did this period start?')}</Text>
+                <View style={styles.lpMonthRow}>
+                  <Pressable onPress={() => setLpMonth(new Date(y, m - 1, 1))} style={styles.lpArrow}><Text style={styles.lpArrowTxt}>‹</Text></Pressable>
+                  <Text style={styles.lpMonthTxt}>{monthLabel}</Text>
+                  <Pressable onPress={() => setLpMonth(new Date(y, m + 1, 1))} style={styles.lpArrow}><Text style={styles.lpArrowTxt}>›</Text></Pressable>
+                </View>
+                <View style={styles.lpGrid}>
+                  {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+                    <Text key={i} style={styles.lpDow}>{d}</Text>
+                  ))}
+                  {cells.map((d, i) => {
+                    if (!d) return <View key={i} style={styles.lpCell} />;
+                    const future = d.getTime() > today.getTime();
+                    const sel = lpSel && d.toDateString() === lpSel.toDateString();
+                    return (
+                      <Pressable key={i} disabled={future} onPress={() => setLpSel(d)} style={[styles.lpCell, sel && styles.lpCellOn]}>
+                        <Text style={[styles.lpCellTxt, future && { color: '#D8CCC2' }, sel && { color: '#fff', fontFamily: font.bold }]}>{d.getDate()}</Text>
+                      </Pressable>
+                    );
+                  })}
+                </View>
+                <Pressable onPress={startCycle} disabled={!lpSel || lpSaving} style={[styles.saveBtn, { marginTop: 14 }, (!lpSel || lpSaving) && { opacity: 0.5 }]}>
+                  <Text style={styles.saveTxt}>
+                    {lpSaving ? t('ui.saving', 'Saving…') : lpSel
+                      ? `${t('mob.startCycleOn', 'Start new cycle on')} ${lpSel.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`
+                      : t('mob.pickDay', 'Pick a day')}
+                  </Text>
+                </Pressable>
+                <Text style={styles.lpNote}>{t('mob.noAutoRestart', "Cycles only restart when you log a period — never automatically, even past day 28.")}</Text>
+              </View>
+            </View>
+          );
+        })()}
+
         {/* f29: full-screen notes editor — keyboard can never cover the input */}
         {notesOpen && (
           <View style={styles.notesOverlay}>
@@ -268,4 +351,20 @@ const styles = StyleSheet.create({
   notes: { minHeight: 90, backgroundColor: '#FBF6F2', borderRadius: radius.md, padding: 14, marginTop: 10, fontFamily: font.regular, fontSize: 14, color: colors.ink, textAlignVertical: 'top' },
   saveBtn: { backgroundColor: colors.coral, height: 54, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', marginTop: 20 },
   saveTxt: { fontFamily: font.semibold, fontSize: 16, color: '#fff' },
+  // R4-f31: log-period button + mini calendar sheet
+  lpBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: colors.coral, borderRadius: radius.pill, paddingHorizontal: 18, height: 48, alignSelf: 'stretch', justifyContent: 'center', ...shadow.card },
+  lpTxt: { fontFamily: font.semibold, fontSize: 15, color: '#fff' },
+  lpSub: { fontFamily: font.regular, fontSize: 12, color: 'rgba(255,255,255,.85)' },
+  lpSheet: { position: 'absolute', left: 16, right: 16, top: '16%', backgroundColor: '#fff', borderRadius: radius.lg, padding: 18, ...shadow.card },
+  lpTitle: { fontFamily: font.semibold, fontSize: 17, color: colors.ink, textAlign: 'center' },
+  lpMonthRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 12 },
+  lpArrow: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FBEEE7' },
+  lpArrowTxt: { fontSize: 20, color: colors.coral, marginTop: -2 },
+  lpMonthTxt: { fontFamily: font.semibold, fontSize: 15, color: colors.ink },
+  lpGrid: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 10 },
+  lpDow: { width: '14.28%', textAlign: 'center', fontFamily: font.semibold, fontSize: 11, color: colors.muted, marginBottom: 4 },
+  lpCell: { width: '14.28%', height: 38, alignItems: 'center', justifyContent: 'center', borderRadius: 19 },
+  lpCellOn: { backgroundColor: colors.coral },
+  lpCellTxt: { fontFamily: font.regular, fontSize: 14, color: colors.ink },
+  lpNote: { fontFamily: font.regular, fontSize: 11.5, color: colors.muted, textAlign: 'center', marginTop: 10, lineHeight: 16 },
 });

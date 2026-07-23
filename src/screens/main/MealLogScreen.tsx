@@ -9,7 +9,7 @@ import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
 import { useSession } from '../../state/SessionProvider';
 import { getCurrentCycle } from '../../lib/api';
-import { cycleDay, phaseForDay } from '../../lib/cas';
+import { cycleDay, cycleDayActual, phaseForDay } from '../../lib/cas';
 import { saveMealTyped, searchFoods } from '../../lib/recs';
 
 /**
@@ -48,7 +48,7 @@ export default function MealLogScreen() {
     try {
       const cycle = await getCurrentCycle(userId);
       const len = cycle?.cycle_length ?? 28;
-      const day = cycle ? cycleDay(cycle.last_period_start_date, new Date(), len) : undefined;
+      const day = cycle ? cycleDayActual(cycle.last_period_start_date, new Date()) : undefined;
       const phase = day ? phaseForDay(day, len, cycle?.period_duration ?? 5) : undefined;
       await saveMealTyped(userId, text.trim(), mealType, { day, phase });
       setDone(true); setText('');

@@ -9,7 +9,7 @@ import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle } from '../../lib/api';
-import { cycleDay, phaseForDay, displayPhase } from '../../lib/cas';
+import { cycleDay, cycleDayActual, phaseForDay, displayPhase } from '../../lib/cas';
 import { fetchScoreHistory, splitCycles, avg, fetchMoodEnergy, stabilityScore, seriesStability, fetchPmsRate, ScoreRow } from '../../lib/progress';
 
 /**
@@ -91,7 +91,7 @@ export default function ProgressScreen({ navigation }: any) {
       setName(p?.first_name ?? ''); setHist(h); setMe(m); setPms(pr);
       if (c?.last_period_start_date) {
         const len = c.cycle_length ?? 28, dur = c.period_duration ?? 5;
-        const d = cycleDay(c.last_period_start_date, new Date(), len);
+        const d = cycleDayActual(c.last_period_start_date, new Date());
         setCyc({ day: d, phase: displayPhase(phaseForDay(d, len, dur)) });
       }
       setLoading(false);

@@ -58,6 +58,47 @@ export async function getCurrentCycle(userId: string): Promise<CycleRow | null> 
   return (data as CycleRow) ?? null;
 }
 
+/**
+ * R4-f31: user manually logs a new period start → a NEW `cycles` row begins
+ * (the previous rows stay as real cycle history). The new row's cycle_length
+ * becomes the rolling average of her last ≤6 actual cycle lengths (gap between
+ * consecutive period starts, sane range 15–60 days only), feeding Progress and
+ * the phase algorithm with her real data instead of the onboarding estimate.
+ */
+export async function startNewCycle(userId: string, startISO: string): Promise<{ created: boolean; avg?: number }> {
+  const { data: rows } = await supabase
+    .from('cycles')
+    .select('id,last_period_start_date,cycle_length,period_duration')
+    .eq('user_id', userId)
+    .order('last_period_start_date', { ascending: true });
+  const all = (rows ?? []) as any[];
+  const prev = all.length ? all[all.length - 1] : null;
+  if (prev && String(prev.last_period_start_date).slice(0, 10) === startISO) return { created: false };
+
+  const starts = [...all.map((r) => String(r.last_period_start_date).slice(0, 10)), startISO]
+    .map((s) => new Date(s + 'T00:00:00').getTime())
+    .sort((a, b) => a - b);
+  const diffs: number[] = [];
+  for (let i = 1; i < starts.length; i++) {
+    const d = Math.round((starts[i] - starts[i - 1]) / 86_400_000);
+    if (d >= 15 && d <= 60) diffs.push(d);
+  }
+  const recent = diffs.slice(-6);
+  const avg = recent.length
+    ? Math.round(recent.reduce((a, b) => a + b, 0) / recent.length)
+    : (prev?.cycle_length ?? 28);
+
+  const { error } = await supabase.from('cycles').insert({
+    user_id: userId,
+    last_period_start_date: startISO,
+    cycle_length: avg,
+    period_duration: prev?.period_duration ?? 5,
+    updated_at: new Date().toISOString(),
+  });
+  if (error) throw error;
+  return { created: true, avg };
+}
+
 /** True once the user has completed onboarding (has a cycle on file). */
 export async function hasCompletedOnboarding(userId: string): Promise<boolean> {
   const { count } = await supabase

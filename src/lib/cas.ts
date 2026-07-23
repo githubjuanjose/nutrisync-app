@@ -31,6 +31,17 @@ export function cycleDay(lastPeriodStart: Date | string, today: Date = new Date(
   return (((days % cycleLength) + cycleLength) % cycleLength) + 1;
 }
 
+/**
+ * R4-f31: the ACTUAL day counter — never wraps. Past day 28 (or the user's
+ * length) it keeps counting (29, 30, …) until she logs a new period start;
+ * the app must not auto-restart a cycle on its own. `cycleDay` above keeps
+ * the modulo behaviour for FORECASTING future dates (calendar predictions).
+ */
+export function cycleDayActual(lastPeriodStart: Date | string, today: Date = new Date()): number {
+  const ms = stripTime(today) - stripTime(lastPeriodStart);
+  return Math.max(1, Math.floor(ms / 86_400_000) + 1);
+}
+
 export function phaseForDay(day: number, cycleLength = 28, periodDuration = 5): Phase {
   const ovulation = cycleLength - 14;
   const ovStart = ovulation;

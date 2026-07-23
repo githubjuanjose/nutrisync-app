@@ -6,7 +6,7 @@ import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getCurrentCycle } from '../../lib/api';
-import { cycleDay, phaseForDay, displayPhase } from '../../lib/cas';
+import { cycleDay, cycleDayActual, phaseForDay, displayPhase } from '../../lib/cas';
 import { getTodayLog, getTodayScore } from '../../lib/daily';
 import { fetchTips } from '../../lib/content';
 
@@ -32,7 +32,7 @@ export default function NotificationCenterScreen({ navigation }: any) {
       if (cycle) {
         const len = cycle.cycle_length ?? 28;
         const dur = cycle.period_duration ?? 5;
-        const day = cycleDay(cycle.last_period_start_date, new Date(), len);
+        const day = cycleDayActual(cycle.last_period_start_date, new Date());
         const p5 = phaseForDay(day, len, dur);
         const ui = displayPhase(p5) as PhaseKey;
         const tips = await fetchTips(ui);
