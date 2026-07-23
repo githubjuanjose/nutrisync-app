@@ -71,8 +71,12 @@ export default function NutriAvatarScreen({ navigation }: any) {
           <Text style={styles.sub}>{t('mob.selectNutri', "Select your Nutri profile")}</Text>
           <View style={styles.grid}>
             {NUTRI_VARIANTS.map((v) => (
-              <Pressable key={v.key} onPress={() => setSel(v.key)} style={[styles.cell, sel === v.key && styles.cellOn]}>
-                <NutriAvatar variant={v.key} size={112} />
+              <Pressable key={v.key} onPress={() => setSel(v.key)} style={styles.cell}>
+                {/* R4-f30: the ring hugs the avatar (fixed size, centred) instead
+                    of tracing the outer grid cell — no more off-centre circle */}
+                <View style={[styles.ringWrap, sel === v.key && styles.ringOn]}>
+                  <NutriAvatar variant={v.key} size={112} />
+                </View>
               </Pressable>
             ))}
           </View>
@@ -93,8 +97,10 @@ const styles = StyleSheet.create({
   title: { fontFamily: font.bold, fontSize: 24, color: colors.ink, marginTop: 6 },
   sub: { fontFamily: font.regular, fontSize: 14, color: colors.muted, marginTop: 4 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: 30, gap: 16 },
-  cell: { width: '46%', aspectRatio: 1, borderRadius: 999, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'transparent' },  // F42: circular
-  cellOn: { borderColor: colors.coral },  // F42: thin red circular outline only
+  cell: { width: '46%', aspectRatio: 1, alignItems: 'center', justifyContent: 'center' },
+  // R4-f30: fixed circle sized to the avatar, always centred
+  ringWrap: { width: 126, height: 126, borderRadius: 63, borderWidth: 2, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center' },
+  ringOn: { borderColor: colors.coral },
   save: { backgroundColor: colors.coral  /* R3-45: full-opacity brand colour */, height: 52, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', marginBottom: 20 },
   saveTxt: { fontFamily: font.semibold, fontSize: 16, color: '#fff' },
 });

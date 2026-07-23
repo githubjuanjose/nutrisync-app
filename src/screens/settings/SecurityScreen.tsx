@@ -33,11 +33,14 @@ export default function SecurityScreen({ navigation }: any) {
 
           <Text style={styles.sectionTitle}>{t('ui.twofaHdr', 'TWO-FACTOR AUTHENTICATION')}</Text>
           <View style={styles.card}>
-            {TFA.map((t, i) => (
-              <View key={t.label} style={[styles.row, i < TFA.length - 1 && styles.rowBorder]}>
-                <Text style={styles.rowIcon}>{t.icon}</Text>
-                <Text style={styles.rowLabel}>{t.label}</Text>
-                <View style={styles.badge}><Text style={styles.badgeTxt}>{t.status}</Text></View>
+            {/* R4-f29: the map param used to shadow the i18n `t` AND rendered the
+                icon KEY as text ("sms", "faceid") — that was the stray "sms" and
+                the doubled "Face ID" the founders saw. Real icons, aligned. */}
+            {TFA.map((row, i) => (
+              <View key={row.label} style={[styles.row, i < TFA.length - 1 && styles.rowBorder]}>
+                <View style={styles.rowIconBox}><SettingsIcon name={row.icon} size={20} /></View>
+                <Text style={styles.rowLabel}>{row.label}</Text>
+                <View style={styles.badge}><Text style={styles.badgeTxt}>{row.status}</Text></View>
               </View>
             ))}
           </View>
@@ -45,12 +48,12 @@ export default function SecurityScreen({ navigation }: any) {
           <Text style={styles.sectionTitle}>{t('ui.sessionsHdr', 'ACTIVE SESSIONS')}</Text>
           <View style={styles.card}>
             <View style={[styles.row, styles.rowBorder]}>
-              <SettingsIcon name="phone" size={20} />
+              <View style={styles.rowIconBox}><SettingsIcon name="phone" size={20} /></View>
               <View style={{ flex: 1 }}><Text style={styles.rowLabel}>iPhone 15 Pro</Text><Text style={styles.sub}>{t('mob.currentDevice', "Current device")}</Text></View>
               <Text style={styles.active}>{t('mob.activeWord', "Active")}</Text>
             </View>
             <View style={styles.row}>
-              <SettingsIcon name="laptop" size={20} />
+              <View style={styles.rowIconBox}><SettingsIcon name="laptop" size={20} /></View>
               <View style={{ flex: 1 }}><Text style={styles.rowLabel}>MacBook Pro</Text><Text style={styles.sub}>2 hours ago</Text></View>
               <Text style={styles.logout}>{t('ui.logout', 'Log Out')}</Text>
             </View>
@@ -75,6 +78,7 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', height: 54 },
   rowBorder: { borderBottomWidth: 1, borderBottomColor: '#F4EBE3' },
   rowIcon: { fontSize: 17, width: 30 },
+  rowIconBox: { width: 30, alignItems: 'flex-start', justifyContent: 'center' },
   rowLabel: { flex: 1, fontFamily: font.medium, fontSize: 14.5, color: colors.ink },
   sub: { fontFamily: font.regular, fontSize: 11.5, color: colors.muted, marginTop: 1 },
   badge: { backgroundColor: '#F1E7DF', borderRadius: radius.pill, paddingHorizontal: 10, height: 24, justifyContent: 'center' },

@@ -51,8 +51,7 @@ export default function MealLogScreen() {
       const day = cycle ? cycleDayActual(cycle.last_period_start_date, new Date()) : undefined;
       const phase = day ? phaseForDay(day, len, cycle?.period_duration ?? 5) : undefined;
       await saveMealTyped(userId, text.trim(), mealType, { day, phase });
-      setDone(true); setText('');
-      setTimeout(() => setDone(false), 1800);
+      setDone(true); setText('');   // R4-f17: persistent confirmation (no auto-dismiss)
     } finally { setBusy(false); }
   };
 
@@ -111,6 +110,23 @@ export default function MealLogScreen() {
             </Pressable>
           </ScrollView>
         </KeyboardAvoidingView>
+
+        {/* R4-f17: confirmation screen after saving — recorded + Home / Log more */}
+        {done && (
+          <View style={styles.confirmWrap}>
+            <View style={styles.confirmCard}>
+              <View style={styles.confirmTick}><Text style={{ fontSize: 34, color: '#fff' }}>✓</Text></View>
+              <Text style={styles.confirmTitle}>{t('mob.logged', 'Logged!')}</Text>
+              <Text style={styles.confirmSub}>{t('mob.mealRecorded', 'Your meal has been recorded and counts toward today.')}</Text>
+              <Pressable onPress={() => setDone(false)} style={styles.confirmPrimary}>
+                <Text style={styles.confirmPrimaryTxt}>{t('mob.logMore', 'Log more')}</Text>
+              </Pressable>
+              <Pressable onPress={() => { setDone(false); nav.navigate('Cycle'); }} style={styles.confirmSecondary}>
+                <Text style={styles.confirmSecondaryTxt}>{t('mob.backHome', 'Back to Home')}</Text>
+              </Pressable>
+            </View>
+          </View>
+        )}
       </SafeAreaView>
     </View>
   );
@@ -139,4 +155,13 @@ const styles = StyleSheet.create({
   textArea: { backgroundColor: colors.white, borderRadius: radius.md, minHeight: 110, padding: 14, marginTop: 10, fontFamily: font.regular, fontSize: 14.5, color: colors.ink, textAlignVertical: 'top', ...shadow.card },
   cta: { marginTop: 18, backgroundColor: colors.coral, borderRadius: radius.pill, height: 52, alignItems: 'center', justifyContent: 'center' },
   ctaTxt: { fontFamily: font.semibold, fontSize: 15, color: '#fff' },
+  confirmWrap: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(28,23,21,.45)', alignItems: 'center', justifyContent: 'center', zIndex: 30 },
+  confirmCard: { width: '84%', backgroundColor: '#fff', borderRadius: 24, padding: 26, alignItems: 'center', ...shadow.card },
+  confirmTick: { width: 64, height: 64, borderRadius: 32, backgroundColor: '#3DBE8B', alignItems: 'center', justifyContent: 'center' },
+  confirmTitle: { fontFamily: font.bold, fontSize: 22, color: colors.ink, marginTop: 14 },
+  confirmSub: { fontFamily: font.regular, fontSize: 13.5, color: colors.muted, marginTop: 6, textAlign: 'center', lineHeight: 19 },
+  confirmPrimary: { alignSelf: 'stretch', backgroundColor: colors.coral, height: 50, borderRadius: 999, alignItems: 'center', justifyContent: 'center', marginTop: 18 },
+  confirmPrimaryTxt: { fontFamily: font.semibold, fontSize: 15, color: '#fff' },
+  confirmSecondary: { alignSelf: 'stretch', height: 46, borderRadius: 999, alignItems: 'center', justifyContent: 'center', marginTop: 8, borderWidth: 1.5, borderColor: colors.ink },
+  confirmSecondaryTxt: { fontFamily: font.semibold, fontSize: 14, color: colors.ink },
 });
