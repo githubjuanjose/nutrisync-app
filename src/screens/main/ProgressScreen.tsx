@@ -185,7 +185,7 @@ export default function ProgressScreen({ navigation }: any) {
   // R5-F6: exact hex palette from the round-5 spec
   const HORM: [string, (d: number) => number, string][] = [
     [t('mob.estrogen', 'Estrogen'), estro, '#FF5343'],      // FF5343E5 (≈90%)
-    [t('mob.lh', 'LH'), lh, '#FF5343'],
+    [t('mob.lh', 'LH'), lh, '#D93030'],   // Design decision 23 Jul: LH distinguishable from Estrogen
     [t('mob.fsh', 'FSH'), fsh, '#FF7926'],
     [t('mob.progesterone', 'Progesterone'), proge, '#FFC049'],
   ];
