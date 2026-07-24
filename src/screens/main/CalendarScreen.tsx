@@ -171,11 +171,17 @@ export default function CalendarScreen({ navigation }: any) {
     const faded = filter && p !== filter;
     const col = p ? PAL[p] : '#E7DCD3';
     if (mini) {
-      // R5-F17: year view goes neutral too — cream circles, dark numbers
+      // R6-f3: year view mirrors the month — cream circle with a DARK number
+      // (they were invisible white-on-cream) + tiny phase dot above; cells
+      // enlarged via the 2-column year grid so numbers are legible.
+      const cdMini = dayOf(d);
       return (
         <View style={[styles.cellMini, { opacity: faded ? 0.15 : 1 }]}>
-          <View style={[styles.miniC, styles.miniNeutral, future && { opacity: 0.7 }]}>
-            <Text style={styles.miniN}>{d.getDate()}</Text>
+          <View>
+            <View style={[styles.miniC, styles.miniNeutral, future && { opacity: 0.7 }]}>
+              <Text style={styles.miniN}>{d.getDate()}</Text>
+            </View>
+            {cdMini != null && p ? <View style={[styles.miniPhaseDot, { backgroundColor: col }]} /> : null}
           </View>
           <Star d={d} mini />
         </View>
@@ -223,16 +229,17 @@ export default function CalendarScreen({ navigation }: any) {
           {view === 'month' ? (
             <>
               <View style={[styles.hero, { overflow: 'hidden' }]}>
-                {/* R4-F13: wireframe radial — FF7000 core (to 23%) -> FF5509 edge */}
-                <Svg style={StyleSheet.absoluteFill} width="100%" height="100%">
+                {/* R6-f2: exact Calendar Token.svg radial, viewBox-scaled so the
+                    card is never cut off (percent-sized Svg mis-measured on native) */}
+                <Svg style={StyleSheet.absoluteFill} viewBox="0 0 397 227" preserveAspectRatio="none">
                   <Defs>
-                    <RadialGradient id="calHero" cx="50%" cy="38%" r="85%">
-                      <Stop offset="0%" stopColor="#FF7000" />
-                      <Stop offset="23%" stopColor="#FF7000" />
-                      <Stop offset="100%" stopColor="#FF5509" />
+                    <RadialGradient id="calHero" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+                      gradientTransform="matrix(146.849 190.5 -181.363 136.307 51.6505 36.5)">
+                      <Stop offset="0.225962" stopColor="#FF7000" />
+                      <Stop offset="1" stopColor="#FF5509" />
                     </RadialGradient>
                   </Defs>
-                  <Rect x="0" y="0" width="100%" height="100%" fill="url(#calHero)" />
+                  <Rect x="0" y="0" width="397" height="227" rx="26" fill="url(#calHero)" />
                 </Svg>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <View>
@@ -436,14 +443,15 @@ const styles = StyleSheet.create({
   moreBtn: { alignItems: 'center', paddingTop: 12 },
   moreTxt: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
   yearWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 14 },
-  miniCard: { width: '31%', backgroundColor: '#fff', borderRadius: 16, padding: 7, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 10, shadowOffset: { width: 0, height: 6 }, elevation: 2 },
+  miniCard: { width: '48.5%',  /* R6-f3: 2-col year grid → cells big enough to read */ backgroundColor: '#fff', borderRadius: 16, padding: 7, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 10, shadowOffset: { width: 0, height: 6 }, elevation: 2 },
   miniCur: { borderWidth: 2, borderColor: colors.coral },
   miniTitle: { fontFamily: font.semibold, fontSize: 11.5, color: colors.ink, marginBottom: 4, textAlign: 'center' },
   miniGrid: { flexDirection: 'row', flexWrap: 'wrap' },
   cellMini: { width: `${100 / 7}%`, alignItems: 'center', paddingVertical: 1 },
-  miniC: { width: 12, height: 12, borderRadius: 6, alignItems: 'center', justifyContent: 'center' },
-  miniN: { fontFamily: font.medium, fontSize: 6.5, color: '#fff' },
-  miniStar: { fontSize: 5, color: '#E9A23B', position: 'absolute', right: -1, top: -1 },
+  miniC: { width: 19, height: 19, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
+  miniN: { fontFamily: font.medium, fontSize: 9, color: colors.ink },  /* R6-f3: dark, readable */
+  miniPhaseDot: { position: 'absolute', top: -2, left: -2, width: 7, height: 7, borderRadius: 4 },
+  miniStar: { fontSize: 7, color: '#E9A23B', position: 'absolute', right: -1, top: -1 },
   guide: { backgroundColor: '#fff', borderRadius: 22, padding: 18, marginTop: 14, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 14, shadowOffset: { width: 0, height: 8 }, elevation: 2 },
   guideDate: { fontFamily: font.medium, fontSize: 12, color: colors.coralDeep },
   guideTitle: { fontFamily: font.semibold, fontSize: 15.5, color: colors.ink, marginTop: 3 },

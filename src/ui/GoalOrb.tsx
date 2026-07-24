@@ -30,7 +30,7 @@ export function GoalOrb({ index, label, size = 200 }: { index: number; label: st
         </Defs>
         <Circle cx={size / 2} cy={size / 2} r={size / 2} fill={`url(#${id})`} />
       </Svg>
-      <Text style={[styles.txt, { paddingHorizontal: size * 0.13, fontSize: size * 0.09 }]}>{label}</Text>
+      <Text style={[styles.txt, { paddingHorizontal: size * 0.11, fontSize: size * 0.085 }]} numberOfLines={4} adjustsFontSizeToFit>{label}</Text>  {/* R6-f19: long ES labels shrink instead of orphaning a letter */}
     </View>
   );
 }

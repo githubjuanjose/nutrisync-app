@@ -28,14 +28,14 @@ import { fetchScoreHistory, splitCycles, avg, fetchMoodEnergy, stabilityScore, s
  */
 
 /** R4-f24: thinner stroke, lighter labels · R4-F18: tappable → explainer modal */
-function Ring({ v, max, size = 54, label, onPress }: { v: number; max: number; size?: number; label: string; onPress?: () => void }) {
+function Ring({ v, max, size = 46, label, onPress }: { v: number; max: number; size?: number; label: string; onPress?: () => void }) {
   const r = size / 2 - 5, c = 2 * Math.PI * r, f = Math.max(0, Math.min(1, v / max));
   return (
     <Pressable onPress={onPress} style={{ alignItems: 'center', width: 62 }}>
       <Svg width={size} height={size}>
-        <Circle cx={size / 2} cy={size / 2} r={r} stroke="#F3E7DC" strokeWidth={4.5} fill="none" />
+        <Circle cx={size / 2} cy={size / 2} r={r} stroke="#F6EBE1" strokeWidth={3.5} fill="none" />
         {f > 0.005 ? (  /* R3-32: no arc at zero — full track only, no floating dot */
-          <Circle cx={size / 2} cy={size / 2} r={r} stroke={colors.coral} strokeWidth={4.5} fill="none" strokeLinecap="round"
+          <Circle cx={size / 2} cy={size / 2} r={r} stroke="#FF4D32" strokeWidth={3.5} fill="none" strokeLinecap="round"
             strokeDasharray={`${c * f} ${c}`} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
         ) : null}
       </Svg>
@@ -45,14 +45,16 @@ function Ring({ v, max, size = 54, label, onPress }: { v: number; max: number; s
   );
 }
 const rs = StyleSheet.create({
-  val: { fontFamily: font.medium, fontSize: 12, color: colors.ink, marginTop: -36, marginBottom: 22 },
-  lbl: { fontFamily: font.regular, fontSize: 9.5, color: colors.faint, textAlign: 'center' },
+  val: { fontFamily: font.medium, fontSize: 11, color: '#FF4D32', marginTop: -32, marginBottom: 20 },  // R6-f9/f14
+  lbl: { fontFamily: font.regular, fontSize: 9, color: '#B9ACA4', textAlign: 'center', textTransform: 'lowercase' },  // R6-f13
 });
 
-/** R4-f22/f25: continuous red→orange→yellow gradient arc (also in low-data
- *  states), white knob at the score position, zone words around the ring —
- *  no discrete legend dots, no purple/green. */
-const GAUGE_STOPS: [number, string][] = [[0, '#E0442A'], [0.5, '#F0813C'], [1, '#F3C64F']];
+/** R6-f10: gauge shape per Subtract.svg — ring OPEN at the bottom, angular
+ *  gradient from volatile red to aligned yellow (exact Round-6 palette),
+ *  white knob at the score position, score number in the centre (f12). */
+const GAUGE_STOPS: [number, string][] = [
+  [0, '#F80000'], [0.25, '#F44848'], [0.5, '#FF2300'], [0.75, '#FF6F04'], [1, '#FFC80E'],
+];
 function gaugeColor(k: number): string {
   const hx = (h: string) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
   for (let i = 0; i < GAUGE_STOPS.length - 1; i++) {
@@ -65,27 +67,31 @@ function gaugeColor(k: number): string {
   return GAUGE_STOPS[k <= 0 ? 0 : GAUGE_STOPS.length - 1][1];
 }
 function StabilityRing({ v, label }: { v: number | null; label: string }) {
-  const size = 104, r = 44, C = size / 2, N = 40;
+  const size = 104, r = 44, C = size / 2, N = 44;
+  // gauge open at the bottom (Subtract.svg): sweep 0.56 → 1.44 of the circle,
+  // volatile (red) at the left end → aligned (yellow) at the right end
+  const T0 = 0.56, SWEEP = 0.88;
   const pt = (t: number) => {
-    const a = (t * 360 - 90) * (Math.PI / 180);
+    const a = ((t % 1) * 360 - 90) * (Math.PI / 180);
     return { x: C + r * Math.cos(a), y: C + r * Math.sin(a) };
   };
   const segs = Array.from({ length: N }, (_, i) => {
-    const t0 = i / N, t1 = (i + 1) / N + 0.003;
-    const p0 = pt(t0), p1 = pt(t1);
+    const u0 = i / N, u1 = (i + 1) / N;
+    const p0 = pt(T0 + u0 * SWEEP), p1 = pt(T0 + u1 * SWEEP + 0.002);
     return { d: `M ${p0.x} ${p0.y} A ${r} ${r} 0 0 1 ${p1.x} ${p1.y}`, c: gaugeColor(i / (N - 1)) };
   });
-  const knob = v != null ? pt(Math.max(0.02, Math.min(1, v))) : null;
+  const knob = v != null ? pt(T0 + Math.max(0.02, Math.min(1, v)) * SWEEP) : null;
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
       <Svg width={size} height={size}>
-        {segs.map((s, i) => <Path key={i} d={s.d} stroke={s.c} strokeWidth={9} fill="none" />)}
+        {segs.map((s, i) => <Path key={i} d={s.d} stroke={s.c} strokeWidth={9} fill="none" strokeLinecap={i === 0 || i === N - 1 ? 'round' : 'butt'} />)}
         {knob ? (<>
           <Circle cx={knob.x} cy={knob.y} r={8} fill="#fff" />
           <Circle cx={knob.x} cy={knob.y} r={8} fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth={1} />
         </>) : null}
       </Svg>
       <View style={{ position: 'absolute', alignItems: 'center' }}>
+        {/* R6-f12: the score number is always visible on the gauge */}
         <Text style={{ fontFamily: font.bold, fontSize: 24, color: colors.ink }}>{v == null ? '—' : Math.round(v * 100)}</Text>
         <Text style={{ fontFamily: font.medium, fontSize: 10.5, color: colors.muted }}>{label}</Text>
       </View>
@@ -124,7 +130,7 @@ export default function ProgressScreen({ navigation }: any) {
 
   if (loading) return <LoadingView />;
 
-  const css = stabilityScore(me);
+  const css = stabilityScore(me);   // kept for the n-days-logged note
   const todayISO = new Date().toISOString().slice(0, 10);
   const todayRow = hist.find((r) => r.date === todayISO) ?? null;
   const cycles = splitCycles(hist);
@@ -137,6 +143,15 @@ export default function ProgressScreen({ navigation }: any) {
   // R3-34: per-metric stat row (last 14 logged days; honest null under 7)
   const eStab = seriesStability(me.filter((x) => x.energy != null).slice(-14).map((x) => x.energy!));
   const mStab = seriesStability(me.filter((x) => x.mood != null).slice(-14).map((x) => x.mood!));
+
+  // R6-f11 (blocker): Cycle Stability is its OWN metric per the developer scope —
+  // Energy Stability 45% + Mood Stability 45% + PMS Symptom Stability 10%
+  // (PMS stability = 100 − PMS-symptom rate). Weights renormalise over the
+  // components that have data; null until none do.
+  const stabParts: [number | null, number][] = [[eStab, 0.45], [mStab, 0.45], [pms != null ? Math.max(0, 100 - pms) : null, 0.10]];
+  let stabAcc = 0, stabW = 0;
+  for (const [val, w] of stabParts) { if (val != null) { stabAcc += val * w; stabW += w; } }
+  const stabilityPct = stabW > 0 ? Math.round(stabAcc / stabW) : null;
 
   // R4-F18: each component carries the founders' explainer copy (what it
   // measures + the concrete action that raises it) for the tap-to-expand modal
@@ -154,7 +169,7 @@ export default function ProgressScreen({ navigation }: any) {
       body: t('mob.c5Body', "Tracks how consistently you're logging overall, separate from your checklists. Add more Meal Log and Movement Log notes. Consistency matters more than volume here.") },
   ] : null;
 
-  const cssLabel = css.score == null ? t('mob.keepSyncing', 'Keep syncing') : css.score < 0.34 ? t('mob.volatile', 'Volatile') : css.score < 0.67 ? t('mob.stable', 'Stable') : t('mob.aligned', 'Aligned');
+  const cssLabel = stabilityPct == null ? t('mob.keepSyncing', 'Keep syncing') : stabilityPct < 34 ? t('mob.volatile', 'Volatile') : stabilityPct < 67 ? t('mob.aligned', 'Aligned') : t('mob.stable', 'Stable');
 
   // R3-35: four predicted hormone curves as filled mountains (illustrative,
   // parameterised by cycle position — same shapes the wireframe uses)
@@ -166,7 +181,7 @@ export default function ProgressScreen({ navigation }: any) {
     let d = '';
     for (let i = 0; i <= 28; i++) {
       const dd = dayNow - 3 + (i / 28) * 7;
-      const x = X0 + (i / 28) * XW, y = BASE - fn(((dd % len) + len) % len) * 66;
+      const x = X0 + (i / 28) * XW, y = BASE - fn(Math.max(0.5, Math.min(len, dd))) * 66;   // R6-f18: clamp, don't wrap — no more mid-week V
       d += `${i ? 'L' : 'M'} ${x.toFixed(1)} ${y.toFixed(1)} `;
     }
     const line = d;
@@ -201,7 +216,7 @@ export default function ProgressScreen({ navigation }: any) {
         <Svg width={size} height={size}>
           <Circle cx={54} cy={54} r={r} stroke="#F3E3D8" strokeWidth={10} fill="none" />
           {f > 0.005 ? (
-            <Circle cx={54} cy={54} r={r} stroke={colors.coral} strokeWidth={10} fill="none" strokeLinecap="round"
+            <Circle cx={54} cy={54} r={r} stroke="#F84E10" strokeWidth={10} fill="none" strokeLinecap="round"  /* R6-f9: FF6903→ED3413 midtone (single-stroke arc) */
               strokeDasharray={`${c * f} ${c}`} transform="rotate(-90 54 54)" />
           ) : null}
         </Svg>
@@ -216,8 +231,8 @@ export default function ProgressScreen({ navigation }: any) {
       <LinearGradient colors={screenGrad.colors as any} locations={screenGrad.locations as any} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top']}>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 110 }} showsVerticalScrollIndicator={false}>
-          {/* R4-f28: FLAT solid coral header — title + greet + PHASE·DAY only */}
-          <View style={styles.hero}>
+          {/* R6-f8: brighter hero gradient FF6903 → ED3413 (left→right) */}
+          <LinearGradient colors={['#FF6903', '#ED3413']} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} style={styles.hero}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <View style={{ flex: 1 }}>
                 <Text style={styles.heroTitle}>{t('ui.progress', 'Progress')}</Text>
@@ -229,7 +244,7 @@ export default function ProgressScreen({ navigation }: any) {
                 </View>
               ) : null}
             </View>
-          </View>
+          </LinearGradient>
 
           {/* R4-f23: the score lives in its OWN white/cream card below the header —
               coral arc, dark score, comparison text in green once data exists */}
@@ -237,7 +252,7 @@ export default function ProgressScreen({ navigation }: any) {
             <View style={{ flex: 1 }}>
               <Text style={styles.casTitle}>{t('mob.cycleAlignmentScore', 'Cycle Alignment Score')}</Text>
               {delta != null
-                ? <Text style={styles.delta}>{delta >= 0 ? '↑' : '↓'}{Math.abs(delta)} {t('mob.vsLastCycle', 'vs last cycle')}</Text>
+                ? <Text style={[styles.delta, delta < 0 && { color: '#D93030' }]}>{delta >= 0 ? '↑' : '↓'}{Math.abs(delta)} {t('mob.vsLastCycle', 'vs last cycle')}</Text>  /* R6-f15 */
                 : <Text style={styles.deltaMuted}>{completed.length ? '' : t('mob.firstCycleNote', 'Comparisons unlock after your first full cycle')}</Text>}
               <Text style={styles.casHint}>{cas == null ? t('mob.logToBuild', "Log your day to build today's score") : t('mob.updatesLive', 'Updates live as you log')}</Text>
             </View>
@@ -253,8 +268,8 @@ export default function ProgressScreen({ navigation }: any) {
           <View style={styles.cardRow}>
             <View style={{ alignItems: 'center' }}>
               <Text style={styles.cssTitle}>{t('mob.cycleStability', 'Cycle Stability')}</Text>
-              <StabilityRing v={css.score} label={cssLabel} />
-              {css.score == null ? <Text style={styles.cssNote}>{css.n}/7 {t('mob.daysLoggedShort', 'days logged')}</Text> : null}
+              <StabilityRing v={stabilityPct == null ? null : stabilityPct / 100} label={cssLabel} />
+              {stabilityPct == null ? <Text style={styles.cssNote}>{css.n}/7 {t('mob.daysLoggedShort', 'days logged')}</Text> : null}
               {/* R4-f22/f25: zone words only (wireframe order), no coloured dots */}
               <View style={styles.bandRow}>
                 <Text style={styles.bandTxt}>{t('mob.volatile', 'volatile')}</Text>
@@ -307,8 +322,8 @@ export default function ProgressScreen({ navigation }: any) {
                   <Defs>
                     {HORM.map(([, , col], i) => (
                       <SvgLinearGradient key={i} id={`horm${i}`} x1="0" y1="0" x2="0" y2="1">
-                        <Stop offset="0%" stopColor={col} stopOpacity={0.55} />
-                        <Stop offset="100%" stopColor={col} stopOpacity={0} />
+                        <Stop offset="0%" stopColor={col} stopOpacity={0.85} />
+                        <Stop offset="100%" stopColor={col} stopOpacity={0.12} />
                       </SvgLinearGradient>
                     ))}
                   </Defs>
@@ -357,7 +372,7 @@ export default function ProgressScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
   fill: { flex: 1, backgroundColor: 'transparent' },
-  hero: { borderRadius: 28, padding: 20, backgroundColor: '#E4572E' },  // R4-f28: flat solid coral
+  hero: { borderRadius: 28, padding: 20 },  // R6-f8: gradient applied by LinearGradient
   // R4-f23: separate score card
   scoreCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFFDF8', borderRadius: 24, padding: 18, marginTop: 12, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   // R4-F18 modal
@@ -373,11 +388,11 @@ const styles = StyleSheet.create({
   phaseBadge: { backgroundColor: 'rgba(255,255,255,0.22)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.5)', borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6 },
   phaseBadgeTxt: { fontFamily: font.semibold, fontSize: 10.5, color: '#fff', letterSpacing: 0.5 },
   // R4-f23: dark text on the white card; comparison green
-  casTitle: { fontFamily: font.semibold, fontSize: 15, color: colors.ink },
+  casTitle: { fontFamily: font.semibold, fontSize: 15, color: '#F03D11' },  // R6-f9
   delta: { fontFamily: font.semibold, fontSize: 13, color: '#2D9E63', marginTop: 4 },
   deltaMuted: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 4 },
   casHint: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 6 },
-  bigScore: { position: 'absolute', fontFamily: font.bold, fontSize: 26, color: colors.ink },
+  bigScore: { position: 'absolute', fontFamily: font.bold, fontSize: 26, color: '#FF300C' },  // R6-f9
   compRow: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#fff', borderRadius: 20, paddingVertical: 14, paddingHorizontal: 8, marginTop: 12, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 2 },
   cardRow: { flexDirection: 'row', backgroundColor: '#fff', borderRadius: 24, padding: 18, marginTop: 12, alignItems: 'center', justifyContent: 'space-between', shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   card2: { backgroundColor: '#fff', borderRadius: 24, padding: 18, marginTop: 12, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
@@ -397,7 +412,7 @@ const styles = StyleSheet.create({
   triCol: { flex: 1, alignItems: 'center' },
   triVal: { fontFamily: font.bold, fontSize: 19, color: colors.ink },
   triLbl: { fontFamily: font.regular, fontSize: 11, color: colors.muted, marginTop: 3, textAlign: 'center' },
-  segTabs: { flexDirection: 'row', backgroundColor: '#F6EEE7', borderRadius: 999, padding: 4, gap: 4, marginBottom: 12 },
+  segTabs: { flexDirection: 'row', gap: 4, marginBottom: 12 },  // R6-f17: no capsule background
   segTab: { flex: 1, height: 32, borderRadius: 999, alignItems: 'center', justifyContent: 'center' },
   segTabOn: {},  // R4-f27: no pill behind the active tab
   segTabTxt: { fontFamily: font.medium, fontSize: 12.5, color: colors.muted },

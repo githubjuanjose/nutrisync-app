@@ -93,7 +93,7 @@ export default function MoodEnergyGate({ navigation }: any) {
             </View>
             <Text style={styles.title}>{t('mob.beforeSync', "Before we Sync...")}</Text>
           </View>
-          <NutriAvatar variant={nutri} size={46} />
+          {/* R6-f20: Nutri avatar removed from the check-in header */}
         </View>
 
         <View style={styles.track}>

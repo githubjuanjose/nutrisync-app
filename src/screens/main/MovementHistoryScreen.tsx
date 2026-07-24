@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
-import { StreakOffDot } from '../../ui/StreakOffDot';
+import { StreakOffDot, StreakOnDot } from '../../ui/StreakOffDot';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { fetchMovementHistory, MovementLogRow } from '../../lib/recs';
@@ -85,7 +85,7 @@ export default function MovementHistoryScreen() {
                 {week.map((on, i) => (
                   /* R5-f19: missed day = exact wireframe SVG (Group 1171289068) */
                   on
-                    ? <Image key={i} source={require('../../../assets/nutrilog/streak-on.png')} style={styles.dot} />
+                    ? <View key={i} style={styles.dot}><StreakOnDot size={16} /></View>  /* R6-f7: crisp vector */
                     : <View key={i} style={styles.dot}><StreakOffDot size={16} /></View>
                 ))}
               </View>

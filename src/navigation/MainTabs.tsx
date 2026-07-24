@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image } from 'react-native';
+import { NavIcon } from '../ui/NavIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MainTabParamList } from './types';
 import { colors } from '../theme';
@@ -44,7 +45,7 @@ export default function MainTabs() {
         },
         tabBarItemStyle: { justifyContent: 'center', alignItems: 'center' },
         tabBarIcon: ({ color }) => (
-          <Image source={ICONS[route.name]} style={{ width: 34, height: 34, tintColor: color }}  /* R5-059: caption-free glyphs, square */ resizeMode="contain" />
+          <NavIcon name={route.name as string} color={color} size={40} />  /* R6-f1: crisp vectors */
         ),
       })}
     >

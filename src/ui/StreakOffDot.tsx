@@ -1,5 +1,28 @@
 import React from 'react';
-import Svg, { Rect, Path, Defs, RadialGradient, Stop } from 'react-native-svg';
+import Svg, { Rect, Path, Circle, Defs, RadialGradient, Stop } from 'react-native-svg';
+
+/**
+ * R6-f7: the LOGGED-day streak marker — exact vector from Design's
+ * `Group 1171289060.svg` (red radial pill, happy face) — replaces the pink
+ * PNG that rendered blurry at 16px.
+ */
+export function StreakOnDot({ size = 16 }: { size?: number }) {
+  return (
+    <Svg width={size} height={size * (24 / 25)} viewBox="0 0 25 24">
+      <Defs>
+        <RadialGradient id="streakOnG" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(12.1649 12) rotate(90) scale(12 12.1649)">
+          <Stop offset="0.00480769" stopColor="#FF0000" />
+          <Stop offset="0.918269" stopColor="#FF4343" />
+        </RadialGradient>
+      </Defs>
+      <Rect opacity={0.75} width={24.3299} height={24} rx={12} fill="url(#streakOnG)" />
+      <Circle cx={13} cy={8} r={1} fill="black" fillOpacity={0.82} />
+      <Circle cx={7} cy={8} r={1} fill="black" fillOpacity={0.82} />
+      <Path d="M9.37583 8.41752C9.40075 8.3791 9.78977 8.57811 10.0729 8.57811C10.356 8.57811 10.7453 8.3797 10.7699 8.41752C10.7945 8.45535 10.8348 8.66393 10.7699 8.79951C10.7338 8.87505 10.356 8.99048 10.0729 8.99048C9.78977 8.99048 9.40867 8.86812 9.37583 8.79951C9.31094 8.66393 9.29366 8.54419 9.37583 8.41752Z" fill="black" fillOpacity={0.82} />
+    </Svg>
+  );
+}
 
 /**
  * R5-f19: the wireframe's missed-day streak marker — exact vector from
