@@ -763,7 +763,11 @@
     "workouts": "Workouts",
     "year": "Year",
     "yearly": "Yearly",
-    "yesterday": "Yesterday"
+    "yesterday": "Yesterday",
+    "baselineBuilding": "Building your baseline",
+    "provisional": "provisional",
+    "vsFirstWeek": "vs your first week",
+    "baselineSet": "Baseline set — from now on we measure your progress against you, not an average."
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",

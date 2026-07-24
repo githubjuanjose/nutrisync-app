@@ -50,11 +50,25 @@ export function stabilityScore(logs: { mood: number | null; energy: number | nul
 }
 
 /** R3-34: per-metric stability % from a 1–5 series (sd 0 → 100%, sd ≥1.6 → 0%). */
-export function seriesStability(vals: number[]): number | null {
-  if (vals.length < 7) return null;
+export function seriesStability(vals: number[], min = 7): number | null {
+  if (vals.length < min) return null;
   const m = vals.reduce((a, b) => a + b, 0) / vals.length;
   const sd = Math.sqrt(vals.reduce((a, b) => a + (b - m) * (b - m), 0) / vals.length);
   return Math.round(Math.max(0, Math.min(1, 1 - sd / 1.6)) * 100);
+}
+
+/**
+ * Baseline ladder (post-R6 UX proposal): the user's PERSONAL baseline is the
+ * average CAS over her first 7 scored days — frozen by construction (always
+ * derived from the same first-7 window, no schema change). Used as the CAS
+ * comparison reference until the first full cycle exists ("vs your first
+ * week"), when "vs last cycle" takes over.
+ */
+export function baselineCAS(hist: ScoreRow[]): number | null {
+  const asc = [...hist].sort((a, b) => (a.date < b.date ? -1 : 1));
+  const first7 = asc.slice(0, 7).map((r) => r.cas_total).filter((v) => v != null) as number[];
+  if (first7.length < 7) return null;
+  return first7.reduce((a, b) => a + b, 0) / first7.length;
 }
 
 /** R3-34: % of the last `days` logged days with any PMS/pain symptom recorded. */

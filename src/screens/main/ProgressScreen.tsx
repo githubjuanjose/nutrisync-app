@@ -10,7 +10,7 @@ import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle } from '../../lib/api';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase } from '../../lib/cas';
-import { fetchScoreHistory, splitCycles, avg, fetchMoodEnergy, stabilityScore, seriesStability, fetchPmsRate, ScoreRow } from '../../lib/progress';
+import { fetchScoreHistory, splitCycles, avg, fetchMoodEnergy, stabilityScore, seriesStability, fetchPmsRate, baselineCAS, ScoreRow } from '../../lib/progress';
 
 /**
  * R3 Batch F · Progress (R3-29…37):
@@ -141,8 +141,17 @@ export default function ProgressScreen({ navigation }: any) {
   const delta = cas != null && lastAvg != null ? Math.round(cas - lastAvg) : null;
 
   // R3-34: per-metric stat row (last 14 logged days; honest null under 7)
-  const eStab = seriesStability(me.filter((x) => x.energy != null).slice(-14).map((x) => x.energy!));
-  const mStab = seriesStability(me.filter((x) => x.mood != null).slice(-14).map((x) => x.mood!));
+  const eVals = me.filter((x) => x.energy != null).slice(-14).map((x) => x.energy!);
+  const mVals = me.filter((x) => x.mood != null).slice(-14).map((x) => x.mood!);
+  const eStab = seriesStability(eVals);
+  const mStab = seriesStability(mVals);
+  // Baseline ladder: days 3–6 show PROVISIONAL values (amber) — real data,
+  // low confidence, honestly labelled; before day 3 the stat shows the n/7
+  // baseline progress instead of a dead dash.
+  const eProv = eStab == null ? seriesStability(eVals, 3) : null;
+  const mProv = mStab == null ? seriesStability(mVals, 3) : null;
+  const baseDays = Math.max(eVals.length, mVals.length);
+  const casBase = baselineCAS(hist);
 
   // R6-f11 (blocker): Cycle Stability is its OWN metric per the developer scope —
   // Energy Stability 45% + Mood Stability 45% + PMS Symptom Stability 10%
@@ -251,9 +260,16 @@ export default function ProgressScreen({ navigation }: any) {
           <View style={styles.scoreCard}>
             <View style={{ flex: 1 }}>
               <Text style={styles.casTitle}>{t('mob.cycleAlignmentScore', 'Cycle Alignment Score')}</Text>
-              {delta != null
-                ? <Text style={[styles.delta, delta < 0 && { color: '#D93030' }]}>{delta >= 0 ? '↑' : '↓'}{Math.abs(delta)} {t('mob.vsLastCycle', 'vs last cycle')}</Text>  /* R6-f15 */
-                : <Text style={styles.deltaMuted}>{completed.length ? '' : t('mob.firstCycleNote', 'Comparisons unlock after your first full cycle')}</Text>}
+              {delta != null ? (
+                <Text style={[styles.delta, delta < 0 && { color: '#D93030' }]}>{delta >= 0 ? '↑' : '↓'}{Math.abs(delta)} {t('mob.vsLastCycle', 'vs last cycle')}</Text>  /* R6-f15 */
+              ) : casBase != null && cas != null ? (
+                /* Baseline ladder: until a full cycle exists, compare vs her own first week */
+                <Text style={[styles.delta, cas - casBase < 0 && { color: '#D93030' }]}>
+                  {cas - casBase >= 0 ? '↑' : '↓'}{Math.abs(Math.round(cas - casBase))} {t('mob.vsFirstWeek', 'vs your first week')}
+                </Text>
+              ) : (
+                <Text style={styles.deltaMuted}>{t('mob.baselineBuilding', 'Building your baseline')} · {Math.min(7, hist.length)}/7 {t('mob.days', 'days')}</Text>
+              )}
               <Text style={styles.casHint}>{cas == null ? t('mob.logToBuild', "Log your day to build today's score") : t('mob.updatesLive', 'Updates live as you log')}</Text>
             </View>
             {ring(cas)}
@@ -289,16 +305,38 @@ export default function ProgressScreen({ navigation }: any) {
             </View>
           </View>
 
-          {/* R3-34: Energy Stability / Mood / PMS Symptoms */}
+          {/* R3-34 + baseline ladder: solid green → provisional amber → n/7 progress */}
           <View style={styles.triRow}>
-            {[[t('mob.energyStability', 'Energy Stability'), eStab], [t('mob.mood', 'Mood'), mStab], [t('mob.pmsSymptoms', 'PMS Symptoms'), pms]].map(([l, v]: any, i) => (
+            {[
+              [t('mob.energyStability', 'Energy Stability'), eStab, eProv],
+              [t('mob.mood', 'Mood'), mStab, mProv],
+              [t('mob.pmsSymptoms', 'PMS Symptoms'), pms, null],
+            ].map(([l, v, prov]: any, i) => (
               <View key={i} style={styles.triCol}>
-                {/* R4-f21: populated values render in green */}
-                <Text style={[styles.triVal, v != null && { color: '#2D9E63' }]}>{v == null ? '—' : `${v}%`}</Text>
+                {v != null ? (
+                  <Text style={[styles.triVal, { color: '#2D9E63' }]}>{v}%</Text>
+                ) : prov != null ? (
+                  <>
+                    <Text style={[styles.triVal, { color: '#E8930C' }]}>{prov}%</Text>
+                    <Text style={styles.provTag}>{t('mob.provisional', 'provisional')}</Text>
+                  </>
+                ) : (
+                  <Text style={styles.triProgress}>{Math.min(7, baseDays)}/7</Text>
+                )}
                 <Text style={styles.triLbl}>{l}</Text>
               </View>
             ))}
           </View>
+
+          {/* Baseline ladder: celebration once the first week is in and no full
+              cycle exists yet — "we measure you against YOU" */}
+          {baseDays >= 7 && completed.length === 0 ? (
+            <View style={styles.baselineCard}>
+              <Text style={styles.baselineTxt}>
+                ✨ {t('mob.baselineSet', 'Baseline set — from now on we measure your progress against you, not an average.')}
+              </Text>
+            </View>
+          ) : null}
 
           {/* hormones — R3-35/36/37 */}
           <View style={styles.card2}>
@@ -412,6 +450,11 @@ const styles = StyleSheet.create({
   triCol: { flex: 1, alignItems: 'center' },
   triVal: { fontFamily: font.bold, fontSize: 19, color: colors.ink },
   triLbl: { fontFamily: font.regular, fontSize: 11, color: colors.muted, marginTop: 3, textAlign: 'center' },
+  // baseline ladder
+  provTag: { fontFamily: font.medium, fontSize: 8.5, color: '#E8930C', textTransform: 'uppercase', letterSpacing: 0.5, marginTop: 1 },
+  triProgress: { fontFamily: font.bold, fontSize: 17, color: '#C9B8AC' },
+  baselineCard: { backgroundColor: '#FFF6E8', borderWidth: 1, borderColor: '#F5DFC0', borderRadius: 16, padding: 14, marginTop: 12 },
+  baselineTxt: { fontFamily: font.medium, fontSize: 12.5, color: '#8A6A3B', lineHeight: 18, textAlign: 'center' },
   segTabs: { flexDirection: 'row', gap: 4, marginBottom: 12 },  // R6-f17: no capsule background
   segTab: { flex: 1, height: 32, borderRadius: 999, alignItems: 'center', justifyContent: 'center' },
   segTabOn: {},  // R4-f27: no pill behind the active tab

@@ -1072,6 +1072,10 @@
     "workouts": "Entrenos",
     "year": "Año",
     "yearly": "Anual",
-    "yesterday": "Ayer"
+    "yesterday": "Ayer",
+    "baselineBuilding": "Construyendo tu línea base",
+    "provisional": "provisional",
+    "vsFirstWeek": "vs tu primera semana",
+    "baselineSet": "Línea base establecida — a partir de ahora medimos tu progreso contra ti misma, no contra una media."
   }
 }
