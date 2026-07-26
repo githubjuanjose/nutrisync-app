@@ -138,7 +138,11 @@ export function component2Biomarkers(o: {
 }
 
 export function component3Nutrition(checked: number, total: number) {
-  return total ? Math.round((checked / total) * 30) : 0;
+  // R7-f11: full marks require at least 3 checked items — one tick can no
+  // longer max the component. Denominator = min(total, 3) floor of 3.
+  if (!total) return 0;
+  const target = Math.max(3, Math.min(total, 3));
+  return Math.round(Math.min(1, checked / target) * 30);
 }
 
 const PHASE_RECOMMENDED_INTENSITY: Record<Phase, number> = {

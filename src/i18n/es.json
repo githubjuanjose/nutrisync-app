@@ -1076,6 +1076,8 @@
     "baselineBuilding": "Construyendo tu línea base",
     "provisional": "provisional",
     "vsFirstWeek": "vs tu primera semana",
-    "baselineSet": "Línea base establecida — a partir de ahora medimos tu progreso contra ti misma, no contra una media."
+    "baselineSet": "Línea base establecida — a partir de ahora medimos tu progreso contra ti misma, no contra una media.",
+    "mostRec": "Más recomendado",
+    "editPeriodStart": "Editar inicio de la regla"
   }
 }

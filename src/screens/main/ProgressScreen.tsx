@@ -9,8 +9,9 @@ import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle } from '../../lib/api';
+import { HormoneChartForPhase, HormoneVolatility } from '../../ui/HormoneCharts';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase } from '../../lib/cas';
-import { fetchScoreHistory, splitCycles, avg, fetchMoodEnergy, stabilityScore, seriesStability, fetchPmsRate, baselineCAS, ScoreRow } from '../../lib/progress';
+import { fetchScoreHistory, splitCycles, avg, fetchMoodEnergy, stabilityScore, seriesStability, fetchPmsRate, baselineCAS, fetchSymptomDays, cycleStabilityV2, ScoreRow } from '../../lib/progress';
 
 /**
  * R3 Batch F · Progress (R3-29…37):
@@ -92,8 +93,8 @@ function StabilityRing({ v, label }: { v: number | null; label: string }) {
       </Svg>
       <View style={{ position: 'absolute', alignItems: 'center' }}>
         {/* R6-f12: the score number is always visible on the gauge */}
-        <Text style={{ fontFamily: font.bold, fontSize: 24, color: colors.ink }}>{v == null ? '—' : Math.round(v * 100)}</Text>
-        <Text style={{ fontFamily: font.medium, fontSize: 10.5, color: colors.muted }}>{label}</Text>
+        <Text style={{ fontFamily: font.bold, fontSize: 24, color: '#FF300C' }}>{v == null ? '—' : Math.round(v * 100)}</Text>
+        <Text style={{ fontFamily: font.medium, fontSize: 10.5, color: colors.muted, maxWidth: 74, textAlign: 'center' }} numberOfLines={1} adjustsFontSizeToFit>{label}</Text>
       </View>
     </View>
   );
@@ -110,6 +111,8 @@ export default function ProgressScreen({ navigation }: any) {
   const [cyc, setCyc] = useState<{ day: number; phase: string } | null>(null);
   const [hTab, setHTab] = useState<'w' | 'm' | 'y'>('w');
   const [compInfo, setCompInfo] = useState<number | null>(null);   // R4-F18
+  const [symp, setSymp] = useState<Set<string>>(new Set());
+  const [cycleRow, setCycleRow] = useState<any>(null);
 
   useFocusEffect(useCallback(() => {
     (async () => {
@@ -118,7 +121,9 @@ export default function ProgressScreen({ navigation }: any) {
         getProfile(userId), fetchScoreHistory(userId), fetchMoodEnergy(userId),
         fetchPmsRate(userId).catch(() => null), getCurrentCycle(userId).catch(() => null),
       ]);
-      setName(p?.first_name ?? ''); setHist(h); setMe(m); setPms(pr);
+      setName(p?.first_name ?? ''); setHist(h); setMe(m); setPms(pr); setCycleRow(c);
+      const since = new Date(); since.setDate(since.getDate() - 180);
+      fetchSymptomDays(userId, since.toISOString().slice(0, 10)).then(setSymp).catch(() => {});
       if (c?.last_period_start_date) {
         const len = c.cycle_length ?? 28, dur = c.period_duration ?? 5;
         const d = cycleDayActual(c.last_period_start_date, new Date());
@@ -138,6 +143,8 @@ export default function ProgressScreen({ navigation }: any) {
   const lastAvg = completed.length ? avg(completed[completed.length - 1].map((r) => r.cas_total)) : null;
   const bestAvg = completed.length ? Math.max(...completed.map((c) => avg(c.map((r) => r.cas_total)) ?? 0)) : null;
   const cas = todayRow?.cas_total ?? null;
+  const curCycleRows = cycles.length ? cycles[cycles.length - 1] : [];
+  const casAvgCur = curCycleRows.length ? avg(curCycleRows.map((r) => r.cas_total)) : null;   // R7-f15
   const delta = cas != null && lastAvg != null ? Math.round(cas - lastAvg) : null;
 
   // R3-34: per-metric stat row (last 14 logged days; honest null under 7)
@@ -153,14 +160,12 @@ export default function ProgressScreen({ navigation }: any) {
   const baseDays = Math.max(eVals.length, mVals.length);
   const casBase = baselineCAS(hist);
 
-  // R6-f11 (blocker): Cycle Stability is its OWN metric per the developer scope —
-  // Energy Stability 45% + Mood Stability 45% + PMS Symptom Stability 10%
-  // (PMS stability = 100 − PMS-symptom rate). Weights renormalise over the
-  // components that have data; null until none do.
-  const stabParts: [number | null, number][] = [[eStab, 0.45], [mStab, 0.45], [pms != null ? Math.max(0, 100 - pms) : null, 0.10]];
-  let stabAcc = 0, stabW = 0;
-  for (const [val, w] of stabParts) { if (val != null) { stabAcc += val * w; stabW += w; } }
-  const stabilityPct = stabW > 0 ? Math.round(stabAcc / stabW) : null;
+  // R7-f13: Cycle Stability v2 — founders' formula vs the FIRST fully-logged
+  // cycle as baseline; locked (null → "Keep syncing") until it exists. Never 100 by default.
+  const baseCycleRows = completed.length ? completed[0] : null;
+  const baseRange = baseCycleRows ? { from: baseCycleRows[0].date, to: baseCycleRows[baseCycleRows.length - 1].date } : null;
+  const currentFrom = cycleRow?.last_period_start_date ? String(cycleRow.last_period_start_date).slice(0, 10) : null;
+  const stabilityPct = cycleStabilityV2(me, symp, baseRange, currentFrom);
 
   // R4-F18: each component carries the founders' explainer copy (what it
   // measures + the concrete action that raises it) for the tap-to-expand modal
@@ -173,7 +178,7 @@ export default function ProgressScreen({ navigation }: any) {
       body: t('mob.c3Body', "Based entirely on your Nutri Basics checklist. Keep checking off your daily items to hold it at full marks.") },
     /* R5-F24: renamed Recovery → Movement (founders) */
     { v: todayRow.c4, max: 20, l: t('mob.movementLbl', 'Movement'), title: t('mob.movementLbl', 'Movement'),
-      body: t('mob.c4Body', "Movement is pass/fail: logging just one exercise in a day earns full credit. Log at least one Movement Log entry daily to close the gap. No need for more than one.") },
+      body: t('mob.c4Body', "Movement is primarily pass/fail: logging just one exercise a day earns credit, but logging a movement that is more aligned with your phase will earn you full credit. There is no need for more than one movement log per day as that will not help you earn more in your overall cycle alignment score.") },
     { v: todayRow.c5, max: 10, l: t('mob.logging', 'Logging'), title: t('mob.logging', 'Logging'),
       body: t('mob.c5Body', "Tracks how consistently you're logging overall, separate from your checklists. Add more Meal Log and Movement Log notes. Consistency matters more than volume here.") },
   ] : null;
@@ -296,9 +301,11 @@ export default function ProgressScreen({ navigation }: any) {
               </View>
             </View>
             <View style={styles.statColBox}>
-              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.current', 'Current')}</Text><Text style={styles.statVal}>{cas == null ? '—' : Math.round(cas)}</Text></View>
-              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.lastCycle', 'Last cycle')}</Text><Text style={styles.statVal}>{lastAvg == null ? '—' : Math.round(lastAvg)}</Text></View>
-              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.bestScore', 'Best score')}</Text><Text style={styles.statVal}>{bestAvg == null ? '—' : Math.round(bestAvg)}</Text></View>
+              {/* R7-f15: BOTH scores — CAS average + CSS side by side */}
+              <View style={styles.statLine}><Text style={styles.statLbl}></Text><Text style={styles.statHdr}>CAS · CSS</Text></View>
+              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.current', 'Current')}</Text><Text style={styles.statVal}>{casAvgCur == null ? '—' : Math.round(casAvgCur)} · {stabilityPct == null ? '—' : stabilityPct}</Text></View>
+              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.lastCycle', 'Last cycle')}</Text><Text style={styles.statVal}>{lastAvg == null ? '—' : Math.round(lastAvg)} · —</Text></View>
+              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.bestScore', 'Best score')}</Text><Text style={styles.statVal}>{bestAvg == null ? '—' : Math.round(bestAvg)} · —</Text></View>
               <Pressable style={styles.histBtn} onPress={() => navigation.navigate('CASHistory')}>
                 <Text style={styles.histBtnTxt}>{t('mob.viewHistory', 'View History')}</Text>
               </Pressable>
@@ -349,39 +356,22 @@ export default function ProgressScreen({ navigation }: any) {
             </View>
             {hTab === 'w' ? (
               <>
-                {/* R4-F19: legend ABOVE the chart */}
-                <View style={[styles.legendRow, { marginTop: 0, marginBottom: 8 }]}>
-                  {HORM.map(([l, , col], i) => (
-                    <View key={i} style={styles.li}><View style={[styles.ld, { backgroundColor: col }]} /><Text style={styles.lt}>{l}</Text></View>
-                  ))}
-                </View>
-                <Svg width="100%" height={110} viewBox="0 0 300 110">
-                  {/* R4-F19: gradient hills — each fill fades to transparent underneath */}
-                  <Defs>
-                    {HORM.map(([, , col], i) => (
-                      <SvgLinearGradient key={i} id={`horm${i}`} x1="0" y1="0" x2="0" y2="1">
-                        <Stop offset="0%" stopColor={col} stopOpacity={0.85} />
-                        <Stop offset="100%" stopColor={col} stopOpacity={0.12} />
-                      </SvgLinearGradient>
-                    ))}
-                  </Defs>
-                  {HORM.map(([, fn, col], i) => <React.Fragment key={i}>{mountain(fn, col, i)}</React.Fragment>)}
-                </Svg>
+                {/* R7-f16: Design's per-phase hormone chart (weekly) */}
+                <HormoneChartForPhase phase={cyc?.phase ?? 'follicular'} width={300} />
                 <View style={styles.dowLblRow}>
                   {DOWS.map((d, i) => (
                     <Text key={i} style={[styles.dowLbl, i === dowIdx && styles.dowLblOn]}>{d}</Text>
                   ))}
                 </View>
               </>
+            ) : hTab === 'm' ? (
+              /* R7-f16: monthly always shows the volatility chart */
+              <HormoneVolatility width={300} />
             ) : (
               <View style={styles.lockBox}>
                 <Text style={styles.lockIcon}>◔</Text>
-                <Text style={styles.lockTxt}>
-                  {hTab === 'm'
-                    ? t('mob.unlockMonthly', 'Keep syncing to see your monthly trends')
-                    : t('mob.unlockYearly', 'Keep syncing to unlock yearly insights')}
-                </Text>
-                <Text style={styles.lockSub}>{completed.length}/{hTab === 'm' ? 2 : 3} {t('mob.cyclesCompleted', 'cycles completed')}</Text>
+                <Text style={styles.lockTxt}>{t('mob.unlockYearly', 'Keep syncing to unlock yearly insights')}</Text>
+                <Text style={styles.lockSub}>{completed.length}/3 {t('mob.cyclesCompleted', 'cycles completed')}</Text>
               </View>
             )}
           </View>
@@ -434,7 +424,7 @@ const styles = StyleSheet.create({
   compRow: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#fff', borderRadius: 20, paddingVertical: 14, paddingHorizontal: 8, marginTop: 12, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 2 },
   cardRow: { flexDirection: 'row', backgroundColor: '#fff', borderRadius: 24, padding: 18, marginTop: 12, alignItems: 'center', justifyContent: 'space-between', shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   card2: { backgroundColor: '#fff', borderRadius: 24, padding: 18, marginTop: 12, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
-  cssTitle: { fontFamily: font.semibold, fontSize: 13.5, color: colors.ink, marginBottom: 8 },
+  cssTitle: { fontFamily: font.semibold, fontSize: 13.5, color: '#F03D11', marginBottom: 8 },  // R7-f14
   cssNote: { fontFamily: font.regular, fontSize: 11, color: colors.faint, marginTop: 4 },
   bandRow: { flexDirection: 'row', gap: 8, marginTop: 8 },
   bandItem: { flexDirection: 'row', alignItems: 'center', gap: 3 },
@@ -444,6 +434,7 @@ const styles = StyleSheet.create({
   statLine: { flexDirection: 'row', justifyContent: 'space-between' },
   statLbl: { fontFamily: font.regular, fontSize: 12.5, color: colors.muted },
   statVal: { fontFamily: font.bold, fontSize: 13.5, color: '#E4572E' },  // R4-f20
+  statHdr: { fontFamily: font.semibold, fontSize: 10, color: colors.faint, letterSpacing: 0.4 },
   histBtn: { marginTop: 8, backgroundColor: colors.coral, borderRadius: 999, height: 38, alignItems: 'center', justifyContent: 'center' },
   histBtnTxt: { fontFamily: font.semibold, fontSize: 13, color: '#fff' },
   triRow: { flexDirection: 'row', backgroundColor: '#fff', borderRadius: 20, paddingVertical: 16, marginTop: 12, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 2 },

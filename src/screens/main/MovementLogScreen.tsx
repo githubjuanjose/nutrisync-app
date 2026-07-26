@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, Image, TextInput } from 'react-native';
-import Svg, { Path, Circle } from 'react-native-svg';
+import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -122,7 +122,11 @@ export default function MovementLogScreen() {
           <View style={{ width: 86 }} />
           <Text style={styles.headerTitle}>{t('mob.today', 'Today')}</Text>
           <Pressable onPress={() => nav.navigate('MovementHistory')} hitSlop={8} style={styles.histLink}>
-            <Text style={styles.histLinkTxt}>{t('mob.history', 'History')} ›</Text>
+            {/* R7-f8/f9: Design btn-history glyph */}
+            <Svg width={26} height={26} viewBox="0 0 28 28">
+              <Rect width={28} height={28} rx={14} fill="#FF4343" />
+              <Path d="M14 8.99962V14L17.3336 15.6668M22.334 14C22.334 18.6028 18.6027 22.334 14 22.334C9.39726 22.334 5.666 18.6028 5.666 14C5.666 9.39727 9.39726 5.66602 14 5.66602C18.6027 5.66602 22.334 9.39727 22.334 14Z" stroke="white" strokeWidth={2} strokeLinecap="round" fill="none" />
+            </Svg>
           </Pressable>
         </View>
         <View style={styles.tabs}>
@@ -157,7 +161,7 @@ export default function MovementLogScreen() {
           <View style={styles.statRow}>
             <View style={styles.stat}>
               <View style={styles.statHead}><DumbbellIcon /><Text style={styles.statTag}>SESSION</Text></View>
-              <Text style={styles.statVal}>{workoutsDone > 0 ? '1 / 1' : '0 / 1'}</Text>
+              <Text style={styles.statVal}>{`${workoutsDone} / 1`}</Text>  {/* R7-f10: real count — extra sessions show (2/1) but never double the score */}
               <Text style={styles.statLbl}>{t('mob.workouts', 'Workouts')}</Text>
             </View>
             <View style={styles.stat}>
@@ -175,16 +179,18 @@ export default function MovementLogScreen() {
           <Text style={styles.section}>{t('mob.movementBasics', 'Movement basics')}</Text>
           <Text style={styles.sectionSub}>{t('mob.checkOffMove', 'Check off your movement for today')}</Text>
           <Text style={styles.sectionNote}>{t('mob.boostsScore', 'Each one boosts your cycle sync score')}</Text>
-          {cats.map(([c, items]) => (
+          {/* R7-f18: rank order preserved from the server; top-3 overall tagged */}
+          {cats.map(([c, items], ci) => (
             <View key={c} style={styles.group}>
               <Text style={styles.groupTitle}>{c}</Text>
-              {items.map((i) => {
+              {items.map((i, idx) => {
                 const on = checked.has(i.name);
+                const topRec = ci === 0 && idx < 3;
                 return (
                   <Pressable key={i.id} onPress={() => toggle(i.name)} style={styles.row}>
                     <Image source={on ? require('../../../assets/nutrilog/checked.png') : require('../../../assets/nutrilog/unchecked.png')} style={styles.box} />
-                    <Text style={[styles.rowTxt, on && styles.rowTxtOn]}>{i.name}</Text>
-                    {i.intensity ? <Text style={styles.intensity}>{i.intensity}</Text> : null}
+                    <Text style={[styles.rowTxt, on && styles.rowTxtOn, { flex: 1 }]}>{i.name}</Text>
+                    {topRec ? <Text style={styles.mostRec}>{t('mob.mostRec', 'Most Recommended')}</Text> : (i.intensity ? <Text style={styles.intensity}>{i.intensity}</Text> : null)}
                   </Pressable>
                 );
               })}
@@ -235,6 +241,7 @@ const styles = StyleSheet.create({
   histLink: { width: 86, alignItems: 'flex-end' },
   histLinkTxt: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
   statHead: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  mostRec: { fontFamily: font.semibold, fontSize: 9, color: '#2D9E63', backgroundColor: '#E8F7F0', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 8, overflow: 'hidden' },
   sectionSub: { fontFamily: font.medium, fontSize: 13.5, color: colors.ink, marginTop: 2 },
   sectionNote: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2, marginBottom: 8 },
   tabs: { flexDirection: 'row', marginHorizontal: 18, marginTop: 12, backgroundColor: '#F6EEE7', borderRadius: radius.pill, padding: 4, gap: 4 },

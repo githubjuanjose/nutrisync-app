@@ -767,7 +767,9 @@
     "baselineBuilding": "Building your baseline",
     "provisional": "provisional",
     "vsFirstWeek": "vs your first week",
-    "baselineSet": "Baseline set — from now on we measure your progress against you, not an average."
+    "baselineSet": "Baseline set — from now on we measure your progress against you, not an average.",
+    "mostRec": "Most Recommended",
+    "editPeriodStart": "Edit period start date"
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",

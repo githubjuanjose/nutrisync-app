@@ -71,6 +71,69 @@ export function baselineCAS(hist: ScoreRow[]): number | null {
   return first7.reduce((a, b) => a + b, 0) / first7.length;
 }
 
+/**
+ * R7-f13: dates (ISO) that carry any logged PMS/pain symptom — feeds the
+ * severe-day component of Cycle Stability v2.
+ */
+export async function fetchSymptomDays(userId: string, sinceISO: string): Promise<Set<string>> {
+  const { data } = await supabase.from('daily_logs').select('date,pain_symptoms')
+    .eq('user_id', userId).gte('date', sinceISO);
+  const out = new Set<string>();
+  for (const r of ((data as any[]) ?? [])) {
+    if (Array.isArray(r.pain_symptoms) && r.pain_symptoms.length > 0) out.add(r.date);
+  }
+  return out;
+}
+
+const sd = (vals: number[]) => {
+  const m = vals.reduce((a, b) => a + b, 0) / vals.length;
+  return Math.sqrt(vals.reduce((a, b) => a + (b - m) * (b - m), 0) / vals.length);
+};
+
+/**
+ * R7-f13 · Cycle Stability Score v2 (founders' formula):
+ *   CSS = 50 + 50·(0.55·EnergyImpact + 0.45·MoodImpact)
+ *   Impact = 0.7·(volatility improvement) + 0.3·(severe-day improvement)
+ * vs the user's BASELINE = her first fully-logged cycle; the current window is
+ * weighted toward the last 7 logged days (late-luteal emphasis: counted twice).
+ * Severe days come from logged PMS symptoms (not a mood proxy). Returns null —
+ * locked "keep syncing" — until the baseline cycle has ≥7 logged days and the
+ * current cycle has ≥5. Never defaults to 100.
+ */
+export function cycleStabilityV2(
+  me: { date: string; mood: number | null; energy: number | null }[],
+  sympDays: Set<string>,
+  baseRange: { from: string; to: string } | null,
+  currentFromISO: string | null,
+): number | null {
+  if (!baseRange || !currentFromISO) return null;
+  const inR = (d: string, from: string, to: string) => d >= from && d <= to;
+  const basRows = me.filter((r) => inR(r.date, baseRange.from, baseRange.to));
+  const curRows = me.filter((r) => r.date >= currentFromISO);
+  const series = (rows: typeof me, k: 'mood' | 'energy') => rows.filter((r) => r[k] != null).map((r) => r[k]!) ;
+  const bE = series(basRows, 'energy'), bM = series(basRows, 'mood');
+  const cE0 = series(curRows, 'energy'), cM0 = series(curRows, 'mood');
+  if (Math.min(bE.length, bM.length) < 7 || Math.min(cE0.length, cM0.length) < 5) return null;
+  // late-luteal emphasis: the last 7 logged days count double
+  const emph = (v: number[]) => [...v, ...v.slice(-7)];
+  const cE = emph(cE0), cM = emph(cM0);
+  const volImpr = (b: number[], c: number[]) => {
+    const bs = sd(b), cs = sd(c);
+    if (bs < 0.05) return cs < 0.05 ? 0 : -1;
+    return Math.max(-1, Math.min(1, (bs - cs) / bs));
+  };
+  const sevRate = (rows: typeof me) => {
+    const logged = rows.filter((r) => r.mood != null || r.energy != null);
+    if (!logged.length) return 0;
+    return logged.filter((r) => sympDays.has(r.date)).length / logged.length;
+  };
+  const bSev = sevRate(basRows), cSev = sevRate(curRows);
+  const sevImpr = bSev < 0.02 ? (cSev < 0.02 ? 0 : -1) : Math.max(-1, Math.min(1, (bSev - cSev) / bSev));
+  const impact = (b: number[], c: number[]) => 0.7 * volImpr(b, c) + 0.3 * sevImpr;
+  const css = 50 + 50 * (0.55 * impact(bE, cE) + 0.45 * impact(bM, cM));
+  return Math.round(Math.max(0, Math.min(100, css)));
+}
+
 /** R3-34: % of the last `days` logged days with any PMS/pain symptom recorded. */
 export async function fetchPmsRate(userId: string, days = 7): Promise<number | null> {
   const since = new Date(); since.setDate(since.getDate() - days);

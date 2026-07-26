@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Svg, { Defs, RadialGradient, Stop, Rect, Circle as SvgCircle } from 'react-native-svg';
+import Svg, { Defs, RadialGradient, Stop, Rect, Circle as SvgCircle, Path } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
-import { getCurrentCycle, getProfile, CycleRow } from '../../lib/api';
-import { cycleDay, phaseForDay, displayPhase } from '../../lib/cas';
+import { getCurrentCycle, getProfile, startNewCycle, CycleRow } from '../../lib/api';
+import { recomputeCAS } from '../../lib/daily';
+import { cycleDay, cycleDayActual, phaseForDay, displayPhase } from '../../lib/cas';
 import { fetchSexDayTypes, fetchScoreHistory, splitCycles, ScoreRow } from '../../lib/progress';
 import { NutriAvatar } from '../../ui/NutriAvatar';
 
@@ -49,6 +50,11 @@ export default function CalendarScreen({ navigation }: any) {
   const [history, setHistory] = useState<ScoreRow[]>([]);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
+  // R7-f4: edit period start date (manual cycle start — never automatic)
+  const [epOpen, setEpOpen] = useState(false);
+  const [epMonth, setEpMonth] = useState(() => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 1); });
+  const [epSel, setEpSel] = useState<Date | null>(null);
+  const [epSaving, setEpSaving] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -66,7 +72,12 @@ export default function CalendarScreen({ navigation }: any) {
   const len = cycle?.cycle_length ?? 28;
   const dur = cycle?.period_duration ?? 5;
   const lps = cycle?.last_period_start_date ?? null;
-  const dayOf = (d: Date) => (lps ? cycleDay(lps, d, len) : null);
+  // R7-f5: past/today use the ACTUAL day (no auto-restart — mirrors Home);
+  // future dates keep the modulo FORECAST (predicted next cycles).
+  const dayOf = (d: Date) => {
+    if (!lps) return null;
+    return d <= today ? cycleDayActual(lps, d) : cycleDay(lps, d, len);
+  };
   const phaseOf = (d: Date): P4 | null => { const n = dayOf(d); return n ? displayPhase(phaseForDay(n, len, dur)) : null; };
   const todayDay = dayOf(today) ?? 1;
   const todayPhase = phaseOf(today) ?? 'follicular';
@@ -219,7 +230,12 @@ export default function CalendarScreen({ navigation }: any) {
           <Pressable hitSlop={10} onPress={() => navigation.navigate('Cycle')}><Text style={styles.back}>‹</Text></Pressable>
           <Text style={styles.pageTitle}>{view === 'month' ? t('mob.calendar', 'Calendar') : t('mob.cycleHistory', 'Cycle History')}</Text>
           {view === 'month' ? (
-            <Pressable hitSlop={10} onPress={() => navigation.navigate('CycleHealth')}><Text style={styles.pencil}>✎</Text></Pressable>
+            <Pressable hitSlop={10} onPress={() => setEpOpen(true)}>
+              {/* R7-f3: edit-3 vector pencil · R7-f4: opens Edit period start date */}
+              <Svg width={20} height={20} viewBox="0 0 24 24">
+                <Path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" stroke={colors.ink} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </Svg>
+            </Pressable>
           ) : (
             <NutriAvatar variant={nutri} size={34} />
           )}
@@ -373,6 +389,56 @@ export default function CalendarScreen({ navigation }: any) {
             </>
           )}
         </ScrollView>
+
+        {/* R7-f4: Edit period start date — mini calendar, manual restart only */}
+        {epOpen && (() => {
+          const t0 = new Date(); t0.setHours(0, 0, 0, 0);
+          const y = epMonth.getFullYear(), m = epMonth.getMonth();
+          const off = new Date(y, m, 1).getDay();
+          const nD = new Date(y, m + 1, 0).getDate();
+          const cells: (Date | null)[] = [...Array.from({ length: off }, () => null), ...Array.from({ length: nD }, (_, i) => new Date(y, m, i + 1))];
+          const save = async () => {
+            if (!userId || !epSel || epSaving) return;
+            setEpSaving(true);
+            try {
+              const isoD = `${epSel.getFullYear()}-${String(epSel.getMonth() + 1).padStart(2, '0')}-${String(epSel.getDate()).padStart(2, '0')}`;
+              await startNewCycle(userId, isoD);
+              await recomputeCAS(userId);
+              const c2 = await getCurrentCycle(userId); setCycle(c2);
+              setEpOpen(false); setEpSel(null);
+            } finally { setEpSaving(false); }
+          };
+          return (
+            <View style={{ ...StyleSheet.absoluteFillObject, zIndex: 40 }}>
+              <Pressable style={StyleSheet.absoluteFill} onPress={() => setEpOpen(false)}><View style={{ flex: 1, backgroundColor: 'rgba(28,23,21,.45)' }} /></Pressable>
+              <View style={styles.epSheet}>
+                <Text style={styles.epTitle}>{t('mob.editPeriodStart', 'Edit period start date')}</Text>
+                <View style={styles.epMonthRow}>
+                  <Pressable onPress={() => setEpMonth(new Date(y, m - 1, 1))} style={styles.epArrow}><Text style={styles.epArrowTxt}>‹</Text></Pressable>
+                  <Text style={styles.epMonthTxt}>{epMonth.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}</Text>
+                  <Pressable onPress={() => setEpMonth(new Date(y, m + 1, 1))} style={styles.epArrow}><Text style={styles.epArrowTxt}>›</Text></Pressable>
+                </View>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 8 }}>
+                  {['S','M','T','W','T','F','S'].map((d, i) => <Text key={i} style={styles.epDow}>{d}</Text>)}
+                  {cells.map((d, i) => {
+                    if (!d) return <View key={i} style={styles.epCell} />;
+                    const fut = d.getTime() > t0.getTime();
+                    const sel = epSel && d.toDateString() === epSel.toDateString();
+                    return (
+                      <Pressable key={i} disabled={fut} onPress={() => setEpSel(d)} style={[styles.epCell, sel && { backgroundColor: colors.coral }]}>
+                        <Text style={[styles.epCellTxt, fut && { color: '#D8CCC2' }, sel && { color: '#fff', fontFamily: font.bold }]}>{d.getDate()}</Text>
+                      </Pressable>
+                    );
+                  })}
+                </View>
+                <Pressable onPress={save} disabled={!epSel || epSaving} style={[styles.epSave, (!epSel || epSaving) && { opacity: 0.5 }]}>
+                  <Text style={styles.epSaveTxt}>{epSaving ? t('ui.saving', 'Saving…') : t('mob.startCycleOn', 'Start new cycle on') + (epSel ? ' ' + epSel.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '')}</Text>
+                </Pressable>
+                <Text style={styles.epNote}>{t('mob.noAutoRestart', "Cycles only restart when you log a period — never automatically, even past day 28.")}</Text>
+              </View>
+            </View>
+          );
+        })()}
       </SafeAreaView>
     </View>
   );
@@ -384,9 +450,21 @@ const styles = StyleSheet.create({
   back: { fontSize: 30, color: colors.ink, width: 26, marginTop: -3 },
   pageTitle: { fontFamily: font.semibold, fontSize: 17, color: colors.ink },
   pencil: { fontSize: 19, color: colors.ink, width: 26, textAlign: 'right' },
-  hero: { borderRadius: 30, padding: 22 },
+  epSheet: { position: 'absolute', left: 16, right: 16, top: '14%', backgroundColor: '#fff', borderRadius: 20, padding: 18, ...shadow.card },
+  epTitle: { fontFamily: font.semibold, fontSize: 17, color: colors.ink, textAlign: 'center' },
+  epMonthRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 12 },
+  epArrow: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FBEEE7' },
+  epArrowTxt: { fontSize: 20, color: colors.coral, marginTop: -2 },
+  epMonthTxt: { fontFamily: font.semibold, fontSize: 15, color: colors.ink },
+  epDow: { width: `${100 / 7}%`, textAlign: 'center', fontFamily: font.semibold, fontSize: 11, color: colors.muted, marginBottom: 4 },
+  epCell: { width: `${100 / 7}%`, height: 36, alignItems: 'center', justifyContent: 'center', borderRadius: 18 },
+  epCellTxt: { fontFamily: font.regular, fontSize: 13.5, color: colors.ink },
+  epSave: { backgroundColor: colors.coral, height: 48, borderRadius: 12, alignItems: 'center', justifyContent: 'center', marginTop: 12 },
+  epSaveTxt: { fontFamily: font.semibold, fontSize: 14, color: '#fff' },
+  epNote: { fontFamily: font.regular, fontSize: 11, color: colors.muted, textAlign: 'center', marginTop: 8, lineHeight: 15 },
+  hero: { borderRadius: 30, paddingVertical: 26, paddingHorizontal: 24 },  // R7-f2: room right+bottom, nothing clipped
   heroSmall: { fontFamily: font.medium, fontSize: 12.5, color: 'rgba(255,255,255,0.85)' },
-  heroTitle: { fontFamily: font.semibold, fontSize: 30, color: '#fff', marginTop: 4 },
+  heroTitle: { fontFamily: font.semibold, fontSize: 27, color: '#fff', marginTop: 4 },  // R7-f2: fits narrow screens
   phasePill: { backgroundColor: 'rgba(255,255,255,0.22)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.55)', borderRadius: 999, paddingHorizontal: 13, paddingVertical: 6 },
   phasePillTxt: { fontFamily: font.medium, fontSize: 12, color: '#fff' },
   segBar: { flexDirection: 'row', height: 22, alignItems: 'center', marginTop: 16, gap: 2 },

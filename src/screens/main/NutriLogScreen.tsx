@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, Image } from 'react-native';
-import Svg, { Path, Circle } from 'react-native-svg';
+import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -124,7 +124,11 @@ export default function NutriLogScreen() {
           <View style={{ width: 86 }} />
           <Text style={styles.headerTitle}>{t('mob.today', 'Today')}</Text>
           <Pressable onPress={() => nav.navigate('MealHistory')} hitSlop={8} style={styles.histLink}>
-            <Text style={styles.histLinkTxt}>{t('mob.history', 'History')} ›</Text>
+            {/* R7-f8/f9: Design btn-history glyph */}
+            <Svg width={26} height={26} viewBox="0 0 28 28">
+              <Rect width={28} height={28} rx={14} fill="#FF4343" />
+              <Path d="M14 8.99962V14L17.3336 15.6668M22.334 14C22.334 18.6028 18.6027 22.334 14 22.334C9.39726 22.334 5.666 18.6028 5.666 14C5.666 9.39727 9.39726 5.66602 14 5.66602C18.6027 5.66602 22.334 9.39727 22.334 14Z" stroke="white" strokeWidth={2} strokeLinecap="round" fill="none" />
+            </Svg>
           </Pressable>
         </View>
         <View style={styles.tabs}>
@@ -206,12 +210,14 @@ export default function NutriLogScreen() {
           {cats.map(([c, items]) => (
             <View key={c} style={styles.group}>
               <Text style={styles.groupTitle}>{c}</Text>
-              {items.map((i) => {
+              {/* R7-f6/f18: server rank order preserved; top-3 tagged */}
+              {items.map((i, idx) => {
                 const on = checked.has(i.name);
                 return (
                   <Pressable key={i.id} onPress={() => toggle(i.name)} style={styles.row}>
                     <Image source={on ? require('../../../assets/nutrilog/checked.png') : require('../../../assets/nutrilog/unchecked.png')} style={styles.box} />
-                    <Text style={[styles.rowTxt, on && styles.rowTxtOn]}>{i.name}</Text>
+                    <Text style={[styles.rowTxt, on && styles.rowTxtOn, { flex: 1 }]}>{i.name}</Text>
+                    {idx < 3 ? <Text style={styles.mostRec}>{t('mob.mostRec', 'Most Recommended')}</Text> : null}
                   </Pressable>
                 );
               })}
@@ -234,6 +240,7 @@ const styles = StyleSheet.create({
   histLink: { width: 86, alignItems: 'flex-end' },
   histLinkTxt: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
   statHead: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  mostRec: { fontFamily: font.semibold, fontSize: 9, color: '#2D9E63', backgroundColor: '#E8F7F0', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 8, overflow: 'hidden' },
   tabs: { flexDirection: 'row', marginHorizontal: 18, marginTop: 12, backgroundColor: '#F6EEE7', borderRadius: radius.pill, padding: 4, gap: 4 },
   tab: { flex: 1, height: 38, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
   tabOn: { backgroundColor: colors.white, ...shadow.card },
