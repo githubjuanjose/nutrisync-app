@@ -161,7 +161,8 @@ export default function MovementLogScreen() {
           <View style={styles.statRow}>
             <View style={styles.stat}>
               <View style={styles.statHead}><DumbbellIcon /><Text style={styles.statTag}>SESSION</Text></View>
-              <Text style={styles.statVal}>{`${workoutsDone} / 1`}</Text>  {/* R7-f10: real count — extra sessions show (2/1) but never double the score */}
+              {/* R7-f10: real count — extra sessions show (2/1) but never double the score */}
+              <Text style={styles.statVal}>{`${workoutsDone} / 1`}</Text>
               <Text style={styles.statLbl}>{t('mob.workouts', 'Workouts')}</Text>
             </View>
             <View style={styles.stat}>
