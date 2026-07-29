@@ -122,5 +122,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+/** R8: BCP-47 tag for date/weekday formatting in the APP language. */
+export function localeTag(l: Lang): string {
+  const m: Record<string, string> = { en: 'en-GB', es: 'es-ES', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', nl: 'nl-NL', el: 'el-GR', ca: 'ca-ES', val: 'ca-ES-valencia', eu: 'eu-ES', gl: 'gl-ES', oc: 'ca-ES', zh: 'zh-CN', ja: 'ja-JP' };
+  return m[l] ?? 'en-GB';
+}
+
 export const useI18n = () => useContext(I18nContext);
 export const useT = () => useContext(I18nContext).t;

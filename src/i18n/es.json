@@ -1078,6 +1078,10 @@
     "vsFirstWeek": "vs tu primera semana",
     "baselineSet": "Línea base establecida — a partir de ahora medimos tu progreso contra ti misma, no contra una media.",
     "mostRec": "Más recomendado",
-    "editPeriodStart": "Editar inicio de la regla"
+    "editPeriodStart": "Editar inicio de la regla",
+    "cycleSynced": "ciclo sincronizado ✓",
+    "addPeriodSync": "añade tu regla para sincronizar",
+    "dayWord": "Día",
+    "backToday": "Volver a hoy"
   }
 }

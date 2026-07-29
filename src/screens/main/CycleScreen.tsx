@@ -10,13 +10,13 @@ import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle, UserRow, CycleRow } from '../../lib/api';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase, cycleProgress } from '../../lib/cas';
 import { getTodayLog, getTodayScore, DailyLog } from '../../lib/daily';
-import { useT } from '../../i18n';
+import { useT, useI18n, localeTag } from '../../i18n';
 
 const WINGS = require('../../../assets/nutri-wings.png');
-const DAYNAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 
 /** Mon–Sun strip around today, with real dates. */
-function weekAroundToday() {
+function weekAroundToday(tag: string) {
   const today = new Date();
   const dow = (today.getDay() + 6) % 7; // 0 = Monday
   const monday = new Date(today);
@@ -24,13 +24,16 @@ function weekAroundToday() {
   return Array.from({ length: 7 }, (_, i) => {
     const d = new Date(monday);
     d.setDate(monday.getDate() + i);
-    return { day: DAYNAMES[d.getDay()], n: d.getDate(), today: d.toDateString() === today.toDateString() };
+    // R8-f10: weekday names in the APP language
+    const nm = d.toLocaleDateString(tag, { weekday: 'short' }).replace('.', '');
+    return { day: nm.charAt(0).toUpperCase() + nm.slice(1), n: d.getDate(), today: d.toDateString() === today.toDateString() };
   });
 }
 
 export default function CycleScreen({ navigation }: any) {
   const { userId } = useSession();
   const t = useT();
+  const { lang } = useI18n();
   const [profile, setProfile] = useState<UserRow | null>(null);
   const [cycle, setCycle] = useState<CycleRow | null>(null);
   const [score, setScore] = useState<number | null>(null);
@@ -63,7 +66,7 @@ export default function CycleScreen({ navigation }: any) {
     return unsub;
   }, [navigation, userId]);
 
-  const week = weekAroundToday();
+  const week = weekAroundToday(localeTag(lang));
   const len = cycle?.cycle_length ?? 28;
   const dur = cycle?.period_duration ?? 5;
   const day = cycle ? cycleDayActual(cycle.last_period_start_date, new Date()) : 1;
@@ -98,7 +101,7 @@ export default function CycleScreen({ navigation }: any) {
           </View>
 
           <Text style={styles.hello}>{t('mob.hello', "Hello,")} <Text style={styles.helloBold}>{firstName}</Text></Text>
-          <Text style={styles.synced}>{cycle ? 'cycle synced ✓' : 'add your period to sync'}</Text>
+          <Text style={styles.synced}>{cycle ? t('mob.cycleSynced', 'cycle synced ✓') : t('mob.addPeriodSync', 'add your period to sync')}</Text>
 
           <View style={styles.weekCard}>
             {week.map((w, i) => (

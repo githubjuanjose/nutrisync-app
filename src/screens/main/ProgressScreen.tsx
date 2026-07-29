@@ -358,12 +358,8 @@ export default function ProgressScreen({ navigation }: any) {
             {hTab === 'w' ? (
               <>
                 {/* R7-f16: Design's per-phase hormone chart (weekly) */}
+                {/* R8-f40: no weekday labels — the Frame carries its own axis */}
                 <HormoneChartForPhase phase={cyc?.phase ?? 'follicular'} width={300} />
-                <View style={styles.dowLblRow}>
-                  {DOWS.map((d, i) => (
-                    <Text key={i} style={[styles.dowLbl, i === dowIdx && styles.dowLblOn]}>{d}</Text>
-                  ))}
-                </View>
               </>
             ) : hTab === 'm' ? (
               /* R7-f16: monthly always shows the volatility chart */

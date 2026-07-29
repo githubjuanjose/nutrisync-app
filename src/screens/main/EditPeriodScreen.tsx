@@ -8,7 +8,7 @@ import { useSession } from '../../state/SessionProvider';
 import { saveEditPeriod, getTodayLog, recomputeCAS } from '../../lib/daily';
 import { startNewCycle } from '../../lib/api';
 import { ChipGroup } from '../../ui/Chips';
-import { useT } from '../../i18n';
+import { useT, useI18n, localeTag } from '../../i18n';
 
 /**
  * R3-14/15/16/17 (f27–f30):
@@ -58,6 +58,8 @@ const BIRTH = ['Condom', 'Patch', 'Ring', 'Pill'];
 export default function EditPeriodScreen({ navigation }: any) {
   const { userId } = useSession();
   const t = useT();
+  const { lang } = useI18n();
+  const lt = localeTag(lang);
   const [flow, setFlow] = useState<number | null>(null);
   const [moods, setMoods] = useState<string[]>([]);
   const [sym, setSym] = useState<Record<string, string[]>>({});
@@ -138,7 +140,7 @@ export default function EditPeriodScreen({ navigation }: any) {
     }
   };
 
-  const todayLabel = new Date().toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' });
+  const todayLabel = new Date().toLocaleDateString(lt, { month: 'long', day: 'numeric', year: 'numeric' });
 
   return (
     <View style={styles.fill}>
@@ -256,7 +258,7 @@ export default function EditPeriodScreen({ navigation }: any) {
             ...Array.from({ length: off }, () => null),
             ...Array.from({ length: nDays }, (_, i) => new Date(y, m, i + 1)),
           ];
-          const monthLabel = lpMonth.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+          const monthLabel = lpMonth.toLocaleDateString(lt, { month: 'long', year: 'numeric' });
           return (
             <View style={styles.notesOverlay}>
               <Pressable style={StyleSheet.absoluteFill} onPress={() => setLpOpen(false)}>
@@ -287,7 +289,7 @@ export default function EditPeriodScreen({ navigation }: any) {
                 <Pressable onPress={startCycle} disabled={!lpSel || lpSaving} style={[styles.saveBtn, { marginTop: 14 }, (!lpSel || lpSaving) && { opacity: 0.5 }]}>
                   <Text style={styles.saveTxt}>
                     {lpSaving ? t('ui.saving', 'Saving…') : lpSel
-                      ? `${t('mob.startCycleOn', 'Start new cycle on')} ${lpSel.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`
+                      ? `${t('mob.startCycleOn', 'Start new cycle on')} ${lpSel.toLocaleDateString(lt, { month: 'short', day: 'numeric' })}`
                       : t('mob.pickDay', 'Pick a day')}
                   </Text>
                 </Pressable>
@@ -367,8 +369,8 @@ const styles = StyleSheet.create({
   lpArrowTxt: { fontSize: 20, color: colors.coral, marginTop: -2 },
   lpMonthTxt: { fontFamily: font.semibold, fontSize: 15, color: colors.ink },
   lpGrid: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 10 },
-  lpDow: { width: '14.28%', textAlign: 'center', fontFamily: font.semibold, fontSize: 11, color: colors.muted, marginBottom: 4 },
-  lpCell: { width: '14.28%', height: 38, alignItems: 'center', justifyContent: 'center', borderRadius: 19 },
+  lpDow: { width: '14.2857%', textAlign: 'center', fontFamily: font.semibold, fontSize: 11, color: colors.muted, marginBottom: 4 },
+  lpCell: { width: '14.2857%', height: 38, alignItems: 'center', justifyContent: 'center', borderRadius: 19 },
   lpCellOn: { backgroundColor: colors.coral },
   lpCellTxt: { fontFamily: font.regular, fontSize: 14, color: colors.ink },
   lpNote: { fontFamily: font.regular, fontSize: 11.5, color: colors.muted, textAlign: 'center', marginTop: 10, lineHeight: 16 },

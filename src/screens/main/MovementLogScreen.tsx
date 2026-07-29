@@ -187,7 +187,13 @@ export default function MovementLogScreen() {
               <Text style={styles.groupTitle}>{c}</Text>
               {items.map((i, idx) => {
                 const on = checked.has(i.name);
-                const topRec = ci === 0 && idx < 3;
+                // R8-f36: recommend by PHASE-fit intensity, not list position
+                const ph = (recs?.phase ?? '').toLowerCase();
+                const want = ph.includes('menstrual') || ph.includes('late') ? ['rest', 'low', 'gentle', 'restorative']
+                  : ph.includes('follicular') || ph.includes('ovul') ? ['high', 'moderate']
+                  : ['moderate', 'low'];
+                const inten = (i.intensity ?? '').toLowerCase();
+                const topRec = want.some((w) => inten.includes(w));
                 return (
                   <Pressable key={i.id} onPress={() => toggle(i.name)} style={styles.row}>
                     <Image source={on ? require('../../../assets/nutrilog/checked.png') : require('../../../assets/nutrilog/unchecked.png')} style={styles.box} />

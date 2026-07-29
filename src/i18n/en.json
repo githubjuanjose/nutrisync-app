@@ -769,7 +769,11 @@
     "vsFirstWeek": "vs your first week",
     "baselineSet": "Baseline set — from now on we measure your progress against you, not an average.",
     "mostRec": "Most Recommended",
-    "editPeriodStart": "Edit period start date"
+    "editPeriodStart": "Edit period start date",
+    "cycleSynced": "cycle synced ✓",
+    "addPeriodSync": "add your period to sync",
+    "dayWord": "Day",
+    "backToday": "Back to today"
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",

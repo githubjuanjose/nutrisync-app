@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, PanResponder, Pressable } from 'react-native';
 import Svg, { Path, Circle, ClipPath, Defs, G, Rect } from 'react-native-svg';
 import { colors, font } from '../theme';
+import { useT } from '../i18n';
 
 /**
  * R5 · Home cycle ring — reworked to the Round-5 spec (supersedes R4 f4/f5/f6):
@@ -97,6 +98,7 @@ type Props = {
 export function CycleRingInteractive({
   size = 330, todayDay, cycleLen, periodDur, phaseName, phaseForDay, onEnergyPress, energyLevel, loggedToday,
 }: Props) {
+  const t = useT();
   const [scrub, setScrub] = useState<number | null>(null);
   const [drag, setDrag] = useState<number | null>(null);
   // r4a: today may exceed cycleLen (no auto-restart) → ring stays CLOSED then
@@ -201,14 +203,14 @@ export function CycleRingInteractive({
           </View>
           <View style={styles.centre} pointerEvents="none">
             <Text style={[styles.phase, { fontSize: labelSize }]} numberOfLines={1} adjustsFontSizeToFit>{label}</Text>
-            <Text style={styles.day}>{`Day ${day}`}</Text>
+            <Text style={styles.day}>{`${t('mob.dayWord', 'Day')} ${day}`}</Text>
           </View>
         </View>
       </View>
 
       {scrubbing && drag == null ? (
         <Pressable onPress={() => setScrub(null)} style={styles.backToday}>
-          <Text style={styles.backTodayTxt}>‹ Back to today (Day {todayDay})</Text>
+          <Text style={styles.backTodayTxt}>‹ {t('mob.backToday', 'Back to today')} ({t('mob.dayWord', 'Day')} {todayDay})</Text>
         </Pressable>
       ) : null}
     </View>

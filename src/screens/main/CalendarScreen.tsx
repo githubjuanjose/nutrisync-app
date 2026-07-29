@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Defs, RadialGradient, Stop, Rect, Circle as SvgCircle, Path } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
-import { useT } from '../../i18n';
+import { useT, useI18n, localeTag } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getCurrentCycle, getProfile, startNewCycle, getAllCycles, CycleRow } from '../../lib/api';
@@ -39,6 +39,8 @@ const PAGE = 12;
 
 export default function CalendarScreen({ navigation }: any) {
   const t = useT();
+  const { lang } = useI18n();
+  const lt = localeTag(lang);
   const { userId } = useSession();
   const [cycle, setCycle] = useState<CycleRow | null>(null);
   const [allCycles, setAllCycles] = useState<CycleRow[]>([]);
@@ -165,7 +167,7 @@ export default function CalendarScreen({ navigation }: any) {
       return n >= 1 && n <= dim ? new Date(y, m, n, 12) : null;
     });
   };
-  const monthName = (m: number) => new Date(2026, m, 1).toLocaleDateString(undefined, { month: 'long' });
+  const monthName = (m: number) => { const n = new Date(2026, m, 1).toLocaleDateString(lt, { month: 'long' }); return n.charAt(0).toUpperCase() + n.slice(1); };  /* R8-f26 */
   const dows = [t('dowsS.0', 'S'), t('dowsS.1', 'M'), t('dowsS.2', 'T'), t('dowsS.3', 'W'), t('dowsS.4', 'T'), t('dowsS.5', 'F'), t('dowsS.6', 'S')];
 
   const Star = ({ d, mini }: { d: Date; mini?: boolean }) => {
@@ -437,7 +439,7 @@ export default function CalendarScreen({ navigation }: any) {
                 <Text style={styles.epTitle}>{t('mob.editPeriodStart', 'Edit period start date')}</Text>
                 <View style={styles.epMonthRow}>
                   <Pressable onPress={() => setEpMonth(new Date(y, m - 1, 1))} style={styles.epArrow}><Text style={styles.epArrowTxt}>‹</Text></Pressable>
-                  <Text style={styles.epMonthTxt}>{epMonth.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}</Text>
+                  <Text style={styles.epMonthTxt}>{epMonth.toLocaleDateString(lt, { month: 'long', year: 'numeric' })}</Text>
                   <Pressable onPress={() => setEpMonth(new Date(y, m + 1, 1))} style={styles.epArrow}><Text style={styles.epArrowTxt}>›</Text></Pressable>
                 </View>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 8 }}>
@@ -478,8 +480,8 @@ const styles = StyleSheet.create({
   epArrow: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FBEEE7' },
   epArrowTxt: { fontSize: 20, color: colors.coral, marginTop: -2 },
   epMonthTxt: { fontFamily: font.semibold, fontSize: 15, color: colors.ink },
-  epDow: { width: `${100 / 7}%`, textAlign: 'center', fontFamily: font.semibold, fontSize: 11, color: colors.muted, marginBottom: 4 },
-  epCell: { width: `${100 / 7}%`, height: 36, alignItems: 'center', justifyContent: 'center', borderRadius: 18 },
+  epDow: { width: '14.2857%', textAlign: 'center', fontFamily: font.semibold, fontSize: 11, color: colors.muted, marginBottom: 4 },
+  epCell: { width: '14.2857%', height: 36, alignItems: 'center', justifyContent: 'center', borderRadius: 18 },
   epCellTxt: { fontFamily: font.regular, fontSize: 13.5, color: colors.ink },
   epSave: { backgroundColor: colors.coral, height: 48, borderRadius: 12, alignItems: 'center', justifyContent: 'center', marginTop: 12 },
   epSaveTxt: { fontFamily: font.semibold, fontSize: 14, color: '#fff' },
