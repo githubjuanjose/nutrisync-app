@@ -98,7 +98,7 @@ export default function AuthScreen({ route, navigation }: Props) {
           ) : (
           <View style={styles.body}>
             <Text style={styles.h1}>{signup ? t('ui.createAccount', 'Create account') : t('ui.loginTitle', 'Welcome back')}</Text>
-            <Text style={styles.sub}>{signup ? 'A minute to set up your rhythm.' : 'Log in to sync your cycle.'}</Text>
+            <Text style={styles.sub}>{signup ? t('mob.signupSub', 'A minute to set up your rhythm.') : t('mob.loginSub', 'Log in to sync your cycle.')}</Text>
 
             {signup && (
               <Field placeholder={t('mob.firstName', "First name")} value={firstName} onChangeText={setFirstName} autoCapitalize="words" />

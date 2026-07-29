@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, TextInput, ActivityIndicator, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { View, Text, StyleSheet, Pressable, TextInput, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
+import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import Constants from 'expo-constants';
@@ -34,7 +35,7 @@ export default function FeedbackScreen({ navigation }: any) {
       setSent(true);
       setTimeout(() => navigation.goBack(), 1400);
     } catch (e: any) {
-      Alert.alert(t('mob.sendFailed', 'Could not send'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
+      notify(t('mob.sendFailed', 'Could not send'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
     } finally { setBusy(false); }
   };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, ActivityIndicator } from 'react-native';
+import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
@@ -67,7 +68,7 @@ export default function CycleHealthScreen({ navigation }: any) {
 
   const save = async () => {
     if (!userId) return;
-    if (start && !/^\d{4}-\d{2}-\d{2}$/.test(start)) { Alert.alert('Date format', 'Last period start must be YYYY-MM-DD.'); return; }
+    if (start && !/^\d{4}-\d{2}-\d{2}$/.test(start)) { notify('Date format', 'Last period start must be YYYY-MM-DD.'); return; }
     setSaving(true);
     try {
       const cyc = { last_period_start_date: start || null, cycle_length: parseInt(len, 10) || 28, period_duration: parseInt(dur, 10) || 5 };
@@ -78,7 +79,7 @@ export default function CycleHealthScreen({ navigation }: any) {
       else await supabase.from('cycles').insert({ user_id: userId, ...cyc });
       await supabase.from('users').update({ contraception_status: contra, health_conditions: conds }).eq('id', userId);
       navigation.goBack();
-    } catch { Alert.alert('Could not save', 'Check your connection and try again.'); }
+    } catch { notify('Could not save', 'Check your connection and try again.'); }
     finally { setSaving(false); }
   };
 

@@ -75,7 +75,7 @@ export default function NotificationCenterScreen({ navigation }: any) {
         out.push({
           icon: '👋', accent: colors.coral,
           title: 'Welcome to NutriSync',
-          body: 'Add your period to sync your cycle and unlock phase-based guidance.',
+          body: t('mob.ncAddPeriod', 'Add your period to sync your cycle and unlock phase-based guidance.'),
           when: 'Now',
         });
       }

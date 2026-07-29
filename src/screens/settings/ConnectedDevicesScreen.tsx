@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Alert, Platform } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Platform } from 'react-native';
+import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
@@ -24,7 +25,7 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
   useEffect(() => { refresh(); }, [userId]);
 
   const onConnect = (key: string, name: string, scopes: string[]) => {
-    Alert.alert(
+    notify(
       `Connect ${name}?`,
       `NutriSync will read: ${scopes.join(', ')}. Data is stored privately under your account and used only to personalise your guidance. You can disconnect any time.`,
       [
@@ -34,7 +35,7 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
             if (!userId) return;
             setBusy(key);
             try { await connectProvider(userId, key, scopes); await refresh(); }
-            catch (e: any) { Alert.alert('Could not connect', e?.message ?? 'Try again.'); }
+            catch (e: any) { notify('Could not connect', e?.message ?? 'Try again.'); }
             finally { setBusy(null); }
           },
         },
@@ -43,14 +44,14 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
   };
 
   const onDisconnect = (key: string, name: string) => {
-    Alert.alert(`Disconnect ${name}?`, 'NutriSync will stop reading from this source. Existing data stays until you delete your account.', [
+    notify(`Disconnect ${name}?`, 'NutriSync will stop reading from this source. Existing data stays until you delete your account.', [
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Disconnect', style: 'destructive', onPress: async () => {
           if (!userId) return;
           setBusy(key);
           try { await disconnectProvider(userId, key); await refresh(); }
-          catch (e: any) { Alert.alert('Could not disconnect', e?.message ?? 'Try again.'); }
+          catch (e: any) { notify('Could not disconnect', e?.message ?? 'Try again.'); }
           finally { setBusy(null); }
         },
       },

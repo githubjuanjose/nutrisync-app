@@ -1154,7 +1154,10 @@
       "dinner": "Cena",
       "snack": "Snacks"
     },
-    "thisDevice": "Este dispositivo"
+    "thisDevice": "Este dispositivo",
+    "signupSub": "Un minuto para configurar tu ritmo.",
+    "loginSub": "Inicia sesión para sincronizar tu ciclo.",
+    "ncAddPeriod": "Añade tu regla para sincronizar tu ciclo y desbloquear la guía por fases."
   },
   "cat": {
     "Getting started": "Primeros pasos",

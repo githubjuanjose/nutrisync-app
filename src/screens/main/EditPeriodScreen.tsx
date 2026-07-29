@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndicator, Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndicator, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path } from 'react-native-svg';
@@ -85,12 +86,12 @@ export default function EditPeriodScreen({ navigation }: any) {
       await startNewCycle(userId, iso);
       await recomputeCAS(userId);
       setLpOpen(false); setLpSel(null);
-      Alert.alert(
+      notify(
         t('mob.periodLogged', 'Period logged'),
         t('mob.cycleRestarted', 'A new cycle has started from the date you picked. Your averages now use your real cycle lengths.')
       );
     } catch (e: any) {
-      Alert.alert(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
+      notify(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
     } finally {
       setLpSaving(false);
     }
@@ -137,7 +138,7 @@ export default function EditPeriodScreen({ navigation }: any) {
     } catch (e: any) {
       // R3-17: never pretend a failed save worked
       setSaving(false);
-      Alert.alert(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
+      notify(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
     }
   };
 

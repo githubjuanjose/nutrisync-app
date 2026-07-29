@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, ActivityIndicator } from 'react-native';
+import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
@@ -84,7 +85,7 @@ export default function PersonalInfoScreen({ navigation }: any) {
       }
       if (error) throw error;
       navigation.goBack();
-    } catch (e: any) { Alert.alert('Save failed', e?.message ?? 'Try again.'); }
+    } catch (e: any) { notify('Save failed', e?.message ?? 'Try again.'); }
     finally { setSaving(false); }
   };
 

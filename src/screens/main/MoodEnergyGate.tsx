@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ActivityIndicator, PanResponder, Alert } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ActivityIndicator, PanResponder } from 'react-native';
+import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, font, radius } from '../../theme';
@@ -74,7 +75,7 @@ export default function MoodEnergyGate({ navigation }: any) {
       navigation.goBack();
     } catch (e: any) {
       setBusy(false);
-      Alert.alert(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
+      notify(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
     }
   };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Switch, ActivityIndicator } from 'react-native';
+import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SettingsIcon } from '../../ui/SettingsIcons';
 import { colors, font, radius, shadow } from '../../theme';
@@ -35,12 +36,12 @@ export default function DataPrivacyScreen({ navigation }: any) {
   const onExport = async () => {
     if (!userId) return;
     setBusy(true);
-    try { await exportUserData(userId); } catch (e: any) { Alert.alert('Export failed', e?.message ?? 'Try again.'); }
+    try { await exportUserData(userId); } catch (e: any) { notify('Export failed', e?.message ?? 'Try again.'); }
     finally { setBusy(false); }
   };
 
   const onDelete = () => {
-    Alert.alert(
+    notify(
       'Delete account?',
       'This permanently deletes your cycle data, logs and scores. This cannot be undone.',
       [
@@ -51,7 +52,7 @@ export default function DataPrivacyScreen({ navigation }: any) {
             if (!userId) return;
             setBusy(true);
             try { await deleteAccount(); } // full erasure (data + auth); sign-out fires the navigator back to Welcome
-            catch (e: any) { Alert.alert('Delete failed', e?.message ?? 'Try again.'); setBusy(false); }
+            catch (e: any) { notify('Delete failed', e?.message ?? 'Try again.'); setBusy(false); }
           },
         },
       ]

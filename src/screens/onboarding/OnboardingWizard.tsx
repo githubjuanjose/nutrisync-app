@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, Platform, BackHandler, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Pressable, Platform, BackHandler } from 'react-native';
+import { notify } from '../../lib/notify';
 import { Animated, Easing } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -92,7 +93,7 @@ export default function OnboardingWizard({ navigation }: Props) {
 
   // Start the whole flow over (clears every answer) — confirmed first.
   const restart = () => {
-    Alert.alert(
+    notify(
       t('mob.startOver', 'Start over?'),
       t('mob.startOverBody', 'This clears your answers so far and takes you back to the first step.'),
       [
@@ -110,7 +111,7 @@ export default function OnboardingWizard({ navigation }: Props) {
   // Android hardware back → step back within the wizard instead of leaving the app.
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => { back(); return true; });
-    return () => sub.remove();
+    return () => { try { (sub as any)?.remove?.(); } catch {} };
   }, [idx]);
 
   // Persist onboarding to Supabase, then enter the app.

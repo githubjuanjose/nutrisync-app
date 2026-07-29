@@ -845,7 +845,10 @@
       "dinner": "Dinner",
       "snack": "Snacks"
     },
-    "thisDevice": "This device"
+    "thisDevice": "This device",
+    "signupSub": "A minute to set up your rhythm.",
+    "loginSub": "Log in to sync your cycle.",
+    "ncAddPeriod": "Add your period to sync your cycle and unlock phase-based guidance."
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",
