@@ -773,7 +773,79 @@
     "cycleSynced": "cycle synced ✓",
     "addPeriodSync": "add your period to sync",
     "dayWord": "Day",
-    "backToday": "Back to today"
+    "backToday": "Back to today",
+    "setSec": {
+      "health": "HEALTH & PROFILE",
+      "privacy": "PRIVACY & SECURITY",
+      "prefs": "PREFERENCES"
+    },
+    "set": {
+      "PersonalInfo": "Personal Information",
+      "CycleHealth": "Cycle & Health Information",
+      "ConnectedDevices": "Connected Devices",
+      "Security": "Sign In & Security",
+      "DataPrivacy": "Data Privacy",
+      "CommunityPrivacy": "Community Privacy",
+      "AppPreferences": "App Preferences",
+      "Notifications": "Notifications & Reminders",
+      "NutritionalPreferences": "Nutritional Preferences",
+      "NutriAvatar": "Choose Your Nutri",
+      "Feedback": "Send Feedback"
+    },
+    "ntfSec": {
+      "daily": "DAILY REMINDERS",
+      "cycle": "CYCLE",
+      "community": "COMMUNITY",
+      "quiet": "QUIET HOURS"
+    },
+    "ntf": {
+      "daily": "Daily log reminder",
+      "dailySub": "A gentle nudge to log your day",
+      "mood": "Mood & energy check-in",
+      "moodSub": "Before-you-sync prompt each morning",
+      "nutri": "NutriLog reminder",
+      "nutriSub": "Today's Nutri Basics",
+      "movement": "Movement reminder",
+      "movementSub": "Phase-matched movement suggestion",
+      "phase": "Phase-change nudges",
+      "phaseSub": "When you enter a new phase",
+      "community": "Community activity",
+      "communitySub": "Replies and streak milestones",
+      "quiet": "Pause 10pm – 7am",
+      "quietSub": "No notifications overnight"
+    },
+    "ntfNote": "Push delivery requires notification permission (wired with the connectors work).",
+    "sec": {
+      "pain": "Pain",
+      "digestion": "Digestion",
+      "cravings": "Cravings",
+      "skin": "Skin"
+    },
+    "moodN": {
+      "calm": "calm",
+      "content": "content",
+      "worried": "worried",
+      "anxious": "anxious",
+      "happy": "happy",
+      "mad": "mad",
+      "sad": "sad",
+      "nervous": "nervous",
+      "brainfog": "brainfog",
+      "distracted": "distracted",
+      "mischievous": "mischievous",
+      "clear": "clear"
+    },
+    "sex": {
+      "protected": "Protected Sex",
+      "unprotected": "Unprotected Sex"
+    },
+    "meal": {
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "snack": "Snacks"
+    },
+    "thisDevice": "This device"
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",
@@ -887,5 +959,6 @@
       "sub": "Nutri has built your first phase plan from your answers. Your personalised nutrition & movement guidance is ready.",
       "note": "You can update these answers anytime in Settings."
     }
-  }
+  },
+  "cat": {}
 }

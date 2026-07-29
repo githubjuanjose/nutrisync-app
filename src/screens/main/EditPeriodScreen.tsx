@@ -8,7 +8,7 @@ import { useSession } from '../../state/SessionProvider';
 import { saveEditPeriod, getTodayLog, recomputeCAS } from '../../lib/daily';
 import { startNewCycle } from '../../lib/api';
 import { ChipGroup } from '../../ui/Chips';
-import { useT, useI18n, localeTag } from '../../i18n';
+import { useT, useTc, useI18n, localeTag } from '../../i18n';
 
 /**
  * R3-14/15/16/17 (f27–f30):
@@ -58,6 +58,7 @@ const BIRTH = ['Condom', 'Patch', 'Ring', 'Pill'];
 export default function EditPeriodScreen({ navigation }: any) {
   const { userId } = useSession();
   const t = useT();
+  const tc = useTc();
   const { lang } = useI18n();
   const lt = localeTag(lang);
   const [flow, setFlow] = useState<number | null>(null);
@@ -197,7 +198,7 @@ export default function EditPeriodScreen({ navigation }: any) {
                 return (
                   <Pressable key={m} onPress={() => toggle(moods, setMoods, m)} style={styles.moodCell}>
                     <Image source={EMOTE[m]} style={[styles.emote, !on && { opacity: 0.4 }]} />
-                    <Text style={[styles.moodLabel, on && { color: colors.coralDeep, fontFamily: font.semibold }]} numberOfLines={1} adjustsFontSizeToFit>{m}</Text>
+                    <Text style={[styles.moodLabel, on && { color: colors.coralDeep, fontFamily: font.semibold }]} numberOfLines={1} adjustsFontSizeToFit>{t('mob.moodN.' + m, m)}</Text>
                   </Pressable>
                 );
               })}
@@ -208,9 +209,9 @@ export default function EditPeriodScreen({ navigation }: any) {
           <Text style={styles.section}>{t('ui.physSymptoms', 'Physical Symptoms')}</Text>
           <View style={styles.card}>
             {PERSIST_SECTIONS.map((s) => (
-              <ChipGroup key={s.key} title={s.title} options={s.options} selected={sym[s.key] ?? []} onToggle={(v) => toggleSym(s.key, v)} />
+              <ChipGroup key={s.key} title={t('mob.sec.' + s.key, s.title)} options={s.options} labelFor={tc} selected={sym[s.key] ?? []} onToggle={(v) => toggleSym(s.key, v)} />
             ))}
-            <ChipGroup title={t('mob.sleepQuality', "Sleep Quality")} options={SLEEP} selected={sleep} single onToggle={(v) => setSleep([v])} />
+            <ChipGroup title={t('mob.sleepQuality', "Sleep Quality")} options={SLEEP} labelFor={tc} selected={sleep} single onToggle={(v) => setSleep([v])} />
           </View>
 
           {/* Libido */}
@@ -225,7 +226,7 @@ export default function EditPeriodScreen({ navigation }: any) {
 
           {/* Birth control + sex log */}
           <View style={styles.card}>
-            <ChipGroup title={t('ui.birthControl', 'Birth Control')} options={BIRTH} selected={birth} onToggle={(v) => toggle(birth, setBirth, v)} />
+            <ChipGroup title={t('ui.birthControl', 'Birth Control')} options={BIRTH} labelFor={tc} selected={birth} onToggle={(v) => toggle(birth, setBirth, v)} />
             <Text style={[styles.h, { marginTop: 16 }]}>{t('mob.sexLog', "Sex Log")}</Text>
             <View style={{ gap: 8, marginTop: 6 }}>
               {['Protected', 'Unprotected'].map((s) => {
@@ -233,7 +234,7 @@ export default function EditPeriodScreen({ navigation }: any) {
                 return (
                   <Pressable key={s} onPress={() => toggle(sex, setSex, s)} style={[styles.sexRow, on && styles.sexOn]}>
                     <Text style={{ color: on ? colors.coralDeep : colors.faint }}>{on ? '★' : '☆'}</Text>
-                    <Text style={[styles.sexTxt, on && { color: colors.coralDeep }]}>{s} Sex</Text>
+                    <Text style={[styles.sexTxt, on && { color: colors.coralDeep }]}>{t('mob.sex.' + s.toLowerCase(), s + ' Sex')}</Text>
                   </Pressable>
                 );
               })}

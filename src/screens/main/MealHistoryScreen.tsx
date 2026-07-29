@@ -17,6 +17,7 @@ import { fetchMealHistory, MealRow } from '../../lib/recs';
 
 const SLOTS = ['breakfast', 'lunch', 'dinner', 'snack'] as const;
 const SLOT_LABEL: Record<string, string> = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', snack: 'Snacks' };
+const slotLabel = (t: (p: string, f?: string) => string, k: string) => t('mob.meal.' + k, SLOT_LABEL[k] ?? k);  /* R8-f34 */
 
 export default function MealHistoryScreen() {
   const t = useT();
@@ -103,7 +104,7 @@ export default function MealHistoryScreen() {
                   const items = dayRows.filter((r) => (r.meal_type ?? 'snack') === slot || (!r.meal_type && slot === 'snack'));
                   return (
                     <View key={slot} style={styles.slotRow}>
-                      <Text style={styles.slotLbl}>{SLOT_LABEL[slot]}</Text>
+                      <Text style={styles.slotLbl}>{slotLabel(t, slot)}</Text>
                       {items.length ? items.map((r) => (
                         <View key={r.id} style={styles.mealRow}>
                           <Image source={require('../../../assets/nutrilog/synced.png')} style={styles.synced} />

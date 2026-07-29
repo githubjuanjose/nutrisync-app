@@ -74,7 +74,7 @@ export default function MealLogScreen() {
             <View style={styles.tabs}>
               {TYPES.map((m) => (
                 <Pressable key={m.k} onPress={() => setMealType(m.k)} style={[styles.tab, mealType === m.k && styles.tabOn]}>
-                  <Text style={[styles.tabTxt, mealType === m.k && styles.tabTxtOn]}>{m.label}</Text>
+                  <Text style={[styles.tabTxt, mealType === m.k && styles.tabTxtOn]}>{t('mob.meal.' + m.k, m.label)}</Text>
                 </Pressable>
               ))}
             </View>

@@ -14,6 +14,7 @@ import { SettingsIcon } from '../../ui/SettingsIcons';
 import { NutriAvatar } from '../../ui/NutriAvatar';
 
 type Row = { icon: string; label: string; route?: string; flag?: FlagKey };
+const SEC_SLUG = ['health', 'privacy', 'prefs'];  // r8b i18n
 const SECTIONS: { title: string; rows: Row[] }[] = [
   { title: 'HEALTH & PROFILE', rows: [
     { icon: 'person', label: 'Personal Information', route: 'PersonalInfo' },
@@ -78,9 +79,9 @@ export default function SettingsScreen({ navigation }: any) {
             {ageTxt ? <Text style={styles.page_}>{ageTxt} years</Text> : null}
           </Pressable>
 
-          {SECTIONS.map((s) => (
+          {SECTIONS.map((s, si) => (
             <View key={s.title} style={{ marginTop: 18 }}>
-              <Text style={styles.sectionTitle}>{s.title}</Text>
+              <Text style={styles.sectionTitle}>{t('mob.setSec.' + SEC_SLUG[si], s.title)}</Text>
               <View style={styles.card}>
                 {s.rows.filter((r) => !r.flag || isEnabled(r.flag)).map((r, i, arr) => (
                   <Pressable
@@ -89,7 +90,7 @@ export default function SettingsScreen({ navigation }: any) {
                     style={[styles.row, i < arr.length - 1 && styles.rowBorder]}
                   >
                     <View style={{ width: 26 }}><SettingsIcon name={r.icon} /></View>
-                    <Text style={styles.rowLabel}>{r.label}</Text>
+                    <Text style={styles.rowLabel}>{t('mob.set.' + (r.route ?? r.icon), r.label)}</Text>
                     <Text style={styles.chev}>›</Text>
                   </Pressable>
                 ))}

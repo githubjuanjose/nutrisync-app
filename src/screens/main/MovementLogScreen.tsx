@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
-import { useT } from '../../i18n';
+import { useT, useTc } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile } from '../../lib/api';
@@ -48,6 +48,7 @@ const TIP_CHARS = [
 
 export default function MovementLogScreen() {
   const t = useT();
+  const tc = useTc();
   const nav = useNavigation<any>();
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
@@ -184,7 +185,7 @@ export default function MovementLogScreen() {
           {/* R7-f18: rank order preserved from the server; top-3 overall tagged */}
           {cats.map(([c, items], ci) => (
             <View key={c} style={styles.group}>
-              <Text style={styles.groupTitle}>{c}</Text>
+              <Text style={styles.groupTitle}>{tc(c)}</Text>
               {items.map((i, idx) => {
                 const on = checked.has(i.name);
                 // R8-f36: recommend by PHASE-fit intensity, not list position

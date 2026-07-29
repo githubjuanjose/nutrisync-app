@@ -4,13 +4,15 @@ import { colors, font, radius } from '../theme';
 
 /** Multi/single select chip group (Edit Period symptom pills). */
 export function ChipGroup({
-  title, options, selected, onToggle, single = false,
+  title, options, selected, onToggle, single = false, labelFor,
 }: {
   title?: string;
   options: string[];
   selected: string[];
   onToggle: (v: string) => void;
   single?: boolean;
+  /** r8b i18n: display label for a canonical value (values stay English in the DB). */
+  labelFor?: (v: string) => string;
 }) {
   return (
     <View style={{ marginTop: title ? 14 : 0 }}>
@@ -20,7 +22,7 @@ export function ChipGroup({
           const on = selected.includes(o);
           return (
             <Pressable key={o} onPress={() => onToggle(o)} style={[styles.chip, on && styles.chipOn]}>
-              <Text style={[styles.txt, on && styles.txtOn]}>{o}</Text>
+              <Text style={[styles.txt, on && styles.txtOn]}>{labelFor ? labelFor(o) : o}</Text>
             </Pressable>
           );
         })}

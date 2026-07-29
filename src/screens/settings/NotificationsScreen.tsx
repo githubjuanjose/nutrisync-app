@@ -11,6 +11,7 @@ export default function NotificationsScreen({ navigation }: any) {
   });
   const set = (k: string) => (v: boolean) => setState((s) => ({ ...s, [k]: v }));
 
+  const NTF_SLUG = ['daily', 'cycle', 'community', 'quiet'];  // r8b i18n
   const groups: { title: string; rows: { k: string; title: string; sub: string }[] }[] = [
     { title: 'DAILY REMINDERS', rows: [
       { k: 'daily', title: 'Daily log reminder', sub: 'A gentle nudge to log your day' },
@@ -37,20 +38,20 @@ export default function NotificationsScreen({ navigation }: any) {
           <Text style={styles.headerTitle}>{t('mob.notifReminders', "Notifications & Reminders")}</Text><View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
-          {groups.map((g) => (
+          {groups.map((g, gi) => (
             <View key={g.title}>
-              <Text style={styles.sectionTitle}>{g.title}</Text>
+              <Text style={styles.sectionTitle}>{t('mob.ntfSec.' + NTF_SLUG[gi], g.title)}</Text>
               <View style={styles.card}>
                 {g.rows.map((r, i) => (
                   <View key={r.k} style={[styles.row, i < g.rows.length - 1 && styles.rowBorder]}>
-                    <View style={{ flex: 1 }}><Text style={styles.title}>{r.title}</Text><Text style={styles.sub}>{r.sub}</Text></View>
+                    <View style={{ flex: 1 }}><Text style={styles.title}>{t('mob.ntf.' + r.k, r.title)}</Text><Text style={styles.sub}>{t('mob.ntf.' + r.k + 'Sub', r.sub)}</Text></View>
                     <Switch value={state[r.k]} onValueChange={set(r.k)} trackColor={{ true: colors.coral, false: '#E4DAD0' }} thumbColor="#fff" />
                   </View>
                 ))}
               </View>
             </View>
           ))}
-          <Text style={styles.note}>Push delivery requires notification permission (wired with the connectors work).</Text>
+          <Text style={styles.note}>{t('mob.ntfNote', 'Push delivery requires notification permission (wired with the connectors work).')}</Text>
         </ScrollView>
       </SafeAreaView>
     </View>

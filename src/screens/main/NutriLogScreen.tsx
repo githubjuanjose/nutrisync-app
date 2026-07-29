@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
-import { useT } from '../../i18n';
+import { useT, useTc } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile } from '../../lib/api';
@@ -52,6 +52,7 @@ const SYMPTOMS = ['Cramps', 'Bloating', 'Fatigue', 'Headache'];
 
 export default function NutriLogScreen() {
   const t = useT();
+  const tc = useTc();
   const nav = useNavigation<any>();
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
@@ -210,14 +211,14 @@ export default function NutriLogScreen() {
           <Text style={styles.section}>{t('mob.checkOffEat', 'Check off what you eat today')}</Text>
           {cats.map(([c, items]) => (
             <View key={c} style={styles.group}>
-              <Text style={styles.groupTitle}>{c}</Text>
+              <Text style={styles.groupTitle}>{tc(c)}</Text>
               {/* R7-f6/f18: server rank order preserved; top-3 tagged */}
               {items.map((i, idx) => {
                 const on = checked.has(i.name);
                 return (
                   <Pressable key={i.id} onPress={() => toggle(i.name)} style={styles.row}>
                     <Image source={on ? require('../../../assets/nutrilog/checked.png') : require('../../../assets/nutrilog/unchecked.png')} style={styles.box} />
-                    <Text style={[styles.rowTxt, on && styles.rowTxtOn, { flex: 1 }]}>{i.name}</Text>
+                    <Text style={[styles.rowTxt, on && styles.rowTxtOn, { flex: 1 }]}>{tc(i.name)}</Text>
                     {idx < 3 ? <Text style={styles.mostRec}>{t('mob.mostRec', 'Most Recommended')}</Text> : null}
                   </Pressable>
                 );

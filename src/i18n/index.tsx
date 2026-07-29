@@ -83,9 +83,11 @@ type Ctx = {
   setLang: (l: Lang) => void;
   langs: { code: Lang; name: string }[];
   t: (path: string, fallback?: string) => string;
+  /** Catalog label: canonical English value → display name in the app language. */
+  tc: (name: string) => string;
 };
 const I18nContext = createContext<Ctx>({
-  lang: 'en', osLang: 'en', setLang: () => {}, langs: LANGS, t: (p, f) => f ?? p,
+  lang: 'en', osLang: 'en', setLang: () => {}, langs: LANGS, t: (p, f) => f ?? p, tc: (n) => n,
 });
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
@@ -115,8 +117,18 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const t = (path: string, fallback?: string) =>
     lookup(BUNDLES[lang], path) ?? lookup(BUNDLES.en, path) ?? fallback ?? path;
 
+  // r8b: catalog lookup — flat map, keys ARE the canonical English values
+  const tc = (name: string) => {
+    const cat = (BUNDLES[lang] as any)?.cat;
+    if (cat && cat[name]) return cat[name];
+    // Founders' Excel embeds Spanish in parens: "Apple (Manzana)".
+    const m = /^(.*?)\s*\(([^)]+)\)\s*$/.exec(name);
+    if (m) return lang === 'es' ? m[2] : m[1];
+    return name;
+  };
+
   return (
-    <I18nContext.Provider value={{ lang, osLang, setLang, langs: AVAILABLE, t }}>
+    <I18nContext.Provider value={{ lang, osLang, setLang, langs: AVAILABLE, t, tc }}>
       {children}
     </I18nContext.Provider>
   );
@@ -129,4 +141,5 @@ export function localeTag(l: Lang): string {
 }
 
 export const useI18n = () => useContext(I18nContext);
+export const useTc = () => useContext(I18nContext).tc;
 export const useT = () => useContext(I18nContext).t;

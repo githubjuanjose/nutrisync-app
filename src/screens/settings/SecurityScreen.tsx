@@ -5,6 +5,7 @@ import { SettingsIcon } from '../../ui/SettingsIcons';
 import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { useT } from '../../i18n';
+import Constants from 'expo-constants';
 
 export default function SecurityScreen({ navigation }: any) {
   const t = useT();
@@ -47,16 +48,13 @@ export default function SecurityScreen({ navigation }: any) {
 
           <Text style={styles.sectionTitle}>{t('ui.sessionsHdr', 'ACTIVE SESSIONS')}</Text>
           <View style={styles.card}>
-            <View style={[styles.row, styles.rowBorder]}>
+            <View style={styles.row}>
               <View style={styles.rowIconBox}><SettingsIcon name="phone" size={20} /></View>
-              <View style={{ flex: 1 }}><Text style={styles.rowLabel}>iPhone 15 Pro</Text><Text style={styles.sub}>{t('mob.currentDevice', "Current device")}</Text></View>
+              <View style={{ flex: 1 }}><Text style={styles.rowLabel}>{Constants.deviceName ?? t('mob.thisDevice', 'This device')}</Text><Text style={styles.sub}>{t('mob.currentDevice', "Current device")}</Text></View>
               <Text style={styles.active}>{t('mob.activeWord', "Active")}</Text>
             </View>
-            <View style={styles.row}>
-              <View style={styles.rowIconBox}><SettingsIcon name="laptop" size={20} /></View>
-              <View style={{ flex: 1 }}><Text style={styles.rowLabel}>MacBook Pro</Text><Text style={styles.sub}>2 hours ago</Text></View>
-              <Text style={styles.logout}>{t('ui.logout', 'Log Out')}</Text>
-            </View>
+            {/* R8-f18: only REAL sessions — the placeholder MacBook row is gone.
+                Other-device sessions return when server-side session listing ships. */}
           </View>
 
         </ScrollView>
