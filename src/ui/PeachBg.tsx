@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import Svg, { Defs, RadialGradient, Stop, Rect } from 'react-native-svg';
 
@@ -9,9 +9,11 @@ import Svg, { Defs, RadialGradient, Stop, Rect } from 'react-native-svg';
  * (Welcome / Login / Create / onboarding) shares this backdrop.
  */
 export function PeachBg({ children, style }: { children?: React.ReactNode; style?: StyleProp<ViewStyle> }) {
+  // PWA fix: explicit size — unsized svg defaults to 300×150 on the web.
+  const [sz, setSz] = useState<{ w: number; h: number } | null>(null);
   return (
-    <View style={[styles.fill, style]}>
-      <Svg style={StyleSheet.absoluteFill} pointerEvents="none">
+    <View style={[styles.fill, { backgroundColor: '#FBEFE6' }, style]} onLayout={(e) => setSz({ w: e.nativeEvent.layout.width, h: e.nativeEvent.layout.height })}>
+      {sz ? <Svg width={sz.w} height={sz.h} style={StyleSheet.absoluteFill} pointerEvents="none">
         <Defs>
           <RadialGradient id="peachbg" cx="28%" cy="16%" r="118%">
             <Stop offset="0" stopColor="#FDE2D6" />
@@ -21,7 +23,7 @@ export function PeachBg({ children, style }: { children?: React.ReactNode; style
           </RadialGradient>
         </Defs>
         <Rect x="0" y="0" width="100%" height="100%" fill="url(#peachbg)" />
-      </Svg>
+      </Svg> : null}
       {children}
     </View>
   );

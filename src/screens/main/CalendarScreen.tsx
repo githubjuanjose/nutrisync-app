@@ -58,6 +58,9 @@ export default function CalendarScreen({ navigation }: any) {
   const [epMonth, setEpMonth] = useState(() => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 1); });
   const [epSel, setEpSel] = useState<Date | null>(null);
   const [epSaving, setEpSaving] = useState(false);
+  // PWA fix: an absoluteFill <Svg> without explicit width/height collapses to the
+  // browser's 300×150 default on react-native-web — measure the card instead.
+  const [heroSz, setHeroSz] = useState<{ w: number; h: number } | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -265,13 +268,16 @@ export default function CalendarScreen({ navigation }: any) {
           )}
         </View>
 
-        <ScrollView contentContainerStyle={{ padding: 18, paddingTop: 6, paddingBottom: 110 }} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={{ padding: 14, paddingTop: 4, paddingBottom: 92 }} showsVerticalScrollIndicator={false}>
           {view === 'month' ? (
             <>
-              <View style={[styles.hero, { overflow: 'hidden' }]}>
-                {/* R6-f2: exact Calendar Token.svg radial, viewBox-scaled so the
-                    card is never cut off (percent-sized Svg mis-measured on native) */}
-                <Svg style={StyleSheet.absoluteFill} viewBox="0 0 397 227" preserveAspectRatio="none">
+              <View
+                style={[styles.hero, { overflow: 'hidden', backgroundColor: '#FF6103' }]}
+                onLayout={(e) => { const { width: w, height: h } = e.nativeEvent.layout; setHeroSz({ w, h }); }}
+              >
+                {/* R6-f2: exact Calendar Token.svg radial — sized from onLayout so the
+                    background always covers the card (web default-sizes unsized svg). */}
+                {heroSz ? <Svg width={heroSz.w} height={heroSz.h} style={StyleSheet.absoluteFill} viewBox="0 0 397 227" preserveAspectRatio="none">
                   <Defs>
                     <RadialGradient id="calHero" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
                       gradientTransform="matrix(146.849 190.5 -181.363 136.307 51.6505 36.5)">
@@ -280,7 +286,7 @@ export default function CalendarScreen({ navigation }: any) {
                     </RadialGradient>
                   </Defs>
                   <Rect x="0" y="0" width="397" height="227" rx="26" fill="url(#calHero)" />
-                </Svg>
+                </Svg> : null}
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <View>
                     <Text style={styles.heroSmall}>{t('mob.today', 'Today')} · {today.toLocaleDateString(undefined, { day: 'numeric', month: 'long' })}</Text>
@@ -325,7 +331,7 @@ export default function CalendarScreen({ navigation }: any) {
                   return (
                     <Pressable key={p} onPress={() => setFilter(on ? null : p)} style={[styles.legendItem, on && styles.legendOn]}>
                       <View style={[styles.legendDot, { backgroundColor: PAL[p] }]} />
-                      <Text style={[styles.legendTxt, on && { color: colors.ink, fontFamily: font.semibold }]}>{t('phaseNames.' + p, p)}</Text>
+                      <Text numberOfLines={1} style={[styles.legendTxt, on && { color: colors.ink, fontFamily: font.semibold }]}>{t('phaseNames.' + p, p)}</Text>
                     </Pressable>
                   );
                 })}
@@ -486,39 +492,39 @@ const styles = StyleSheet.create({
   epSave: { backgroundColor: colors.coral, height: 48, borderRadius: 12, alignItems: 'center', justifyContent: 'center', marginTop: 12 },
   epSaveTxt: { fontFamily: font.semibold, fontSize: 14, color: '#fff' },
   epNote: { fontFamily: font.regular, fontSize: 11, color: colors.muted, textAlign: 'center', marginTop: 8, lineHeight: 15 },
-  hero: { borderRadius: 30, paddingVertical: 26, paddingHorizontal: 24 },  // R7-f2: room right+bottom, nothing clipped
+  hero: { borderRadius: 26, paddingVertical: 16, paddingHorizontal: 18 },  // R7-f2: room right+bottom, nothing clipped
   heroSmall: { fontFamily: font.medium, fontSize: 12.5, color: 'rgba(255,255,255,0.85)' },
-  heroTitle: { fontFamily: font.semibold, fontSize: 27, color: '#fff', marginTop: 4 },  // R7-f2: fits narrow screens
+  heroTitle: { fontFamily: font.semibold, fontSize: 23, color: '#fff', marginTop: 2 },  // R7-f2: fits narrow screens
   phasePill: { backgroundColor: 'rgba(255,255,255,0.22)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.55)', borderRadius: 999, paddingHorizontal: 13, paddingVertical: 6 },
   phasePillTxt: { fontFamily: font.medium, fontSize: 12, color: '#fff' },
-  segBar: { flexDirection: 'row', height: 22, alignItems: 'center', marginTop: 16, gap: 2 },
+  segBar: { flexDirection: 'row', height: 20, alignItems: 'center', marginTop: 10, gap: 2 },
   seg: { height: 12, borderRadius: 6, position: 'relative', justifyContent: 'center' },
   segKnob: { position: 'absolute', width: 22, height: 22, borderRadius: 11, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOpacity: 0.2, shadowRadius: 4, shadowOffset: { width: 0, height: 2 }, elevation: 3 },
   segKnobTxt: { fontFamily: font.bold, fontSize: 10.5, color: '#F4633A' },
-  heroNote: { fontFamily: font.regular, fontSize: 12.5, color: 'rgba(255,255,255,0.92)', marginTop: 12 },
-  heroStats: { flexDirection: 'row', gap: 10, marginTop: 14 },
-  heroStat: { flex: 1, backgroundColor: 'rgba(255,255,255,0.18)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.35)', borderRadius: 16, padding: 12 },
+  heroNote: { fontFamily: font.regular, fontSize: 12, color: 'rgba(255,255,255,0.92)', marginTop: 8 },
+  heroStats: { flexDirection: 'row', gap: 8, marginTop: 10 },
+  heroStat: { flex: 1, backgroundColor: 'rgba(255,255,255,0.18)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.35)', borderRadius: 14, paddingVertical: 8, paddingHorizontal: 10 },
   heroStatLbl: { fontFamily: font.regular, fontSize: 11.5, color: 'rgba(255,255,255,0.85)' },
-  heroStatVal: { fontFamily: font.semibold, fontSize: 17, color: '#fff', marginTop: 2 },
-  toggleRow: { flexDirection: 'row', backgroundColor: '#F6EEE7', borderRadius: 999, padding: 4, gap: 4, marginTop: 16 },
+  heroStatVal: { fontFamily: font.semibold, fontSize: 15, color: '#fff', marginTop: 1 },
+  toggleRow: { flexDirection: 'row', backgroundColor: '#F6EEE7', borderRadius: 999, padding: 3, gap: 4, marginTop: 10 },
   toggle: { flex: 1, height: 36, borderRadius: 999, alignItems: 'center', justifyContent: 'center' },
   toggleOn: { backgroundColor: '#fff', ...shadow.card },
   toggleTxt: { fontFamily: font.medium, fontSize: 13, color: colors.muted },
   toggleTxtOn: { color: colors.ink, fontFamily: font.semibold, fontSize: 13 },
-  legend: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 12 },
-  legendItem: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 11, paddingVertical: 7, borderRadius: 999, backgroundColor: '#fff', borderWidth: 1, borderColor: '#EFE3D7' },
+  legend: { flexDirection: 'row', flexWrap: 'nowrap', gap: 6, marginTop: 8 },  /* one row on mobile */
+  legendItem: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, paddingHorizontal: 4, paddingVertical: 7, borderRadius: 999, backgroundColor: '#fff', borderWidth: 1, borderColor: '#EFE3D7' },
   legendOn: { borderColor: colors.coral },
   legendDot: { width: 7, height: 7, borderRadius: 4 },
-  legendTxt: { fontFamily: font.regular, fontSize: 12, color: colors.muted },
-  card: { backgroundColor: '#fff', borderRadius: 26, padding: 18, marginTop: 14, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 18, shadowOffset: { width: 0, height: 10 }, elevation: 3 },
-  monthHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 },
+  legendTxt: { fontFamily: font.regular, fontSize: 11.5, color: colors.muted, flexShrink: 1 },
+  card: { backgroundColor: '#fff', borderRadius: 24, padding: 12, marginTop: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 18, shadowOffset: { width: 0, height: 10 }, elevation: 3 },
+  monthHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 },
   monthTitle: { fontFamily: font.semibold, fontSize: 16.5, color: colors.ink },
   nav: { fontFamily: font.semibold, fontSize: 22, color: colors.ink, paddingHorizontal: 10 },
-  dowRow: { flexDirection: 'row', marginBottom: 4 },
+  dowRow: { flexDirection: 'row', marginBottom: 2 },
   dow: { flex: 1, textAlign: 'center', fontFamily: font.medium, fontSize: 11, color: colors.faint },
   grid: { flexDirection: 'row', flexWrap: 'wrap' },
-  cell: { width: `${100 / 7}%`, alignItems: 'center', paddingVertical: 6 },
-  dayC: { width: 30, height: 30, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
+  cell: { width: `${100 / 7}%`, alignItems: 'center', paddingVertical: 2 },
+  dayC: { width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
   dayTxtOn: { fontFamily: font.semibold, fontSize: 13, color: '#fff' },
   // R4-F14/f15
   dayNeutral: { backgroundColor: '#FFFAF9', borderWidth: 1, borderColor: '#F0E4DC' },
@@ -526,7 +532,7 @@ const styles = StyleSheet.create({
   cdBadge: { position: 'absolute', top: -4, left: -6, width: 15, height: 15, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
   cdTxt: { fontFamily: font.bold, fontSize: 8, color: '#fff' },
   miniNeutral: { backgroundColor: '#FFFAF9', borderWidth: 0.5, borderColor: '#EDDFD6' },  // R5-F17
-  starRow: { height: 11, marginTop: 1, alignItems: 'center', justifyContent: 'center' },
+  starRow: { height: 8, marginTop: 0, alignItems: 'center', justifyContent: 'center' },
   star: { fontSize: 9, color: '#E9A23B' },
   yearHeadRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 2 },
   yearBig: { fontFamily: font.bold, fontSize: 34, color: colors.ink },
