@@ -52,7 +52,7 @@ export async function getCurrentCycle(userId: string): Promise<CycleRow | null> 
     .from('cycles')
     .select('*')
     .eq('user_id', userId)
-    .order('updated_at', { ascending: false })
+    .order('last_period_start_date', { ascending: false })   // R8: same rule as the server
     .limit(1)
     .maybeSingle();
   return (data as CycleRow) ?? null;
@@ -74,6 +74,17 @@ export async function startNewCycle(userId: string, startISO: string): Promise<{
   const all = (rows ?? []) as any[];
   const prev = all.length ? all[all.length - 1] : null;
   if (prev && String(prev.last_period_start_date).slice(0, 10) === startISO) return { created: false };
+
+  // R8-f28/f30: an EARLIER date than the current cycle's start is a CORRECTION —
+  // update the current row instead of inserting a stale-ordered new one (the
+  // server picks the latest start, so an inserted earlier row would never win).
+  if (prev && startISO < String(prev.last_period_start_date).slice(0, 10)) {
+    const { error: upErr } = await supabase.from('cycles')
+      .update({ last_period_start_date: startISO, updated_at: new Date().toISOString() })
+      .eq('id', prev.id);
+    if (upErr) throw upErr;
+    return { created: false, avg: prev.cycle_length ?? 28 };
+  }
 
   const starts = [...all.map((r) => String(r.last_period_start_date).slice(0, 10)), startISO]
     .map((s) => new Date(s + 'T00:00:00').getTime())
@@ -97,6 +108,13 @@ export async function startNewCycle(userId: string, startISO: string): Promise<{
   });
   if (error) throw error;
   return { created: true, avg };
+}
+
+/** R8-f25: full cycle history (asc) — the calendar maps each date to ITS cycle. */
+export async function getAllCycles(userId: string): Promise<CycleRow[]> {
+  const { data } = await supabase.from('cycles').select('*')
+    .eq('user_id', userId).order('last_period_start_date', { ascending: true });
+  return ((data as any[]) ?? []) as CycleRow[];
 }
 
 /** True once the user has completed onboarding (has a cycle on file). */

@@ -21,9 +21,7 @@ export function SuccessRing({ size = 106 }: { size?: number }) {
           </RadialGradient>
           <ClipPath id="succMouth"><Rect width={6} height={3} x={38} y={37} /></ClipPath>
         </Defs>
-        <Rect x={1.5} y={0.5} width={99} height={99} rx={49.5} fill="white" />
-        <Rect x={1.5} y={0.5} width={99} height={99} rx={49.5} stroke="#F6F6F6" />
-        <Rect x={15} y={14} width={72} height={72} rx={36} fill="white" />
+        {/* R8-f32: outer rings removed — just the orb + wings badge */}
         <Rect opacity={0.85} y={2} width={101} height={100} rx={50} fill="url(#succOrb)" />
         {/* closed happy eyes */}
         <Path d="M34 35.8175C34 38.4781 33.2164 35.8175 29.5 35.8175C25.7836 35.8175 25 38.4781 25 35.8175C25 33.1569 27.0147 31 29.5 31C31.9853 31 34 33.1569 34 35.8175Z" fill="black" fillOpacity={0.82} />

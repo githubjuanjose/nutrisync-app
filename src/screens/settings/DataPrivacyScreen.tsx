@@ -12,7 +12,24 @@ export default function DataPrivacyScreen({ navigation }: any) {
   const { userId } = useSession();
   const [analytics, setAnalytics] = useState(true);
   const [insights, setInsights] = useState(true);
-  const [research, setResearch] = useState(false);
+  const [research, setResearchState] = useState(false);
+  // R8-f21: persisted; seeded by onboarding's consent answer
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const AS = require('@react-native-async-storage/async-storage').default;
+        const v = await AS.getItem('ns.research.' + (userId ?? ''));
+        if (v != null) setResearchState(v === '1');
+      } catch {}
+    })();
+  }, [userId]);
+  const setResearch = (v: boolean) => {
+    setResearchState(v);
+    try {
+      const AS = require('@react-native-async-storage/async-storage').default;
+      AS.setItem('ns.research.' + (userId ?? ''), v ? '1' : '0');
+    } catch {}
+  };
   const [busy, setBusy] = useState(false);
 
   const onExport = async () => {

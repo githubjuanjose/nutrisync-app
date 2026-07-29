@@ -57,6 +57,7 @@ export default function CycleScreen({ navigation }: any) {
         setScore(await getTodayScore(userId));
         setTodayLog(await getTodayLog(userId));
         getProfile(userId).then(setProfile).catch(() => {});
+        getCurrentCycle(userId).then(setCycle).catch(() => {});  /* R8-f1: period edits reflect immediately */
       }
     });
     return unsub;
@@ -96,7 +97,7 @@ export default function CycleScreen({ navigation }: any) {
             </View>
           </View>
 
-          <Text style={styles.hello}>{t('mob.hello', "Hello,")}<Text style={styles.helloBold}>{firstName}</Text></Text>
+          <Text style={styles.hello}>{t('mob.hello', "Hello,")} <Text style={styles.helloBold}>{firstName}</Text></Text>
           <Text style={styles.synced}>{cycle ? 'cycle synced ✓' : 'add your period to sync'}</Text>
 
           <View style={styles.weekCard}>

@@ -71,6 +71,7 @@ export default function NutriLogScreen() {
     setRecs(r); setChecked(ck); setQuick(q); setMeals(m); setLoading(false);
   }, [userId]);
   useEffect(() => { load(); }, [load]);
+  useEffect(() => { const u = nav.addListener('focus', load); return u; }, [nav, load]);  // R8-f30
   useFocusEffect(useCallback(() => {
     if (userId && !loading) countMealsToday(userId).then(setMeals).catch(() => {});
   }, [userId, loading]));
@@ -141,7 +142,7 @@ export default function NutriLogScreen() {
           ))}
         </View>
 
-        <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 110 }} showsVerticalScrollIndicator={false}>
+        <ScrollView automaticallyAdjustKeyboardInsets contentContainerStyle={{ padding: 18, paddingBottom: 110 }} showsVerticalScrollIndicator={false}>
           <View style={styles.card}>
             <View style={{ flex: 1, paddingRight: 8 }}>
               <Text style={styles.badge}>{badge}</Text>

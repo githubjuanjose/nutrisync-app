@@ -131,6 +131,11 @@ export default function OnboardingWizard({ navigation }: Props) {
       // F20 (fixed in R4-r4c): persist the selected NutriGoal with the REAL user
       // id — the old block referenced an undefined `userId` and its catch{}
       // swallowed the ReferenceError, so the goal silently never saved.
+      // R8-f21: the research opt-in chosen here must arrive switched on in Settings
+      try {
+        const AS = require('@react-native-async-storage/async-storage').default;
+        await AS.setItem('ns.research.' + user.id, research ? '1' : '0');
+      } catch {}
       const g = (answers['nutriGoal'] ?? [])[0];
       if (g) {
         const { error: gErr } = await supabase.from('users').update({ nutrigoal: g }).eq('id', user.id);

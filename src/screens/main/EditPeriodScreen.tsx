@@ -195,7 +195,7 @@ export default function EditPeriodScreen({ navigation }: any) {
                 return (
                   <Pressable key={m} onPress={() => toggle(moods, setMoods, m)} style={styles.moodCell}>
                     <Image source={EMOTE[m]} style={[styles.emote, !on && { opacity: 0.4 }]} />
-                    <Text style={[styles.moodLabel, on && { color: colors.coralDeep, fontFamily: font.semibold }]}>{m}</Text>
+                    <Text style={[styles.moodLabel, on && { color: colors.coralDeep, fontFamily: font.semibold }]} numberOfLines={1} adjustsFontSizeToFit>{m}</Text>
                   </Pressable>
                 );
               })}
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
   notesOverlay: { ...StyleSheet.absoluteFillObject, zIndex: 20 },
   notesFull: { flex: 1, margin: 18, backgroundColor: '#fff', borderRadius: radius.lg, padding: 16, fontFamily: font.regular, fontSize: 15, color: colors.ink, textAlignVertical: 'top', ...shadow.card },
   title: { fontFamily: font.bold, fontSize: 22, color: colors.ink },
-  date: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2 },
+  date: { fontFamily: font.regular, fontSize: 12, color: '#FFFFFF', marginTop: 2 },  // R8-f4
   card: { backgroundColor: colors.white, borderRadius: radius.lg, padding: 16, marginTop: 14, ...shadow.card },
   h: { fontFamily: font.semibold, fontSize: 16, color: colors.ink },
   section: { fontFamily: font.semibold, fontSize: 16, color: colors.ink, marginTop: 20, marginLeft: 4 },

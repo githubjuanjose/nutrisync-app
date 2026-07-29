@@ -7,7 +7,7 @@ import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
-import { getCurrentCycle, getProfile, startNewCycle, CycleRow } from '../../lib/api';
+import { getCurrentCycle, getProfile, startNewCycle, getAllCycles, CycleRow } from '../../lib/api';
 import { recomputeCAS } from '../../lib/daily';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase } from '../../lib/cas';
 import { fetchSexDayTypes, fetchScoreHistory, splitCycles, ScoreRow } from '../../lib/progress';
@@ -41,6 +41,7 @@ export default function CalendarScreen({ navigation }: any) {
   const t = useT();
   const { userId } = useSession();
   const [cycle, setCycle] = useState<CycleRow | null>(null);
+  const [allCycles, setAllCycles] = useState<CycleRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<'month' | 'year'>('month');
   const [filter, setFilter] = useState<P4 | null>(null);
@@ -61,6 +62,7 @@ export default function CalendarScreen({ navigation }: any) {
       if (!userId) { setLoading(false); return; }
       const c = await getCurrentCycle(userId);
       setCycle(c); setLoading(false);
+      getAllCycles(userId).then(setAllCycles).catch(() => {});
       const from = new Date(); from.setMonth(0, 1);
       fetchSexDayTypes(userId, iso(from)).then(setSexDays).catch(() => {});
       getProfile(userId).then((p: any) => setNutri(p?.nutri_avatar ?? null)).catch(() => {});
@@ -68,15 +70,35 @@ export default function CalendarScreen({ navigation }: any) {
     })();
   }, [userId]);
 
+  // R8-f30: refresh the cycle whenever the tab regains focus (edits elsewhere)
+  useEffect(() => {
+    const unsub = navigation.addListener('focus', () => {
+      if (!userId) return;
+      getCurrentCycle(userId).then(setCycle).catch(() => {});
+      getAllCycles(userId).then(setAllCycles).catch(() => {});
+    });
+    return unsub;
+  }, [navigation, userId]);
+
   const today = new Date();
   const len = cycle?.cycle_length ?? 28;
   const dur = cycle?.period_duration ?? 5;
   const lps = cycle?.last_period_start_date ?? null;
-  // R7-f5: past/today use the ACTUAL day (no auto-restart — mirrors Home);
-  // future dates keep the modulo FORECAST (predicted next cycles).
+  // R8-f24/f25: each date maps to ITS cycle from the logged history; the future
+  // keeps counting from the current start (31, 32… — no phantom next cycle);
+  // dates before the first logged cycle back-project predicted previous cycles.
   const dayOf = (d: Date) => {
     if (!lps) return null;
-    return d <= today ? cycleDayActual(lps, d) : cycleDay(lps, d, len);
+    const iso10 = (x: Date) => `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`;
+    const dISO = iso10(d);
+    const starts = allCycles.length ? allCycles.map((c) => String(c.last_period_start_date).slice(0, 10)) : [String(lps).slice(0, 10)];
+    if (dISO < starts[0]) {
+      // before any logged cycle → modulo back-projection from the first start
+      return cycleDay(starts[0], d, len);
+    }
+    let ownStart = starts[0];
+    for (const st of starts) { if (st <= dISO) ownStart = st; else break; }
+    return cycleDayActual(ownStart, d);
   };
   const phaseOf = (d: Date): P4 | null => { const n = dayOf(d); return n ? displayPhase(phaseForDay(n, len, dur)) : null; };
   const todayDay = dayOf(today) ?? 1;

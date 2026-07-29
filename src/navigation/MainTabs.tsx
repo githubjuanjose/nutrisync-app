@@ -45,7 +45,7 @@ export default function MainTabs() {
         },
         tabBarItemStyle: { justifyContent: 'center', alignItems: 'center' },
         tabBarIcon: ({ color }) => (
-          <NavIcon name={route.name as string} color={color} size={46} />  /* R7: bigger, fill-safe */
+          <NavIcon name={route.name as string} color={color} size={50} />  /* R8-f2 */
         ),
       })}
     >

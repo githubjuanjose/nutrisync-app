@@ -51,7 +51,7 @@ export default function CycleHealthScreen({ navigation }: any) {
     (async () => {
       if (!userId) { setLoading(false); return; }
       const [{ data: c }, { data: u }] = await Promise.all([
-        supabase.from('cycles').select('last_period_start_date,cycle_length,period_duration').eq('user_id', userId).limit(1).maybeSingle(),
+        supabase.from('cycles').select('id,last_period_start_date,cycle_length,period_duration').eq('user_id', userId).order('last_period_start_date', { ascending: false }).limit(1).maybeSingle(),  /* R8-f29: latest cycle */
         supabase.from('users').select('contraception_status,health_conditions').eq('id', userId).maybeSingle(),
       ]);
       if (c) { setStart((c as any).last_period_start_date ?? ''); setLen(String((c as any).cycle_length ?? 28)); setDur(String((c as any).period_duration ?? 5)); }
@@ -71,8 +71,10 @@ export default function CycleHealthScreen({ navigation }: any) {
     setSaving(true);
     try {
       const cyc = { last_period_start_date: start || null, cycle_length: parseInt(len, 10) || 28, period_duration: parseInt(dur, 10) || 5 };
-      const { data: ex } = await supabase.from('cycles').select('user_id').eq('user_id', userId).limit(1);
-      if (ex && ex.length) await supabase.from('cycles').update(cyc).eq('user_id', userId);
+      // R8-f29: update ONLY the latest cycle row — never blanket all history
+      const { data: ex } = await supabase.from('cycles').select('id').eq('user_id', userId)
+        .order('last_period_start_date', { ascending: false }).limit(1).maybeSingle();
+      if (ex) await supabase.from('cycles').update(cyc).eq('id', (ex as any).id);
       else await supabase.from('cycles').insert({ user_id: userId, ...cyc });
       await supabase.from('users').update({ contraception_status: contra, health_conditions: conds }).eq('id', userId);
       navigation.goBack();

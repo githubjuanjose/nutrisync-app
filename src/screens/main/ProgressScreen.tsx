@@ -94,7 +94,6 @@ function StabilityRing({ v, label }: { v: number | null; label: string }) {
       <View style={{ position: 'absolute', alignItems: 'center' }}>
         {/* R6-f12: the score number is always visible on the gauge */}
         <Text style={{ fontFamily: font.bold, fontSize: 24, color: '#FF300C' }}>{v == null ? '—' : Math.round(v * 100)}</Text>
-        <Text style={{ fontFamily: font.medium, fontSize: 10.5, color: colors.muted, maxWidth: 74, textAlign: 'center' }} numberOfLines={1} adjustsFontSizeToFit>{label}</Text>
       </View>
     </View>
   );
@@ -290,6 +289,8 @@ export default function ProgressScreen({ navigation }: any) {
             <View style={{ alignItems: 'center' }}>
               <Text style={styles.cssTitle}>{t('mob.cycleStability', 'Cycle Stability')}</Text>
               <StabilityRing v={stabilityPct == null ? null : stabilityPct / 100} label={cssLabel} />
+              {/* R8-f39: state word sits BELOW the ring, above the days note */}
+              <Text style={styles.cssState} numberOfLines={1} adjustsFontSizeToFit>{cssLabel}</Text>
               {stabilityPct == null ? <Text style={styles.cssNote}>{css.n}/7 {t('mob.daysLoggedShort', 'days logged')}</Text> : null}
               {/* R4-f22/f25: zone words only (wireframe order), no coloured dots */}
               <View style={styles.bandRow}>
@@ -425,12 +426,14 @@ const styles = StyleSheet.create({
   cardRow: { flexDirection: 'row', backgroundColor: '#fff', borderRadius: 24, padding: 18, marginTop: 12, alignItems: 'center', justifyContent: 'space-between', shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   card2: { backgroundColor: '#fff', borderRadius: 24, padding: 18, marginTop: 12, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
   cssTitle: { fontFamily: font.semibold, fontSize: 13.5, color: '#F03D11', marginBottom: 8 },  // R7-f14
-  cssNote: { fontFamily: font.regular, fontSize: 11, color: colors.faint, marginTop: 4 },
+  cssNote: { fontFamily: font.regular, fontSize: 11, color: colors.faint, marginTop: 2 },
+  cssState: { fontFamily: font.medium, fontSize: 11.5, color: colors.muted, marginTop: 6, maxWidth: 120, textAlign: 'center' },
   bandRow: { flexDirection: 'row', gap: 8, marginTop: 8 },
   bandItem: { flexDirection: 'row', alignItems: 'center', gap: 3 },
   bandDot: { width: 6, height: 6, borderRadius: 3 },
   bandTxt: { fontFamily: font.regular, fontSize: 9.5, color: colors.muted },
-  statColBox: { width: 126, gap: 6 },
+  statColBox: { width: 138, gap: 6, alignItems: 'stretch' },  // R8-f38
+
   statLine: { flexDirection: 'row', justifyContent: 'space-between' },
   statLbl: { fontFamily: font.regular, fontSize: 12.5, color: colors.muted },
   statVal: { fontFamily: font.bold, fontSize: 13.5, color: '#E4572E' },  // R4-f20
