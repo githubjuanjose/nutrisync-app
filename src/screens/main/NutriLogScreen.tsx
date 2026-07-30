@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
-import { useT, useTc } from '../../i18n';
+import { useT, useTc, useI18n } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile } from '../../lib/api';
@@ -53,6 +53,7 @@ const SYMPTOMS = ['Cramps', 'Bloating', 'Fatigue', 'Headache'];
 export default function NutriLogScreen() {
   const t = useT();
   const tc = useTc();
+  const { lang } = useI18n();
   const nav = useNavigation<any>();
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
@@ -67,7 +68,7 @@ export default function NutriLogScreen() {
     if (!userId) { setLoading(false); return; }
     getProfile(userId).then((p: any) => setCharIdx(pickVariantIndex(p?.nutri_avatar))).catch(() => {});
     const [r, ck, q, m] = await Promise.all([
-      fetchDailyRecs(), fetchCheckedToday(userId, 'nutrition_checklist'), getQuickLog(userId), countMealsToday(userId),
+      fetchDailyRecs(lang), fetchCheckedToday(userId, 'nutrition_checklist'), getQuickLog(userId), countMealsToday(userId),
     ]);
     setRecs(r); setChecked(ck); setQuick(q); setMeals(m); setLoading(false);
   }, [userId]);

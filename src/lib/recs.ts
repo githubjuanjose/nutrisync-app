@@ -22,8 +22,9 @@ export type DailyRecs = {
   error?: string;
 };
 
-export async function fetchDailyRecs(): Promise<DailyRecs | null> {
-  const { data, error } = await supabase.rpc('ns_daily_recs');
+export async function fetchDailyRecs(lang: string = 'en'): Promise<DailyRecs | null> {
+  // content-i18n fase 1: el motor devuelve tips/insights en el idioma de la app
+  const { data, error } = await supabase.rpc('ns_daily_recs', { p_lang: lang });
   if (error || !data || (data as any).error) return null;
   return data as DailyRecs;
 }
