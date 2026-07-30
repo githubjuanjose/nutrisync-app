@@ -199,7 +199,7 @@ export default function MovementLogScreen() {
                   <Pressable key={i.id} onPress={() => toggle(i.name)} style={styles.row}>
                     <Image source={on ? require('../../../assets/nutrilog/checked.png') : require('../../../assets/nutrilog/unchecked.png')} style={styles.box} />
                     <Text style={[styles.rowTxt, on && styles.rowTxtOn, { flex: 1 }]}>{i.name}</Text>
-                    {topRec ? <Text style={styles.mostRec}>{t('mob.mostRec', 'Most Recommended')}</Text> : (i.intensity ? <Text style={styles.intensity}>{i.intensity}</Text> : null)}
+                    {topRec ? <Text style={styles.mostRec}>{t('mob.mostRec', 'Most Recommended')}</Text> : (i.intensity ? <Text style={styles.intensity}>{tc(i.intensity)}</Text> : null)}
                   </Pressable>
                 );
               })}

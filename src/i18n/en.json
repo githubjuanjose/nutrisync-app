@@ -848,7 +848,26 @@
     "thisDevice": "This device",
     "signupSub": "A minute to set up your rhythm.",
     "loginSub": "Log in to sync your cycle.",
-    "ncAddPeriod": "Add your period to sync your cycle and unlock phase-based guidance."
+    "ncAddPeriod": "Add your period to sync your cycle and unlock phase-based guidance.",
+    "valM": {
+      "low": "Low",
+      "meh": "Meh",
+      "okay": "Okay",
+      "good": "Good",
+      "great": "Great"
+    },
+    "valE": {
+      "low": "Low",
+      "mid": "Mid",
+      "high": "High"
+    },
+    "valF": {
+      "none": "None",
+      "light": "Light",
+      "medium": "Medium",
+      "heavy": "Heavy"
+    },
+    "nutriPrefNote": "These tune your food guidance — allergens are removed and diet type reshapes each phase's list."
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",

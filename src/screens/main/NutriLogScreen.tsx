@@ -80,7 +80,7 @@ export default function NutriLogScreen() {
   if (loading) return <LoadingView />;
 
   const cats = orderedCategories(recs?.nutri_basics).map(([c, items]) => [c, items.slice(0, PER_CATEGORY)] as const);
-  const badge = recs ? `${(recs.phase || '').toUpperCase()} PHASE, DAY ${recs.cycle_day}` : '';
+  const badge = recs ? `${t('phaseNames.' + (recs.phase || ''), recs.phase || '').toUpperCase()} · ${t('mob.dayWord', 'Day').toUpperCase()} ${recs.cycle_day}` : '';  /* R9-Pilar */
   const tip = recs?.nutrition_tip; const ins = recs?.nutrition_insight;
 
   const toggle = async (name: string) => {
@@ -178,17 +178,17 @@ export default function NutriLogScreen() {
                 <Pressable style={styles.pillStat} onPress={cycleMood}>
                   <Image source={require('../../../assets/nutrilog/mood.png')} style={styles.pillIcon} />
                   <Text style={styles.pillLbl}>{t('mob.mood', 'Mood')}</Text>
-                  <Text style={styles.pillVal}>{quick.mood ? MOODS[quick.mood - 1] : '—'}</Text>
+                  <Text style={styles.pillVal}>{quick.mood ? t('mob.valM.' + MOODS[quick.mood - 1].toLowerCase(), MOODS[quick.mood - 1]) : '—'}</Text>
                 </Pressable>
                 <Pressable style={styles.pillStat} onPress={cycleEnergy}>
                   <Image source={require('../../../assets/nutrilog/energy.png')} style={styles.pillIcon} />
                   <Text style={styles.pillLbl}>{t('mob.energy', 'Energy')}</Text>
-                  <Text style={styles.pillVal}>{quick.energy ? ENERGY[quick.energy - 1] : '—'}</Text>
+                  <Text style={styles.pillVal}>{quick.energy ? t('mob.valE.' + ENERGY[quick.energy - 1].toLowerCase(), ENERGY[quick.energy - 1]) : '—'}</Text>
                 </Pressable>
                 <Pressable style={styles.pillStat} onPress={cycleFlow}>
                   <Image source={require('../../../assets/nutrilog/flow.png')} style={styles.pillIcon} />
                   <Text style={styles.pillLbl}>{t('mob.flow', 'Flow')}</Text>
-                  <Text style={styles.pillVal}>{quick.flow_level != null ? FLOWS[quick.flow_level] : '—'}</Text>
+                  <Text style={styles.pillVal}>{quick.flow_level != null ? t('mob.valF.' + FLOWS[quick.flow_level].toLowerCase(), FLOWS[quick.flow_level]) : '—'}</Text>
                 </Pressable>
               </View>
               <Text style={styles.section}>{t('mob.todaysSymptoms', "Today's Symptoms")}</Text>
@@ -197,7 +197,7 @@ export default function NutriLogScreen() {
                   const on = quick.pain_symptoms.includes(s);
                   return (
                     <Pressable key={s} onPress={() => toggleSymptom(s)} style={[styles.tag, on && styles.tagOn]}>
-                      <Text style={[styles.tagTxt, on && styles.tagTxtOn]}>{s}</Text>
+                      <Text style={[styles.tagTxt, on && styles.tagTxtOn]}>{tc(s)}</Text>
                     </Pressable>
                   );
                 })}

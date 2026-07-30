@@ -7,7 +7,7 @@ import { ChipGroup } from '../../ui/Chips';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
 import { DIET } from '../../lib/onboardingMap';
-import { useT } from '../../i18n';
+import { useT, useTc } from '../../i18n';
 
 const DIET_LABELS = Object.keys(DIET); // Balanced Diet, Keto, Vegetarian, ...
 const ALLERGIES = ['Milk', 'Eggs', 'Fish', 'Shellfish', 'Peanuts', 'Tree nuts', 'Wheat', 'Soy'];
@@ -21,6 +21,8 @@ const toggleTok = (arr: string[], label: string) => {
 
 export default function NutritionalPreferencesScreen({ navigation }: any) {
   const t = useT();
+  const tc = useTc();
+  const kk = (v: string) => v.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -61,16 +63,16 @@ export default function NutritionalPreferencesScreen({ navigation }: any) {
           <Text style={styles.headerTitle}>{t('mob.nutritionalPrefs', "Nutritional Preferences")}</Text><View style={{ width: 24 }} />
         </View>
         <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
-          <Text style={styles.note}>These tune your food guidance — allergens are removed and diet type reshapes each phase's list.</Text>
+          <Text style={styles.note}>{t('mob.nutriPrefNote', "These tune your food guidance — allergens are removed and diet type reshapes each phase's list.")}</Text>
 
           <Text style={styles.sectionTitle}>{t('mob.dietTypeCaps', "DIET TYPE")}</Text>
           <View style={styles.card}>
-            <ChipGroup options={DIET_LABELS} selected={[dietLabel]} single onToggle={(v) => setDietLabel(v)} />
+            <ChipGroup options={DIET_LABELS} labelFor={(v) => t('ob.nutritionDiet.opt.' + kk(v), v)} selected={[dietLabel]} single onToggle={(v) => setDietLabel(v)} />
           </View>
 
           <Text style={styles.sectionTitle}>{t('mob.allergiesIntol', "ALLERGIES & INTOLERANCES")}</Text>
           <View style={styles.card}>
-            <ChipGroup options={ALLERGIES} selected={ALLERGIES.filter((a) => has(allergies, a))}
+            <ChipGroup options={ALLERGIES} labelFor={tc} selected={ALLERGIES.filter((a) => has(allergies, a))}
               onToggle={(v) => setAllergies((p) => toggleTok(p, v))} />
           </View>
 
