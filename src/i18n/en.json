@@ -867,7 +867,15 @@
       "medium": "Medium",
       "heavy": "Heavy"
     },
-    "nutriPrefNote": "These tune your food guidance — allergens are removed and diet type reshapes each phase's list."
+    "nutriPrefNote": "These tune your food guidance — allergens are removed and diet type reshapes each phase's list.",
+    "daysWord": "Days",
+    "monthlyPattern": "Monthly hormone pattern",
+    "h": {
+      "e": "Estrogen",
+      "l": "LH",
+      "f": "FSH",
+      "p": "Progesterone"
+    }
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",

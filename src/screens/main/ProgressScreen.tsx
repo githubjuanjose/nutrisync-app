@@ -9,7 +9,8 @@ import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle } from '../../lib/api';
-import { HormoneChartForPhase, HormoneVolatility } from '../../ui/HormoneCharts';
+import { HormoneChartForPhase, HormoneMonthly, HormoneLegend } from '../../ui/HormoneCharts';
+import { hormoneAt, H_VB, H_NAME, H_COLOR } from '../../ui/hormoneHit';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase } from '../../lib/cas';
 import { fetchScoreHistory, splitCycles, avg, fetchMoodEnergy, stabilityScore, seriesStability, fetchPmsRate, baselineCAS, fetchSymptomDays, cycleStabilityV2, ScoreRow } from '../../lib/progress';
 
@@ -112,6 +113,8 @@ export default function ProgressScreen({ navigation }: any) {
   const [compInfo, setCompInfo] = useState<number | null>(null);   // R4-F18
   const [symp, setSymp] = useState<Set<string>>(new Set());
   const [cycleRow, setCycleRow] = useState<any>(null);
+  // r10a: tag de hormona al tocar la curva (se oculta sola)
+  const [hTag, setHTag] = useState<{ k: string; x: number; y: number } | null>(null);
 
   useFocusEffect(useCallback(() => {
     (async () => {
@@ -133,6 +136,25 @@ export default function ProgressScreen({ navigation }: any) {
   }, [userId]));
 
   if (loading) return <LoadingView />;
+
+  // r10a: rango de días de la fase actual (cabecera de la tarjeta)
+  const phaseRange = (phase: string, len: number, dur: number): [number, number] => {
+    const ovS = len - 14, ovE = ovS + 2;
+    if (phase === 'menstrual') return [1, dur];
+    if (phase === 'follicular') return [dur + 1, ovS - 1];
+    if (phase === 'ovulatory') return [ovS, ovE];
+    return [ovE + 1, len];
+  };
+  const onChartTap = (phase: string, w: number, e: any) => {
+    const vb = H_VB[phase]; if (!vb) return;
+    const scale = vb[0] / w;
+    const x = e.nativeEvent.locationX * scale, y = e.nativeEvent.locationY * scale;
+    const k = hormoneAt(phase, x, y);
+    if (k) {
+      setHTag({ k, x: e.nativeEvent.locationX, y: e.nativeEvent.locationY });
+      setTimeout(() => setHTag(null), 2600);
+    } else setHTag(null);
+  };
 
   const css = stabilityScore(me);   // kept for the n-days-logged note
   const todayISO = new Date().toISOString().slice(0, 10);
@@ -356,14 +378,37 @@ export default function ProgressScreen({ navigation }: any) {
               ))}
             </View>
             {hTab === 'w' ? (
-              <>
-                {/* R7-f16: Design's per-phase hormone chart (weekly) */}
-                {/* R8-f40: no weekday labels — the Frame carries its own axis */}
-                <HormoneChartForPhase phase={cyc?.phase ?? 'follicular'} width={300} />
-              </>
+              /* r10a: tarjeta blanca + cabecera fase·días + leyenda FIJA + tap-tags */
+              <View style={styles.chartCard}>
+                <Text style={styles.chartHead}>
+                  {t('phaseNames.' + (cyc?.phase ?? 'follicular'), cyc?.phase ?? '')} · {t('mob.daysWord', 'Days')} {phaseRange(cyc?.phase ?? 'follicular', cycleRow?.cycle_length ?? 28, cycleRow?.period_duration ?? 5)[0]}–{phaseRange(cyc?.phase ?? 'follicular', cycleRow?.cycle_length ?? 28, cycleRow?.period_duration ?? 5)[1]}
+                </Text>
+                <HormoneLegend width={300} />
+                <Pressable onPress={(e) => onChartTap(cyc?.phase ?? 'follicular', 300, e)} style={{ marginTop: 6 }}>
+                  <HormoneChartForPhase phase={cyc?.phase ?? 'follicular'} width={300} />
+                  {hTag ? (
+                    <View style={[styles.hTagPill, { left: Math.min(230, Math.max(4, hTag.x - 34)), top: Math.max(0, hTag.y - 34), borderColor: H_COLOR[hTag.k] }]}>
+                      <View style={[styles.hTagDot, { backgroundColor: H_COLOR[hTag.k] }]} />
+                      <Text style={styles.hTagTxt}>{t('mob.h.' + hTag.k.toLowerCase(), H_NAME[hTag.k])}</Text>
+                    </View>
+                  ) : null}
+                </Pressable>
+              </View>
             ) : hTab === 'm' ? (
-              /* R7-f16: monthly always shows the volatility chart */
-              <HormoneVolatility width={300} />
+              /* r10a: frame mensual ESTÁTICO de Design — nunca cambia */
+              <View style={styles.chartCard}>
+                <Text style={styles.chartHead}>{t('mob.monthlyPattern', 'Monthly hormone pattern')}</Text>
+                <HormoneLegend width={300} />
+                <Pressable onPress={(e) => onChartTap('monthly', 300, e)} style={{ marginTop: 6 }}>
+                  <HormoneMonthly width={300} />
+                  {hTag ? (
+                    <View style={[styles.hTagPill, { left: Math.min(230, Math.max(4, hTag.x - 34)), top: Math.max(0, hTag.y - 34), borderColor: H_COLOR[hTag.k] }]}>
+                      <View style={[styles.hTagDot, { backgroundColor: H_COLOR[hTag.k] }]} />
+                      <Text style={styles.hTagTxt}>{t('mob.h.' + hTag.k.toLowerCase(), H_NAME[hTag.k])}</Text>
+                    </View>
+                  ) : null}
+                </Pressable>
+              </View>
             ) : (
               <View style={styles.lockBox}>
                 <Text style={styles.lockIcon}>◔</Text>
@@ -458,6 +503,11 @@ const styles = StyleSheet.create({
   ld: { width: 8, height: 8, borderRadius: 4 },
   lt: { fontFamily: font.regular, fontSize: 11.5, color: colors.muted },
   lockBox: { alignItems: 'center', paddingVertical: 22 },
+  chartCard: { backgroundColor: '#fff', borderRadius: 18, paddingVertical: 12, paddingHorizontal: 8, alignItems: 'center', width: '100%' },
+  chartHead: { fontFamily: font.semibold, fontSize: 13.5, color: colors.ink, marginBottom: 8 },
+  hTagPill: { position: 'absolute', flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#fff', borderWidth: 1.5, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4, shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 3 },
+  hTagDot: { width: 9, height: 9, borderRadius: 5 },
+  hTagTxt: { fontFamily: font.semibold, fontSize: 12, color: colors.ink },
   lockIcon: { fontSize: 26, color: colors.faint },
   lockTxt: { fontFamily: font.medium, fontSize: 13.5, color: colors.muted, marginTop: 8, textAlign: 'center' },
   lockSub: { fontFamily: font.regular, fontSize: 11.5, color: colors.faint, marginTop: 4 },

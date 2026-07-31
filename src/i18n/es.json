@@ -1176,7 +1176,15 @@
       "medium": "Medio",
       "heavy": "Abundante"
     },
-    "nutriPrefNote": "Esto afina tu guía de alimentación: los alérgenos se eliminan y el tipo de dieta remodela la lista de cada fase."
+    "nutriPrefNote": "Esto afina tu guía de alimentación: los alérgenos se eliminan y el tipo de dieta remodela la lista de cada fase.",
+    "daysWord": "Días",
+    "monthlyPattern": "Patrón hormonal del mes",
+    "h": {
+      "e": "Estrógeno",
+      "l": "LH",
+      "f": "FSH",
+      "p": "Progesterona"
+    }
   },
   "cat": {
     "Getting started": "Primeros pasos",
