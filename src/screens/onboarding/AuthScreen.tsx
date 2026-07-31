@@ -16,6 +16,8 @@ import { useT } from '../../i18n';
 
 // Epic K (4B): closes the in-app browser tab once the OAuth redirect fires.
 WebBrowser.maybeCompleteAuthSession();
+// Epic K: los emails de auth siempre aterrizan en producción, pase lo que pase con Site URL
+const WEB_REDIRECT = 'https://nutrisynccollective.com/app.html';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login' | 'CreateAccount'>;
 
@@ -133,7 +135,7 @@ export default function AuthScreen({ route, navigation }: Props) {
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email: email.trim(),
-        options: { shouldCreateUser: true },
+        options: { shouldCreateUser: true, emailRedirectTo: WEB_REDIRECT },
       });
       if (error) throw error;
       if (isResend) {
@@ -170,7 +172,7 @@ export default function AuthScreen({ route, navigation }: Props) {
     if (busy) return;
     setErr('');
     try {
-      const { error } = await supabase.auth.resend({ type: 'signup', email: email.trim() });
+      const { error } = await supabase.auth.resend({ type: 'signup', email: email.trim(), options: { emailRedirectTo: WEB_REDIRECT } });
       if (error) throw error;
       setResent(true);
     } catch (e: any) {
@@ -188,7 +190,7 @@ export default function AuthScreen({ route, navigation }: Props) {
         const { data, error } = await supabase.auth.signUp({
           email: email.trim(),
           password,
-          options: { data: { first_name: firstName.trim() } },
+          options: { emailRedirectTo: WEB_REDIRECT, data: { first_name: firstName.trim() } },
         });
         if (error) throw error;
         // Session returned = confirmations OFF (legacy) → navigator proceeds.
