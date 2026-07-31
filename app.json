@@ -2,7 +2,7 @@
   "expo": {
     "name": "NutriSync",
     "slug": "nutrisync",
-    "version": "0.17.4",
+    "version": "0.18.0",
     "orientation": "portrait",
     "scheme": "nutrisync",
     "userInterfaceStyle": "light",
@@ -30,7 +30,8 @@
       "bundleIdentifier": "com.nutrisynccollective.app",
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "usesAppleSignIn": true
     },
     "android": {
       "package": "com.nutrisynccollective.app"

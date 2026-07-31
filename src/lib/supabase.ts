@@ -9,5 +9,9 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: false,
+    // Epic K (4B): PKCE so the native Google flow can exchange the ?code=
+    // returned to nutrisync://auth via exchangeCodeForSession. Password,
+    // OTP and Apple id-token flows are unaffected by the flow type.
+    flowType: 'pkce',
   },
 });

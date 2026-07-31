@@ -875,6 +875,23 @@
       "l": "LH",
       "f": "FSH",
       "p": "Progesterone"
+    },
+    "auth": {
+      "continueApple": "Continue with Apple",
+      "continueGoogle": "Continue with Google",
+      "otpBtn": "Email me a code",
+      "otpTitle": "Check your email",
+      "otpSub": "We sent a 6-digit code to",
+      "otpVerify": "Verify",
+      "usePassword": "Use password instead",
+      "confirmSent": "Confirm your email — we sent you a link.",
+      "resend": "Resend email",
+      "bioTitle": "Unlock with Face ID?",
+      "bioSub": "Open NutriSync with your face or fingerprint. Your password still works, and biometrics never leave your phone.",
+      "bioYes": "Yes, activate",
+      "bioNo": "Not now",
+      "bioUnlock": "Unlock NutriSync",
+      "bioFallback": "Use password"
     }
   },
   "ob": {

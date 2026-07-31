@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+import Constants from 'expo-constants';
 import React, { createContext, useContext, useCallback, useEffect, useState } from 'react';
 import { Session } from '@supabase/supabase-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -46,6 +48,10 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data }) => {
       setSession(data.session);
+      // Epic K (K4): access log mínimo al abrir con sesión
+      if (data.session?.user?.id) {
+        supabase.rpc('log_access', { p_platform: Platform.OS, p_version: String(Constants.expoConfig?.version ?? '') }).then(() => {}, () => {});
+      }
       await check(data.session?.user.id ?? null);
       setLoading(false);
     });
