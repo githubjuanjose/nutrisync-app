@@ -185,7 +185,9 @@
     "saving": "Guardando…",
     "cancel": "Cancelar",
     "gotIt": "Entendido",
-    "welP": "Estás aquí porque tu cuerpo merece algo mejor que conjeturas. Sincronicemos."
+    "welP": "Estás aquí porque tu cuerpo merece algo mejor que conjeturas. Sincronicemos.",
+    "done": "Hecho",
+    "feedbackReply": "Respuesta a tu comentario"
   },
   "dows": [
     "DOM",
@@ -501,7 +503,10 @@
       "pick": "Toca para elegir una fecha"
     },
     "city": {
-      "h": "¡Esto ayuda a NutriSync a localizar los consejos y entenderte mejor!"
+      "h": "¡Esto ayuda a NutriSync a localizar los consejos y entenderte mejor!",
+      "use": "Usar mi ubicación",
+      "detecting": "Detectando tu ciudad…",
+      "fail": "No hemos podido detectar tu ciudad — escríbela, por favor."
     },
     "consent": {
       "hero": "Tus datos siguen siendo tuyos",
@@ -1105,7 +1110,10 @@
       "daily": "RECORDATORIOS DIARIOS",
       "cycle": "CICLO",
       "community": "COMUNIDAD",
-      "quiet": "HORAS DE SILENCIO"
+      "quiet": "HORAS DE SILENCIO",
+      "streaks": "RACHAS",
+      "reengage": "REENGANCHE",
+      "times": "HORARIOS"
     },
     "ntf": {
       "daily": "Recordatorio de registro diario",
@@ -1121,7 +1129,15 @@
       "community": "Actividad de la comunidad",
       "communitySub": "Respuestas e hitos de racha",
       "quiet": "Pausa 22:00 – 7:00",
-      "quietSub": "Sin notificaciones por la noche"
+      "quietSub": "Sin notificaciones por la noche",
+      "push": "Notificaciones push",
+      "pushSub": "Interruptor general — pide permiso al activarlo",
+      "streaks": "Celebración de rachas",
+      "streaksSub": "Cuando alcanzas un hito",
+      "reengage": "Vueltas con cariño",
+      "reengageSub": "Si llevas unos días sin pasarte",
+      "morning": "Hora del recordatorio de mañana",
+      "evening": "Hora del recordatorio de noche"
     },
     "ntfNote": "Las notificaciones push requieren permiso de notificaciones (se activa con el trabajo de conectores).",
     "sec": {
@@ -1201,7 +1217,75 @@
       "bioNo": "Ahora no",
       "bioUnlock": "Desbloquea NutriSync",
       "bioFallback": "Usar contraseña"
-    }
+    },
+    "graceAvg": "tu media es",
+    "graceQ": "¿Te ha venido el período?",
+    "graceNorm": "Los ciclos varían — es normal.",
+    "graceCta": "Registrar mi período",
+    "dobPick": "Toca para elegir",
+    "heightFt": "Altura (ft)",
+    "heightIn": "Altura (in)",
+    "weightLb": "Peso (lb)",
+    "unitsHint": "Puedes cambiar las unidades en Preferencias de la app.",
+    "invalidHeight": "Esa altura no parece correcta — revísala, por favor.",
+    "invalidWeight": "Ese peso no parece correcto — revísalo, por favor.",
+    "invalidCycleLen": "La duración del ciclo debe ser un número entero entre 15 y 90 días.",
+    "invalidDur": "La duración del período debe estar entre 1 y 14 días.",
+    "confirmRare": "Valor poco frecuente",
+    "confirmRareBody": "Los ciclos fuera de 21–45 días son poco frecuentes. ¿Guardar igualmente?",
+    "saveAnyway": "Guardar igualmente",
+    "saveFail": "No se pudo guardar",
+    "saveFailBody": "Comprueba tu conexión e inténtalo de nuevo.",
+    "unitsMetric": "Métrico (kg, cm)",
+    "unitsImperial": "Imperial (lb, in)",
+    "heightLbl": "Altura",
+    "weightLbl": "Peso",
+    "awaitingTitle": "Esperando tu nuevo ciclo",
+    "avgShort": "media",
+    "cycleSavedT": "Ciclo guardado",
+    "cycleSavedN": " días: ciclo guardado.",
+    "cycleSavedD1": "Estás en Menstrual · Día 1 — gracias por mantener tu ritmo al día.",
+    "cycleSavedAvg": "Tu media ahora es",
+    "careCopy": "Este ciclo va bastante más allá de tu patrón. Un ciclo largo suelto es común — pero si se repite o te preocupa, consultar con un profesional es buena idea.",
+    "driftCopy": "Este se está alargando más allá de tu rango habitual. El cuerpo hace estas cosas — si se convierte en tu nuevo ritmo, tu media se ajustará automáticamente.",
+    "careLink": "Nota de salud",
+    "careNoteT": "Una nota sobre tu salud",
+    "careNoteBody": "NutriSync detecta patrones — nunca diagnostica. Los ciclos largos o irregulares puntuales son comunes (estrés, viajes, enfermedad). Si los ciclos largos se repiten, o sientes que algo no va bien, consulta con tu médica o ginecóloga. Tus datos aquí pueden ayudar en esa conversación.",
+    "endPeriod": "Terminar período",
+    "endPeriodSub": "pasas a Folicular",
+    "periodEndedT": "Período terminado",
+    "periodEndedB1": "Registrado un período de",
+    "periodEndedB2": " días. Bienvenida a tu fase Folicular — esta duración ya alimenta tu baseline.",
+    "rebaseFyi": "ℹ️ Con 3 ciclos registrados, tu media personal ya guía tu anillo, calendario y predicciones.",
+    "outlierFyi": "Este quedó fuera de tu patrón habitual, así que no moverá tu media salvo que se repita.",
+    "trends": "Tendencias",
+    "trendsBrewT": "Tus tendencias se están cocinando",
+    "trendsBrewB": "Registra al menos 2 ciclos completos y aquí aparecerá tu gráfica personal — duraciones, tu media y tu rango normal.",
+    "cyclesClosed": "ciclos cerrados",
+    "trCycleLen": "Duración del ciclo",
+    "trLastN": "últimos",
+    "trBand": "tu rango normal",
+    "trOutlier": "fuera de patrón",
+    "nextPeriodPred": "Próximo período previsto",
+    "trHistory": "Historial de ciclos",
+    "trEditHint": "¿Fecha de inicio mal? Corrige el ciclo actual con el lápiz de arriba — los pasados se recalculan desde tus inicios registrados.",
+    "legalHdr": "LEGAL",
+    "legalTerms": "Términos y condiciones",
+    "legalPrivacy": "Política de privacidad",
+    "legalCookies": "Política de cookies",
+    "legalHealth": "Aviso de salud",
+    "legalNotice": "Aviso legal",
+    "legalConsent": "Consentimiento de datos de salud",
+    "legalBeta": "Acuerdo de piloto beta",
+    "tapEnergy": "Toca para registrar tu energía",
+    "back": "Atrás",
+    "daysToUnlock": "días para desbloquear",
+    "ntfDenied": "Permiso denegado — activa las notificaciones de NutriSync en Ajustes del sistema.",
+    "ntfOld": "El push aún no está disponible aquí — llega con la versión 0.21.",
+    "ntfPriv": "Tu pantalla bloqueada nunca muestra detalles de salud — el mensaje completo se abre dentro de la app.",
+    "otherFood": "Otro — escribe lo que comiste",
+    "otherFoodPh": "p. ej. ensalada de lentejas",
+    "otherFoodSave": "Registrar"
   },
   "cat": {
     "Getting started": "Primeros pasos",
@@ -1770,5 +1854,25 @@
     "Mid-High": "Media-alta",
     "Mid": "Media",
     "Varies": "Variable"
+  },
+  "gender": {
+    "woman": "Mujer",
+    "nonbinary": "No binaria",
+    "pnts": "Prefiero no decirlo"
+  },
+  "contra": {
+    "yes": "Sí, actualmente",
+    "notanymore": "Ya no",
+    "never": "Nunca"
+  },
+  "cond": {
+    "adenomyosis": "Adenomiosis",
+    "irregular_cycles": "Ciclos irregulares",
+    "hypothyroidism": "Hipotiroidismo",
+    "pmos": "SOP",
+    "endometriosis": "Endometriosis",
+    "hashimoto_s": "Hashimoto",
+    "heavy_menstrual_bleeding": "Sangrado menstrual abundante",
+    "hyperthyroidism": "Hipertiroidismo"
   }
 }

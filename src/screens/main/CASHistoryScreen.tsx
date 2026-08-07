@@ -7,6 +7,7 @@ import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { fetchScoreHistory, splitCycles, avg, ScoreRow } from '../../lib/progress';
+import { localDayISO } from '../../lib/localDay';   // NS-0010: día local
 
 /**
  * R2-J · CAS History (F24b) — Weekly / Monthly / Yearly with the dev-spec's
@@ -57,7 +58,7 @@ export default function CASHistoryScreen({ navigation }: any) {
       const byWeek = new Map<string, number[]>();
       hist.forEach((r) => {
         const d = new Date(r.date); const wk = new Date(d); wk.setDate(d.getDate() - ((d.getDay() + 6) % 7));
-        const k = wk.toISOString().slice(0, 10);
+        const k = localDayISO(wk);
         byWeek.set(k, [...(byWeek.get(k) ?? []), r.cas_total]);
       });
       return [...byWeek.entries()].slice(-8).map(([k, v]) => ({ label: k.slice(5), v: avg(v)! }));

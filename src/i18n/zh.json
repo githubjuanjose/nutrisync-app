@@ -196,7 +196,9 @@
     "prBest": "最佳",
     "battEmpty": "耗尽",
     "battFull": "满电",
-    "saving": "保存中…"
+    "saving": "保存中…",
+    "done": "完成",
+    "feedbackReply": "对你反馈的回复"
   },
   "dows": [
     "周日",
@@ -626,7 +628,10 @@
       "pick": "点击选择日期"
     },
     "city": {
-      "h": "这有助于 NutriSync 本地化建议并更好地了解你！"
+      "h": "这有助于 NutriSync 本地化建议并更好地了解你！",
+      "use": "使用我的位置",
+      "detecting": "正在检测你的城市…",
+      "fail": "无法检测你的城市，请手动输入。"
     },
     "consent": {
       "hero": "你的数据始终属于你",
@@ -796,7 +801,90 @@
     "notesBtn": "备注",
     "nutrition": "营养",
     "other": "其他",
-    "today": "今天"
+    "today": "今天",
+    "graceAvg": "你的平均周期:",
+    "graceQ": "月经来了吗？",
+    "graceNorm": "周期会有变化——这很正常。",
+    "graceCta": "记录月经",
+    "dobPick": "点按选择",
+    "heightFt": "身高（ft）",
+    "heightIn": "身高（in）",
+    "weightLb": "体重（lb）",
+    "unitsHint": "单位可在应用偏好中更改。",
+    "invalidHeight": "身高数值似乎有误，请检查。",
+    "invalidWeight": "体重数值似乎有误，请检查。",
+    "invalidCycleLen": "周期长度须为15至90天之间的整数。",
+    "invalidDur": "经期天数须在1至14天之间。",
+    "confirmRare": "少见的数值",
+    "confirmRareBody": "21–45天以外的周期较少见。仍要保存吗？",
+    "saveAnyway": "仍要保存",
+    "saveFail": "保存失败",
+    "saveFailBody": "请检查网络后重试。",
+    "unitsMetric": "公制（kg、cm）",
+    "unitsImperial": "英制（lb、in）",
+    "heightLbl": "身高",
+    "weightLbl": "体重",
+    "awaitingTitle": "等待你的新周期",
+    "avgShort": "平均",
+    "cycleSavedT": "周期已保存",
+    "cycleSavedN": "天周期已保存。",
+    "cycleSavedD1": "现在是月经期 · 第1天 — 谢谢你持续记录自己的节奏。",
+    "cycleSavedAvg": "你的新平均值是",
+    "careCopy": "这个周期已明显超出你的规律。偶尔一次长周期很常见 — 但如果反复出现或让你担心，建议咨询专业人士。",
+    "driftCopy": "这个周期正超出你的日常范围。身体有时会这样 — 如果这成为你的新节奏，平均值会自动调整。",
+    "careLink": "健康提示",
+    "careNoteT": "关于你健康的提示",
+    "careNoteBody": "NutriSync 追踪规律 — 从不做诊断。偶尔的长周期或不规律周期很常见（压力、旅行、生病）。如果长周期反复出现，或你感觉不对劲，请咨询医生或妇科医生。这里的数据可以帮助那次问诊。",
+    "endPeriod": "结束经期",
+    "endPeriodSub": "进入卵泡期",
+    "periodEndedT": "经期已结束",
+    "periodEndedB1": "已记录",
+    "periodEndedB2": "天的经期。欢迎进入卵泡期 — 这个时长已计入你的基准。",
+    "rebaseFyi": "ℹ️ 记录满3个周期后，你的个人平均值将引导圆环、日历和预测。",
+    "outlierFyi": "这次超出了你的日常规律，除非再次出现，否则不会影响你的平均值。",
+    "trends": "趋势",
+    "trendsBrewT": "你的趋势正在酝酿",
+    "trendsBrewB": "记录至少2个完整周期后，这里会显示你的个人图表 — 周期长度、平均值和正常范围。",
+    "cyclesClosed": "个周期已完成",
+    "trCycleLen": "周期长度",
+    "trLastN": "最近",
+    "trBand": "你的正常范围",
+    "trOutlier": "超出规律",
+    "nextPeriodPred": "下次月经预计",
+    "trHistory": "周期历史",
+    "trEditHint": "开始日期不对？用上方的铅笔修正当前周期 — 过去的周期会根据你记录的开始日期重新计算。",
+    "legalHdr": "法律信息",
+    "legalTerms": "条款与条件",
+    "legalPrivacy": "隐私政策",
+    "legalCookies": "Cookie政策",
+    "legalHealth": "健康须知",
+    "legalNotice": "法律声明",
+    "legalConsent": "健康数据同意书",
+    "legalBeta": "测试版协议",
+    "tapEnergy": "点击记录你的能量",
+    "back": "返回",
+    "daysToUnlock": "天后解锁",
+    "ntf": {
+      "push": "推送通知",
+      "pushSub": "总开关 — 开启时会请求权限",
+      "streaks": "连续打卡庆祝",
+      "streaksSub": "当你达成里程碑时",
+      "reengage": "温柔召回",
+      "reengageSub": "当你几天没来时",
+      "morning": "早间提醒时间",
+      "evening": "晚间提醒时间"
+    },
+    "ntfSec": {
+      "streaks": "连续打卡",
+      "reengage": "召回",
+      "times": "时间"
+    },
+    "ntfDenied": "权限被拒绝 — 请在系统设置中开启 NutriSync 通知。",
+    "ntfOld": "推送暂不可用 — 将随 0.21 版本到来。",
+    "ntfPriv": "锁屏永远不会显示健康细节 — 完整消息在应用内打开。",
+    "otherFood": "其他 — 输入你吃了什么",
+    "otherFoodPh": "例如：扁豆沙拉",
+    "otherFoodSave": "记录"
   },
   "cat": {
     "Getting started": "新手入门",
@@ -1348,5 +1436,25 @@
     "Whole-Wheat Pasta": "全麦意面",
     "Yoga & Mobility": "瑜伽与灵活性",
     "Zucchini (Calabacín)": "西葫芦"
+  },
+  "gender": {
+    "woman": "女性",
+    "nonbinary": "非二元",
+    "pnts": "不愿透露"
+  },
+  "contra": {
+    "yes": "是（目前）",
+    "notanymore": "以前用过",
+    "never": "从未"
+  },
+  "cond": {
+    "adenomyosis": "子宫腺肌病",
+    "irregular_cycles": "月经不规律",
+    "hypothyroidism": "甲状腺功能减退",
+    "pmos": "多囊卵巢综合征",
+    "endometriosis": "子宫内膜异位症",
+    "hashimoto_s": "桥本氏病",
+    "heavy_menstrual_bleeding": "月经量过多",
+    "hyperthyroidism": "甲状腺功能亢进"
   }
 }

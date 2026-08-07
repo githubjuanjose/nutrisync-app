@@ -12,7 +12,8 @@ import { getProfile, getCurrentCycle } from '../../lib/api';
 import { HormoneChartForPhase, HormoneMonthly, HormoneLegend } from '../../ui/HormoneCharts';
 import { hormoneAt, H_VB, H_NAME, H_COLOR } from '../../ui/hormoneHit';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase } from '../../lib/cas';
-import { fetchScoreHistory, splitCycles, avg, fetchMoodEnergy, stabilityScore, seriesStability, fetchPmsRate, baselineCAS, fetchSymptomDays, cycleStabilityV2, ScoreRow } from '../../lib/progress';
+import { fetchScoreHistory, splitCycles, avg, fetchMoodEnergy, stabilityScore, seriesStability, fetchPmsRate, baselineCAS, fetchSymptomDays, cycleStabilityV2, cssWindows, ScoreRow } from '../../lib/progress';
+import { localDayISO } from '../../lib/localDay';   // NS-0010: día local
 
 /**
  * R3 Batch F · Progress (R3-29…37):
@@ -125,7 +126,7 @@ export default function ProgressScreen({ navigation }: any) {
       ]);
       setName(p?.first_name ?? ''); setHist(h); setMe(m); setPms(pr); setCycleRow(c);
       const since = new Date(); since.setDate(since.getDate() - 180);
-      fetchSymptomDays(userId, since.toISOString().slice(0, 10)).then(setSymp).catch(() => {});
+      fetchSymptomDays(userId, localDayISO(since)).then(setSymp).catch(() => {});
       if (c?.last_period_start_date) {
         const len = c.cycle_length ?? 28, dur = c.period_duration ?? 5;
         const d = cycleDayActual(c.last_period_start_date, new Date());
@@ -157,7 +158,7 @@ export default function ProgressScreen({ navigation }: any) {
   };
 
   const css = stabilityScore(me);   // kept for the n-days-logged note
-  const todayISO = new Date().toISOString().slice(0, 10);
+  const todayISO = localDayISO(new Date());
   const todayRow = hist.find((r) => r.date === todayISO) ?? null;
   const cycles = splitCycles(hist);
   const completed = cycles.slice(0, -1);
@@ -183,10 +184,29 @@ export default function ProgressScreen({ navigation }: any) {
 
   // R7-f13: Cycle Stability v2 — founders' formula vs the FIRST fully-logged
   // cycle as baseline; locked (null → "Keep syncing") until it exists. Never 100 by default.
-  const baseCycleRows = completed.length ? completed[0] : null;
-  const baseRange = baseCycleRows ? { from: baseCycleRows[0].date, to: baseCycleRows[baseCycleRows.length - 1].date } : null;
+  // r12-b2: escalera de baseline — si no hay ciclo cerrado, "vs tu primera semana"
   const currentFrom = cycleRow?.last_period_start_date ? String(cycleRow.last_period_start_date).slice(0, 10) : null;
-  const stabilityPct = cycleStabilityV2(me, symp, baseRange, currentFrom);
+  const win = cssWindows(me, completed, currentFrom);
+  const baseRange = win.ready ? win.base : null;
+  const stabilityPct = win.ready ? cycleStabilityV2(me, symp, win.base, win.currentFrom, win.currentTo) : null;
+
+  // r10a-2: honest Current/Last/Best for BOTH scores (no placeholder dashes).
+  // CAS — Current = today's score (same number as the ring), Last cycle = avg of
+  // every day logged in that cycle, Best = best DAILY score ever (so it can
+  // never sit below Current, which is what broke trust in R10).
+  const bestDaily = (() => {
+    const vals = hist.map((r) => r.cas_total).filter((v) => v != null) as number[];
+    return vals.length ? Math.max(...vals) : null;
+  })();
+  // CSS — past cycles scored with the same formula over their CLOSED window
+  // (vs the first-cycle baseline; the baseline cycle itself is not scored).
+  const cssFor = (rows: ScoreRow[]) => cycleStabilityV2(me, symp, baseRange, rows[0].date, rows[rows.length - 1].date);
+  const scorable = completed.slice(1);
+  const cssLast = scorable.length ? cssFor(scorable[scorable.length - 1]) : null;
+  const cssBest = (() => {
+    const vals = [...scorable.map(cssFor), stabilityPct].filter((v) => v != null) as number[];
+    return vals.length ? Math.max(...vals) : null;
+  })();
 
   // R4-F18: each component carries the founders' explainer copy (what it
   // measures + the concrete action that raises it) for the tap-to-expand modal
@@ -313,7 +333,12 @@ export default function ProgressScreen({ navigation }: any) {
               <StabilityRing v={stabilityPct == null ? null : stabilityPct / 100} label={cssLabel} />
               {/* R8-f39: state word sits BELOW the ring, above the days note */}
               <Text style={styles.cssState} numberOfLines={1} adjustsFontSizeToFit>{cssLabel}</Text>
-              {stabilityPct == null ? <Text style={styles.cssNote}>{css.n}/7 {t('mob.daysLoggedShort', 'days logged')}</Text> : null}
+              {/* r12-b2: cuenta atrás clara (antes "11/7 días logged", confuso) */}
+              {stabilityPct == null && !win.ready ? (
+                <Text style={styles.cssNote}>{win.have}/{win.need} {t('mob.daysToUnlock', 'days to unlock')}</Text>
+              ) : stabilityPct != null && win.ready && win.vsFirstWeek ? (
+                <Text style={styles.cssNote}>{t('mob.vsFirstWeek', 'vs your first week')}</Text>
+              ) : null}
               {/* R4-f22/f25: zone words only (wireframe order), no coloured dots */}
               <View style={styles.bandRow}>
                 <Text style={styles.bandTxt}>{t('mob.volatile', 'volatile')}</Text>
@@ -326,9 +351,9 @@ export default function ProgressScreen({ navigation }: any) {
             <View style={styles.statColBox}>
               {/* R7-f15: BOTH scores — CAS average + CSS side by side */}
               <View style={styles.statLine}><Text style={styles.statLbl}></Text><Text style={styles.statHdr}>CAS · CSS</Text></View>
-              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.current', 'Current')}</Text><Text style={styles.statVal}>{casAvgCur == null ? '—' : Math.round(casAvgCur)} · {stabilityPct == null ? '—' : stabilityPct}</Text></View>
-              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.lastCycle', 'Last cycle')}</Text><Text style={styles.statVal}>{lastAvg == null ? '—' : Math.round(lastAvg)} · —</Text></View>
-              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.bestScore', 'Best score')}</Text><Text style={styles.statVal}>{bestAvg == null ? '—' : Math.round(bestAvg)} · —</Text></View>
+              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.current', 'Current')}</Text><Text style={styles.statVal}>{cas == null ? '—' : Math.round(cas)} · {stabilityPct == null ? '—' : stabilityPct}</Text></View>
+              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.lastCycle', 'Last cycle')}</Text><Text style={styles.statVal}>{lastAvg == null ? '—' : Math.round(lastAvg)} · {cssLast == null ? '—' : cssLast}</Text></View>
+              <View style={styles.statLine}><Text style={styles.statLbl}>{t('mob.bestScore', 'Best score')}</Text><Text style={styles.statVal}>{bestDaily == null ? '—' : Math.round(bestDaily)} · {cssBest == null ? '—' : cssBest}</Text></View>
               <Pressable style={styles.histBtn} onPress={() => navigation.navigate('CASHistory')}>
                 <Text style={styles.histBtnTxt}>{t('mob.viewHistory', 'View History')}</Text>
               </Pressable>

@@ -8,6 +8,7 @@ import { StreakOffDot, StreakOnDot } from '../../ui/StreakOffDot';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { fetchMovementHistory, MovementLogRow } from '../../lib/recs';
+import { localDayISO } from '../../lib/localDay';   // NS-0010: día local
 
 /**
  * R2-D · screen 4 — Movement History. Days Logged + Weekly Streak cards,
@@ -50,17 +51,17 @@ export default function MovementHistoryScreen() {
   const dates = [...byDate.keys()];
   const logged = new Set(dates);
   let streak = 0; const d = new Date();
-  while (logged.has(d.toISOString().slice(0, 10))) { streak++; d.setDate(d.getDate() - 1); }
+  while (logged.has(localDayISO(d))) { streak++; d.setDate(d.getDate() - 1); }
   const week = [...Array(7)].map((_, i) => {
     const x = new Date(); x.setDate(x.getDate() - (6 - i));
-    return logged.has(x.toISOString().slice(0, 10));
+    return logged.has(localDayISO(x));
   });
 
   const fmtDate = (iso: string) => {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = localDayISO(new Date());
     const yd = new Date(); yd.setDate(yd.getDate() - 1);
     if (iso === today) return t('mob.today', 'Today');
-    if (iso === yd.toISOString().slice(0, 10)) return t('mob.yesterday', 'Yesterday');
+    if (iso === localDayISO(yd)) return t('mob.yesterday', 'Yesterday');
     return new Date(iso + 'T12:00:00').toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
   };
   const phaseLabel = (p: string | null) => p ? p.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : '';

@@ -196,7 +196,9 @@
     "prBest": "Mellor",
     "battEmpty": "Esgotada",
     "battFull": "Cargada",
-    "saving": "Gardando…"
+    "saving": "Gardando…",
+    "done": "Feito",
+    "feedbackReply": "Resposta ao teu comentario"
   },
   "dows": [
     "DOM",
@@ -626,7 +628,10 @@
       "pick": "Toca para escoller unha data"
     },
     "city": {
-      "h": "Isto axuda a NutriSync a localizar os consellos e a entenderte mellor!"
+      "h": "Isto axuda a NutriSync a localizar os consellos e a entenderte mellor!",
+      "use": "Usar a miña localización",
+      "detecting": "Detectando a túa cidade…",
+      "fail": "Non puidemos detectar a túa cidade — escríbea, por favor."
     },
     "consent": {
       "hero": "Os teus datos seguen sendo teus",
@@ -796,7 +801,90 @@
     "notesBtn": "Notas",
     "nutrition": "NUTRICIÓN",
     "other": "Outro",
-    "today": "HOXE"
+    "today": "HOXE",
+    "graceAvg": "a túa media é",
+    "graceQ": "Chegouche o período?",
+    "graceNorm": "Os ciclos varían — é normal.",
+    "graceCta": "Rexistrar o meu período",
+    "dobPick": "Toca para elixir",
+    "heightFt": "Altura (ft)",
+    "heightIn": "Altura (in)",
+    "weightLb": "Peso (lb)",
+    "unitsHint": "Podes cambiar as unidades en Preferencias da app.",
+    "invalidHeight": "Esa altura non parece correcta — revísaa.",
+    "invalidWeight": "Ese peso non parece correcto — revísao.",
+    "invalidCycleLen": "A duración do ciclo debe ser un número enteiro entre 15 e 90 días.",
+    "invalidDur": "A duración do período debe estar entre 1 e 14 días.",
+    "confirmRare": "Valor pouco frecuente",
+    "confirmRareBody": "Os ciclos fóra de 21–45 días son pouco frecuentes. Gardar igualmente?",
+    "saveAnyway": "Gardar igualmente",
+    "saveFail": "Non se puido gardar",
+    "saveFailBody": "Comproba a conexión e téntao de novo.",
+    "unitsMetric": "Métrico (kg, cm)",
+    "unitsImperial": "Imperial (lb, in)",
+    "heightLbl": "Altura",
+    "weightLbl": "Peso",
+    "awaitingTitle": "Agardando o teu novo ciclo",
+    "avgShort": "media",
+    "cycleSavedT": "Ciclo gardado",
+    "cycleSavedN": " días: ciclo gardado.",
+    "cycleSavedD1": "Estás en Menstrual · Día 1 — grazas por manter o teu ritmo ao día.",
+    "cycleSavedAvg": "A túa media agora é",
+    "careCopy": "Este ciclo vai bastante máis alá do teu patrón. Un ciclo longo puntual é común — pero se se repite ou te preocupa, consultar cun profesional é boa idea.",
+    "driftCopy": "Este estase alongando máis alá do teu rango habitual. O corpo fai estas cousas — se se converte no teu novo ritmo, a túa media axustarase automaticamente.",
+    "careLink": "Nota de saúde",
+    "careNoteT": "Unha nota sobre a túa saúde",
+    "careNoteBody": "NutriSync detecta patróns — nunca diagnostica. Os ciclos longos ou irregulares puntuais son comúns (estrés, viaxes, enfermidade). Se os ciclos longos se repiten, ou sentes que algo non vai ben, consulta coa túa médica ou xinecóloga. Os teus datos aquí poden axudar nesa conversa.",
+    "endPeriod": "Rematar período",
+    "endPeriodSub": "pasas a Folicular",
+    "periodEndedT": "Período rematado",
+    "periodEndedB1": "Rexistrado un período de",
+    "periodEndedB2": " días. Benvida á túa fase Folicular — esta duración xa alimenta o teu baseline.",
+    "rebaseFyi": "ℹ️ Con 3 ciclos rexistrados, a túa media persoal xa guía o teu anel, calendario e predicións.",
+    "outlierFyi": "Este quedou fóra do teu patrón habitual, así que non moverá a túa media salvo que se repita.",
+    "trends": "Tendencias",
+    "trendsBrewT": "As túas tendencias están a cocerse",
+    "trendsBrewB": "Rexistra polo menos 2 ciclos completos e aquí aparecerá a túa gráfica persoal — duracións, a túa media e o teu rango normal.",
+    "cyclesClosed": "ciclos pechados",
+    "trCycleLen": "Duración do ciclo",
+    "trLastN": "últimos",
+    "trBand": "o teu rango normal",
+    "trOutlier": "fóra de patrón",
+    "nextPeriodPred": "Próximo período previsto",
+    "trHistory": "Historial de ciclos",
+    "trEditHint": "Data de inicio mal? Corrixe o ciclo actual co lapis de arriba — os pasados recalcúlanse desde os teus inicios rexistrados.",
+    "legalHdr": "LEGAL",
+    "legalTerms": "Termos e condicións",
+    "legalPrivacy": "Política de privacidade",
+    "legalCookies": "Política de cookies",
+    "legalHealth": "Aviso de saúde",
+    "legalNotice": "Aviso legal",
+    "legalConsent": "Consentimento de datos de saúde",
+    "legalBeta": "Acordo de piloto beta",
+    "tapEnergy": "Toca para rexistrar a túa enerxía",
+    "back": "Atrás",
+    "daysToUnlock": "días para desbloquear",
+    "ntf": {
+      "push": "Notificacións push",
+      "pushSub": "Interruptor xeral — pide permiso ao activalo",
+      "streaks": "Celebración de rachas",
+      "streaksSub": "Cando acadas un fito",
+      "reengage": "Regresos con agarimo",
+      "reengageSub": "Se levas uns días sen pasar",
+      "morning": "Hora do recordatorio da mañá",
+      "evening": "Hora do recordatorio da noite"
+    },
+    "ntfSec": {
+      "streaks": "RACHAS",
+      "reengage": "REENGANCHE",
+      "times": "HORARIOS"
+    },
+    "ntfDenied": "Permiso denegado — activa as notificacións de NutriSync nos Axustes do sistema.",
+    "ntfOld": "O push aínda non está dispoñible aquí — chega coa versión 0.21.",
+    "ntfPriv": "A túa pantalla bloqueada nunca amosa detalles de saúde — a mensaxe completa ábrese dentro da app.",
+    "otherFood": "Outro — escribe o que comiches",
+    "otherFoodPh": "p. ex. ensalada de lentellas",
+    "otherFoodSave": "Rexistrar"
   },
   "cat": {
     "Getting started": "Primeiros pasos",
@@ -1348,5 +1436,25 @@
     "Whole-Wheat Pasta": "Pasta integral",
     "Yoga & Mobility": "Ioga e mobilidade",
     "Zucchini (Calabacín)": "Cabaciña"
+  },
+  "gender": {
+    "woman": "Muller",
+    "nonbinary": "Non binaria",
+    "pnts": "Prefiro non dicilo"
+  },
+  "contra": {
+    "yes": "Si, actualmente",
+    "notanymore": "Xa non",
+    "never": "Nunca"
+  },
+  "cond": {
+    "adenomyosis": "Adenomiose",
+    "irregular_cycles": "Ciclos irregulares",
+    "hypothyroidism": "Hipotiroidismo",
+    "pmos": "SOP",
+    "endometriosis": "Endometriose",
+    "hashimoto_s": "Hashimoto",
+    "heavy_menstrual_bleeding": "Sangrado menstrual abundante",
+    "hyperthyroidism": "Hipertiroidismo"
   }
 }

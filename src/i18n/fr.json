@@ -196,7 +196,9 @@
     "prBest": "Record",
     "battEmpty": "À plat",
     "battFull": "Chargée",
-    "saving": "Enregistrement…"
+    "saving": "Enregistrement…",
+    "done": "OK",
+    "feedbackReply": "Réponse à ton commentaire"
   },
   "dows": [
     "DIM",
@@ -626,7 +628,10 @@
       "pick": "Touche pour choisir une date"
     },
     "city": {
-      "h": "Cela aide NutriSync à localiser les conseils et à mieux te comprendre !"
+      "h": "Cela aide NutriSync à localiser les conseils et à mieux te comprendre !",
+      "use": "Utiliser ma position",
+      "detecting": "Détection de votre ville…",
+      "fail": "Impossible de détecter votre ville — saisissez-la, s'il vous plaît."
     },
     "consent": {
       "hero": "Tes données restent les tiennes",
@@ -794,7 +799,90 @@
     "lowest": "Bas",
     "movementLbl": "Mouvement",
     "other": "Autre",
-    "today": "AUJOURD'HUI"
+    "today": "AUJOURD'HUI",
+    "graceAvg": "votre moyenne est de",
+    "graceQ": "Vos règles sont-elles arrivées ?",
+    "graceNorm": "Les cycles varient — c'est normal.",
+    "graceCta": "Enregistrer mes règles",
+    "dobPick": "Touchez pour choisir",
+    "heightFt": "Taille (ft)",
+    "heightIn": "Taille (in)",
+    "weightLb": "Poids (lb)",
+    "unitsHint": "Vous pouvez changer les unités dans Préférences.",
+    "invalidHeight": "Cette taille semble incorrecte — vérifiez-la.",
+    "invalidWeight": "Ce poids semble incorrect — vérifiez-le.",
+    "invalidCycleLen": "La durée du cycle doit être un nombre entier entre 15 et 90 jours.",
+    "invalidDur": "La durée des règles doit être entre 1 et 14 jours.",
+    "confirmRare": "Valeur inhabituelle",
+    "confirmRareBody": "Les cycles hors 21–45 jours sont rares. Enregistrer quand même ?",
+    "saveAnyway": "Enregistrer quand même",
+    "saveFail": "Échec de l'enregistrement",
+    "saveFailBody": "Vérifiez votre connexion et réessayez.",
+    "unitsMetric": "Métrique (kg, cm)",
+    "unitsImperial": "Impérial (lb, in)",
+    "heightLbl": "Taille",
+    "weightLbl": "Poids",
+    "awaitingTitle": "En attente de ton nouveau cycle",
+    "avgShort": "moy.",
+    "cycleSavedT": "Cycle enregistré",
+    "cycleSavedN": " jours : cycle enregistré.",
+    "cycleSavedD1": "Tu es en Menstruelle · Jour 1 — merci de garder ton rythme à jour.",
+    "cycleSavedAvg": "Ta moyenne est maintenant de",
+    "careCopy": "Ce cycle dépasse nettement ton schéma habituel. Un cycle long isolé est courant — mais si cela se répète ou t’inquiète, consulter un professionnel est une bonne idée.",
+    "driftCopy": "Celui-ci s’allonge au-delà de ta plage habituelle. Le corps fait ça — si cela devient ton nouveau rythme, ta moyenne s’ajustera automatiquement.",
+    "careLink": "Note santé",
+    "careNoteT": "Une note sur ta santé",
+    "careNoteBody": "NutriSync détecte des tendances — il ne diagnostique jamais. Des cycles longs ou irréguliers ponctuels sont courants (stress, voyages, maladie). Si les cycles longs se répètent, ou si tu sens que quelque chose ne va pas, parles-en à ton médecin ou ta gynécologue. Tes données ici peuvent aider cette conversation.",
+    "endPeriod": "Terminer les règles",
+    "endPeriodSub": "passe en Folliculaire",
+    "periodEndedT": "Règles terminées",
+    "periodEndedB1": "Enregistré des règles de",
+    "periodEndedB2": " jours. Bienvenue dans ta phase Folliculaire — cette durée nourrit maintenant ta référence.",
+    "rebaseFyi": "ℹ️ Avec 3 cycles enregistrés, ta moyenne personnelle guide désormais ton anneau, ton calendrier et tes prédictions.",
+    "outlierFyi": "Celui-ci est sorti de ton schéma habituel : il ne bougera pas ta moyenne sauf s’il se répète.",
+    "trends": "Tendances",
+    "trendsBrewT": "Tes tendances mijotent",
+    "trendsBrewB": "Enregistre au moins 2 cycles complets et ton graphique personnel apparaîtra ici — durées, ta moyenne et ta plage normale.",
+    "cyclesClosed": "cycles clos",
+    "trCycleLen": "Durée du cycle",
+    "trLastN": "derniers",
+    "trBand": "ta plage normale",
+    "trOutlier": "hors schéma",
+    "nextPeriodPred": "Prochaines règles attendues",
+    "trHistory": "Historique des cycles",
+    "trEditHint": "Date de début erronée ? Corrige le cycle en cours avec le crayon en haut — les cycles passés se recalculent depuis tes débuts enregistrés.",
+    "legalHdr": "LÉGAL",
+    "legalTerms": "Conditions générales",
+    "legalPrivacy": "Politique de confidentialité",
+    "legalCookies": "Politique de cookies",
+    "legalHealth": "Avis santé",
+    "legalNotice": "Mentions légales",
+    "legalConsent": "Consentement données de santé",
+    "legalBeta": "Accord bêta",
+    "tapEnergy": "Touche pour noter ton énergie",
+    "back": "Retour",
+    "daysToUnlock": "jours pour débloquer",
+    "ntf": {
+      "push": "Notifications push",
+      "pushSub": "Interrupteur général — demande la permission à l'activation",
+      "streaks": "Célébration des séries",
+      "streaksSub": "Quand tu atteins un palier",
+      "reengage": "Retours en douceur",
+      "reengageSub": "Si tu t’es absentée quelques jours",
+      "morning": "Heure du rappel du matin",
+      "evening": "Heure du rappel du soir"
+    },
+    "ntfSec": {
+      "streaks": "SÉRIES",
+      "reengage": "RETOURS",
+      "times": "HORAIRES"
+    },
+    "ntfDenied": "Permission refusée — active les notifications NutriSync dans les Réglages du système.",
+    "ntfOld": "Le push n'est pas encore disponible ici — il arrive avec la version 0.21.",
+    "ntfPriv": "Ton écran verrouillé n’affiche jamais de détails de santé — le message complet s’ouvre dans l’app.",
+    "otherFood": "Autre — écris ce que tu as mangé",
+    "otherFoodPh": "p. ex. salade de lentilles",
+    "otherFoodSave": "Enregistrer"
   },
   "cat": {
     "Getting started": "Premiers pas",
@@ -1346,5 +1434,25 @@
     "Whole-Wheat Pasta": "Pâtes complètes",
     "Yoga & Mobility": "Yoga et mobilité",
     "Zucchini (Calabacín)": "Courgette"
+  },
+  "gender": {
+    "woman": "Femme",
+    "nonbinary": "Non-binaire",
+    "pnts": "Je préfère ne pas le dire"
+  },
+  "contra": {
+    "yes": "Oui, actuellement",
+    "notanymore": "Plus maintenant",
+    "never": "Jamais"
+  },
+  "cond": {
+    "adenomyosis": "Adénomyose",
+    "irregular_cycles": "Cycles irréguliers",
+    "hypothyroidism": "Hypothyroïdie",
+    "pmos": "SOPK",
+    "endometriosis": "Endométriose",
+    "hashimoto_s": "Hashimoto",
+    "heavy_menstrual_bleeding": "Règles très abondantes",
+    "hyperthyroidism": "Hyperthyroïdie"
   }
 }

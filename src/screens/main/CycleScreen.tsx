@@ -6,10 +6,12 @@ import { NutriAvatar } from '../../ui/NutriAvatar';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
 import { CycleRingInteractive } from '../../ui/CycleRingInteractive';
+import { GraceBanner } from '../../ui/GraceBanner';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile, getCurrentCycle, UserRow, CycleRow } from '../../lib/api';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase, cycleProgress } from '../../lib/cas';
 import { getTodayLog, getTodayScore, DailyLog } from '../../lib/daily';
+import { notify } from '../../lib/notify';
 import { useT, useI18n, localeTag } from '../../i18n';
 
 const WINGS = require('../../../assets/nutri-wings.png');
@@ -115,6 +117,13 @@ export default function CycleScreen({ navigation }: any) {
               </View>
             ))}
           </View>
+
+          {cycle ? <GraceBanner day={day} len={len} onLog={() => navigation.navigate('EditPeriod')}
+            onCare={() => notify(
+              t('mob.careNoteT', 'A note on your health'),
+              t('mob.careNoteBody', 'NutriSync tracks patterns — it never diagnoses. Occasional long or irregular cycles are common (stress, travel, illness). If long cycles keep repeating, or you feel something is off, please check in with a doctor or gynaecologist. Your data here can help that conversation.')
+            )}
+            style={{ marginHorizontal: 20, marginTop: 12 }} /> : null}
 
           <View style={styles.ringWrap}>
             <CycleRingInteractive

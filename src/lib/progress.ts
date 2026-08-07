@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { localDayISO } from './localDay';   // NS-0010: día local
 
 /** R2-J data layer — score history + logs for Progress/History/Calendar. */
 
@@ -8,7 +9,7 @@ export async function fetchScoreHistory(userId: string, days = 365): Promise<Sco
   const since = new Date(); since.setDate(since.getDate() - days);
   const { data } = await supabase.from('daily_scores')
     .select('date,cas_total,component_1_phase_confidence,component_2_biomarkers,component_3_nutrition,component_4_fitness,component_5_logging,phase,cycle_day')
-    .eq('user_id', userId).gte('date', since.toISOString().slice(0, 10)).order('date', { ascending: true });
+    .eq('user_id', userId).gte('date', localDayISO(since)).order('date', { ascending: true });
   return ((data as any[]) ?? []).map((d) => ({
     date: d.date, cas_total: Number(d.cas_total), phase: d.phase, cycle_day: d.cycle_day,
     c1: Number(d.component_1_phase_confidence), c2: Number(d.component_2_biomarkers),
@@ -33,7 +34,7 @@ export const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) 
 export async function fetchMoodEnergy(userId: string, days = 120): Promise<{ date: string; mood: number | null; energy: number | null }[]> {
   const since = new Date(); since.setDate(since.getDate() - days);
   const { data } = await supabase.from('daily_logs').select('date,mood,energy')
-    .eq('user_id', userId).gte('date', since.toISOString().slice(0, 10)).order('date', { ascending: true });
+    .eq('user_id', userId).gte('date', localDayISO(since)).order('date', { ascending: true });
   return (data as any[]) ?? [];
 }
 
@@ -91,25 +92,28 @@ const sd = (vals: number[]) => {
 };
 
 /**
- * R7-f13 · Cycle Stability Score v2 (founders' formula):
- *   CSS = 50 + 50·(0.55·EnergyImpact + 0.45·MoodImpact)
- *   Impact = 0.7·(volatility improvement) + 0.3·(severe-day improvement)
- * vs the user's BASELINE = her first fully-logged cycle; the current window is
- * weighted toward the last 7 logged days (late-luteal emphasis: counted twice).
- * Severe days come from logged PMS symptoms (not a mood proxy). Returns null —
- * locked "keep syncing" — until the baseline cycle has ≥7 logged days and the
- * current cycle has ≥5. Never defaults to 100.
+ * r10a · Cycle Stability Score (master-doc formula, replaces R7-f13 weights):
+ *   CSS = 50 + 50·(0.45·EnergyStabilityImprovement + 0.45·MoodStabilityImprovement
+ *                  + 0.10·PMSSymptomStability)
+ * Energy/Mood terms are volatility improvements vs the user's BASELINE = her
+ * first fully-logged cycle; PMS term is the severe-day-rate improvement. The
+ * current window is weighted toward the last 7 logged days (late-luteal
+ * emphasis: counted twice). Severe days come from logged PMS symptoms (not a
+ * mood proxy). Pass `currentToISO` to score a CLOSED past cycle (Last/Best
+ * rows). Returns null — locked "keep syncing" — until the baseline cycle has
+ * ≥7 logged days and the scored window has ≥5. Never defaults to 100.
  */
 export function cycleStabilityV2(
   me: { date: string; mood: number | null; energy: number | null }[],
   sympDays: Set<string>,
   baseRange: { from: string; to: string } | null,
   currentFromISO: string | null,
+  currentToISO?: string | null,
 ): number | null {
   if (!baseRange || !currentFromISO) return null;
   const inR = (d: string, from: string, to: string) => d >= from && d <= to;
   const basRows = me.filter((r) => inR(r.date, baseRange.from, baseRange.to));
-  const curRows = me.filter((r) => r.date >= currentFromISO);
+  const curRows = me.filter((r) => r.date >= currentFromISO && (!currentToISO || r.date <= currentToISO));
   const series = (rows: typeof me, k: 'mood' | 'energy') => rows.filter((r) => r[k] != null).map((r) => r[k]!) ;
   const bE = series(basRows, 'energy'), bM = series(basRows, 'mood');
   const cE0 = series(curRows, 'energy'), cM0 = series(curRows, 'mood');
@@ -129,16 +133,55 @@ export function cycleStabilityV2(
   };
   const bSev = sevRate(basRows), cSev = sevRate(curRows);
   const sevImpr = bSev < 0.02 ? (cSev < 0.02 ? 0 : -1) : Math.max(-1, Math.min(1, (bSev - cSev) / bSev));
-  const impact = (b: number[], c: number[]) => 0.7 * volImpr(b, c) + 0.3 * sevImpr;
-  const css = 50 + 50 * (0.55 * impact(bE, cE) + 0.45 * impact(bM, cM));
+  // 45% energy stability + 45% mood stability + 10% PMS symptom stability
+  const css = 50 + 50 * (0.45 * volImpr(bE, cE) + 0.45 * volImpr(bM, cM) + 0.10 * sevImpr);
   return Math.round(Math.max(0, Math.min(100, css)));
+}
+
+/**
+ * r12-b2 (bug Pilar, 4-ago) · ESCALERA DE BASELINE DEL CSS.
+ * Antes el CSS exigía un ciclo CERRADO como referencia: con un solo ciclo en
+ * curso quedaba bloqueado ~2 meses y la tarjeta decía "11/7 días" (confuso).
+ * Ahora, igual que el CAS con "tu primera semana": si no hay ciclo cerrado, la
+ * referencia son sus 7 PRIMEROS días registrados y la ventana actual son los
+ * posteriores (mínimo 5, sin solaparse) → se desbloquea a los 12 días. Pura.
+ */
+export type CssWindows =
+  | { ready: true; base: { from: string; to: string }; currentFrom: string; currentTo?: string; vsFirstWeek: boolean }
+  | { ready: false; have: number; need: number };
+
+export function cssWindows(
+  me: { date: string; mood: number | null; energy: number | null }[],
+  closedCycleRows: ScoreRow[][],           // ciclos CERRADOS (el 1º es la referencia)
+  currentCycleStartISO: string | null,
+): CssWindows {
+  // camino preferente: ya existe un ciclo cerrado → referencia real
+  if (closedCycleRows.length && currentCycleStartISO) {
+    const first = closedCycleRows[0];
+    return {
+      ready: true, vsFirstWeek: false,
+      base: { from: first[0].date, to: first[first.length - 1].date },
+      currentFrom: currentCycleStartISO,
+    };
+  }
+  // escalera: primeros 7 días registrados vs los siguientes (≥5, sin solape)
+  const logged = me
+    .filter((r) => r.mood != null && r.energy != null)
+    .sort((a, b) => (a.date < b.date ? -1 : 1));
+  const NEED = 12;
+  if (logged.length < NEED) return { ready: false, have: logged.length, need: NEED };
+  return {
+    ready: true, vsFirstWeek: true,
+    base: { from: logged[0].date, to: logged[6].date },
+    currentFrom: logged[7].date,
+  };
 }
 
 /** R3-34: % of the last `days` logged days with any PMS/pain symptom recorded. */
 export async function fetchPmsRate(userId: string, days = 7): Promise<number | null> {
   const since = new Date(); since.setDate(since.getDate() - days);
   const { data } = await supabase.from('daily_logs').select('date,pain_symptoms')
-    .eq('user_id', userId).gte('date', since.toISOString().slice(0, 10));
+    .eq('user_id', userId).gte('date', localDayISO(since));
   const rows = (data as any[]) ?? [];
   if (rows.length < 3) return null;                       // honest: needs a few logged days
   const withSym = rows.filter((r) => Array.isArray(r.pain_symptoms) && r.pain_symptoms.length > 0).length;

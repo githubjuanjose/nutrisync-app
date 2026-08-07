@@ -64,7 +64,7 @@ export default function AppPreferencesScreen({ navigation }: any) {
             <View style={styles.rowCol}>
               <Text style={styles.rowLabel}>{t('mob.measureUnits', "Measurement units")}</Text>
               <Segment value={p.units} onChange={(v) => update({ units: v })}
-                options={[{ key: 'metric', label: 'Metric (kg, cm)' }, { key: 'imperial', label: 'Imperial (lb, in)' }]} />
+                options={[{ key: 'metric', label: t('mob.unitsMetric', 'Metric (kg, cm)') }, { key: 'imperial', label: t('mob.unitsImperial', 'Imperial (lb, in)') }]} />
             </View>
           </View>
 

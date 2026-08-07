@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, PanResponder, Pressable } from 'react-native';
 import Svg, { Path, Circle, ClipPath, Defs, G, Rect } from 'react-native-svg';
 import { colors, font } from '../theme';
 import { useT } from '../i18n';
+import { dayState } from '../lib/cycleStats';
 
 /**
  * R5 · Home cycle ring — reworked to the Round-5 spec (supersedes R4 f4/f5/f6):
@@ -110,6 +111,11 @@ export function CycleRingInteractive({
   const phase = phaseForDay(day);
   const label = phaseName(phase);
   const scrubbing = (scrub != null && scrub !== todayDay) || drag != null;
+  // r10a-4 (D9) · r11c-2: fuente ÚNICA de tramos = cycleStats.dayState (la misma
+  // que usa el GraceBanner y que cubre jest) — awaiting/drift/care pintan el
+  // anillo punteado ámbar. (day solo supera cycleLen mostrando HOY.)
+  const st = dayState(day, cycleLen);
+  const awaiting = st === 'awaiting' || st === 'drift' || st === 'care';
 
   const C = 165, R = 132, SW = 22;
   const scale = size / 330;
@@ -172,6 +178,15 @@ export function CycleRingInteractive({
       <Pressable onPress={onEnergyPress} style={[styles.battery, { right: size * 0.04 }]} hitSlop={10}>
         <Battery level={energyLevel ?? 0} logged={!!loggedToday} />
       </Pressable>
+      {/* r11d-1 (feedback Juanjo): la batería no se entendía como algo que HAY
+          que rellenar. Burbuja guía (estilo coach-mark) mientras no haya
+          registro del día; desaparece sola al registrar. */}
+      {!loggedToday ? (
+        <Pressable onPress={onEnergyPress} style={[styles.coach, { right: size * 0.04 }]} hitSlop={6}>
+          <View style={styles.coachArrow} />
+          <Text style={styles.coachTxt}>{t('mob.tapEnergy', 'Tap to log your energy')}</Text>
+        </Pressable>
+      ) : null}
 
       <View {...pan.panHandlers} style={{ width: size, height: size }}>
         <Svg width={size} height={size} viewBox="0 0 330 330">
@@ -186,15 +201,21 @@ export function CycleRingInteractive({
           <Circle cx={C} cy={C} r={R - 100} fill="#FFFFFF" opacity={0.95} />
           {/* white track — the unfilled remainder of the cycle */}
           <Circle cx={C} cy={C} r={R} stroke="#FFFFFF" strokeWidth={SW} fill="none" />
-          {/* the progress arc (f1 palette) */}
-          {segs.map((s, i) => <Path key={i} d={s.d} stroke={s.c} strokeWidth={SW} fill="none" />)}
-          {/* rounded start cap at 12 o'clock */}
-          <Circle cx={pt(C, C, R, 0).x} cy={pt(C, C, R, 0).y} r={SW / 2} fill={arcColor(0)} />
+          {awaiting ? (
+            /* r10a-4: dotted amber "awaiting" ring replaces the vivid gradient */
+            <Circle cx={C} cy={C} r={R} stroke="#E8B072" strokeWidth={SW} fill="none"
+              strokeDasharray="3 12" strokeLinecap="round" opacity={0.9} />
+          ) : (<>
+            {/* the progress arc (f1 palette) */}
+            {segs.map((s, i) => <Path key={i} d={s.d} stroke={s.c} strokeWidth={SW} fill="none" />)}
+            {/* rounded start cap at 12 o'clock */}
+            <Circle cx={pt(C, C, R, 0).x} cy={pt(C, C, R, 0).y} r={SW / 2} fill={arcColor(0)} />
+          </>)}
           {/* f2: EXACT wireframe waves, clipped to the inner circle */}
           <G clipPath="url(#innerclip)">{WAVES}</G>
           {/* f22: day badge riding the TIP of the arc */}
           <Circle cx={tip.x} cy={tip.y} r={22} fill="#FFFFFF" />
-          <Circle cx={tip.x} cy={tip.y} r={22} fill="none" stroke="rgba(0,0,0,0.06)" strokeWidth={1} />
+          <Circle cx={tip.x} cy={tip.y} r={22} fill="none" stroke={awaiting ? '#E8B072' : 'rgba(0,0,0,0.06)'} strokeWidth={awaiting ? 1.5 : 1} />
         </Svg>
 
         <View pointerEvents="none" style={StyleSheet.absoluteFill}>
@@ -202,8 +223,13 @@ export function CycleRingInteractive({
             <Text style={{ fontFamily: font.bold, fontSize: 17, color: '#F5641E' }}>{day}</Text>
           </View>
           <View style={styles.centre} pointerEvents="none">
-            <Text style={[styles.phase, { fontSize: labelSize }]} numberOfLines={1} adjustsFontSizeToFit>{label}</Text>
-            <Text style={styles.day}>{`${t('mob.dayWord', 'Day')} ${day}`}</Text>
+            {awaiting ? (<>
+              <Text style={[styles.phase, { fontSize: 22, color: '#9A6B35' }]} numberOfLines={2} adjustsFontSizeToFit>{t('mob.awaitingTitle', 'Awaiting your new cycle')}</Text>
+              <Text style={styles.day}>{`⏳ ${t('mob.dayWord', 'Day')} ${day} · ${t('mob.avgShort', 'avg')} ${cycleLen}`}</Text>
+            </>) : (<>
+              <Text style={[styles.phase, { fontSize: labelSize }]} numberOfLines={1} adjustsFontSizeToFit>{label}</Text>
+              <Text style={styles.day}>{`${t('mob.dayWord', 'Day')} ${day}`}</Text>
+            </>)}
           </View>
         </View>
       </View>
@@ -219,6 +245,10 @@ export function CycleRingInteractive({
 
 const styles = StyleSheet.create({
   battery: { position: 'absolute', top: -2, zIndex: 5, backgroundColor: '#fff', borderRadius: 14, paddingHorizontal: 9, paddingVertical: 7, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 4 },
+  /* r11d-1: coach-mark de la batería */
+  coach: { position: 'absolute', top: 46, zIndex: 6, backgroundColor: colors.ink, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 8, maxWidth: 190, shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }, elevation: 6 },
+  coachArrow: { position: 'absolute', top: -5, right: 18, width: 10, height: 10, backgroundColor: colors.ink, transform: [{ rotate: '45deg' }] },
+  coachTxt: { fontFamily: font.semibold, fontSize: 12, color: '#fff', lineHeight: 16 },
   centre: { position: 'absolute', left: 0, right: 0, top: '31%', alignItems: 'center', paddingHorizontal: 62 },
   phase: { fontFamily: font.bold, color: colors.ink, textAlign: 'center' },
   day: { fontFamily: font.regular, fontSize: 18, color: colors.muted, marginTop: 6 },

@@ -1,5 +1,6 @@
 import { supabase } from './supabase';
 import { todayISO } from './daily';
+import { localDayISO } from './localDay';   // NS-0010: día local
 
 /**
  * R2-B recommendation engine client. One RPC (`ns_daily_recs`) returns the
@@ -32,12 +33,29 @@ export async function fetchDailyRecs(lang: string = 'en'): Promise<DailyRecs | n
 /** Wireframe category order first, extra content categories after. */
 const CAT_ORDER = ['Proteins', 'Vegetables', 'Grains & Carbs', 'Nuts & Seeds',
   'Fruits', 'Legumes', 'Dairy & Alternatives', 'Healthy Fats & Oils', 'Herbs, Spices & Extras'];
-export function orderedCategories(map: Record<string, RecItem[]> | null | undefined): [string, RecItem[]][] {
+/** NS-0007 (r15): rotación diaria DETERMINISTA dentro de cada categoría.
+ *  «Always showing me the same foods» — las listas llegaban siempre en el
+ *  mismo orden y arriba salían los mismos platos. Giramos cada lista con una
+ *  semilla del DÍA LOCAL (lección NS-0010: jamás Greenwich) + la categoría:
+ *  mismo día = mismo orden (estable en re-renders), día nuevo = platos nuevos
+ *  arriba. Pura, con unitarios. */
+export function rotateDaily<T>(items: T[], seed: string): T[] {
+  if (!items || items.length < 2) return items ?? [];
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+  const off = h % items.length;
+  return items.slice(off).concat(items.slice(0, off));
+}
+
+export function orderedCategories(map: Record<string, RecItem[]> | null | undefined, dayISO?: string): [string, RecItem[]][] {
   if (!map) return [];
-  return Object.entries(map).sort((a, b) => {
-    const ia = CAT_ORDER.indexOf(a[0]); const ib = CAT_ORDER.indexOf(b[0]);
-    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
-  });
+  const dia = dayISO ?? localDayISO();
+  return Object.entries(map)
+    .map(([cat, items]) => [cat, rotateDaily(items, dia + '·' + cat)] as [string, RecItem[]])
+    .sort((a, b) => {
+      const ia = CAT_ORDER.indexOf(a[0]); const ib = CAT_ORDER.indexOf(b[0]);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    });
 }
 
 /** Today's checked item names from a checklist table. */
@@ -81,7 +99,7 @@ export async function fetchMealHistory(userId: string, days = 30): Promise<MealR
   const since = new Date(); since.setDate(since.getDate() - days);
   const { data } = await supabase.from('meal_logs')
     .select('id,date,description,meal_type,phase')
-    .eq('user_id', userId).gte('date', since.toISOString().slice(0, 10))
+    .eq('user_id', userId).gte('date', localDayISO(since))
     .order('date', { ascending: false }).order('id', { ascending: true });
   return (data as MealRow[]) ?? [];
 }
@@ -104,7 +122,7 @@ export async function saveMovementText(userId: string, description: string, ctx?
 export type MovementLogRow = { id: number; date: string; description: string; phase: string | null };
 export async function fetchMovementHistory(userId: string, days = 30): Promise<{ logs: MovementLogRow[]; checks: { date: string; item_name: string; category_tag: string | null; phase?: string | null }[] }> {
   const since = new Date(); since.setDate(since.getDate() - days);
-  const iso = since.toISOString().slice(0, 10);
+  const iso = localDayISO(since);
   const [l, c] = await Promise.all([
     supabase.from('movement_logs').select('id,date,description,phase')
       .eq('user_id', userId).gte('date', iso).order('date', { ascending: false }),

@@ -196,7 +196,9 @@
     "prBest": "Milhor",
     "battEmpty": "Descargada",
     "battFull": "Cargada",
-    "saving": "En tot guardar…"
+    "saving": "En tot guardar…",
+    "done": "Hèt",
+    "feedbackReply": "Responsa a ton comentari"
   },
   "dows": [
     "DG",
@@ -626,7 +628,10 @@
       "pick": "Tòca entà causir ua data"
     },
     "city": {
-      "h": "Açò ajude a NutriSync a localizar es conselhs e a compréner-te melhor!"
+      "h": "Açò ajude a NutriSync a localizar es conselhs e a compréner-te melhor!",
+      "use": "Emplegar era mia localizacion",
+      "detecting": "Detectant era tua ciutat…",
+      "fail": "Non auem podut detectar era tua ciutat — escriu-la, se te platz."
     },
     "consent": {
       "hero": "Es tues dades seguissen essent tues",
@@ -796,7 +801,90 @@
     "notesBtn": "Nòtes",
     "nutrition": "NUTRICION",
     "other": "Aute",
-    "today": "AUÉ"
+    "today": "AUÉ",
+    "graceAvg": "era tua mejana ei",
+    "graceQ": "T'a vengut era règla?",
+    "graceNorm": "Es cicles varien — ei normau.",
+    "graceCta": "Registrar era mia règla",
+    "dobPick": "Tòca entà causir",
+    "heightFt": "Nautada (ft)",
+    "heightIn": "Nautada (in)",
+    "weightLb": "Pes (lb)",
+    "unitsHint": "Pòs cambiar es unitats en Preferéncies dera app.",
+    "invalidHeight": "Aguesta nautada non semble corrècta — revisa-la.",
+    "invalidWeight": "Aguest pes non semble corrècte — revisa-lo.",
+    "invalidCycleLen": "Era durada deth cicle a d'èster un nombre sancer entre 15 e 90 dies.",
+    "invalidDur": "Era durada dera règla a d'èster entre 1 e 14 dies.",
+    "confirmRare": "Valor pòc frequent",
+    "confirmRareBody": "Es cicles dehòra de 21–45 dies son pòc frequents. Sauvar autanplan?",
+    "saveAnyway": "Sauvar autanplan",
+    "saveFail": "Non s'a pogut sauvar",
+    "saveFailBody": "Verifica era connexion e torna a provar.",
+    "unitsMetric": "Metric (kg, cm)",
+    "unitsImperial": "Imperiau (lb, in)",
+    "heightLbl": "Nautada",
+    "weightLbl": "Pes",
+    "awaitingTitle": "En esperant ton cicle novèl",
+    "avgShort": "mejana",
+    "cycleSavedT": "Cicle enregistrat",
+    "cycleSavedN": " jorns: cicle enregistrat.",
+    "cycleSavedD1": "Siás en Menstruala · Jorn 1 — mercés de gardar ton ritme a jorn.",
+    "cycleSavedAvg": "Ta mejana ara es",
+    "careCopy": "Aqueste cicle va plan delà de ton patron. Un cicle long isolat es comun — mas se se repetís o te preocupa, consultar un professional es una bona idèa.",
+    "driftCopy": "Aqueste s’alonga delà de ton interval abitual. Lo còs fa aquò — se ven ton ritme novèl, ta mejana s’ajustarà automaticament.",
+    "careLink": "Nòta de santat",
+    "careNoteT": "Una nòta sus ta santat",
+    "careNoteBody": "NutriSync detècta de patrons — jamai diagnostica pas. De cicles longs o irregulars isolats son comuns (estrès, viatges, malautiá). Se los cicles longs se repetisson, o se sentes que quicòm va pas, consulta ton mètge o ta ginecològa. Tas donadas aicí pòdon ajudar dins aquela conversa.",
+    "endPeriod": "Acabar lo periòde",
+    "endPeriodSub": "passas a Folliculara",
+    "periodEndedT": "Periòde acabat",
+    "periodEndedB1": "Enregistrat un periòde de",
+    "periodEndedB2": " jorns. Benvenguda dins ta fasa Folliculara — aquesta durada noirís ara ton baseline.",
+    "rebaseFyi": "ℹ️ Amb 3 cicles enregistrats, ta mejana personala guida ara ton anèl, calendièr e prediccions.",
+    "outlierFyi": "Aqueste es demorat fòra de ton patron abitual, doncas botjarà pas ta mejana levat que se repetisca.",
+    "trends": "Tendéncias",
+    "trendsBrewT": "Tas tendéncias se còson",
+    "trendsBrewB": "Enregistra almens 2 cicles complets e ta grafica personala apareisserà aicí — duradas, ta mejana e ton interval normal.",
+    "cyclesClosed": "cicles barrats",
+    "trCycleLen": "Durada del cicle",
+    "trLastN": "darrièrs",
+    "trBand": "ton interval normal",
+    "trOutlier": "fòra patron",
+    "nextPeriodPred": "Periòde que ven previst",
+    "trHistory": "Istoric dels cicles",
+    "trEditHint": "Data de començament marrida? Corregís lo cicle actual amb lo gredon d’amont — los passats se recalculan dempuèi tos començaments enregistrats.",
+    "legalHdr": "LEGAL",
+    "legalTerms": "Tèrmes e condicions",
+    "legalPrivacy": "Politica de privadesa",
+    "legalCookies": "Politica de cookies",
+    "legalHealth": "Avís de santat",
+    "legalNotice": "Avís legal",
+    "legalConsent": "Consentiment de donadas de santat",
+    "legalBeta": "Acòrdi de pilòt beta",
+    "tapEnergy": "Toca per enregistrar ton energia",
+    "back": "Enrè",
+    "daysToUnlock": "jorns per desblocar",
+    "ntf": {
+      "push": "Notificacions push",
+      "pushSub": "Interruptor general — demanda permission en l’activar",
+      "streaks": "Celebracion de sequéncias",
+      "streaksSub": "Quand atenhes una fita",
+      "reengage": "Retorns amb suenh",
+      "reengageSub": "Se fa qualques jorns que passes pas",
+      "morning": "Ora del rapèl del matin",
+      "evening": "Ora del rapèl del ser"
+    },
+    "ntfSec": {
+      "streaks": "SEQUÉNCIAS",
+      "reengage": "RETORNS",
+      "times": "ORARIS"
+    },
+    "ntfDenied": "Permission refusada — activa las notificacions de NutriSync dins los Reglatges del sistèma.",
+    "ntfOld": "Lo push es pas encara disponible aquí — arriba amb la version 0.21.",
+    "ntfPriv": "L’ecran verrolhat mòstra pas jamai de detalhs de santat — lo messatge complet se dobrís dins l’aplicacion.",
+    "otherFood": "Autre — escriu çò qu'as manjat",
+    "otherFoodPh": "p. ex. ensalada de lentilhas",
+    "otherFoodSave": "Registrar"
   },
   "cat": {
     "Getting started": "Prumèri passi",
@@ -1348,5 +1436,25 @@
     "Whole-Wheat Pasta": "Pasta integrau",
     "Yoga & Mobility": "Iòga e mobilitat",
     "Zucchini (Calabacín)": "Corgeta"
+  },
+  "gender": {
+    "woman": "Hemna",
+    "nonbinary": "Non binària",
+    "pnts": "Preferisqui non ac díder"
+  },
+  "contra": {
+    "yes": "Òc, actuaument",
+    "notanymore": "Ja non",
+    "never": "Jamès"
+  },
+  "cond": {
+    "adenomyosis": "Adenomiòsi",
+    "irregular_cycles": "Cicles irregulars",
+    "hypothyroidism": "Ipotiroïdisme",
+    "pmos": "SOP",
+    "endometriosis": "Endometriòsi",
+    "hashimoto_s": "Hashimoto",
+    "heavy_menstrual_bleeding": "Sagnament menstruau abondós",
+    "hyperthyroidism": "Ipertiroïdisme"
   }
 }

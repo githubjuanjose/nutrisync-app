@@ -87,14 +87,26 @@ export default function MoodEnergyGate({ navigation }: any) {
       <LinearGradient colors={['#FCF1EC', '#FBE7DB', '#F6D6C2']} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top', 'bottom']}>
         <View style={styles.header}>
-          <View>
+          {/* r11d-1 (feedback Juanjo, 4-ago): el check-in era un CALLEJÓN SIN
+              SALIDA — sin ✕ ni atrás. Ahora: ‹ retrocede de energía a ánimo (o
+              cierra desde el primer paso) y ✕ sale siempre sin guardar. */}
+          <Pressable
+            onPress={() => (stepEnergy ? setStepEnergy(false) : navigation.goBack())}
+            hitSlop={14} style={styles.navBtn}
+            accessibilityLabel={stepEnergy ? t('mob.back', 'Back') : t('ui.cancel', 'Cancel')}>
+            <Text style={styles.navTxt}>‹</Text>
+          </Pressable>
+          <View style={{ flex: 1, alignItems: 'center' }}>
             <View style={styles.brandLockup}>
               <Image source={require('../../../assets/nutri-wings.png')} style={styles.brandMark} resizeMode="contain" />
               <Text style={styles.brand}>NUTRISYNC</Text>
             </View>
             <Text style={styles.title}>{t('mob.beforeSync', "Before we Sync...")}</Text>
           </View>
-          {/* R6-f20: Nutri avatar removed from the check-in header */}
+          <Pressable onPress={() => navigation.goBack()} hitSlop={14} style={styles.navBtn}
+            accessibilityLabel={t('ui.cancel', 'Cancel')}>
+            <Text style={styles.navTxt}>✕</Text>
+          </Pressable>
         </View>
 
         <View style={styles.track}>
@@ -118,9 +130,15 @@ export default function MoodEnergyGate({ navigation }: any) {
           {busy ? (
             <ActivityIndicator color={colors.ink} />
           ) : (
-            <Pressable onPress={onNext} disabled={disabled} style={[styles.next, disabled && { opacity: 0.4 }]}>
-              <Text style={styles.nextTxt}>{t('ui.next', 'next')}</Text>
-            </Pressable>
+            <>
+              <Pressable onPress={onNext} disabled={disabled} style={[styles.next, disabled && { opacity: 0.4 }]}>
+                <Text style={styles.nextTxt}>{t('ui.next', 'next')}</Text>
+              </Pressable>
+              {/* r11d-1: salida explícita — nunca obligamos a registrar */}
+              <Pressable onPress={() => navigation.goBack()} style={styles.skip} hitSlop={8}>
+                <Text style={styles.skipTxt}>{t('ui.skipToday', 'Skip for today')}</Text>
+              </Pressable>
+            </>
           )}
         </View>
       </SafeAreaView>
@@ -130,7 +148,9 @@ export default function MoodEnergyGate({ navigation }: any) {
 
 const styles = StyleSheet.create({
   fill: { flex: 1, backgroundColor: 'transparent' },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 22, paddingTop: 8 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingTop: 8 },
+  navBtn: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },   /* r11d-1 */
+  navTxt: { fontFamily: font.semibold, fontSize: 24, color: colors.ink, lineHeight: 28 },
   brandLockup: { flexDirection: 'row', alignItems: 'center', gap: 7, marginBottom: 2 },
   brandMark: { width: 30, height: 30 },
   brand: { fontFamily: font.bold, fontSize: 17, letterSpacing: 1.3, color: colors.ink },
@@ -145,7 +165,9 @@ const styles = StyleSheet.create({
   pillOff: { backgroundColor: colors.white },
   mark5: { position: 'absolute', left: -18, top: 4, fontFamily: font.medium, fontSize: 13, color: colors.muted },
   mark1: { position: 'absolute', left: -18, bottom: 4, fontFamily: font.medium, fontSize: 13, color: colors.muted },
-  footer: { alignItems: 'center', paddingBottom: 20, height: 70, justifyContent: 'center' },
+  footer: { alignItems: 'center', paddingBottom: 20, height: 108, justifyContent: 'center', gap: 8 },
+  skip: { paddingVertical: 6, paddingHorizontal: 12 },                                  /* r11d-1 */
+  skipTxt: { fontFamily: font.medium, fontSize: 13, color: colors.muted, textDecorationLine: 'underline' },
   next: { backgroundColor: colors.ink, paddingHorizontal: 40, height: 50, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
   nextTxt: { fontFamily: font.medium, fontSize: 16, color: colors.white },
 });

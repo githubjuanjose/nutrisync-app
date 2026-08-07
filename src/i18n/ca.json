@@ -196,7 +196,9 @@
     "prBest": "Millor",
     "battEmpty": "Esgotada",
     "battFull": "Carregada",
-    "saving": "Desant…"
+    "saving": "Desant…",
+    "done": "Fet",
+    "feedbackReply": "Resposta al teu comentari"
   },
   "dows": [
     "DG",
@@ -626,7 +628,10 @@
       "pick": "Toca per triar una data"
     },
     "city": {
-      "h": "Això ajuda NutriSync a localitzar els consells i entendre't millor!"
+      "h": "Això ajuda NutriSync a localitzar els consells i entendre't millor!",
+      "use": "Fes servir la meva ubicació",
+      "detecting": "Detectant la teva ciutat…",
+      "fail": "No hem pogut detectar la teva ciutat — escriu-la, si us plau."
     },
     "consent": {
       "hero": "Les teves dades segueixen sent teves",
@@ -795,7 +800,90 @@
     "movementLbl": "Moviment",
     "nutrition": "NUTRICIÓ",
     "other": "Altres",
-    "today": "AVUI"
+    "today": "AVUI",
+    "graceAvg": "la teva mitjana és",
+    "graceQ": "T'ha vingut la regla?",
+    "graceNorm": "Els cicles varien — és normal.",
+    "graceCta": "Registrar la meva regla",
+    "dobPick": "Toca per triar",
+    "heightFt": "Alçada (ft)",
+    "heightIn": "Alçada (in)",
+    "weightLb": "Pes (lb)",
+    "unitsHint": "Pots canviar les unitats a Preferències de l'app.",
+    "invalidHeight": "Aquesta alçada no sembla correcta — revisa-la.",
+    "invalidWeight": "Aquest pes no sembla correcte — revisa'l.",
+    "invalidCycleLen": "La durada del cicle ha de ser un nombre enter entre 15 i 90 dies.",
+    "invalidDur": "La durada de la regla ha de ser entre 1 i 14 dies.",
+    "confirmRare": "Valor poc freqüent",
+    "confirmRareBody": "Els cicles fora de 21–45 dies són poc freqüents. Desar igualment?",
+    "saveAnyway": "Desar igualment",
+    "saveFail": "No s'ha pogut desar",
+    "saveFailBody": "Comprova la connexió i torna-ho a provar.",
+    "unitsMetric": "Mètric (kg, cm)",
+    "unitsImperial": "Imperial (lb, in)",
+    "heightLbl": "Alçada",
+    "weightLbl": "Pes",
+    "awaitingTitle": "Esperant el teu nou cicle",
+    "avgShort": "mitjana",
+    "cycleSavedT": "Cicle desat",
+    "cycleSavedN": " dies: cicle desat.",
+    "cycleSavedD1": "Ets a Menstrual · Dia 1 — gràcies per mantenir el teu ritme al dia.",
+    "cycleSavedAvg": "La teva mitjana ara és",
+    "careCopy": "Aquest cicle va força més enllà del teu patró. Un cicle llarg puntual és comú — però si es repeteix o et preocupa, consultar amb un professional és bona idea.",
+    "driftCopy": "Aquest s’està allargant més enllà del teu rang habitual. El cos fa aquestes coses — si es converteix en el teu nou ritme, la teva mitjana s’ajustarà automàticament.",
+    "careLink": "Nota de salut",
+    "careNoteT": "Una nota sobre la teva salut",
+    "careNoteBody": "NutriSync detecta patrons — mai diagnostica. Els cicles llargs o irregulars puntuals són comuns (estrès, viatges, malaltia). Si els cicles llargs es repeteixen, o sents que alguna cosa no va bé, consulta amb la teva metgessa o ginecòloga. Les teves dades aquí poden ajudar en aquesta conversa.",
+    "endPeriod": "Acabar període",
+    "endPeriodSub": "passes a Fol·licular",
+    "periodEndedT": "Període acabat",
+    "periodEndedB1": "Registrat un període de",
+    "periodEndedB2": " dies. Benvinguda a la teva fase Fol·licular — aquesta durada ja alimenta el teu baseline.",
+    "rebaseFyi": "ℹ️ Amb 3 cicles registrats, la teva mitjana personal ja guia el teu anell, calendari i prediccions.",
+    "outlierFyi": "Aquest ha quedat fora del teu patró habitual, així que no mourà la teva mitjana llevat que es repeteixi.",
+    "trends": "Tendències",
+    "trendsBrewT": "Les teves tendències s’estan coent",
+    "trendsBrewB": "Registra almenys 2 cicles complets i aquí apareixerà la teva gràfica personal — durades, la teva mitjana i el teu rang normal.",
+    "cyclesClosed": "cicles tancats",
+    "trCycleLen": "Durada del cicle",
+    "trLastN": "últims",
+    "trBand": "el teu rang normal",
+    "trOutlier": "fora de patró",
+    "nextPeriodPred": "Proper període previst",
+    "trHistory": "Historial de cicles",
+    "trEditHint": "Data d’inici incorrecta? Corregeix el cicle actual amb el llapis de dalt — els passats es recalculen des dels teus inicis registrats.",
+    "legalHdr": "LEGAL",
+    "legalTerms": "Termes i condicions",
+    "legalPrivacy": "Política de privacitat",
+    "legalCookies": "Política de galetes",
+    "legalHealth": "Avís de salut",
+    "legalNotice": "Avís legal",
+    "legalConsent": "Consentiment de dades de salut",
+    "legalBeta": "Acord de pilot beta",
+    "tapEnergy": "Toca per registrar la teva energia",
+    "back": "Enrere",
+    "daysToUnlock": "dies per desbloquejar",
+    "ntf": {
+      "push": "Notificacions push",
+      "pushSub": "Interruptor general — demana permís en activar-lo",
+      "streaks": "Celebració de ratxes",
+      "streaksSub": "Quan assoleixes una fita",
+      "reengage": "Retorns amb cura",
+      "reengageSub": "Si fa uns dies que no hi passes",
+      "morning": "Hora del recordatori del matí",
+      "evening": "Hora del recordatori de nit"
+    },
+    "ntfSec": {
+      "streaks": "RATXES",
+      "reengage": "REENGANXAMENT",
+      "times": "HORARIS"
+    },
+    "ntfDenied": "Permís denegat — activa les notificacions de NutriSync a Configuració del sistema.",
+    "ntfOld": "El push encara no està disponible aquí — arriba amb la versió 0.21.",
+    "ntfPriv": "La pantalla bloquejada mai mostra detalls de salut — el missatge complet s’obre dins l’app.",
+    "otherFood": "Altres — escriu què has menjat",
+    "otherFoodPh": "p. ex. amanida de llenties",
+    "otherFoodSave": "Registrar"
   },
   "cat": {
     "Getting started": "Primers passos",
@@ -1347,5 +1435,25 @@
     "Whole-Wheat Pasta": "Pasta integral",
     "Yoga & Mobility": "Ioga i mobilitat",
     "Zucchini (Calabacín)": "Carbassó"
+  },
+  "gender": {
+    "woman": "Dona",
+    "nonbinary": "No binària",
+    "pnts": "Prefereixo no dir-ho"
+  },
+  "contra": {
+    "yes": "Sí, actualment",
+    "notanymore": "Ja no",
+    "never": "Mai"
+  },
+  "cond": {
+    "adenomyosis": "Adenomiosi",
+    "irregular_cycles": "Cicles irregulars",
+    "hypothyroidism": "Hipotiroïdisme",
+    "pmos": "SOP",
+    "endometriosis": "Endometriosi",
+    "hashimoto_s": "Hashimoto",
+    "heavy_menstrual_bleeding": "Sagnat menstrual abundant",
+    "hyperthyroidism": "Hipertiroïdisme"
   }
 }

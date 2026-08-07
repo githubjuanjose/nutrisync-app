@@ -29,6 +29,8 @@ export function buildPayloads(
     email: extra.email ?? null,
     city: extra.city ?? null,
     diet_type: DIET[first(answers.nutritionDiet) ?? ''] ?? 'none',
+    diet_types: (() => { const d = DIET[first(answers.nutritionDiet) ?? ''] ?? 'none';   // NS-0004
+                         return d === 'none' ? [] : [d]; })(),
     diet_other: extra.dietOther ?? null,   // R3-54: free-text when diet = Other
     health_conditions: (answers.healthCondition ?? [])
       .filter((v) => v !== 'None of the above')

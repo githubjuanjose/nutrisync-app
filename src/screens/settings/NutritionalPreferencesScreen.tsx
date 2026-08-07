@@ -26,17 +26,19 @@ export default function NutritionalPreferencesScreen({ navigation }: any) {
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [dietLabel, setDietLabel] = useState<string>('No diet');
+  const [dietLabels, setDietLabels] = useState<string[]>(['No diet']);   // NS-0004: multi-dieta
   const [allergies, setAllergies] = useState<string[]>([]);
 
   useEffect(() => {
     (async () => {
       if (!userId) { setLoading(false); return; }
-      const { data } = await supabase.from('users').select('diet_type, allergies').eq('id', userId).maybeSingle();
+      const { data } = await supabase.from('users').select('diet_type, diet_types, allergies').eq('id', userId).maybeSingle();
       if (data) {
         const d = data as any;
-        const label = DIET_LABELS.find((l) => DIET[l] === d.diet_type);
-        if (label) setDietLabel(label);
+        // NS-0004: la verdad nueva es el array; el legado diet_type es el respaldo
+        const vals: string[] = (d.diet_types?.length ? d.diet_types : [d.diet_type]).filter(Boolean);
+        const labels = DIET_LABELS.filter((l) => vals.includes(DIET[l]));
+        setDietLabels(labels.length ? labels : ['No diet']);
         setAllergies(d.allergies ?? []);
       }
       setLoading(false);
@@ -47,7 +49,12 @@ export default function NutritionalPreferencesScreen({ navigation }: any) {
     if (!userId) return;
     setSaving(true);
     try {
-      await supabase.from('users').update({ diet_type: DIET[dietLabel] ?? 'none', allergies }).eq('id', userId);
+      const tipos = dietLabels.filter((l) => l !== 'No diet').map((l) => DIET[l]).filter(Boolean);
+      await supabase.from('users').update({
+        diet_types: tipos,                          // NS-0004: la verdad (todas)
+        diet_type: tipos[0] ?? 'none',              // legado: la primera, por compat
+        allergies,
+      }).eq('id', userId);
       navigation.goBack();
     } catch { navigation.goBack(); }
     finally { setSaving(false); }
@@ -67,7 +74,12 @@ export default function NutritionalPreferencesScreen({ navigation }: any) {
 
           <Text style={styles.sectionTitle}>{t('mob.dietTypeCaps', "DIET TYPE")}</Text>
           <View style={styles.card}>
-            <ChipGroup options={DIET_LABELS} labelFor={(v) => t('ob.nutritionDiet.opt.' + kk(v), v)} selected={[dietLabel]} single onToggle={(v) => setDietLabel(v)} />
+            <ChipGroup options={DIET_LABELS} labelFor={(v) => t('ob.nutritionDiet.opt.' + kk(v), v)} selected={dietLabels}
+              onToggle={(v) => setDietLabels((prev) => {
+                if (v === 'No diet') return ['No diet'];                    // exclusiva: limpia el resto
+                const sin = prev.filter((x) => x !== 'No diet');
+                return sin.includes(v) ? (sin.filter((x) => x !== v).length ? sin.filter((x) => x !== v) : ['No diet']) : [...sin, v];
+              })} />
           </View>
 
           <Text style={styles.sectionTitle}>{t('mob.allergiesIntol', "ALLERGIES & INTOLERANCES")}</Text>

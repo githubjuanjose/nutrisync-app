@@ -28,7 +28,7 @@ const Stack = createNativeStackNavigator();
 /** The signed-in, onboarded app: tabs + the daily mood/energy gate (modal). */
 export default function AppStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' } }}>
+    <Stack.Navigator screenOptions={{ headerShown: false, animation: 'fade', animationDuration: 180, contentStyle: { backgroundColor: 'transparent' } }}>
       <Stack.Screen name="Tabs" component={MainTabs} />
       <Stack.Screen name="Gate" component={MoodEnergyGate} options={{ presentation: 'modal' }} />
       <Stack.Screen name="EditPeriod" component={EditPeriodScreen} options={{ presentation: 'modal' }} />

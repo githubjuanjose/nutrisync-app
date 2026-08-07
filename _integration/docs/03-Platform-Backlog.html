@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Platform & Infra Backlog — NutriSync Docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Platform & Infra Backlog — NutriSync Docs</title><link rel="stylesheet" href="/assets/fonts/fonts.css"><style>
 :root{--coral:#EA5740;--coral-deep:#D8452F;--cream:#FBF4EE;--ink:#241D1A;--muted:#6f655e;--line:#EADED5;--code:#FBEDE6;}
 *{box-sizing:border-box;}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;line-height:1.65;}
@@ -35,7 +35,107 @@ tbody tr:nth-child(even){background:var(--cream);}
 .card .t{font-weight:800;font-size:16px;color:var(--coral-deep);}
 .card .d{font-size:13.5px;color:var(--muted);margin-top:3px;}
 .sec{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;}
-</style></head><body><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Platform &amp; Infrastructure Backlog</h1>
+</style><script id="ns-canonical">(function(){var h=location.hostname;if(h.slice(-10)===".pages.dev"){location.replace("https://nutrisynccollective.com"+location.pathname+location.search+location.hash);}})();</script></head><body><!-- ns-hub-navbar -->
+<div id="ns-hub-navbar">
+<style>
+#ns-hub-navbar{position:fixed;top:0;left:0;right:0;z-index:99990;font-family:'Poppins',system-ui,sans-serif;background:#FFFFFF;box-shadow:0 1px 0 #E6E0D8}
+#ns-hub-navbar *{box-sizing:border-box}
+/* fila 1 · app bar */
+#ns-hub-navbar .nsnb-app{display:flex;align-items:center;gap:12px;padding:10px 18px}
+#ns-hub-navbar .nsnb-brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:#231F20}
+#ns-hub-navbar .nsnb-logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#FF7600,#FD400C);display:flex;align-items:center;justify-content:center;font-size:15px}
+#ns-hub-navbar .nsnb-bt{line-height:1.15}
+#ns-hub-navbar .nsnb-bt b{font-size:14.5px;font-weight:800;letter-spacing:.4px;display:block}
+#ns-hub-navbar .nsnb-bt span{font-size:11px;color:#8A7F78}
+#ns-hub-navbar .nsnb-sp{flex:1}
+#ns-hub-navbar .nsnb-btn{width:34px;height:34px;border:1px solid #E6E0D8;border-radius:9px;background:#fff;color:#5A5148;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0}
+#ns-hub-navbar .nsnb-btn:hover{background:#FFF1EC;color:#E8472A;border-color:#F3C8B8}
+#ns-hub-navbar .nsnb-date{font-size:12px;color:#8A7F78;margin-right:2px}
+/* fila 2 · tab strip estilo carpeta */
+#ns-hub-navbar .nsnb-strip{background:#F4F0EA;border-top:1px solid #EEE8E0}
+#ns-hub-navbar .nsnb-tabs{padding:8px 14px 0}
+/* po66: UNA fila mientras quepa; al desbordar, reparto ladrillo (JS relayout) */
+#ns-hub-navbar .nsnb-row{display:flex;gap:4px;flex-wrap:nowrap;overflow:hidden}
+#ns-hub-navbar .nsnb-row+.nsnb-row{margin-top:3px;padding-left:64px;flex-wrap:wrap;display:none}
+#ns-hub-navbar .nsnb-tab{flex:0 0 auto;padding:9px 16px;font-size:13px;font-weight:600;color:#6E655D;background:#ECE6DD;text-decoration:none;white-space:nowrap;border:1px solid #E2DACF;border-bottom:none;border-radius:10px 10px 0 0;position:relative;top:1px}
+#ns-hub-navbar .nsnb-tab:hover{background:#FFF6EF;color:#C73A20}
+#ns-hub-navbar .nsnb-tab.on{background:#FFFDFA;color:#E8472A;font-weight:700;border-color:#E6E0D8;box-shadow:inset 0 3px 0 #FD400C}
+@media (max-width:700px){#ns-hub-navbar .nsnb-row+.nsnb-row{padding-left:22px}}
+@media (max-width:640px){#ns-hub-navbar .nsnb-bt span,#ns-hub-navbar .nsnb-date{display:none}}
+</style>
+<div class="nsnb-app">
+  <a class="nsnb-brand" href="/hub/full-hub-gated-site.html#/builders">
+    <div class="nsnb-logo">🧡</div>
+    <div class="nsnb-bt"><b>NUTRISYNC</b><span>Builders Hub</span></div>
+  </a>
+  <div class="nsnb-sp"></div>
+  <span class="nsnb-date" id="nsnb-date"></span>
+  <button class="nsnb-btn" onclick="history.back()" title="Atrás" aria-label="Atrás">&#8249;</button>
+  <button class="nsnb-btn" onclick="history.forward()" title="Adelante" aria-label="Adelante">&#8250;</button>
+  <a class="nsnb-btn" href="/hub/full-hub-gated-site.html#/builders" title="Inicio del hub" style="text-decoration:none">⌂</a>
+</div>
+<div class="nsnb-strip">
+  <nav class="nsnb-tabs" id="nsnb-tabs">
+    <div class="nsnb-row" id="nsnb-r1"><a class="nsnb-tab" href="/hub/full-hub-gated-site.html#/builders">⌂ Overview</a>
+      <a class="nsnb-tab" href="/hub/admin-mis-console.html">📊 MIS</a>
+      <a class="nsnb-tab" href="/hub/finance.html">💶 Finanzas</a>
+      <a class="nsnb-tab" href="/hub/pilot.html">🧪 Piloto</a>
+      <a class="nsnb-tab" href="/hub/feedback.html">💬 Feedback</a>
+      <a class="nsnb-tab" href="/hub/waitlist.html">📬 Waitlist</a>
+      <a class="nsnb-tab" href="/hub/documentation/index.html">📚 Docs</a>
+    <a class="nsnb-tab" href="/hub/translations.html">🌍 Traducciones</a>
+      <a class="nsnb-tab" href="/hub/review.html">🔎 Review</a>
+      <a class="nsnb-tab" href="/hub/prototypes.html">🧩 Prototipos</a>
+      <a class="nsnb-tab" href="/hub/development-planning-backlog.html">🗂 Backlog</a>
+      <a class="nsnb-tab" href="/hub/investors-business-case.html">🎯 Pitch</a>
+      <a class="nsnb-tab" href="/hub/access.html">🔑 Access</a>
+      <a class="nsnb-tab" href="/hub/mfa.html">🔐 MFA</a>
+    </div>
+    <div class="nsnb-row" id="nsnb-r2"></div>
+  </nav>
+</div>
+<script>
+(function(){
+  /* po63: si una herramienta acaba dentro de un iframe (clon del marketing),
+     toda la navegación de la barra toma la ventana superior — adiós bucles */
+  document.querySelectorAll('#ns-hub-navbar a').forEach(function(a){a.target='_top';});
+  /* po68: fuera la cabecera heredada "NUTRISYNC 🪶 · Member — open the app"
+     (gated, consola MIS y Pitch la traían de serie; llevaba al marketing) */
+  function hideLegacyHeader(){var ep=document.querySelector('.header-eps');if(ep){var hd=ep.closest('header');(hd||ep).style.display='none';}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hideLegacyHeader);else hideLegacyHeader();
+  var here=(location.pathname.split('/').pop()||'').toLowerCase();
+  var dir=location.pathname.toLowerCase();
+  document.querySelectorAll('#nsnb-tabs .nsnb-tab').forEach(function(a){
+    var f=(a.getAttribute('href')||'').toLowerCase();
+    var base=f.split('/').pop();
+    var hit=(f.indexOf('/documentation/')>-1) ? dir.indexOf('/documentation/')>-1 : base===here;
+    if(hit){a.classList.add('on');}
+  });
+  var d=new Date();
+  var el=document.getElementById('nsnb-date');
+  if(el)el.textContent=d.toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  /* po66: una fila si cabe; si no, corte en el limite y 2o escalon ladrillo */
+  function relayout(){
+    var r1=document.getElementById('nsnb-r1'),r2=document.getElementById('nsnb-r2');
+    if(!r1||!r2)return;
+    var tabs=Array.prototype.slice.call(document.querySelectorAll('#nsnb-tabs .nsnb-tab'));
+    tabs.forEach(function(t){r1.appendChild(t);});
+    r2.style.display='none';
+    if(r1.scrollWidth<=r1.clientWidth+1){pad();return;}
+    var w=r1.clientWidth,acc=0,brk=tabs.length;
+    for(var i=0;i<tabs.length;i++){acc+=tabs[i].offsetWidth+4;if(acc>w){brk=i;break;}}
+    if(brk<1)brk=1;
+    r2.style.display='flex';
+    tabs.slice(brk).forEach(function(t){r2.appendChild(t);});
+    pad();
+  }
+  function pad(){var h=document.getElementById('ns-hub-navbar').offsetHeight||96;document.body.style.paddingTop=(h+6)+'px';}
+  var rT;window.addEventListener('resize',function(){clearTimeout(rT);rT=setTimeout(relayout,150);});
+  relayout();
+})();
+</script>
+</div>
+<!-- /ns-hub-navbar --><div class="topbar"><div class="brand"><b>NUTRISYNC</b> · Docs</div><div class="navbtns"><a href="#" onclick="if(history.length>1){history.back();return false;}return true;" title="Previous page">‹ Back</a><a href="index.html">All documents</a></div></div><div class="wrap"><h1>NutriSync — Platform &amp; Infrastructure Backlog</h1>
 <p>This backlog describes the full production platform NutriSync is being built toward: a scalable containerized backend, a secure zone for biometric and health data, consent captured everywhere data is collected, health and wearable connectors, a single unified web entry point, and an internal admin/MIS plus a protected business-case site.</p>
 <p>The important context, as of July 2026: <strong>the product is already live and operational on Supabase (EU).</strong> Mobile and web are both shipping, both auto-deploy on every push, and the marketing and business-case surfaces are public. This backlog therefore reads less like a from-scratch plan and more like a map from <em>where we are today</em> (a fast Phase-1 stack on Supabase) to <em>where we go for B2B scale</em> (AWS core behind Cloudflare). Each epic below carries an explicit <strong>current status</strong> so investors and builders can see at a glance what is done, what is partial, and what is deliberately deferred.</p>
 <p>Legend — <strong>Priority:</strong> P0 (MVP/launch-blocking) · P1 (fast-follow) · P2 (scale). <strong>Estimate:</strong> T-shirt (S ≤3d, M ≤1.5wk, L ≤3wk, XL &gt;3wk).</p>
@@ -121,13 +221,13 @@ tbody tr:nth-child(even){background:var(--cream);}
 <td><strong>F</strong></td>
 <td>Unified web entry point</td>
 <td>P0</td>
-<td><strong>✅ Done</strong> (on <code>pages.dev</code>) — one site: marketing + web app + gated hub; <strong>custom NutriSync domain pending</strong> (F7)</td>
+<td><strong>✅ Done</strong> — one site on <code>nutrisynccollective.com</code> (custom domain live, www→apex, Zero Trust on /hub, PWA on <code>m.</code>); waitlist handoff (F5) shipped 19 Jul</td>
 </tr>
 <tr>
 <td><strong>G</strong></td>
 <td>Web admin application (MIS / KPIs)</td>
 <td>P1</td>
-<td><strong>◑ Live KPIs wired</strong> — Total Users + DAU/WAU/MAU via admin-gated <code>admin_kpis()</code>; billing metrics modelled until payments exist</td>
+<td><strong>◑ Phase 1 live</strong> — real KPIs (<code>admin_kpis</code>) + growth actuals &amp; editable assumptions (<code>admin_growth</code>, 19 Jul); billing metrics wait for payments</td>
 </tr>
 <tr>
 <td><strong>H</strong></td>
@@ -141,10 +241,43 @@ tbody tr:nth-child(even){background:var(--cream);}
 <td>P1</td>
 <td><strong>Not started</strong></td>
 </tr>
+<tr>
+<td>K</td>
+<td>Identity &amp; Authentication (doc 28)</td>
+<td>P1</td>
+<td>✅ approved 1A·2A·3B·4B — implementation next session</td>
+</tr>
+<tr>
+<td>L</td>
+<td>Payments &amp; Subscriptions (doc 29)</td>
+<td>P1</td>
+<td>◯ proposal ready — founder decisions + company prerequisite</td>
+</tr>
 </tbody>
 </table>
 <p>Status key: <strong>✅ Done</strong> · <strong>◑ Partial</strong> · <strong>▢ Documented only</strong> · <strong>Not started</strong>.</p>
 <hr />
+<h2>Epic K — Identity &amp; Authentication  <em>(P1 — ✅ APPROVED 31 Jul: 1A·2A·3B·4B)</em></h2>
+<p>Sign-in choice, passwordless and access assurance for the pilot and beyond. Full rationale, phasing and founder decisions in <strong>doc 28 — Identity &amp; Authentication Proposal</strong>.</p>
+<ul>
+<li><strong>K1 (P1, M)</strong> — Google + Apple Sign-In (shipped as a pair — App Store rule) with account linking by email. <em>AC: same email across providers resolves to one account; both buttons on app + web.</em> — <strong>GO (1A)</strong>.</li>
+<li><strong>K2 (P1, S)</strong> — Email OTP sign-in (<code>signInWithOtp</code>) as passwordless option and recovery path. <em>AC: OTP works on all surfaces; password stays as fallback.</em> — <strong>GO — new users see providers/OTP first (4B)</strong>.</li>
+<li><strong>K3 (P1, S)</strong> — Email verification ON for password sign-ups; <strong>TOTP MFA required for the 4 admin accounts</strong>. <em>AC: no unverified password accounts; hub tools unreachable without MFA for admins.</em> — <strong>GO — mandatory (2A)</strong>.</li>
+<li><strong>K4 (P2, S)</strong> — Minimal access log (login/app-open: user, ts, platform, version; 90-day retention; admin-only RPC). <em>AC: pilot dashboard can answer "who used the app this week".</em> — <strong>GO</strong>.</li>
+<li><strong>K5 (P2, M)</strong> — Biometric app-lock (SecureStore + local auth, opt-in toggle in Sign In &amp; Security; session expiry unchanged). Native rebuild, bundled with K1's entitlement build. — <strong>GO — offered right after first login, opt-out (3B)</strong>.</li>
+<li><strong>K6 (watchlist)</strong> — Passkeys (WebAuthn) when Supabase support is GA — replaces any custom push-approval idea. — <em>watching.</em></li>
+</ul>
+<h2>Epic L — Payments &amp; Subscriptions  <em>(P1 — decision paper: doc 29)</em></h2>
+<p>Two imposed rails (Apple/Google IAP in-app · Stripe/Paddle on web) with one source of truth. Full architecture, flows and founder decisions in <strong>doc 29</strong>.</p>
+<ul>
+<li><strong>L1 (P1, M)</strong> — Foundation: <code>subscriptions</code> table + <code>is_premium()</code> + RLS gates + RevenueCat wiring, behind a feature flag. <em>AC: entitlement flips end-to-end in sandbox.</em> — <em>pending founder GO.</em></li>
+<li><strong>L2 (P1, M)</strong> — Paywall + locked-state + Settings "Suscripción" + success state (Design §22). <em>AC: all four screens behind the flag.</em> — <em>pending.</em></li>
+<li><strong>L3 (P1, M)</strong> — Apple + Google IAP products live (trial + monthly/annual, price tiers per storefront); TestFlight/internal-track sandbox pass. — <em>pending banking/tax forms in the store accounts.</em></li>
+<li><strong>L4 (P1, M)</strong> — Web rail: Paddle-type MoR (or Stripe) checkout + customer portal + webhooks → Supabase. — <strong>blocked on company registration (doc 19).</strong></li>
+<li><strong>L5 (P2, S)</strong> — Dunning/grace states + billing banner; cancellation deep-links. — <em>pending.</em></li>
+<li><strong>L6 (P2, S)</strong> — Regional price tiers review (LATAM sensitivity) + G3 tracker hookup (MRR real). — <em>pending.</em></li>
+<li><strong>L7 (P3, M)</strong> — LATAM local methods (dLocal/EBANX/Mercado Pago) when the cohort is real. — <em>watching.</em></li>
+</ul>
 <h2>Epic A — Cloud foundation &amp; secure landing zone  <em>(P0)</em></h2>
 <p><strong>Current status: Not started — Supabase Phase 1 by design.</strong> Today Supabase (EU) provides Postgres, Auth, and Row-Level Security, which covers Phase-1 needs. This epic is the AWS secure landing zone we build when scale and B2B compliance obligations justify it.</p>
 <blockquote>
@@ -167,7 +300,7 @@ tbody tr:nth-child(even){background:var(--cream);}
 </ul>
 <p>The AWS-specific CI/CD items below (ECR, ECS blue/green, gated DB migrations) are the <em>scale-up</em> continuation of this epic and land alongside Epics A and C.</p>
 <ul>
-<li><strong>B1 (P0, S)</strong> — Branch protection, required reviews, CODEOWNERS on both repos. <em>AC: no direct pushes to <code>main</code>; PRs require green CI + 1 review.</em> — <em>pending hardening.</em></li>
+<li><strong>B1 (P0, S)</strong> — Branch protection, required reviews, CODEOWNERS on both repos. <em>AC: no direct pushes to <code>main</code>; PRs require green CI + 1 review.</em> — <em>◑ rulesets live on both repos (no force-push/delete, 19 Jul); PR-required + CI gate deferred until the GitHub org lands (Epic J).</em></li>
 <li><strong>B2 (P0, M)</strong> — Fuller CI on GitHub Actions: lint, typecheck, unit tests, build, SBOM, container image scan (Trivy), secret scan. <em>AC: pipeline fails on critical vulns or leaked secrets; artifacts versioned.</em> — <em>lands with the containerized backend.</em></li>
 <li><strong>B3 (P0, M)</strong> — Container build &amp; push to ECR with immutable tags + image signing (cosign). <em>AC: only signed images deploy to prod.</em> — <em>AWS phase.</em></li>
 <li><strong>B4 (P0, L)</strong> — CD to ECS: deploy to <code>dev</code> on merge, <code>staging</code> on tag, <code>prod</code> on manual approval (GitHub Environments); blue/green or rolling. <em>AC: zero-downtime deploys; one-click rollback; deploy events logged.</em> — <em>AWS phase.</em></li>
@@ -202,7 +335,7 @@ tbody tr:nth-child(even){background:var(--cream);}
 <li><strong>D5 (P0, S)</strong> — Row-Level Security / per-user isolation. <em>AC: cross-user access impossible; verified by tests.</em> — <em>✅ done: RLS scopes every row to <code>auth.uid()</code>.</em></li>
 <li><strong>D6 (P0, S)</strong> — Data classification + retention policy; minimization. <em>AC: each field tagged; retention enforced by jobs.</em> — <em>pending.</em></li>
 <li><strong>D7 (P1, M)</strong> — DPIA, Records of Processing, DPA templates for processors. <em>AC: DPIA signed off before launch; sub-processor list published.</em></li>
-<li><strong>D8 (P1, S)</strong> — Cookie/consent banner (privacy-first defaults) on the web entry point. <em>AC: non-essential off by default; choices logged.</em> — <em>pending — a key remaining blocker.</em></li>
+<li><strong>D8 (P1, S)</strong> — Cookie/consent banner (privacy-first defaults) on the web entry point. <em>AC: non-essential off by default; choices logged.</em> — <em>✅ done (ns-consent layer, off-by-default, choice persisted).</em></li>
 <li><strong>D9 (P1, S)</strong> — "Your data is yours" trust surface in-app. <em>AC: users can view/manage/revoke all consents in Profile.</em> — <em>partly present via the Data Privacy screen (export + delete).</em></li>
 </ul>
 <h2>Epic E — Health &amp; wearable connectors  <em>(P1 — roadmap 2028, foundation earlier)</em></h2>
@@ -223,7 +356,8 @@ tbody tr:nth-child(even){background:var(--cream);}
 <p><strong>Connector platform (shared):</strong>
 - <strong>E-P1 (P1, L)</strong> — Connector framework: normalized <code>health_signal</code> schema, per-provider adapters, token vault, incremental sync + backfill, dedup. <em>AC: adding a provider = new adapter only; conflicts resolved by priority rules.</em>
 - <strong>E-P2 (P1, M)</strong> — Sync orchestration via SQS workers + webhooks; retry/backoff; per-provider observability. <em>AC: failed syncs alert; per-user sync status visible.</em>
-- <strong>E-P3 (P1, S)</strong> — Consent + revoke wiring (depends D3): disconnect purges provider tokens and optionally data. <em>AC: revoke stops sync in &lt; 1 min; tokens deleted.</em></p>
+- <strong>E-P3 (P1, S)</strong> — Consent + revoke wiring (depends D3): disconnect purges provider tokens and optionally data. <em>AC: revoke stops sync in &lt; 1 min; tokens deleted.</em>
+- <strong>E-P4 (P2, M)</strong> — <strong>Energy battery fed by wearables</strong> (petición Juanjo, 4-ago-2026): la batería de energía de Home puede pre-rellenarse con señales del wearable (sueño, HRV, frecuencia cardíaca en reposo, carga de actividad) en lugar de depender solo del registro manual. Sugerencia, NUNCA sustitución: la app propone un valor y la usuaria lo confirma o corrige — el dato introducido a mano siempre gana. Requiere <code>health_signal</code> (E-P1) + consentimiento por métrica (E-P3). <em>AC: con wearable conectado y consentido, la batería muestra un valor sugerido marcado como tal, con un toque para aceptar o ajustar; sin wearable o sin consentimiento, el comportamiento actual no cambia; la procedencia (manual vs. dispositivo) queda registrada para no contaminar CAS/CSS.</em></p>
 <h2>Epic F — Unified web entry point (one site, not two)  <em>(P0)</em></h2>
 <p><strong>Current status: ✅ Done.</strong> NutriSync ships as <strong>one site</strong> on the Cloudflare Pages project <code>nutrisync-collective</code>: the marketing site at the root, the transactional web app at <code>/app.html</code>, and the gated investor/builder hub reached from the footer "Team access." The web app is the Claude Design bundle genuinely stitched to the same Supabase backend — real sign-up/log-in, session routing (no session → login · session without a cycle → onboarding · else → home), reading and writing all 8 tables, and the same 5-component CAS writing <code>daily_scores</code>. In-app JSON export and delete work here too. The anon key is baked in and is public and safe (RLS scopes every row).</p>
 <p>Live URLs:
@@ -238,9 +372,9 @@ tbody tr:nth-child(even){background:var(--cream);}
 <li><strong>F2 (P0, S)</strong> — Session-aware entry: no session → login; session without a cycle → onboarding; else → home. <em>AC: session-aware routing; deep links preserved.</em> — <em>✅ done.</em></li>
 <li><strong>F3 (P0, M)</strong> — Shared auth/session on the same Supabase identity across surfaces. <em>AC: single sign-in.</em> — <em>✅ done.</em></li>
 <li><strong>F4 (P0, S)</strong> — Shared design tokens (Figma-aligned) across marketing, web app, and React Native. <em>AC: one token source; consistent brand.</em> — <em>substantially done via the shared Claude Design/Figma system.</em></li>
-<li><strong>F5 (P1, S)</strong> — Waitlist → onboarding handoff. <em>AC: waitlisted emails convert without re-entry.</em> — <em>◑ mostly done: a live <code>public.waitlist</code> table (RLS-private, anon-insert), the marketing-site + newsletter fields now </em><em>persist</em><em> signups (tagged by source), </em><em>~140 legacy signups migrated</em><em> from an old Supabase project, and a </em><em>Founders' Waitlist dashboard</em><em> in the Builders hub with full </em><em>CRUD + CSV export</em><em> (admin-gated, with undo). Remaining: the auto-convert-to-onboarding handoff (pre-fill a waitlisted email into signup).</em></li>
+<li><strong>F5 (P1, S)</strong> — Waitlist → onboarding handoff. <em>AC: waitlisted emails convert without re-entry.</em> — <em>◑ mostly done: a live <code>public.waitlist</code> table (RLS-private, anon-insert), the marketing-site + newsletter fields now </em><em>persist</em><em> signups (tagged by source), </em><em>~140 legacy signups migrated</em><em> from an old Supabase project, and a </em><em>Founders' Waitlist dashboard</em><em> in the Builders hub with full </em><em>CRUD + CSV export</em><em> (admin-gated, with undo). </em><em>19 Jul: handoff shipped</em><em> — <code>converted_at</code> + auth trigger + backfill; dashboard shows an App-user column and conversion stats. ✅ done.</em></li>
 <li><strong>F6 (P1, S)</strong> — Funnel analytics + A/B (EU analytics). <em>AC: signup funnel measured end-to-end.</em> — <em>fast-follow.</em></li>
-<li><strong>F7 (P0, S)</strong> — <strong>Publish on the NutriSync custom domain</strong> (e.g. <code>nutrisynccollective.com</code>) instead of <code>*.pages.dev</code>: Cloudflare <strong>Pages → Custom domains → Add</strong>, point the domain's DNS at Pages, force HTTPS, and redirect the <code>pages.dev</code> URL to it. <em>AC: site served on the branded domain with valid TLS; both apex and <code>www</code> resolve; old URL 301s to the new one.</em> — <strong>pending</strong> — the site is live on <code>nutrisync-collective.pages.dev</code> today; this is a ~15-min DNS task once you pick/confirm the domain.</li>
+<li><strong>F7 (P0, S)</strong> — <strong>Publish on the NutriSync custom domain</strong> (e.g. <code>nutrisynccollective.com</code>) instead of <code>*.pages.dev</code>: Cloudflare <strong>Pages → Custom domains → Add</strong>, point the domain's DNS at Pages, force HTTPS, and redirect the <code>pages.dev</code> URL to it. <em>AC: site served on the branded domain with valid TLS; both apex and <code>www</code> resolve; old URL 301s to the new one.</em> — <strong>✅ DONE (18 Jul)</strong> — live on <code>https://nutrisynccollective.com</code> with TLS, www→apex 301, pages.dev canonical-bounced on hub routes.</li>
 </ul>
 <p><em>Cleanup note:</em> the account still contains stale artifacts — an old <code>nutrisync-web.pages.dev</code> project and a broken <code>nutrisync</code> Worker. Neither is in use; both are safely deletable.</p>
 <h2>Epic G — Web admin application (MIS / KPIs)  <em>(P1)</em></h2>
@@ -251,7 +385,7 @@ tbody tr:nth-child(even){background:var(--cream);}
 <ul>
 <li><strong>G1 (P1, M)</strong> — Admin app shell with role-based access (admin/finance/clinical/support) behind Cloudflare Access / SSO + MFA. <em>AC: no public access; roles enforced server-side; admin actions audit-logged.</em> — <em>shell exists; access control + wiring pending.</em></li>
 <li><strong>G2 (P1, M)</strong> — <strong>MIS KPI dashboard</strong>: DAU·WAU·MAU, signups, retention (D1/D7/D30), subscriptions (free vs premium, MRR, churn), conversion %, B2B seats, CAC/LTV/ARPU vs targets. <em>AC: metrics match source-of-truth analytics; date filters; export.</em> — <em>mock layout present; live data pending.</em></li>
-<li><strong>G3 (P1, M)</strong> — Business-case / financial tracker: revenue vs cost vs profit by year vs plan; user-growth actuals vs targets. <em>AC: editable assumptions; variance vs plan shown.</em> — <em>mock present; wiring pending.</em></li>
+<li><strong>G3 (P1, M)</strong> — Business-case / financial tracker: revenue vs cost vs profit by year vs plan; user-growth actuals vs targets. <em>AC: editable assumptions; variance vs plan shown.</em> — <em>◑ phase 1 live (19 Jul): real growth actuals via <code>admin_growth</code> (12-month users/waitlist, conversion %) + editable assumptions with 12-month projection vs plan. Phase 2 (revenue/cost actuals) waits for payments (Stripe/RevenueCat).</em></li>
 <li><strong>G4 (P1, S)</strong> — Subscription &amp; user admin (no access to raw cycle data). <em>AC: PII access role-gated + logged; cycle data never shown individually.</em></li>
 <li><strong>G5 (P1, S)</strong> — Connector/ops health panel. <em>AC: surfaces E-P2 metrics.</em></li>
 <li><strong>G6 (P2, S)</strong> — Content/clinical review queue. <em>AC: publish workflow with clinical sign-off.</em></li>
@@ -317,7 +451,7 @@ tbody tr:nth-child(even){background:var(--cream);}
 <tr>
 <td><strong>Waitlist &amp; signups</strong></td>
 <td>✅ Done (capture + admin)</td>
-<td>Live <code>public.waitlist</code> table; marketing + newsletter capture; ~140 legacy signups migrated; Founders' CRUD dashboard (search/filter/export/undo) in the Builders hub. Auto-convert-to-onboarding handoff pending (F5).</td>
+<td>Live <code>public.waitlist</code> table; marketing + newsletter capture; ~140 legacy signups migrated; Founders' CRUD dashboard (search/filter/export/undo) in the Builders hub. F5 handoff shipped 19 Jul (auto <code>converted_at</code> via auth trigger + dashboard column).</td>
 </tr>
 <tr>
 <td><strong>DB change safety</strong></td>
@@ -341,7 +475,7 @@ tbody tr:nth-child(even){background:var(--cream);}
 </tr>
 <tr>
 <td><strong>Custom domain (F7)</strong></td>
-<td>⬜ Pending</td>
+<td>✅ Done (18 Jul)</td>
 <td>Publish on the branded NutriSync domain (Cloudflare Pages → Custom domains). ~15-min DNS task.</td>
 </tr>
 <tr>
@@ -361,4 +495,8 @@ tbody tr:nth-child(even){background:var(--cream);}
 </tr>
 </tbody>
 </table>
-<p><strong>Sequencing view:</strong> bilingual and the localization workflow are done. The next product build with real revenue impact is <strong>monetization</strong> (it also unblocks the live admin financial KPIs). Community and native wearables are later-stage. Custom domain is a quick your-side task, independent of all of the above.</p></div></body></html>
+<p><strong>Sequencing view:</strong> bilingual and the localization workflow are done. The next product build with real revenue impact is <strong>monetization</strong> (it also unblocks the live admin financial KPIs). Community and native wearables are later-stage. Custom domain is a quick your-side task, independent of all of the above.</p>
+<h2>Epic J · Corporatisation — everything under NutriSync-owned accounts (NEW · 19 Jul)</h2>
+<p>Move all infrastructure off personal accounts: Google Workspace on the domain, GitHub organisation + transfer of <code>nutrisync-app</code>/<code>nutrisync-web</code> (with Cloudflare Pages re-connection), company-held Cloudflare/Supabase/Expo access, Organization enrollment for Apple + company Play Console, IONOS under company identity, team password vault, 3+1 admin model everywhere. Full phased task list, per-platform explainers and access matrix: <strong>doc 19 · Corporate Migration Plan</strong> (EN+ES).</p>
+<h2>Epic K · Production launch readiness + conditional AWS scale-up (NEW · 19 Jul)</h2>
+<p>Pre-launch: payments (Stripe/RevenueCat), observability (Sentry, uptime, alerting), security hardening (WAF/Turnstile, quotas, secrets rotation, backup RESTORE drill + PITR), staging env + CI, store release pipeline, compliance ops (DPIA, DPAs, retention, delete E2E), support ops. AWS migration is trigger-based (latency/plan-ceiling/cost/enterprise), with the Supabase-dedicated intermediate step evaluated first. Full task list: <strong>doc 19 · Appendix B</strong>.</p></div></body></html>

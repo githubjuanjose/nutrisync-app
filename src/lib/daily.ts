@@ -2,11 +2,52 @@ import { supabase } from './supabase';
 import { getProfile, getCurrentCycle } from './api';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase, computeDailyCAS, Intensity } from './cas';
 
-export const todayISO = () => new Date().toISOString().slice(0, 10);
+import { localDayISO } from './localDay';
+export const todayISO = () => localDayISO();   // NS-0010: día LOCAL, no UTC
 
+/* r12-b1 (bug Pilar, 4-ago): el catálogo trae intensidades COMPUESTAS
+   ("Moderate-High" ×8, "Low-Mid" ×4, "Low-Moderate" ×7, "Restorative…") que no
+   casaban con este mapa → highestIntensity devolvía null y el componente de
+   MOVIMIENTO se quedaba en 0 aunque hubiera entreno registrado. Ahora la
+   clasificación es por contenido, tomando SIEMPRE el nivel más alto presente
+   (un "Moderate-High" cuenta como high). Cubierto por tests en cas.test.ts. */
 const INTENSITY_MAP: Record<string, Intensity> = {
   low: 'low', low_moderate: 'low', moderate: 'moderate', high: 'high', rest: 'rest',
 };
+export function normalizeIntensity(raw?: string | null): Intensity | null {
+  const s = String(raw ?? '').toLowerCase();
+  if (!s.trim()) return null;
+  const direct = INTENSITY_MAP[s.replace(/[^a-z]+/g, '_')];
+  if (direct) return direct;
+  if (/high|vigorous|intens/.test(s)) return 'high';          // moderate-high, high-intensity…
+  if (/moder|mid|medium/.test(s)) return 'moderate';          // low-mid, moderates training…
+  if (/rest|restor|yin|recover/.test(s)) return 'rest';       // restorative yoga, rest day…
+  if (/low|light|gentle|easy|walk/.test(s)) return 'low';
+  return null;
+}
+/* r12-b4 (bug Pilar/Juanjo, 4-ago · 2ª vuelta): con "strength training" el anillo
+   seguía a 0. Causa: varios ítems del catálogo NO traen intensidad (la ficha
+   enseña "Most Recommended" en su lugar) → intensity_level se guardaba null y
+   la intensidad quedaba FUERA justo en el caso por defecto. Regla nueva: si el
+   ítem no declara intensidad, manda su CATEGORÍA. Nunca se pierde el registro. */
+const CATEGORY_DEFAULT: [RegExp, Intensity][] = [
+  [/hiit|sprint|tabata|plyo/, 'high'],
+  [/strength|fuerza|resistance|weight|pesas|gym/, 'moderate'],
+  [/cardio|run|correr|bike|cycl|swim|nataci/, 'moderate'],
+  [/yoga|pilates|mobility|movilidad|stretch|estira|barre|walk|camin/, 'low'],
+  [/rest|descanso|recovery|recuper|restor/, 'rest'],
+  [/other|otro|otras/, 'low'],                 // registro propio: cuenta, sin sobrevender
+];
+export function categoryIntensity(cat?: string | null): Intensity | null {
+  const s = String(cat ?? '').toLowerCase();
+  if (!s.trim()) return null;
+  for (const [re, v] of CATEGORY_DEFAULT) if (re.test(s)) return v;
+  return null;
+}
+/** Intensidad efectiva de una fila del checklist: la suya o, si no, la de su categoría. */
+export function rowIntensity(row: { intensity_level?: string | null; category_tag?: string | null }): Intensity | null {
+  return normalizeIntensity(row.intensity_level) ?? categoryIntensity(row.category_tag);
+}
 const rank: Record<Intensity, number> = { rest: 0, low: 1, moderate: 2, high: 3 };
 
 export type DailyLog = {
@@ -114,10 +155,10 @@ export async function saveChecklist(
   await recomputeCAS(userId);
 }
 
-function highestIntensity(rows: Record<string, any>[]): Intensity | null {
+export function highestIntensity(rows: Record<string, any>[]): Intensity | null {
   let best: Intensity | null = null;
   rows.filter((r) => r.checked).forEach((r) => {
-    const i = INTENSITY_MAP[(r.intensity_level as string) ?? ''] ?? null;
+    const i = rowIntensity(r as any);
     if (i && (best == null || rank[i] > rank[best])) best = i;
   });
   return best;
@@ -134,7 +175,8 @@ export async function recomputeCAS(userId: string) {
     supabase.from('nutrition_checklist').select('id', { count: 'exact', head: true }).eq('user_id', userId).eq('date', date).eq('checked', true),
   ]);
   const { data: moveRows } = await supabase
-    .from('movement_checklist').select('intensity_level,checked').eq('user_id', userId).eq('date', date);
+    // r12-b4: la CATEGORÍA es el respaldo cuando el ítem no declara intensidad
+    .from('movement_checklist').select('intensity_level,category_tag,checked').eq('user_id', userId).eq('date', date);
 
   const fitnessIntensity = highestIntensity(moveRows ?? []);
   const gateDone = log?.mood != null && log?.energy != null;

@@ -196,7 +196,9 @@
     "prBest": "Beste",
     "battEmpty": "Leeg",
     "battFull": "Opgeladen",
-    "saving": "Opslaan…"
+    "saving": "Opslaan…",
+    "done": "Klaar",
+    "feedbackReply": "Antwoord op je feedback"
   },
   "dows": [
     "ZO",
@@ -626,7 +628,10 @@
       "pick": "Tik om een datum te kiezen"
     },
     "city": {
-      "h": "Dit helpt NutriSync om tips te lokaliseren en jou beter te begrijpen!"
+      "h": "Dit helpt NutriSync om tips te lokaliseren en jou beter te begrijpen!",
+      "use": "Mijn locatie gebruiken",
+      "detecting": "Je stad wordt gedetecteerd…",
+      "fail": "We konden je stad niet vinden — typ hem alsjeblieft in."
     },
     "consent": {
       "hero": "Jouw gegevens blijven van jou",
@@ -796,7 +801,90 @@
     "notesBtn": "Notities",
     "nutrition": "VOEDING",
     "other": "Anders",
-    "today": "VANDAAG"
+    "today": "VANDAAG",
+    "graceAvg": "je gemiddelde is",
+    "graceQ": "Is je menstruatie begonnen?",
+    "graceNorm": "Cycli variëren — dat is normaal.",
+    "graceCta": "Menstruatie registreren",
+    "dobPick": "Tik om te kiezen",
+    "heightFt": "Lengte (ft)",
+    "heightIn": "Lengte (in)",
+    "weightLb": "Gewicht (lb)",
+    "unitsHint": "Eenheden wijzig je in App-voorkeuren.",
+    "invalidHeight": "Deze lengte lijkt niet te kloppen — controleer even.",
+    "invalidWeight": "Dit gewicht lijkt niet te kloppen — controleer even.",
+    "invalidCycleLen": "De cycluslengte moet een geheel getal tussen 15 en 90 dagen zijn.",
+    "invalidDur": "De menstruatieduur moet tussen 1 en 14 dagen liggen.",
+    "confirmRare": "Ongebruikelijke waarde",
+    "confirmRareBody": "Cycli buiten 21–45 dagen zijn zeldzaam. Toch opslaan?",
+    "saveAnyway": "Toch opslaan",
+    "saveFail": "Opslaan mislukt",
+    "saveFailBody": "Controleer je verbinding en probeer opnieuw.",
+    "unitsMetric": "Metrisch (kg, cm)",
+    "unitsImperial": "Imperiaal (lb, in)",
+    "heightLbl": "Lengte",
+    "weightLbl": "Gewicht",
+    "awaitingTitle": "Wachten op je nieuwe cyclus",
+    "avgShort": "gem.",
+    "cycleSavedT": "Cyclus opgeslagen",
+    "cycleSavedN": "-daagse cyclus opgeslagen.",
+    "cycleSavedD1": "Je zit in Menstruatie · Dag 1 — bedankt dat je je ritme bijhoudt.",
+    "cycleSavedAvg": "Je gemiddelde is nu",
+    "careCopy": "Deze cyclus loopt flink voorbij je patroon. Eén lange cyclus is normaal — maar als het zich herhaalt of je zorgen maakt, is een check bij een professional een goed idee.",
+    "driftCopy": "Deze loopt voorbij je gebruikelijke bereik. Dat doet een lichaam soms — wordt dit je nieuwe ritme, dan past je gemiddelde zich automatisch aan.",
+    "careLink": "Gezondheidsnotitie",
+    "careNoteT": "Een notitie over je gezondheid",
+    "careNoteBody": "NutriSync volgt patronen — het stelt nooit diagnoses. Af en toe een lange of onregelmatige cyclus is normaal (stress, reizen, ziekte). Herhalen lange cycli zich, of voelt iets niet goed, bespreek het dan met je arts of gynaecoloog. Je gegevens hier kunnen dat gesprek helpen.",
+    "endPeriod": "Menstruatie beëindigen",
+    "endPeriodSub": "je gaat naar Folliculair",
+    "periodEndedT": "Menstruatie beëindigd",
+    "periodEndedB1": "Vastgelegd: een menstruatie van",
+    "periodEndedB2": " dagen. Welkom in je folliculaire fase — deze lengte voedt nu je baseline.",
+    "rebaseFyi": "ℹ️ Met 3 vastgelegde cycli leidt je persoonlijke gemiddelde nu je ring, kalender en voorspellingen.",
+    "outlierFyi": "Deze viel buiten je gebruikelijke patroon en beweegt je gemiddelde alleen als het zich herhaalt.",
+    "trends": "Trends",
+    "trendsBrewT": "Je trends zijn aan het brouwen",
+    "trendsBrewB": "Leg minstens 2 volledige cycli vast en hier verschijnt je persoonlijke grafiek — lengtes, je gemiddelde en je normale bereik.",
+    "cyclesClosed": "cycli afgerond",
+    "trCycleLen": "Cycluslengte",
+    "trLastN": "laatste",
+    "trBand": "je normale bereik",
+    "trOutlier": "buiten patroon",
+    "nextPeriodPred": "Volgende menstruatie verwacht",
+    "trHistory": "Cyclusgeschiedenis",
+    "trEditHint": "Startdatum fout? Corrigeer de huidige cyclus met het potlood bovenaan — eerdere worden herberekend vanaf je vastgelegde starts.",
+    "legalHdr": "JURIDISCH",
+    "legalTerms": "Algemene voorwaarden",
+    "legalPrivacy": "Privacybeleid",
+    "legalCookies": "Cookiebeleid",
+    "legalHealth": "Gezondheidsverklaring",
+    "legalNotice": "Juridische kennisgeving",
+    "legalConsent": "Toestemming gezondheidsgegevens",
+    "legalBeta": "Beta-overeenkomst",
+    "tapEnergy": "Tik om je energie vast te leggen",
+    "back": "Terug",
+    "daysToUnlock": "dagen tot ontgrendeling",
+    "ntf": {
+      "push": "Pushmeldingen",
+      "pushSub": "Hoofdschakelaar — vraagt toestemming bij inschakelen",
+      "streaks": "Reeksen vieren",
+      "streaksSub": "Wanneer je een mijlpaal haalt",
+      "reengage": "Zachte comebacks",
+      "reengageSub": "Als je een paar dagen weg bent",
+      "morning": "Tijd ochtendherinnering",
+      "evening": "Tijd avondherinnering"
+    },
+    "ntfSec": {
+      "streaks": "REEKSEN",
+      "reengage": "COMEBACKS",
+      "times": "TIJDEN"
+    },
+    "ntfDenied": "Toestemming geweigerd — zet NutriSync-meldingen aan in de systeeminstellingen.",
+    "ntfOld": "Push is hier nog niet beschikbaar — komt met versie 0.21.",
+    "ntfPriv": "Je vergrendelscherm toont nooit gezondheidsdetails — het volledige bericht opent in de app.",
+    "otherFood": "Anders — typ wat je hebt gegeten",
+    "otherFoodPh": "bijv. linzensalade",
+    "otherFoodSave": "Loggen"
   },
   "cat": {
     "Getting started": "Aan de slag",
@@ -1348,5 +1436,25 @@
     "Whole-Wheat Pasta": "Volkorenpasta",
     "Yoga & Mobility": "Yoga & mobiliteit",
     "Zucchini (Calabacín)": "Courgette"
+  },
+  "gender": {
+    "woman": "Vrouw",
+    "nonbinary": "Non-binair",
+    "pnts": "Zeg ik liever niet"
+  },
+  "contra": {
+    "yes": "Ja, momenteel",
+    "notanymore": "Niet meer",
+    "never": "Nooit"
+  },
+  "cond": {
+    "adenomyosis": "Adenomyose",
+    "irregular_cycles": "Onregelmatige cycli",
+    "hypothyroidism": "Hypothyreoïdie",
+    "pmos": "PCOS",
+    "endometriosis": "Endometriose",
+    "hashimoto_s": "Hashimoto",
+    "heavy_menstrual_bleeding": "Hevige menstruatie",
+    "hyperthyroidism": "Hyperthyreoïdie"
   }
 }

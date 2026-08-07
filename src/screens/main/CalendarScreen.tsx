@@ -8,10 +8,13 @@ import { useT, useI18n, localeTag } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getCurrentCycle, getProfile, startNewCycle, getAllCycles, CycleRow } from '../../lib/api';
+import { notify } from '../../lib/notify';
 import { recomputeCAS } from '../../lib/daily';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase } from '../../lib/cas';
 import { fetchSexDayTypes, fetchScoreHistory, splitCycles, ScoreRow } from '../../lib/progress';
+import { closedCycles, personalAvg, normalRange, predictNext, inPredictedPeriod } from '../../lib/cycleStats';
 import { NutriAvatar } from '../../ui/NutriAvatar';
+import { GraceBanner } from '../../ui/GraceBanner';
 
 /**
  * R3 Batch E · Calendar rebuild (R3-18…28 + sex stars from R3-17):
@@ -34,7 +37,8 @@ import { NutriAvatar } from '../../ui/NutriAvatar';
 
 type P4 = 'menstrual' | 'follicular' | 'ovulatory' | 'luteal';
 const PAL: Record<P4, string> = { menstrual: '#E8837B', follicular: '#A8C3A0', ovulatory: '#E9C46A', luteal: '#B9A7D9' };
-const iso = (d: Date) => d.toISOString().slice(0, 10);
+import { localDayISO } from '../../lib/localDay';
+const iso = (d: Date) => localDayISO(d);   // NS-0010
 const PAGE = 12;
 
 export default function CalendarScreen({ navigation }: any) {
@@ -45,7 +49,7 @@ export default function CalendarScreen({ navigation }: any) {
   const [cycle, setCycle] = useState<CycleRow | null>(null);
   const [allCycles, setAllCycles] = useState<CycleRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState<'month' | 'year'>('month');
+  const [view, setView] = useState<'month' | 'year' | 'trends'>('month');   // M-1: + Trends
   const [filter, setFilter] = useState<P4 | null>(null);
   const [cursor, setCursor] = useState(() => { const d = new Date(); return { y: d.getFullYear(), m: d.getMonth() }; });
   const [sexDays, setSexDays] = useState<Map<string, 'protected' | 'unprotected'>>(new Map());
@@ -89,17 +93,18 @@ export default function CalendarScreen({ navigation }: any) {
   const len = cycle?.cycle_length ?? 28;
   const dur = cycle?.period_duration ?? 5;
   const lps = cycle?.last_period_start_date ?? null;
-  // R8-f24/f25: each date maps to ITS cycle from the logged history; the future
-  // keeps counting from the current start (31, 32… — no phantom next cycle);
-  // dates before the first logged cycle back-project predicted previous cycles.
+  // R8-f24/f25 + NS-0009 (r15): each date maps to ITS cycle from the logged
+  // history; the future keeps counting from the current start (31, 32… — no
+  // phantom next cycle). Dates BEFORE her first logged cycle stay BLANK:
+  // the old modulo back-projection painted «periods» for the whole past year
+  // and read as invented data she never entered (ticket NS-0009).
   const dayOf = (d: Date) => {
     if (!lps) return null;
     const iso10 = (x: Date) => `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`;
     const dISO = iso10(d);
     const starts = allCycles.length ? allCycles.map((c) => String(c.last_period_start_date).slice(0, 10)) : [String(lps).slice(0, 10)];
     if (dISO < starts[0]) {
-      // before any logged cycle → modulo back-projection from the first start
-      return cycleDay(starts[0], d, len);
+      return null;   // NS-0009: nada pintado antes de su primer ciclo real
     }
     let ownStart = starts[0];
     for (const st of starts) { if (st <= dISO) ownStart = st; else break; }
@@ -126,6 +131,15 @@ export default function CalendarScreen({ navigation }: any) {
     }
     return null;
   }, [lps, todayPhase, len]);
+
+  // M-1 · Cycle Intelligence: ciclos cerrados + media personal + banda + predicción
+  const cc = useMemo(() => closedCycles(allCycles.map((c) => String(c.last_period_start_date).slice(0, 10))), [allCycles]);
+  const pAvg = useMemo(() => personalAvg(cc), [cc]);
+  const band = useMemo(() => normalRange(cc), [cc]);
+  const pred = useMemo(() => (lps ? predictNext(String(lps).slice(0, 10), cc, len) : null), [lps, cc, len]);
+  // NS-0009: la predicción PINTADA en la rejilla (el chip 🔮 vivía solo en
+  // Tendencias y la tester mira el Mes). Ventana = inicio previsto + duración.
+  const isPredictedDay = (d: Date) => !!(pred && inPredictedPeriod(localDayISO(d), pred.dateISO, dur));
 
   // R3-25: real cycle-history stats from logged data (honest "—" before enough history)
   const cycles = useMemo(() => splitCycles(history), [history]);
@@ -201,6 +215,12 @@ export default function CalendarScreen({ navigation }: any) {
       <Text style={styles.cdTxt}>{n}</Text>
     </View>
   );
+  /* M-1 (R10): días más allá del baseline → badge HUECO con borde discontinuo */
+  const GraceDayBadge = ({ n }: { n: number }) => (
+    <View style={[styles.cdBadge, styles.cdBadgeGrace]}>
+      <Text style={styles.cdTxtGrace}>{n}</Text>
+    </View>
+  );
   const DayCell = ({ d, mini }: { d: Date | null; mini?: boolean }) => {
     if (!d) return <View style={[styles.cell, mini && styles.cellMini]} />;
     const p = phaseOf(d);
@@ -219,7 +239,14 @@ export default function CalendarScreen({ navigation }: any) {
             <View style={[styles.miniC, styles.miniNeutral, future && { opacity: 0.7 }]}>
               <Text style={styles.miniN}>{d.getDate()}</Text>
             </View>
-            {cdMini != null && p ? <View style={[styles.miniPhaseDot, { backgroundColor: col }]} /> : null}
+            {cdMini != null && p ? (
+              cdMini > len
+                ? <View style={[styles.miniPhaseDot, styles.miniDotGrace]} />         /* M-1: hueco */
+                : <View style={[styles.miniPhaseDot, { backgroundColor: col }]} />
+            ) : isPredictedDay(d) ? (
+              /* NS-0009: período PREVISTO — punto hueco menstrual */
+              <View style={[styles.miniPhaseDot, { backgroundColor: 'transparent', borderWidth: 1, borderColor: PAL.menstrual }]} />
+            ) : null}
           </View>
           <Star d={d} mini />
         </View>
@@ -234,12 +261,15 @@ export default function CalendarScreen({ navigation }: any) {
               <Text style={styles.dayTxtOn}>{d.getDate()}</Text>
             </LinearGradient>
           ) : (
-            <View style={[styles.dayC, styles.dayNeutral, future && { opacity: 0.75 }]}>
+            <View style={[styles.dayC, styles.dayNeutral, future && { opacity: 0.75 },
+              /* NS-0009: día del período PREVISTO — aro discontinuo menstrual */
+              isPredictedDay(d) && { borderWidth: 1.5, borderColor: PAL.menstrual, borderStyle: 'dashed' as const, opacity: 1 }]}>
               <Text style={styles.dayTxtNeutral}>{d.getDate()}</Text>
             </View>
           )}
-          {/* R5-f18: cycle-day badge with the per-phase radial gradient */}
-          {cd != null && p ? <PhaseBadge p={p} n={cd} /> : null}
+          {/* R5-f18: cycle-day badge with the per-phase radial gradient
+              M-1: pasado el baseline (cd > media) el badge se vacía (hueco) */}
+          {cd != null && p ? (cd > len ? <GraceDayBadge n={cd} /> : <PhaseBadge p={p} n={cd} />) : null}
         </View>
         <View style={styles.starRow}><Star d={d} /></View>
       </View>
@@ -255,7 +285,7 @@ export default function CalendarScreen({ navigation }: any) {
         {/* R3-18: page header — back · title · pencil (edit period dates) */}
         <View style={styles.pageHead}>
           <Pressable hitSlop={10} onPress={() => navigation.navigate('Cycle')}><Text style={styles.back}>‹</Text></Pressable>
-          <Text style={styles.pageTitle}>{view === 'month' ? t('mob.calendar', 'Calendar') : t('mob.cycleHistory', 'Cycle History')}</Text>
+          <Text style={styles.pageTitle}>{view === 'month' ? t('mob.calendar', 'Calendar') : view === 'year' ? t('mob.cycleHistory', 'Cycle History') : t('mob.trends', 'Trends')}</Text>
           {view === 'month' ? (
             <Pressable hitSlop={10} onPress={() => setEpOpen(true)}>
               {/* R7-f3: edit-3 vector pencil · R7-f4: opens Edit period start date */}
@@ -312,16 +342,37 @@ export default function CalendarScreen({ navigation }: any) {
                 </View>
                 {nextInfo ? <Text style={styles.heroNote}>→ {nextInfo}</Text> : null}
                 <View style={styles.heroStats}>
-                  <View style={styles.heroStat}><Text style={styles.heroStatLbl}>{t('mob.avgCycle', 'Avg cycle')}</Text><Text style={styles.heroStatVal}>{len} {t('mob.days', 'days')}</Text></View>
+                  {/* M-1: tarjeta viva — media personal + sparkline últimos 6 + puerta a Trends */}
+                  <Pressable style={styles.heroStat} onPress={() => setView('trends')}>
+                    <Text style={styles.heroStatLbl}>{t('mob.avgCycle', 'Avg cycle')}{cc.length >= 3 ? ' ✦' : ''}</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                      <Text style={styles.heroStatVal}>{pAvg ?? len} {t('mob.days', 'days')}</Text>
+                      {cc.length >= 2 ? (() => {
+                        const last6 = cc.slice(-6).map((c) => c.length);
+                        const lo = Math.min(...last6), hi = Math.max(...last6), sp = Math.max(1, hi - lo);
+                        const W = 34, H = 14;
+                        const pts = last6.map((v, i) => `${(i / (last6.length - 1)) * W},${H - 2 - ((v - lo) / sp) * (H - 4)}`).join(' ');
+                        return (
+                          <Svg width={W} height={H}>
+                            <Path d={`M ${pts.split(' ').join(' L ')}`} stroke="#FFFFFF" strokeWidth={1.6} fill="none" strokeLinecap="round" strokeLinejoin="round" opacity={0.9} />
+                          </Svg>
+                        );
+                      })() : null}
+                      <Text style={styles.heroChevron}>›</Text>
+                    </View>
+                  </Pressable>
                   {/* R3-21: period communicated as a range */}
                   <View style={styles.heroStat}><Text style={styles.heroStatLbl}>{t('mob.avgPeriod', 'Avg period')}</Text><Text style={styles.heroStatVal}>{dur}–{dur + 1} {t('mob.days', 'days')}</Text></View>
                 </View>
               </View>
 
+              {/* M-0: grace state — today past the average → speak up + hand the door */}
+              <GraceBanner day={todayDay} len={len} onLog={() => setEpOpen(true)} style={{ marginTop: 10 }} />
+
               <View style={styles.toggleRow}>
-                {(['month', 'year'] as const).map((v) => (
+                {(['month', 'year', 'trends'] as const).map((v) => (
                   <Pressable key={v} onPress={() => setView(v)} style={[styles.toggle, view === v && styles.toggleOn]}>
-                    <Text style={[styles.toggleTxt, view === v && styles.toggleTxtOn]}>{v === 'month' ? t('mob.month', 'Month') : t('mob.year', 'Year')}</Text>
+                    <Text style={[styles.toggleTxt, view === v && styles.toggleTxtOn]}>{v === 'month' ? t('mob.month', 'Month') : v === 'year' ? t('mob.year', 'Year') : t('mob.trends', 'Trends')}</Text>
                   </Pressable>
                 ))}
               </View>
@@ -345,6 +396,14 @@ export default function CalendarScreen({ navigation }: any) {
                 </View>
                 <View style={styles.dowRow}>{dows.map((d, i) => <Text key={i} style={styles.dow}>{d}</Text>)}</View>
                 <View style={styles.grid}>{monthCells(cursor.y, cursor.m).map((d, i) => <DayCell key={i} d={d} />)}</View>
+                {/* NS-0009: la predicción también EN EL MES (antes solo en Tendencias) */}
+                {pred ? (
+                  <View style={styles.trPredChip}>
+                    <Text style={styles.trPredTxt}>
+                      🔮 {t('mob.nextPeriodPred', 'Next period expected')} {new Date(pred.dateISO + 'T12:00:00').toLocaleDateString(lt, { day: 'numeric', month: 'long' })} ± {pred.plusMinus} {t('mob.days', 'days')}
+                    </Text>
+                  </View>
+                ) : null}
               </View>
 
               {/* R3-24: guidance card tied to the specific date */}
@@ -354,7 +413,7 @@ export default function CalendarScreen({ navigation }: any) {
                 <Text style={styles.guideTxt}>{t('phase.' + todayPhase + '.copy', '')}</Text>
               </View>
             </>
-          ) : (
+          ) : view === 'year' ? (
             <>
               {/* R3-25/28: Year = its own Cycle History layout */}
               <View style={styles.yearHeadRow}>
@@ -417,6 +476,88 @@ export default function CalendarScreen({ navigation }: any) {
                 <View style={[styles.toggle, styles.toggleOn]}><Text style={styles.toggleTxtOn}>{t('mob.backToMonth', '‹ Back to Month view')}</Text></View>
               </Pressable>
             </>
+          ) : (
+            <>
+              {/* M-1 · TRENDS (R10 blocker): barras de ciclos cerrados + media
+                  personal + banda normal + outliers huecos + predicción */}
+              {cc.length < 2 ? (
+                <View style={styles.card}>
+                  <Text style={styles.trBrewT}>{t('mob.trendsBrewT', 'Your trends are brewing')}</Text>
+                  <Text style={styles.trBrewB}>{t('mob.trendsBrewB', 'Log at least 2 full cycles and your personal chart appears here — lengths, your average, and your normal range.')}</Text>
+                  <Text style={styles.trBrewB}>{cc.length}/2 {t('mob.cyclesClosed', 'cycles closed')}</Text>
+                </View>
+              ) : (() => {
+                const T = cc.slice(-12);
+                const lens = T.map((c) => c.length);
+                const yMax = Math.max(...lens, band?.hi ?? 0) + 2;
+                const yMin = Math.max(10, Math.min(...lens, band?.lo ?? 99) - 4);
+                const CH = 150;
+                const yPx = (v: number) => Math.max(4, ((v - yMin) / (yMax - yMin)) * CH);
+                return (
+                  <>
+                    <View style={styles.card}>
+                      <Text style={styles.trTitle}>{t('mob.trCycleLen', 'Cycle length')} · {t('mob.trLastN', 'last')} {T.length}</Text>
+                      <View style={{ height: CH, marginTop: 10, justifyContent: 'flex-end' }}>
+                        {band ? (
+                          <View style={[styles.trBand, { bottom: yPx(band.lo), height: Math.max(6, yPx(band.hi) - yPx(band.lo)) }]} />
+                        ) : null}
+                        {pAvg != null ? (
+                          <View style={[styles.trAvgLine, { bottom: yPx(pAvg) }]}>
+                            <Text style={styles.trAvgLbl}>{t('mob.avgShort', 'avg')} {pAvg}</Text>
+                          </View>
+                        ) : null}
+                        <View style={styles.trBarsRow}>
+                          {T.map((c, i) => (
+                            <View key={i} style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
+                              <Text style={styles.trBarVal}>{c.length}</Text>
+                              {c.outlier ? (
+                                <View style={[styles.trBar, styles.trBarOut, { height: yPx(c.length) }]} />
+                              ) : (
+                                <LinearGradient colors={['#FF7600', '#FD400C']} style={[styles.trBar, { height: yPx(c.length) }]} />
+                              )}
+                            </View>
+                          ))}
+                        </View>
+                      </View>
+                      <View style={styles.trXRow}>
+                        {T.map((c, i) => (
+                          <Text key={i} style={styles.trBarLbl} numberOfLines={1}>
+                            {new Date(c.start + 'T12:00:00').toLocaleDateString(lt, { month: 'short' })}
+                          </Text>
+                        ))}
+                      </View>
+                      <View style={styles.trLegendRow}>
+                        <View style={styles.trLegendBand} /><Text style={styles.trLegendTxt}>{t('mob.trBand', 'your normal range')}</Text>
+                        <View style={styles.trLegendOut} /><Text style={styles.trLegendTxt}>{t('mob.trOutlier', 'outside pattern')}</Text>
+                      </View>
+                    </View>
+
+                    {pred ? (
+                      <View style={styles.trPredChip}>
+                        <Text style={styles.trPredTxt}>
+                          🔮 {t('mob.nextPeriodPred', 'Next period expected')} {new Date(pred.dateISO + 'T12:00:00').toLocaleDateString(lt, { day: 'numeric', month: 'long' })} ± {pred.plusMinus} {t('mob.days', 'days')}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    <View style={styles.card}>
+                      <Text style={styles.trTitle}>{t('mob.trHistory', 'Cycle history')}</Text>
+                      {[...cc].reverse().map((c, i) => (
+                        <View key={i} style={styles.trHistRow}>
+                          <Text style={styles.trHistDates}>{fmtShort(c.start)} – {fmtShort(c.end)}</Text>
+                          <Text style={styles.trHistLen}>{c.length}d{c.outlier ? ` · ${t('mob.trOutlier', 'outside pattern')}` : ''}</Text>
+                        </View>
+                      ))}
+                      <Text style={styles.trEditHint}>✎ {t('mob.trEditHint', 'Wrong start date? Fix the current cycle with the pencil up top — past cycles recalculate from your logged starts.')}</Text>
+                    </View>
+                  </>
+                );
+              })()}
+
+              <Pressable onPress={() => setView('month')} style={styles.toggleRow}>
+                <View style={[styles.toggle, styles.toggleOn]}><Text style={styles.toggleTxtOn}>{t('mob.backToMonth', '‹ Back to Month view')}</Text></View>
+              </Pressable>
+            </>
           )}
         </ScrollView>
 
@@ -432,10 +573,22 @@ export default function CalendarScreen({ navigation }: any) {
             setEpSaving(true);
             try {
               const isoD = `${epSel.getFullYear()}-${String(epSel.getMonth() + 1).padStart(2, '0')}-${String(epSel.getDate()).padStart(2, '0')}`;
-              await startNewCycle(userId, isoD);
+              const res = await startNewCycle(userId, isoD);
               await recomputeCAS(userId);
               const c2 = await getCurrentCycle(userId); setCycle(c2);
               setEpOpen(false); setEpSel(null);
+              // r10a-5 + M-1: warm confirmation + rebaseline FYI / outlier note
+              if (res.closed) {
+                const extra = res.rebaselined
+                  ? ` ${t('mob.rebaseFyi', 'ℹ️ With 3 cycles logged, your personal average now leads your ring, calendar and predictions.')}`
+                  : res.outlier
+                    ? ` ${t('mob.outlierFyi', 'This one sat outside your usual pattern, so it won’t move your average unless it repeats.')}`
+                    : '';
+                notify(
+                  `🎉 ${t('mob.cycleSavedT', 'Cycle saved')}`,
+                  `${res.closed}${t('mob.cycleSavedN', '-day cycle saved.')} ${t('mob.cycleSavedD1', "You're on Menstrual · Day 1 — thanks for keeping your rhythm in sync.")}${res.avg ? ` ${t('mob.cycleSavedAvg', 'Your average is now')} ${res.avg}.` : ''}${extra}`
+                );
+              }
             } finally { setEpSaving(false); }
           };
           return (
@@ -506,6 +659,33 @@ const styles = StyleSheet.create({
   heroStat: { flex: 1, backgroundColor: 'rgba(255,255,255,0.18)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.35)', borderRadius: 14, paddingVertical: 8, paddingHorizontal: 10 },
   heroStatLbl: { fontFamily: font.regular, fontSize: 11.5, color: 'rgba(255,255,255,0.85)' },
   heroStatVal: { fontFamily: font.semibold, fontSize: 15, color: '#fff', marginTop: 1 },
+  /* M-1: tarjeta avg viva + badge hueco + vista Trends */
+  heroChevron: { fontFamily: font.bold, fontSize: 16, color: 'rgba(255,255,255,0.9)' },
+  cdBadgeGrace: { backgroundColor: 'transparent', borderWidth: 1.3, borderStyle: 'dashed', borderColor: '#E8B072' },
+  cdTxtGrace: { fontFamily: font.bold, fontSize: 8, color: '#B98548' },
+  miniDotGrace: { backgroundColor: 'transparent', borderWidth: 1, borderStyle: 'dashed', borderColor: '#E8B072' },
+  trBrewT: { fontFamily: font.semibold, fontSize: 15, color: colors.ink },
+  trBrewB: { fontFamily: font.regular, fontSize: 12.5, color: colors.muted, lineHeight: 18, marginTop: 6 },
+  trTitle: { fontFamily: font.semibold, fontSize: 13.5, color: colors.ink },
+  trBand: { position: 'absolute', left: 0, right: 0, backgroundColor: 'rgba(120,190,140,0.18)', borderRadius: 8 },
+  trAvgLine: { position: 'absolute', left: 0, right: 0, borderTopWidth: 1.5, borderColor: '#2E9E63', borderStyle: 'dashed', zIndex: 3 },
+  trAvgLbl: { position: 'absolute', right: 0, top: -14, fontFamily: font.semibold, fontSize: 10, color: '#2E9E63' },
+  trBarsRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 6, height: '100%', zIndex: 2 },
+  trBar: { width: '72%', maxWidth: 26, borderTopLeftRadius: 6, borderTopRightRadius: 6 },
+  trBarOut: { backgroundColor: 'transparent', borderWidth: 1.5, borderStyle: 'dashed', borderColor: '#E8B072' },
+  trBarVal: { fontFamily: font.semibold, fontSize: 10, color: colors.muted, marginBottom: 3 },
+  trXRow: { flexDirection: 'row', gap: 6, marginTop: 4 },
+  trBarLbl: { flex: 1, textAlign: 'center', fontFamily: font.regular, fontSize: 9.5, color: colors.faint },
+  trLegendRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 10 },
+  trLegendBand: { width: 14, height: 10, borderRadius: 3, backgroundColor: 'rgba(120,190,140,0.3)' },
+  trLegendOut: { width: 14, height: 10, borderRadius: 3, borderWidth: 1.3, borderStyle: 'dashed', borderColor: '#E8B072', marginLeft: 8 },
+  trLegendTxt: { fontFamily: font.regular, fontSize: 11, color: colors.muted },
+  trPredChip: { backgroundColor: '#FFF1EC', borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14, marginTop: 10 },
+  trPredTxt: { fontFamily: font.semibold, fontSize: 12.5, color: colors.coralDeep },
+  trHistRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 7, borderBottomWidth: 1, borderColor: '#F6EEE7' },
+  trHistDates: { fontFamily: font.regular, fontSize: 12.5, color: colors.ink },
+  trHistLen: { fontFamily: font.semibold, fontSize: 12.5, color: colors.muted },
+  trEditHint: { fontFamily: font.regular, fontSize: 11, color: colors.faint, marginTop: 10, lineHeight: 16 },
   toggleRow: { flexDirection: 'row', backgroundColor: '#F6EEE7', borderRadius: 999, padding: 3, gap: 4, marginTop: 10 },
   toggle: { flex: 1, height: 36, borderRadius: 999, alignItems: 'center', justifyContent: 'center' },
   toggleOn: { backgroundColor: '#fff', ...shadow.card },
@@ -523,7 +703,9 @@ const styles = StyleSheet.create({
   dowRow: { flexDirection: 'row', marginBottom: 2 },
   dow: { flex: 1, textAlign: 'center', fontFamily: font.medium, fontSize: 11, color: colors.faint },
   grid: { flexDirection: 'row', flexWrap: 'wrap' },
-  cell: { width: `${100 / 7}%`, alignItems: 'center', paddingVertical: 2 },
+  /* M-0: 100/7% rounds up to >100% of the row on some device widths → the 7th
+     cell (Saturday) wrapped to the next line (Lucía's phone). 14.28% is safe. */
+  cell: { width: '14.28%', alignItems: 'center', paddingVertical: 2 },
   dayC: { width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
   dayTxtOn: { fontFamily: font.semibold, fontSize: 13, color: '#fff' },
   // R4-F14/f15
@@ -555,7 +737,7 @@ const styles = StyleSheet.create({
   miniCur: { borderWidth: 2, borderColor: colors.coral },
   miniTitle: { fontFamily: font.semibold, fontSize: 11.5, color: colors.ink, marginBottom: 4, textAlign: 'center' },
   miniGrid: { flexDirection: 'row', flexWrap: 'wrap' },
-  cellMini: { width: `${100 / 7}%`, alignItems: 'center', paddingVertical: 1 },
+  cellMini: { width: '14.28%', alignItems: 'center', paddingVertical: 1 },
   miniC: { width: 19, height: 19, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
   miniN: { fontFamily: font.medium, fontSize: 9, color: colors.ink },  /* R6-f3: dark, readable */
   miniPhaseDot: { position: 'absolute', top: -2, left: -2, width: 7, height: 7, borderRadius: 4 },

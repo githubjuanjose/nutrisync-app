@@ -196,7 +196,9 @@
     "prBest": "Migliore",
     "battEmpty": "Scarica",
     "battFull": "Carica",
-    "saving": "Salvataggio…"
+    "saving": "Salvataggio…",
+    "done": "Fatto",
+    "feedbackReply": "Risposta al tuo commento"
   },
   "dows": [
     "DOM",
@@ -626,7 +628,10 @@
       "pick": "Tocca per scegliere una data"
     },
     "city": {
-      "h": "Questo aiuta NutriSync a localizzare i consigli e a capirti meglio!"
+      "h": "Questo aiuta NutriSync a localizzare i consigli e a capirti meglio!",
+      "use": "Usa la mia posizione",
+      "detecting": "Rilevamento della tua città…",
+      "fail": "Non siamo riusciti a rilevare la tua città — scrivila, per favore."
     },
     "consent": {
       "hero": "I tuoi dati restano tuoi",
@@ -796,7 +801,90 @@
     "notesBtn": "Note",
     "nutrition": "NUTRIZIONE",
     "other": "Altro",
-    "today": "OGGI"
+    "today": "OGGI",
+    "graceAvg": "la tua media è",
+    "graceQ": "È arrivato il ciclo?",
+    "graceNorm": "I cicli variano — è normale.",
+    "graceCta": "Registra il mio ciclo",
+    "dobPick": "Tocca per scegliere",
+    "heightFt": "Altezza (ft)",
+    "heightIn": "Altezza (in)",
+    "weightLb": "Peso (lb)",
+    "unitsHint": "Puoi cambiare le unità nelle Preferenze dell'app.",
+    "invalidHeight": "Quest'altezza non sembra corretta — controllala.",
+    "invalidWeight": "Questo peso non sembra corretto — controllalo.",
+    "invalidCycleLen": "La durata del ciclo dev'essere un numero intero tra 15 e 90 giorni.",
+    "invalidDur": "La durata del ciclo mestruale dev'essere tra 1 e 14 giorni.",
+    "confirmRare": "Valore insolito",
+    "confirmRareBody": "I cicli fuori da 21–45 giorni sono rari. Salvare comunque?",
+    "saveAnyway": "Salva comunque",
+    "saveFail": "Impossibile salvare",
+    "saveFailBody": "Controlla la connessione e riprova.",
+    "unitsMetric": "Metrico (kg, cm)",
+    "unitsImperial": "Imperiale (lb, in)",
+    "heightLbl": "Altezza",
+    "weightLbl": "Peso",
+    "awaitingTitle": "In attesa del tuo nuovo ciclo",
+    "avgShort": "media",
+    "cycleSavedT": "Ciclo salvato",
+    "cycleSavedN": " giorni: ciclo salvato.",
+    "cycleSavedD1": "Sei in Mestruale · Giorno 1 — grazie per tenere il tuo ritmo aggiornato.",
+    "cycleSavedAvg": "La tua media ora è",
+    "careCopy": "Questo ciclo va ben oltre il tuo schema. Un ciclo lungo isolato è comune — ma se si ripete o ti preoccupa, parlarne con un professionista è una buona idea.",
+    "driftCopy": "Questo si sta allungando oltre il tuo intervallo abituale. Il corpo fa così — se diventa il tuo nuovo ritmo, la tua media si aggiusterà automaticamente.",
+    "careLink": "Nota sulla salute",
+    "careNoteT": "Una nota sulla tua salute",
+    "careNoteBody": "NutriSync rileva schemi — non fa mai diagnosi. Cicli lunghi o irregolari occasionali sono comuni (stress, viaggi, malattia). Se i cicli lunghi si ripetono, o senti che qualcosa non va, parlane con la tua dottoressa o ginecologa. I tuoi dati qui possono aiutare quella conversazione.",
+    "endPeriod": "Termina mestruazioni",
+    "endPeriodSub": "passi alla Follicolare",
+    "periodEndedT": "Mestruazioni terminate",
+    "periodEndedB1": "Registrate mestruazioni di",
+    "periodEndedB2": " giorni. Benvenuta nella fase Follicolare — questa durata ora alimenta la tua baseline.",
+    "rebaseFyi": "ℹ️ Con 3 cicli registrati, la tua media personale ora guida anello, calendario e previsioni.",
+    "outlierFyi": "Questo è rimasto fuori dal tuo schema abituale: non sposterà la tua media a meno che non si ripeta.",
+    "trends": "Tendenze",
+    "trendsBrewT": "Le tue tendenze sono in preparazione",
+    "trendsBrewB": "Registra almeno 2 cicli completi e qui apparirà il tuo grafico personale — durate, la tua media e il tuo intervallo normale.",
+    "cyclesClosed": "cicli chiusi",
+    "trCycleLen": "Durata del ciclo",
+    "trLastN": "ultimi",
+    "trBand": "il tuo intervallo normale",
+    "trOutlier": "fuori schema",
+    "nextPeriodPred": "Prossime mestruazioni previste",
+    "trHistory": "Storico dei cicli",
+    "trEditHint": "Data di inizio sbagliata? Correggi il ciclo attuale con la matita in alto — i passati si ricalcolano dai tuoi inizi registrati.",
+    "legalHdr": "LEGALE",
+    "legalTerms": "Termini e condizioni",
+    "legalPrivacy": "Informativa privacy",
+    "legalCookies": "Politica sui cookie",
+    "legalHealth": "Avviso sulla salute",
+    "legalNotice": "Note legali",
+    "legalConsent": "Consenso dati sanitari",
+    "legalBeta": "Accordo beta",
+    "tapEnergy": "Tocca per registrare la tua energia",
+    "back": "Indietro",
+    "daysToUnlock": "giorni per sbloccare",
+    "ntf": {
+      "push": "Notifiche push",
+      "pushSub": "Interruttore generale — chiede il permesso all'attivazione",
+      "streaks": "Festeggia le serie",
+      "streaksSub": "Quando raggiungi un traguardo",
+      "reengage": "Ritorni gentili",
+      "reengageSub": "Se manchi da qualche giorno",
+      "morning": "Ora del promemoria del mattino",
+      "evening": "Ora del promemoria della sera"
+    },
+    "ntfSec": {
+      "streaks": "SERIE",
+      "reengage": "RITORNI",
+      "times": "ORARI"
+    },
+    "ntfDenied": "Permesso negato — attiva le notifiche di NutriSync nelle Impostazioni di sistema.",
+    "ntfOld": "Il push non è ancora disponibile qui — arriva con la versione 0.21.",
+    "ntfPriv": "La schermata di blocco non mostra mai dettagli sulla salute — il messaggio completo si apre nell’app.",
+    "otherFood": "Altro — scrivi cosa hai mangiato",
+    "otherFoodPh": "es. insalata di lenticchie",
+    "otherFoodSave": "Registra"
   },
   "cat": {
     "Getting started": "Primi passi",
@@ -1348,5 +1436,25 @@
     "Whole-Wheat Pasta": "Pasta integrale",
     "Yoga & Mobility": "Yoga e mobilità",
     "Zucchini (Calabacín)": "Zucchine"
+  },
+  "gender": {
+    "woman": "Donna",
+    "nonbinary": "Non binaria",
+    "pnts": "Preferisco non dirlo"
+  },
+  "contra": {
+    "yes": "Sì, attualmente",
+    "notanymore": "Non più",
+    "never": "Mai"
+  },
+  "cond": {
+    "adenomyosis": "Adenomiosi",
+    "irregular_cycles": "Cicli irregolari",
+    "hypothyroidism": "Ipotiroidismo",
+    "pmos": "PCOS",
+    "endometriosis": "Endometriosi",
+    "hashimoto_s": "Hashimoto",
+    "heavy_menstrual_bleeding": "Flusso mestruale abbondante",
+    "hyperthyroidism": "Ipertiroidismo"
   }
 }

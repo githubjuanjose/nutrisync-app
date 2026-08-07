@@ -7,7 +7,8 @@ import Svg, { Path } from 'react-native-svg';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { saveEditPeriod, getTodayLog, recomputeCAS } from '../../lib/daily';
-import { startNewCycle } from '../../lib/api';
+import { startNewCycle, endPeriod, getCurrentCycle, CycleRow } from '../../lib/api';
+import { cycleDayActual, phaseForDay } from '../../lib/cas';
 import { ChipGroup } from '../../ui/Chips';
 import { useT, useTc, useI18n, localeTag } from '../../i18n';
 
@@ -77,19 +78,56 @@ export default function EditPeriodScreen({ navigation }: any) {
   const [lpMonth, setLpMonth] = useState(() => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 1); });
   const [lpSel, setLpSel] = useState<Date | null>(null);
   const [lpSaving, setLpSaving] = useState(false);
+  // M-1: End period — visible solo en fase menstrual; guarda la duración REAL
+  const [cycle, setCycle] = useState<CycleRow | null>(null);
+  const [epSaving, setEpSaving] = useState(false);
+  useEffect(() => { if (userId) getCurrentCycle(userId).then(setCycle).catch(() => {}); }, [userId]);
+  const cDay = cycle ? cycleDayActual(cycle.last_period_start_date, new Date()) : null;
+  const inMenstrual = cycle != null && cDay != null &&
+    phaseForDay(cDay, cycle.cycle_length ?? 28, cycle.period_duration ?? 5) === 'menstrual' && cDay > 1;
+
+  const doEndPeriod = async () => {
+    if (!userId || cDay == null || epSaving) return;
+    setEpSaving(true);
+    try {
+      const dur = await endPeriod(userId, cDay);
+      const c2 = await getCurrentCycle(userId); setCycle(c2);
+      notify(
+        `✅ ${t('mob.periodEndedT', 'Period ended')}`,
+        `${t('mob.periodEndedB1', 'Logged a')} ${dur}${t('mob.periodEndedB2', '-day period. Welcome to your Follicular phase — this length now feeds your baseline.')}`
+      );
+    } catch (e: any) {
+      notify(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
+    } finally { setEpSaving(false); }
+  };
 
   const startCycle = async () => {
     if (!userId || !lpSel || lpSaving) return;
     setLpSaving(true);
     try {
       const iso = `${lpSel.getFullYear()}-${String(lpSel.getMonth() + 1).padStart(2, '0')}-${String(lpSel.getDate()).padStart(2, '0')}`;
-      await startNewCycle(userId, iso);
+      const res = await startNewCycle(userId, iso);
       await recomputeCAS(userId);
       setLpOpen(false); setLpSel(null);
-      notify(
-        t('mob.periodLogged', 'Period logged'),
-        t('mob.cycleRestarted', 'A new cycle has started from the date you picked. Your averages now use your real cycle lengths.')
-      );
+      getCurrentCycle(userId).then(setCycle).catch(() => {});
+      // r10a-5: warm confirmation + saved-cycle summary ("31-day cycle saved")
+      // M-1: + FYI de rebaseline (D10) y nota de outlier (R10)
+      if (res.closed) {
+        const extra = res.rebaselined
+          ? ` ${t('mob.rebaseFyi', 'ℹ️ With 3 cycles logged, your personal average now leads your ring, calendar and predictions.')}`
+          : res.outlier
+            ? ` ${t('mob.outlierFyi', 'This one sat outside your usual pattern, so it won’t move your average unless it repeats.')}`
+            : '';
+        notify(
+          `🎉 ${t('mob.cycleSavedT', 'Cycle saved')}`,
+          `${res.closed}${t('mob.cycleSavedN', '-day cycle saved.')} ${t('mob.cycleSavedD1', "You're on Menstrual · Day 1 — thanks for keeping your rhythm in sync.")}${res.avg ? ` ${t('mob.cycleSavedAvg', 'Your average is now')} ${res.avg}.` : ''}${extra}`
+        );
+      } else {
+        notify(
+          t('mob.periodLogged', 'Period logged'),
+          t('mob.cycleRestarted', 'A new cycle has started from the date you picked. Your averages now use your real cycle lengths.')
+        );
+      }
     } catch (e: any) {
       notify(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
     } finally {
@@ -175,6 +213,14 @@ export default function EditPeriodScreen({ navigation }: any) {
             <Text style={styles.lpTxt}>{t('mob.logPeriod', 'Log period')}</Text>
             <Text style={styles.lpSub}>{t('mob.logPeriodSub', 'starts a new cycle')}</Text>
           </Pressable>
+
+          {/* M-1 (R10): End period — solo visible en fase menstrual */}
+          {inMenstrual ? (
+            <Pressable onPress={doEndPeriod} disabled={epSaving} style={[styles.endBtn, epSaving && { opacity: 0.6 }]}>
+              <Text style={styles.endTxt}>{epSaving ? t('ui.saving', 'Saving…') : `◦ ${t('mob.endPeriod', 'End period')}`}</Text>
+              <Text style={styles.endSub}>{t('mob.endPeriodSub', 'moves you to Follicular')}</Text>
+            </Pressable>
+          ) : null}
 
           {/* Flow */}
           <View style={styles.card}>
@@ -362,6 +408,9 @@ const styles = StyleSheet.create({
   saveTxt: { fontFamily: font.semibold, fontSize: 16, color: '#fff' },
   // R4-f31: log-period button + mini calendar sheet
   lpBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: colors.coral, borderRadius: radius.pill, paddingHorizontal: 18, height: 48, alignSelf: 'stretch', justifyContent: 'center', ...shadow.card },
+  endBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#fff', borderWidth: 1.5, borderColor: colors.coral, borderRadius: radius.pill, paddingHorizontal: 18, height: 44, alignSelf: 'stretch', justifyContent: 'center', marginTop: 10 },
+  endTxt: { fontFamily: font.semibold, fontSize: 14, color: colors.coral },
+  endSub: { fontFamily: font.regular, fontSize: 11.5, color: colors.muted },
   lpTxt: { fontFamily: font.semibold, fontSize: 15, color: '#fff' },
   lpSub: { fontFamily: font.regular, fontSize: 12, color: 'rgba(255,255,255,.85)' },
   lpSheet: { position: 'absolute', left: 16, right: 16, top: '16%', backgroundColor: '#fff', borderRadius: radius.lg, padding: 18, ...shadow.card },

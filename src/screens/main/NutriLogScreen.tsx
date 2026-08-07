@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, Image, TextInput } from 'react-native';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -13,8 +13,7 @@ import { pickVariantIndex } from '../../ui/NutriAvatar';
 import { saveChecklist } from '../../lib/daily';
 import {
   fetchDailyRecs, DailyRecs, orderedCategories, fetchCheckedToday,
-  saveQuickLog, getQuickLog, countMealsToday,
-} from '../../lib/recs';
+  saveQuickLog, getQuickLog, countMealsToday, saveMealTyped } from '../../lib/recs';
 
 /**
  * R2-C · NutriLog — 4-screen flow, screens 1+2 (Daily Tip / Body Insight tabs).
@@ -62,6 +61,8 @@ export default function NutriLogScreen() {
   const [charIdx, setCharIdx] = useState(0);
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const [meals, setMeals] = useState(0);
+  const [otro, setOtro] = useState('');            // NS-0005: «Other» texto libre
+  const [otroSaving, setOtroSaving] = useState(false);
   const [quick, setQuick] = useState<{ mood: number | null; energy: number | null; flow_level: number | null; pain_symptoms: string[] }>({ mood: null, energy: null, flow_level: null, pain_symptoms: [] });
 
   const load = useCallback(async () => {
@@ -93,6 +94,18 @@ export default function NutriLogScreen() {
       .filter((i) => next.has(i.name))
       .map((i) => ({ item_name: i.name, nutrient_tag: c.toLowerCase(), phase: recs?.phase ?? null, checked: true })));
     try { await saveChecklist(userId, 'nutrition_checklist', rows); } catch {}
+  };
+
+  // NS-0005: lo que comió y no está en la lista — cuenta como comida del día
+  const saveOtro = async () => {
+    const texto = otro.trim();
+    if (!texto || !userId || otroSaving) return;
+    setOtroSaving(true);
+    try {
+      await saveMealTyped(userId, texto, 'snack', { day: recs?.cycle_day, phase: recs?.phase ?? undefined });
+      setMeals((m) => m + 1); setOtro('');
+    } catch { /* sin red: lo reintenta ella */ }
+    finally { setOtroSaving(false); }
   };
 
   const cycleMood = async () => {
@@ -226,6 +239,22 @@ export default function NutriLogScreen() {
               })}
             </View>
           ))}
+
+          {/* NS-0005: «Other» — opción libre pedida por una tester (ticket) */}
+          <View style={styles.group}>
+            <Text style={styles.groupTitle}>{t('mob.otherFood', 'Other — type what you had')}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <TextInput
+                value={otro} onChangeText={setOtro}
+                placeholder={t('mob.otherFoodPh', 'e.g. lentil salad')} placeholderTextColor="#B8ADA4"
+                style={styles.otherInput} returnKeyType="done" onSubmitEditing={saveOtro}
+              />
+              <Pressable disabled={!otro.trim() || otroSaving} onPress={saveOtro}
+                style={[styles.otherBtn, (!otro.trim() || otroSaving) && { opacity: 0.45 }]}>
+                <Text style={styles.otherBtnTxt}>{t('mob.otherFoodSave', 'Log it')}</Text>
+              </Pressable>
+            </View>
+          </View>
         </ScrollView>
 
         <Pressable style={styles.cta} onPress={() => nav.navigate('MealLog')}>
@@ -237,6 +266,9 @@ export default function NutriLogScreen() {
 }
 
 const styles = StyleSheet.create({
+  otherInput: { flex: 1, backgroundColor: '#FFFDFa'.replace('a','A'), borderWidth: 1, borderColor: '#E4DAD0', borderRadius: 12, paddingHorizontal: 12, paddingVertical: 9, fontSize: 13.5, color: '#241D1A' },
+  otherBtn: { backgroundColor: '#FF6103', borderRadius: 12, paddingVertical: 10, paddingHorizontal: 14 },
+  otherBtnTxt: { color: '#fff', fontSize: 12.5, fontWeight: '700' },
   fill: { flex: 1, backgroundColor: 'transparent' },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 4, paddingHorizontal: 18 },
   headerTitle: { fontFamily: font.semibold, fontSize: 17, color: colors.ink },

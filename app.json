@@ -2,7 +2,7 @@
   "expo": {
     "name": "NutriSync",
     "slug": "nutrisync",
-    "version": "0.18.0",
+    "version": "0.21.0",
     "orientation": "portrait",
     "scheme": "nutrisync",
     "userInterfaceStyle": "light",
@@ -31,13 +31,37 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "usesAppleSignIn": true
+      "usesAppleSignIn": true,
+      "entitlements": {
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.healthkit.access": []
+      }
     },
     "android": {
-      "package": "com.nutrisynccollective.app"
+      "package": "com.nutrisynccollective.app",
+      "googleServicesFile": "./google-services.json"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      [
+        "expo-notifications",
+        {
+          "color": "#FF6103"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "NutriSync uses your approximate location once to suggest your city during setup."
+        }
+      ],
+      [
+        "@kingstinct/react-native-healthkit",
+        {
+          "NSHealthShareUsageDescription": "NutriSync lee tu sueño, tu actividad y los datos de tu ciclo para rellenar tu día sin que lo teclees y ajustar las recomendaciones a lo que de verdad has hecho. Solo lectura: NutriSync no escribe nada en Salud.",
+          "background": false
+        }
+      ]
     ],
     "icon": "./assets/icon.png"
   }

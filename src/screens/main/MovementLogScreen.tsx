@@ -10,7 +10,7 @@ import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile } from '../../lib/api';
 import { pickVariantIndex } from '../../ui/NutriAvatar';
-import { saveChecklist } from '../../lib/daily';
+import { saveChecklist, normalizeIntensity, categoryIntensity } from '../../lib/daily';
 import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib/recs';
 
 /**
@@ -91,11 +91,14 @@ export default function MovementLogScreen() {
     const rows = [
       ...cats.flatMap(([c, items]) => items.filter((i) => next.has(i.name)).map((i) => ({
         item_name: i.name, category_tag: c.toLowerCase(),
-        intensity_level: (i.intensity ?? '').toLowerCase().replace(/[^a-z]+/g, '_') || null,
+        // r12-b4: normaliza SIEMPRE y, si el ítem no declara intensidad (caso
+        // "Most Recommended" de strength), hereda la de su categoría.
+        intensity_level: normalizeIntensity(i.intensity) ?? categoryIntensity(c),
         phase: recs?.phase ?? null, checked: true,
       }))),
       ...nextOthers.filter((n) => next.has(n)).map((n) => ({
-        item_name: n, category_tag: 'other', intensity_level: null, phase: recs?.phase ?? null, checked: true,
+        item_name: n, category_tag: 'other', intensity_level: categoryIntensity('other'),
+        phase: recs?.phase ?? null, checked: true,
       })),
     ];
     try { await saveChecklist(userId, 'movement_checklist', rows); } catch {}

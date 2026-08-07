@@ -9,6 +9,8 @@ import { getCurrentCycle } from '../../lib/api';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase } from '../../lib/cas';
 import { getTodayLog, getTodayScore } from '../../lib/daily';
 import { fetchTips } from '../../lib/content';
+import { supabase } from '../../lib/supabase';
+import { replyNotes, unreadIds, FeedbackReply } from '../../lib/replies';
 
 type Note = { icon: string; title: string; body: string; accent: string; when: string };
 
@@ -25,6 +27,17 @@ export default function NotificationCenterScreen({ navigation }: any) {
   useEffect(() => {
     (async () => {
       if (!userId) { setLoading(false); return; }
+      // r13 · respuestas del equipo al feedback de ESTA usuaria (RLS: solo las suyas)
+      let replyRows: FeedbackReply[] = [];
+      try {
+        const { data } = await supabase
+          .from('feedback_replies')
+          .select('id,ticket_no,body,created_at,read_at')
+          .order('created_at', { ascending: false })
+          .limit(20);
+        replyRows = (data as FeedbackReply[]) ?? [];
+      } catch { /* tabla aún sin crear: el feed normal no se cae */ }
+
       const cycle = await getCurrentCycle(userId);
       const [log, score] = await Promise.all([getTodayLog(userId), getTodayScore(userId)]);
 
@@ -79,8 +92,15 @@ export default function NotificationCenterScreen({ navigation }: any) {
           when: 'Now',
         });
       }
-      setNotes(out);
+      const rNotes = replyNotes(replyRows, t('ui.feedbackReply', 'Reply to your feedback'), colors.coral)
+        .map(({ unread, ...n }) => n);
+      setNotes([...rNotes, ...out]);
       setLoading(false);
+      const pendientes = unreadIds(replyRows);
+      if (pendientes.length) {
+        supabase.from('feedback_replies').update({ read_at: new Date().toISOString() })
+          .in('id', pendientes).then(() => {}, () => {});
+      }
     })();
   }, [userId]);
 

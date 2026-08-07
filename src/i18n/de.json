@@ -196,7 +196,9 @@
     "prBest": "Bestwert",
     "battEmpty": "Erschöpft",
     "battFull": "Aufgeladen",
-    "saving": "Speichern…"
+    "saving": "Speichern…",
+    "done": "Fertig",
+    "feedbackReply": "Antwort auf dein Feedback"
   },
   "dows": [
     "SO",
@@ -626,7 +628,10 @@
       "pick": "Tippe, um ein Datum zu wählen"
     },
     "city": {
-      "h": "Das hilft NutriSync, Tipps zu lokalisieren und dich besser zu verstehen!"
+      "h": "Das hilft NutriSync, Tipps zu lokalisieren und dich besser zu verstehen!",
+      "use": "Meinen Standort verwenden",
+      "detecting": "Deine Stadt wird ermittelt…",
+      "fail": "Wir konnten deine Stadt nicht ermitteln — bitte gib sie ein."
     },
     "consent": {
       "hero": "Deine Daten bleiben deine",
@@ -796,7 +801,90 @@
     "notesBtn": "Notizen",
     "nutrition": "ERNÄHRUNG",
     "other": "Andere",
-    "today": "HEUTE"
+    "today": "HEUTE",
+    "graceAvg": "dein Durchschnitt ist",
+    "graceQ": "Ist deine Periode gekommen?",
+    "graceNorm": "Zyklen variieren — das ist normal.",
+    "graceCta": "Periode eintragen",
+    "dobPick": "Zum Auswählen tippen",
+    "heightFt": "Größe (ft)",
+    "heightIn": "Größe (in)",
+    "weightLb": "Gewicht (lb)",
+    "unitsHint": "Einheiten änderst du in den App-Einstellungen.",
+    "invalidHeight": "Diese Größe wirkt nicht plausibel — bitte prüfen.",
+    "invalidWeight": "Dieses Gewicht wirkt nicht plausibel — bitte prüfen.",
+    "invalidCycleLen": "Die Zykluslänge muss eine ganze Zahl zwischen 15 und 90 Tagen sein.",
+    "invalidDur": "Die Periodendauer muss zwischen 1 und 14 Tagen liegen.",
+    "confirmRare": "Ungewöhnlicher Wert",
+    "confirmRareBody": "Zyklen außerhalb von 21–45 Tagen sind selten. Trotzdem speichern?",
+    "saveAnyway": "Trotzdem speichern",
+    "saveFail": "Speichern fehlgeschlagen",
+    "saveFailBody": "Prüfe deine Verbindung und versuch es erneut.",
+    "unitsMetric": "Metrisch (kg, cm)",
+    "unitsImperial": "Imperial (lb, in)",
+    "heightLbl": "Größe",
+    "weightLbl": "Gewicht",
+    "awaitingTitle": "Warten auf deinen neuen Zyklus",
+    "avgShort": "Ø",
+    "cycleSavedT": "Zyklus gespeichert",
+    "cycleSavedN": "-Tage-Zyklus gespeichert.",
+    "cycleSavedD1": "Du bist in der Menstruation · Tag 1 — danke, dass du deinen Rhythmus aktuell hältst.",
+    "cycleSavedAvg": "Dein Durchschnitt ist jetzt",
+    "careCopy": "Dieser Zyklus läuft deutlich über dein Muster hinaus. Ein einzelner langer Zyklus ist normal — wenn es sich wiederholt oder dich beunruhigt, ist ein Check bei Fachpersonal eine gute Idee.",
+    "driftCopy": "Dieser zieht sich über deinen üblichen Bereich hinaus. Das macht der Körper manchmal — wird es dein neuer Rhythmus, passt sich dein Durchschnitt automatisch an.",
+    "careLink": "Gesundheitshinweis",
+    "careNoteT": "Ein Hinweis zu deiner Gesundheit",
+    "careNoteBody": "NutriSync erkennt Muster — es diagnostiziert nie. Gelegentliche lange oder unregelmäßige Zyklen sind normal (Stress, Reisen, Krankheit). Wiederholen sich lange Zyklen, oder fühlt sich etwas falsch an, sprich mit deiner Ärztin oder Gynäkologin. Deine Daten hier können dabei helfen.",
+    "endPeriod": "Periode beenden",
+    "endPeriodSub": "weiter zur Follikelphase",
+    "periodEndedT": "Periode beendet",
+    "periodEndedB1": "Erfasst: eine Periode von",
+    "periodEndedB2": " Tagen. Willkommen in deiner Follikelphase — diese Länge fließt jetzt in deine Baseline ein.",
+    "rebaseFyi": "ℹ️ Mit 3 erfassten Zyklen führt jetzt dein persönlicher Durchschnitt Ring, Kalender und Vorhersagen.",
+    "outlierFyi": "Dieser lag außerhalb deines üblichen Musters und bewegt deinen Durchschnitt nur, wenn er sich wiederholt.",
+    "trends": "Trends",
+    "trendsBrewT": "Deine Trends brauen sich zusammen",
+    "trendsBrewB": "Erfasse mindestens 2 volle Zyklen und hier erscheint dein persönliches Diagramm — Längen, dein Durchschnitt und dein Normalbereich.",
+    "cyclesClosed": "Zyklen abgeschlossen",
+    "trCycleLen": "Zykluslänge",
+    "trLastN": "letzte",
+    "trBand": "dein Normalbereich",
+    "trOutlier": "außerhalb des Musters",
+    "nextPeriodPred": "Nächste Periode erwartet",
+    "trHistory": "Zyklus-Verlauf",
+    "trEditHint": "Startdatum falsch? Korrigiere den aktuellen Zyklus mit dem Stift oben — vergangene werden aus deinen erfassten Starts neu berechnet.",
+    "legalHdr": "RECHTLICHES",
+    "legalTerms": "AGB",
+    "legalPrivacy": "Datenschutzerklärung",
+    "legalCookies": "Cookie-Richtlinie",
+    "legalHealth": "Gesundheitshinweis",
+    "legalNotice": "Impressum",
+    "legalConsent": "Einwilligung Gesundheitsdaten",
+    "legalBeta": "Beta-Vereinbarung",
+    "tapEnergy": "Tippen, um deine Energie zu erfassen",
+    "back": "Zurück",
+    "daysToUnlock": "Tage bis zur Freischaltung",
+    "ntf": {
+      "push": "Push-Benachrichtigungen",
+      "pushSub": "Hauptschalter — fragt beim Aktivieren nach Erlaubnis",
+      "streaks": "Serien feiern",
+      "streaksSub": "Wenn du einen Meilenstein erreichst",
+      "reengage": "Sanfte Rückkehr",
+      "reengageSub": "Wenn du ein paar Tage weg warst",
+      "morning": "Uhrzeit der Morgen-Erinnerung",
+      "evening": "Uhrzeit der Abend-Erinnerung"
+    },
+    "ntfSec": {
+      "streaks": "SERIEN",
+      "reengage": "RÜCKKEHR",
+      "times": "ZEITEN"
+    },
+    "ntfDenied": "Berechtigung verweigert — aktiviere NutriSync-Benachrichtigungen in den Systemeinstellungen.",
+    "ntfOld": "Push ist hier noch nicht verfügbar — kommt mit Version 0.21.",
+    "ntfPriv": "Dein Sperrbildschirm zeigt nie Gesundheitsdetails — die vollständige Nachricht öffnet sich in der App.",
+    "otherFood": "Anderes — tippe, was du gegessen hast",
+    "otherFoodPh": "z. B. Linsensalat",
+    "otherFoodSave": "Eintragen"
   },
   "cat": {
     "Getting started": "Erste Schritte",
@@ -1348,5 +1436,25 @@
     "Whole-Wheat Pasta": "Vollkornnudeln",
     "Yoga & Mobility": "Yoga & Mobilität",
     "Zucchini (Calabacín)": "Zucchini"
+  },
+  "gender": {
+    "woman": "Frau",
+    "nonbinary": "Nichtbinär",
+    "pnts": "Keine Angabe"
+  },
+  "contra": {
+    "yes": "Ja, derzeit",
+    "notanymore": "Nicht mehr",
+    "never": "Nie"
+  },
+  "cond": {
+    "adenomyosis": "Adenomyose",
+    "irregular_cycles": "Unregelmäßige Zyklen",
+    "hypothyroidism": "Schilddrüsenunterfunktion",
+    "pmos": "PCOS",
+    "endometriosis": "Endometriose",
+    "hashimoto_s": "Hashimoto",
+    "heavy_menstrual_bleeding": "Starke Menstruationsblutung",
+    "hyperthyroidism": "Schilddrüsenüberfunktion"
   }
 }

@@ -196,7 +196,9 @@
     "prBest": "ベスト",
     "battEmpty": "空",
     "battFull": "フル充電",
-    "saving": "保存中…"
+    "saving": "保存中…",
+    "done": "完了",
+    "feedbackReply": "フィードバックへの返信"
   },
   "dows": [
     "日",
@@ -626,7 +628,10 @@
       "pick": "タップして日付を選択"
     },
     "city": {
-      "h": "これにより NutriSync がアドバイスを地域に合わせ、あなたをより深く理解できます！"
+      "h": "これにより NutriSync がアドバイスを地域に合わせ、あなたをより深く理解できます！",
+      "use": "現在地を使用",
+      "detecting": "都市を検出中…",
+      "fail": "都市を検出できませんでした。入力してください。"
     },
     "consent": {
       "hero": "あなたのデータはあなたのもの",
@@ -795,7 +800,90 @@
     "notesBtn": "メモ",
     "nutrition": "栄養",
     "other": "その他",
-    "today": "今日"
+    "today": "今日",
+    "graceAvg": "あなたの平均:",
+    "graceQ": "生理は来ましたか？",
+    "graceNorm": "周期には個人差があります — 正常なことです。",
+    "graceCta": "生理を記録",
+    "dobPick": "タップして選択",
+    "heightFt": "身長（ft）",
+    "heightIn": "身長（in）",
+    "weightLb": "体重（lb）",
+    "unitsHint": "単位はアプリ設定で変更できます。",
+    "invalidHeight": "身長の値が正しくないようです。ご確認ください。",
+    "invalidWeight": "体重の値が正しくないようです。ご確認ください。",
+    "invalidCycleLen": "周期は15〜90日の整数で入力してください。",
+    "invalidDur": "生理期間は1〜14日で入力してください。",
+    "confirmRare": "まれな値",
+    "confirmRareBody": "21〜45日以外の周期はまれです。保存しますか？",
+    "saveAnyway": "保存する",
+    "saveFail": "保存できませんでした",
+    "saveFailBody": "接続を確認して再試行してください。",
+    "unitsMetric": "メートル法（kg・cm）",
+    "unitsImperial": "ヤード・ポンド法（lb・in）",
+    "heightLbl": "身長",
+    "weightLbl": "体重",
+    "awaitingTitle": "次の周期を待っています",
+    "avgShort": "平均",
+    "cycleSavedT": "周期を保存しました",
+    "cycleSavedN": "日間の周期を保存しました。",
+    "cycleSavedD1": "月経期・1日目です — リズムの記録を続けてくれてありがとう。",
+    "cycleSavedAvg": "新しい平均は",
+    "careCopy": "今回の周期はいつものパターンをかなり超えています。単発の長い周期はよくあることですが、繰り返したり不安な場合は専門家への相談をおすすめします。",
+    "driftCopy": "いつもの範囲を超えて長引いています。体にはよくあることです — これが新しいリズムになれば、平均は自動的に調整されます。",
+    "careLink": "健康メモ",
+    "careNoteT": "健康についてのメモ",
+    "careNoteBody": "NutriSyncはパターンを追跡するもので、診断は行いません。たまの長い周期や不規則な周期はよくあります（ストレス、旅行、体調不良）。長い周期が続く場合や違和感がある場合は、医師や婦人科医にご相談ください。ここのデータはその会話に役立ちます。",
+    "endPeriod": "月経を終了",
+    "endPeriodSub": "卵胞期へ進みます",
+    "periodEndedT": "月経を終了しました",
+    "periodEndedB1": "",
+    "periodEndedB2": "日間の月経を記録しました。卵胞期へようこそ — この長さが基準値に反映されます。",
+    "rebaseFyi": "ℹ️ 3周期の記録により、あなた個人の平均がリング・カレンダー・予測を導くようになりました。",
+    "outlierFyi": "今回はいつものパターンから外れていたため、繰り返さない限り平均には影響しません。",
+    "trends": "トレンド",
+    "trendsBrewT": "トレンドを準備中",
+    "trendsBrewB": "2周期以上記録すると、ここに個人のグラフが表示されます — 周期の長さ、平均、正常範囲。",
+    "cyclesClosed": "周期完了",
+    "trCycleLen": "周期の長さ",
+    "trLastN": "直近",
+    "trBand": "あなたの正常範囲",
+    "trOutlier": "パターン外",
+    "nextPeriodPred": "次の月経予定",
+    "trHistory": "周期履歴",
+    "trEditHint": "開始日が違う？上の鉛筆で現在の周期を修正できます — 過去の周期は記録された開始日から再計算されます。",
+    "legalHdr": "法的情報",
+    "legalTerms": "利用規約",
+    "legalPrivacy": "プライバシーポリシー",
+    "legalCookies": "クッキーポリシー",
+    "legalHealth": "健康に関する注意",
+    "legalNotice": "特定商取引法に基づく表記",
+    "legalConsent": "健康データの同意",
+    "legalBeta": "ベータ利用同意",
+    "tapEnergy": "タップしてエネルギーを記録",
+    "back": "戻る",
+    "daysToUnlock": "日で解除",
+    "ntf": {
+      "push": "プッシュ通知",
+      "pushSub": "マスタースイッチ — オンにすると許可を求めます",
+      "streaks": "連続記録のお祝い",
+      "streaksSub": "マイルストーン達成時",
+      "reengage": "やさしいおかえり",
+      "reengageSub": "数日ぶりのときに",
+      "morning": "朝のリマインダー時刻",
+      "evening": "夜のリマインダー時刻"
+    },
+    "ntfSec": {
+      "streaks": "連続記録",
+      "reengage": "おかえり",
+      "times": "時間帯"
+    },
+    "ntfDenied": "許可が拒否されています — システム設定でNutriSyncの通知を有効にしてください。",
+    "ntfOld": "プッシュはまだ利用できません — バージョン0.21で届きます。",
+    "ntfPriv": "ロック画面に健康の詳細は表示されません — メッセージ全文はアプリ内で開きます。",
+    "otherFood": "その他 — 食べたものを入力",
+    "otherFoodPh": "例：レンズ豆のサラダ",
+    "otherFoodSave": "記録する"
   },
   "cat": {
     "Getting started": "はじめの一歩",
@@ -1347,5 +1435,25 @@
     "Whole-Wheat Pasta": "全粒粉パスタ",
     "Yoga & Mobility": "ヨガ＆モビリティ",
     "Zucchini (Calabacín)": "ズッキーニ"
+  },
+  "gender": {
+    "woman": "女性",
+    "nonbinary": "ノンバイナリー",
+    "pnts": "回答しない"
+  },
+  "contra": {
+    "yes": "はい（現在）",
+    "notanymore": "以前は使用",
+    "never": "使用したことがない"
+  },
+  "cond": {
+    "adenomyosis": "子宮腺筋症",
+    "irregular_cycles": "月経不順",
+    "hypothyroidism": "甲状腺機能低下症",
+    "pmos": "多嚢胞性卵巣症候群",
+    "endometriosis": "子宮内膜症",
+    "hashimoto_s": "橋本病",
+    "heavy_menstrual_bleeding": "過多月経",
+    "hyperthyroidism": "甲状腺機能亢進症"
   }
 }

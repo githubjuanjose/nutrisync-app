@@ -42,17 +42,19 @@ function Floaty({ children }: { children: React.ReactNode }) {
   return <Animated.View style={{ transform: [{ translateY: y }] }}>{children}</Animated.View>;
 }
 import { STEPS, Step } from './steps';
+import { detectCity } from '../../lib/geoCity';
 import { supabase } from '../../lib/supabase';
 import { saveOnboarding } from '../../lib/api';
 import { useSession } from '../../state/SessionProvider';
 import { useT } from '../../i18n';
 import { GoalCarousel } from '../../ui/GoalOrb';
+import { localDayISO } from '../../lib/localDay';   // NS-0010: día local
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Onboarding'>;
 
 const fmtDate = (d: Date) =>
   d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
-const toISO = (d: Date) => d.toISOString().slice(0, 10);
+const toISO = (d: Date) => localDayISO(d);
 
 /** Orange orb with the exact Figma blue-tinted halo (onboarding hero variant). */
 function HaloOrb({ size = 180 }: { size?: number }) {
@@ -85,6 +87,7 @@ export default function OnboardingWizard({ navigation }: Props) {
   const [showPicker, setShowPicker] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveErr, setSaveErr] = useState('');
+  const [locBusy, setLocBusy] = useState(false);
 
   const step = STEPS[idx] as Step;
 
@@ -112,6 +115,15 @@ export default function OnboardingWizard({ navigation }: Props) {
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => { back(); return true; });
     return () => { try { (sub as any)?.remove?.(); } catch {} };
+  }, [idx]);
+
+  // Auto-fill the city when the step appears IF location permission is already
+  // granted (silent — never prompts). Fresh installs use the button below instead.
+  useEffect(() => {
+    if (step.kind !== 'city') return;
+    let live = true;
+    detectCity(false).then((c) => { if (live && c) setCity((prev) => prev || c); });
+    return () => { live = false; };
   }, [idx]);
 
   // Persist onboarding to Supabase, then enter the app.
@@ -290,6 +302,27 @@ export default function OnboardingWizard({ navigation }: Props) {
             style={styles.cityText}
           />
         </View>
+        {Platform.OS !== 'web' && (
+          <Pressable
+            disabled={locBusy}
+            onPress={async () => {
+              setLocBusy(true);
+              const c = await detectCity(true);
+              setLocBusy(false);
+              if (c) setCity(c);
+              else notify(t('ob.city.fail', "We couldn't detect your city — please type it in."));
+            }}
+            style={styles.locBtn}
+          >
+            <Svg width={15} height={15} viewBox="0 0 24 24">
+              <Path d="M12 22s7-6.6 7-12a7 7 0 10-14 0c0 5.4 7 12 7 12z" fill="none" stroke={colors.coral} strokeWidth={2} />
+              <Circle cx={12} cy={9.5} r={2.2} fill={colors.coral} />
+            </Svg>
+            <Text style={styles.locTxt}>
+              {locBusy ? t('ob.city.detecting', 'Detecting your city…') : t('ob.city.use', 'Use my location')}
+            </Text>
+          </Pressable>
+        )}
       </OnboardingLayout>
     );
   }
@@ -371,6 +404,8 @@ const styles = StyleSheet.create({
   sectionItalic: { fontFamily: font.regular, fontStyle: 'italic', fontSize: 13.5, color: colors.coral, marginTop: 6 },
   question: { fontFamily: font.semibold, fontSize: 23, color: colors.ink, marginTop: 18, lineHeight: 30 },
   helper: { fontFamily: font.regular, fontSize: 14, color: colors.muted, marginTop: 8, lineHeight: 20 },
+  locBtn: { flexDirection: 'row', alignItems: 'center', gap: 7, alignSelf: 'flex-start', marginTop: 14, paddingVertical: 6, paddingHorizontal: 2 },
+  locTxt: { fontFamily: font.semibold, fontSize: 14, color: colors.coral },
   desc: { fontFamily: font.regular, fontSize: 14.5, color: colors.ink, lineHeight: 21 },
   // hero blocks
   halo: { backgroundColor: '#6E86F5', opacity: 0.28 },

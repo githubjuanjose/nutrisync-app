@@ -1,5 +1,6 @@
 import { supabase } from './supabase';
 import { buildPayloads } from './onboardingMap';
+import { planNewCycle, clampPeriodDur } from './cycleStats';
 
 export type UserRow = {
   id: string;
@@ -65,7 +66,12 @@ export async function getCurrentCycle(userId: string): Promise<CycleRow | null> 
  * consecutive period starts, sane range 15–60 days only), feeding Progress and
  * the phase algorithm with her real data instead of the onboarding estimate.
  */
-export async function startNewCycle(userId: string, startISO: string): Promise<{ created: boolean; avg?: number }> {
+/** r10a-5: `closed` = length of the cycle this start just completed (days from
+ *  the previous start to the new one) — feeds the warm "N-day cycle saved" copy.
+ *  M-1: `rebaselined` = true SOLO la vez que la media personal sustituye al
+ *  onboarding (3er cerrado, D10) — dispara el aviso informativo; `outlier` =
+ *  el ciclo recién cerrado quedó fuera del patrón (no moverá la media). */
+export async function startNewCycle(userId: string, startISO: string): Promise<{ created: boolean; avg?: number; closed?: number; rebaselined?: boolean; outlier?: boolean }> {
   const { data: rows } = await supabase
     .from('cycles')
     .select('id,last_period_start_date,cycle_length,period_duration')
@@ -73,12 +79,15 @@ export async function startNewCycle(userId: string, startISO: string): Promise<{
     .order('last_period_start_date', { ascending: true });
   const all = (rows ?? []) as any[];
   const prev = all.length ? all[all.length - 1] : null;
-  if (prev && String(prev.last_period_start_date).slice(0, 10) === startISO) return { created: false };
 
-  // R8-f28/f30: an EARLIER date than the current cycle's start is a CORRECTION —
-  // update the current row instead of inserting a stale-ordered new one (the
-  // server picks the latest start, so an inserted earlier row would never win).
-  if (prev && startISO < String(prev.last_period_start_date).slice(0, 10)) {
+  // r11c-2: TODA la decisión (duplicado/corrección/nuevo + D10 + outlier) vive
+  // en cycleStats.planNewCycle — pura y cubierta por jest. Aquí solo IO.
+  const plan = planNewCycle(all.map((r) => String(r.last_period_start_date)), startISO, prev?.cycle_length ?? 28);
+
+  if (plan.kind === 'duplicate') return { created: false };
+
+  if (plan.kind === 'correction') {
+    // R8-f28/f30: fecha ANTERIOR al inicio vigente = corrección de la fila actual
     const { error: upErr } = await supabase.from('cycles')
       .update({ last_period_start_date: startISO, updated_at: new Date().toISOString() })
       .eq('id', prev.id);
@@ -86,28 +95,32 @@ export async function startNewCycle(userId: string, startISO: string): Promise<{
     return { created: false, avg: prev.cycle_length ?? 28 };
   }
 
-  const starts = [...all.map((r) => String(r.last_period_start_date).slice(0, 10)), startISO]
-    .map((s) => new Date(s + 'T00:00:00').getTime())
-    .sort((a, b) => a - b);
-  const diffs: number[] = [];
-  for (let i = 1; i < starts.length; i++) {
-    const d = Math.round((starts[i] - starts[i - 1]) / 86_400_000);
-    if (d >= 15 && d <= 60) diffs.push(d);
-  }
-  const recent = diffs.slice(-6);
-  const avg = recent.length
-    ? Math.round(recent.reduce((a, b) => a + b, 0) / recent.length)
-    : (prev?.cycle_length ?? 28);
-
   const { error } = await supabase.from('cycles').insert({
     user_id: userId,
     last_period_start_date: startISO,
-    cycle_length: avg,
+    cycle_length: plan.avg,
     period_duration: prev?.period_duration ?? 5,
     updated_at: new Date().toISOString(),
   });
   if (error) throw error;
-  return { created: true, avg };
+  return { created: true, avg: plan.avg, closed: plan.closed, rebaselined: plan.rebaselined, outlier: plan.outlier };
+}
+
+/** M-1 · botón "End period" (R10): fija la duración REAL del período del ciclo
+ *  vigente (día actual - 1 → hoy ya es folicular) y alimenta el baseline de
+ *  duración de los siguientes ciclos. Devuelve la duración guardada. */
+export async function endPeriod(userId: string, todayCycleDay: number): Promise<number> {
+  const dur = clampPeriodDur(todayCycleDay);   // r11c-2: pura + testeada
+  const { data: rows } = await supabase.from('cycles')
+    .select('id').eq('user_id', userId)
+    .order('last_period_start_date', { ascending: false }).limit(1);
+  const cur = (rows ?? [])[0] as any;
+  if (!cur) throw new Error('no active cycle');
+  const { error } = await supabase.from('cycles')
+    .update({ period_duration: dur, updated_at: new Date().toISOString() })
+    .eq('id', cur.id);
+  if (error) throw error;
+  return dur;
 }
 
 /** R8-f25: full cycle history (asc) — the calendar maps each date to ITS cycle. */

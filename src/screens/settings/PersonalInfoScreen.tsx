@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, ActivityIndicator } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, ActivityIndicator, Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
@@ -7,7 +8,20 @@ import { LoadingView } from '../../ui/LoadingView';
 import { NutriAvatar } from '../../ui/NutriAvatar';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
-import { useT } from '../../i18n';
+import { useT, useI18n, localeTag } from '../../i18n';
+import { getUnits, UnitSystem, parseNum, cmToFtIn, ftInToCm, kgToLb, lbToKg, R, inR, isoToDate, dateToIso } from '../../lib/units';
+import { WheelSheet } from '../../ui/WheelSheet';
+
+// r11b — wheel ranges (valid by construction, Apple-Health style)
+const CM = Array.from({ length: 141 }, (_, i) => 90 + i);          // 90–230
+const KG = Array.from({ length: 441 }, (_, i) => 30 + i * 0.5);    // 30–250 ×0.5
+const FT = [3, 4, 5, 6, 7];
+const IN = Array.from({ length: 12 }, (_, i) => i);                // 0–11
+const LB = Array.from({ length: 485 }, (_, i) => 66 + i);          // 66–550
+const nearest = (arr: number[], v: number) => {
+  let best = 0; for (let i = 1; i < arr.length; i++) if (Math.abs(arr[i] - v) < Math.abs(arr[best] - v)) best = i;
+  return best;
+};
 
 type Form = {
   first_name: string; full_name: string; username: string; email: string;
@@ -19,25 +33,52 @@ type Form = {
  * the component, so every keystroke re-created the component type, React
  * remounted the TextInput and focus was lost → "one letter at a time".
  */
-function Field({ label, value, onChange, ...p }: { label: string; value: string; onChange: (v: string) => void } & any) {
+function Field({ label, value, onChange, inputRef, ...p }: { label: string; value: string; onChange: (v: string) => void; inputRef?: any } & any) {
   return (
     <View style={styles.field}>
       <Text style={styles.fieldLabel}>{label}</Text>
-      <TextInput value={value} onChangeText={onChange} style={styles.input} placeholderTextColor={colors.faint} {...p} />
+      <TextInput ref={inputRef} value={value} onChangeText={onChange} style={styles.input} placeholderTextColor={colors.faint} {...p} />
     </View>
   );
 }
 
-const GENDERS = ['Woman', 'Non-binary', 'Prefer not to say'];
+// stored values stay canonical (unchanged in DB); labels render localized
+const GENDERS = [
+  { v: 'Woman', k: 'gender.woman', en: 'Woman' },
+  { v: 'Non-binary', k: 'gender.nonbinary', en: 'Non-binary' },
+  { v: 'Prefer not to say', k: 'gender.pnts', en: 'Prefer not to say' },
+];
+const MIN_AGE = 16; // matches our 16+ store rating and Terms
 
 export default function PersonalInfoScreen({ navigation }: any) {
   const t = useT();
+  const { lang } = useI18n();
+  const lt = localeTag(lang);
   const { userId } = useSession();
   const [f, setF] = useState<Form>({ first_name: '', full_name: '', username: '', email: '', date_of_birth: '', gender: '', height_cm: '', weight_kg: '' });
   const [avatar, setAvatar] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const set = (k: keyof Form) => (v: string) => setF((s) => ({ ...s, [k]: v }));
+
+  // r11a — units, DOB picker, next-field refs
+  const [units, setUnits] = useState<UnitSystem>('metric');
+  const [showDob, setShowDob] = useState(false);
+  const [wheel, setWheel] = useState<null | 'h' | 'w'>(null);   // r11b: barrel abierta
+  const [hFt, setHFt] = useState(''); const [hIn, setHIn] = useState(''); const [wLb, setWLb] = useState('');
+  const fullRef = useRef<TextInput>(null); const userRef = useRef<TextInput>(null);
+  const maxDob = (() => { const d = new Date(); d.setFullYear(d.getFullYear() - MIN_AGE); return d; })();
+  const minDob = new Date(1926, 0, 1);
+  const dobDate = isoToDate(f.date_of_birth);
+
+  useEffect(() => { getUnits().then(setUnits); }, []);
+  // seed imperial display fields from canonical metric once both are known
+  useEffect(() => {
+    if (units !== 'imperial') return;
+    const cm = parseNum(f.height_cm); const kg = parseNum(f.weight_kg);
+    if (cm != null && hFt === '' && hIn === '') { const { ft, inch } = cmToFtIn(cm); setHFt(String(ft)); setHIn(String(inch)); }
+    if (kg != null && wLb === '') setWLb(String(kgToLb(kg)));
+  }, [units, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const unsub = navigation.addListener('focus', async () => {
@@ -69,13 +110,29 @@ export default function PersonalInfoScreen({ navigation }: any) {
 
   const save = async () => {
     if (!userId) return;
+    // r11a — canonical metric + garbage-proof validation (never store nonsense)
+    let heightCm: number | null = null, weightKg: number | null = null;
+    if (units === 'imperial') {
+      const ft = parseNum(hFt), inch = parseNum(hIn), lb = parseNum(wLb);
+      if (hFt || hIn) {
+        if (ft == null || inch == null || inch < 0 || inch >= 12) { notify(t('mob.invalidHeight', 'That height looks off — please check it.')); return; }
+        heightCm = ftInToCm(ft, inch);
+      }
+      if (wLb) { if (lb == null) { notify(t('mob.invalidWeight', 'That weight looks off — please check it.')); return; } weightKg = lbToKg(lb); }
+    } else {
+      if (f.height_cm) { heightCm = parseNum(f.height_cm); if (heightCm == null) { notify(t('mob.invalidHeight', 'That height looks off — please check it.')); return; } }
+      if (f.weight_kg) { weightKg = parseNum(f.weight_kg); if (weightKg == null) { notify(t('mob.invalidWeight', 'That weight looks off — please check it.')); return; } }
+    }
+    if (heightCm != null && !inR(heightCm, R.heightCm)) { notify(t('mob.invalidHeight', 'That height looks off — please check it.')); return; }
+    if (weightKg != null && !inR(weightKg, R.weightKg)) { notify(t('mob.invalidWeight', 'That weight looks off — please check it.')); return; }
     setSaving(true);
     try {
       const patch: Record<string, any> = {
         first_name: f.first_name || null, full_name: f.full_name || null,
         date_of_birth: f.date_of_birth || null, gender: f.gender || null, username: f.username || null,
-        height_cm: f.height_cm ? Number(f.height_cm) : null,
-        weight_kg: f.weight_kg ? Number(f.weight_kg) : null,
+        age: age ?? null,   // crossover v11.50: web guarda DOB + edad derivada — la app igual
+        height_cm: heightCm,
+        weight_kg: weightKg,
       };
       let { error } = await supabase.from('users').update(patch).eq('id', userId);
       if (error && /username|gender/.test(error.message)) {
@@ -110,22 +167,49 @@ export default function PersonalInfoScreen({ navigation }: any) {
 
           <Text style={styles.sectionTitle}>{t('mob.basicInfo', "BASIC INFO")}</Text>
           <View style={styles.card}>
-            <Field label={t('mob.firstName', 'First name')} value={f.first_name} onChange={set('first_name')} autoCapitalize="words" />
-            <Field label={t('ui.fullName', 'Full name')} value={f.full_name} onChange={set('full_name')} autoCapitalize="words" />
-            <Field label={t('mob.username', 'Username')} value={f.username} onChange={set('username')} autoCapitalize="none" />
+            <Field label={t('mob.firstName', 'First name')} value={f.first_name} onChange={set('first_name')} autoCapitalize="words"
+              returnKeyType="next" blurOnSubmit={false} onSubmitEditing={() => fullRef.current?.focus()} />
+            <Field label={t('ui.fullName', 'Full name')} value={f.full_name} onChange={set('full_name')} autoCapitalize="words"
+              inputRef={fullRef} returnKeyType="next" blurOnSubmit={false} onSubmitEditing={() => userRef.current?.focus()} />
+            <Field label={t('mob.username', 'Username')} value={f.username} onChange={set('username')} autoCapitalize="none"
+              inputRef={userRef} returnKeyType="done" />
             <View style={styles.field}>
               <Text style={styles.fieldLabel}>{t('mob.email', 'Email')}</Text>
               <Text style={[styles.input, { color: colors.muted }]}>{f.email || '—'}</Text>
             </View>
-            <Field label={t('mob.dob', 'Date of birth')} value={f.date_of_birth} onChange={set('date_of_birth')} placeholder="YYYY-MM-DD" />
+            {/* r11a — DOB via native picker: localized format, bounded, zero garbage */}
+            <Pressable style={styles.field} onPress={() => {
+              // mismo principio que las ruedas: lo mostrado queda seleccionado desde el primer momento
+              if (!dobDate) set('date_of_birth')(dateToIso(new Date(1995, 5, 15)));
+              setShowDob(true);
+            }}>
+              <Text style={styles.fieldLabel}>{t('mob.dob', 'Date of birth')}</Text>
+              <Text style={[styles.input, !dobDate && { color: colors.faint }]}>
+                {dobDate ? dobDate.toLocaleDateString(lt, { day: 'numeric', month: 'long', year: 'numeric' }) : t('mob.dobPick', 'Tap to select')}
+              </Text>
+            </Pressable>
+            {showDob && (
+              <DateTimePicker
+                value={dobDate ?? new Date(1995, 5, 15)}
+                mode="date" maximumDate={maxDob} minimumDate={minDob}
+                display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                onChange={(_e: any, d?: Date) => {
+                  if (Platform.OS !== 'ios') setShowDob(false);
+                  if (d) set('date_of_birth')(dateToIso(d));
+                }}
+              />
+            )}
+            {showDob && Platform.OS === 'ios' ? (
+              <Pressable onPress={() => setShowDob(false)} style={styles.dobDone}><Text style={styles.dobDoneTxt}>{t('ui.done', 'Done')}</Text></Pressable>
+            ) : null}
             <View style={[styles.field, { borderBottomWidth: 0 }]}>
               <Text style={styles.fieldLabel}>{t('mob.gender', 'Gender')}</Text>
               <View style={styles.chipRow}>
                 {GENDERS.map((g) => {
-                  const on = f.gender === g;
+                  const on = f.gender === g.v;
                   return (
-                    <Pressable key={g} onPress={() => set('gender')(on ? '' : g)} style={[styles.chip, on && styles.chipOn]}>
-                      <Text style={[styles.chipTxt, on && styles.chipTxtOn]}>{g}</Text>
+                    <Pressable key={g.v} onPress={() => set('gender')(on ? '' : g.v)} style={[styles.chip, on && styles.chipOn]}>
+                      <Text style={[styles.chipTxt, on && styles.chipTxtOn]}>{t(g.k, g.en)}</Text>
                     </Pressable>
                   );
                 })}
@@ -135,9 +219,47 @@ export default function PersonalInfoScreen({ navigation }: any) {
 
           <Text style={styles.sectionTitle}>{t('mob.bodyMetrics', "BODY METRICS")}</Text>
           <View style={styles.card}>
-            <Field label={t('mob.heightCm', 'Height (cm)')} value={f.height_cm} onChange={set('height_cm')} keyboardType="numeric" />
-            <Field label={t('mob.weightKg', 'Weight (kg)')} value={f.weight_kg} onChange={set('weight_kg')} keyboardType="numeric" />
+            {/* r11b — barrel pickers: tap the row, spin the wheel; garbage impossible */}
+            <Pressable style={styles.field} onPress={() => setWheel('h')}>
+              <Text style={styles.fieldLabel}>{units === 'imperial' ? t('mob.heightLbl', 'Height') + ' (ft · in)' : t('mob.heightLbl', 'Height') + ' (cm)'}</Text>
+              <Text style={[styles.input, !(units === 'imperial' ? hFt : f.height_cm) && { color: colors.faint }]}>
+                {units === 'imperial'
+                  ? (hFt ? `${hFt} ft ${hIn || 0} in` : t('mob.dobPick', 'Tap to select'))
+                  : (f.height_cm ? `${f.height_cm} cm` : t('mob.dobPick', 'Tap to select'))}
+              </Text>
+            </Pressable>
+            <Pressable style={[styles.field, { borderBottomWidth: 0 }]} onPress={() => setWheel('w')}>
+              <Text style={styles.fieldLabel}>{units === 'imperial' ? t('mob.weightLbl', 'Weight') + ' (lb)' : t('mob.weightLbl', 'Weight') + ' (kg)'}</Text>
+              <Text style={[styles.input, !(units === 'imperial' ? wLb : f.weight_kg) && { color: colors.faint }]}>
+                {units === 'imperial'
+                  ? (wLb ? `${wLb} lb` : t('mob.dobPick', 'Tap to select'))
+                  : (f.weight_kg ? `${f.weight_kg} kg` : t('mob.dobPick', 'Tap to select'))}
+              </Text>
+            </Pressable>
+            <Text style={styles.unitsHint}>{t('mob.unitsHint', 'Units can be changed in App Preferences.')}</Text>
           </View>
+
+          <WheelSheet
+            visible={wheel === 'h'}
+            title={t('mob.heightLbl', 'Height')}
+            onClose={() => setWheel(null)}
+            cols={units === 'imperial' ? [
+              { values: FT, suffix: 'ft', selected: nearest(FT, parseNum(hFt) ?? 5), onChange: (i) => setHFt(String(FT[i])) },
+              { values: IN, suffix: 'in', selected: nearest(IN, parseNum(hIn) ?? 6), onChange: (i) => setHIn(String(IN[i])) },
+            ] : [
+              { values: CM, suffix: 'cm', selected: nearest(CM, parseNum(f.height_cm) ?? 165), onChange: (i) => set('height_cm')(String(CM[i])) },
+            ]}
+          />
+          <WheelSheet
+            visible={wheel === 'w'}
+            title={t('mob.weightLbl', 'Weight')}
+            onClose={() => setWheel(null)}
+            cols={units === 'imperial' ? [
+              { values: LB, suffix: 'lb', selected: nearest(LB, parseNum(wLb) ?? 150), onChange: (i) => setWLb(String(LB[i])) },
+            ] : [
+              { values: KG, suffix: 'kg', selected: nearest(KG, parseNum(f.weight_kg) ?? 65), onChange: (i) => set('weight_kg')(String(KG[i])) },
+            ]}
+          />
 
           {/* F46: cycle + conditions + contraception live on their own page */}
           <Text style={styles.sectionTitle}>{t('mob.cycleHealthCaps', "CYCLE & HEALTH")}</Text>
@@ -178,4 +300,7 @@ const styles = StyleSheet.create({
   chev: { fontFamily: font.semibold, fontSize: 18, color: colors.faint },
   save: { backgroundColor: colors.coral, height: 52, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center', marginTop: 24 },
   saveTxt: { fontFamily: font.semibold, fontSize: 16, color: '#fff' },
+  dobDone: { alignSelf: 'flex-end', paddingVertical: 6, paddingHorizontal: 14 },
+  dobDoneTxt: { fontFamily: font.semibold, fontSize: 14, color: colors.coral },
+  unitsHint: { fontFamily: font.regular, fontSize: 11, color: colors.faint, paddingVertical: 8 },
 });

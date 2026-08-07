@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Switch, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Switch, ActivityIndicator, Linking } from 'react-native';
 import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SettingsIcon } from '../../ui/SettingsIcons';
@@ -7,6 +7,10 @@ import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { exportUserData, deleteAccount } from '../../lib/account';
 import { useT } from '../../i18n';
+
+/* po71: documentos legales bilingües publicados en la web (fuente única) */
+const openLegal = (page: string) =>
+  Linking.openURL('https://nutrisynccollective.com/legal/' + page).catch(() => {});
 
 export default function DataPrivacyScreen({ navigation }: any) {
   const t = useT();
@@ -86,19 +90,28 @@ export default function DataPrivacyScreen({ navigation }: any) {
             <View style={{flexDirection:'row',gap:8,alignItems:'flex-start'}}><SettingsIcon name="lock" size={18} /><Text style={[styles.bannerTxt,{flex:1}]}>Your health data is encrypted and never sold. You control what's shared below.</Text></View>
           </View>
 
-          <Text style={styles.sectionTitle}>{t('mob.dataPermissions', "DATA PERMISSIONS")}</Text>
-          <View style={styles.card}>
-            <Toggle v={analytics} set={setAnalytics} title={t('mob.analyticsCrash', "Analytics & crash reports")} sub="Helps us fix bugs faster" />
-            <Toggle v={insights} set={setInsights} title={t('mob.personalisedInsights', "Personalised insights")} sub="Tailors tips to your patterns" />
-            <Toggle v={research} set={setResearch} title={t('mob.researchPart', "Research participation")} sub="Anonymised, for women's health" />
-          </View>
+          {/* po77 (decisión counsel + Juanjo, 4-ago): los toggles de Analítica,
+              Insights y Research quedan OCULTOS mientras no exista tratamiento
+              real detrás — un interruptor sin función sugiere un control que no
+              es tal. Se restauran con consentimiento granular cuando se activen
+              (y con actualización del inventario y la política de cookies). */}
 
           <Text style={styles.sectionTitle}>{t('mob.yourDataRights', "YOUR DATA RIGHTS")}</Text>
           <View style={styles.card}>
             <RightRow icon="download" label={busy ? 'Preparing…' : t('ui.exportJson', 'Download my data')} onPress={onExport} />
-            <RightRow icon="📄" label="View privacy policy" />
-            <RightRow icon="🗂️" label="Manage activity log" />
-            <RightRow icon="🍪" label="Cookie preferences" />
+          </View>
+
+          {/* po71: los 5 documentos legales publicados (borrador validado por
+              asesoría en curso) — páginas bilingües ES/EN en la web */}
+          <Text style={styles.sectionTitle}>{t('mob.legalHdr', 'LEGAL')}</Text>
+          <View style={styles.card}>
+            <RightRow icon="📜" label={t('mob.legalTerms', 'Terms & conditions')} onPress={() => openLegal('terms.html')} />
+            <RightRow icon="📄" label={t('mob.legalPrivacy', 'Privacy policy')} onPress={() => openLegal('privacy.html')} />
+            <RightRow icon="🩺" label={t('mob.legalConsent', 'Health-data consent')} onPress={() => openLegal('health-consent.html')} />
+            <RightRow icon="🧪" label={t('mob.legalBeta', 'Beta agreement')} onPress={() => openLegal('beta-agreement.html')} />
+            <RightRow icon="🍪" label={t('mob.legalCookies', 'Cookie policy')} onPress={() => openLegal('cookies.html')} />
+            <RightRow icon="🫶" label={t('mob.legalHealth', 'Health notice')} onPress={() => openLegal('health.html')} />
+            <RightRow icon="⚖️" label={t('mob.legalNotice', 'Legal notice')} onPress={() => openLegal('legal-notice.html')} />
           </View>
 
           <Pressable onPress={onDelete} disabled={busy} style={styles.delete}>

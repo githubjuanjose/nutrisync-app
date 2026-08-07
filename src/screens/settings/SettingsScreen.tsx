@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
   rowIcon: { fontSize: 17, width: 30 },
   rowLabel: { flex: 1, fontFamily: font.medium, fontSize: 15, color: colors.ink },
   chev: { fontSize: 22, color: colors.faint },
-  signOut: { backgroundColor: '#F6A99A', height: 52, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', marginTop: 26 },
+  /* activo = color de marca pleno; los tonos lavados quedan SOLO para estados disabled */
+  signOut: { backgroundColor: colors.coral, height: 52, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', marginTop: 26 },
   signOutTxt: { fontFamily: font.semibold, fontSize: 16, color: '#fff' },
 });

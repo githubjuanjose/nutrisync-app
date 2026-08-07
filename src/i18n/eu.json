@@ -196,7 +196,9 @@
     "prBest": "Onena",
     "battEmpty": "Hustuta",
     "battFull": "Kargatuta",
-    "saving": "Gordetzen…"
+    "saving": "Gordetzen…",
+    "done": "Eginda",
+    "feedbackReply": "Zure iruzkinari erantzuna"
   },
   "dows": [
     "IG",
@@ -626,7 +628,10 @@
       "pick": "Sakatu data bat aukeratzeko"
     },
     "city": {
-      "h": "Honek NutriSync-i aholkuak lokalizatzen eta zu hobeto ulertzen laguntzen dio!"
+      "h": "Honek NutriSync-i aholkuak lokalizatzen eta zu hobeto ulertzen laguntzen dio!",
+      "use": "Erabili nire kokapena",
+      "detecting": "Zure hiria detektatzen…",
+      "fail": "Ezin izan dugu zure hiria detektatu — idatzi, mesedez."
     },
     "consent": {
       "hero": "Zure datuak zureak dira beti",
@@ -797,7 +802,90 @@
     "notesBtn": "Oharrak",
     "nutrition": "ELIKADURA",
     "other": "Beste bat",
-    "today": "GAUR"
+    "today": "GAUR",
+    "graceAvg": "zure batezbestekoa:",
+    "graceQ": "Etorri al zaizu hilekoa?",
+    "graceNorm": "Zikloak aldatu egiten dira — normala da.",
+    "graceCta": "Nire hilekoa erregistratu",
+    "dobPick": "Sakatu hautatzeko",
+    "heightFt": "Altuera (ft)",
+    "heightIn": "Altuera (in)",
+    "weightLb": "Pisua (lb)",
+    "unitsHint": "Unitateak Aplikazioaren hobespenetan alda ditzakezu.",
+    "invalidHeight": "Altuera horrek ez du zuzena ematen — egiaztatu.",
+    "invalidWeight": "Pisu horrek ez du zuzena ematen — egiaztatu.",
+    "invalidCycleLen": "Zikloaren iraupenak 15 eta 90 egun arteko zenbaki osoa izan behar du.",
+    "invalidDur": "Hilekoaren iraupenak 1 eta 14 egun artekoa izan behar du.",
+    "confirmRare": "Ohiz kanpoko balioa",
+    "confirmRareBody": "21–45 egunetik kanpoko zikloak ez dira ohikoak. Gorde hala ere?",
+    "saveAnyway": "Gorde hala ere",
+    "saveFail": "Ezin izan da gorde",
+    "saveFailBody": "Egiaztatu konexioa eta saiatu berriro.",
+    "unitsMetric": "Metrikoa (kg, cm)",
+    "unitsImperial": "Inperiala (lb, in)",
+    "heightLbl": "Altuera",
+    "weightLbl": "Pisua",
+    "awaitingTitle": "Zure ziklo berriaren zain",
+    "avgShort": "batez b.",
+    "cycleSavedT": "Zikloa gordeta",
+    "cycleSavedN": " eguneko zikloa gordeta.",
+    "cycleSavedD1": "Hilekoa · 1. egunean zaude — eskerrik asko zure erritmoa egunean izateagatik.",
+    "cycleSavedAvg": "Zure batezbestekoa orain",
+    "careCopy": "Ziklo hau zure patroitik dezente harago doa. Ziklo luze bakan bat ohikoa da — baina errepikatzen bada edo kezkatzen bazaitu, profesional batekin kontsultatzea ideia ona da.",
+    "driftCopy": "Hau zure ohiko tartetik harago luzatzen ari da. Gorputzak horrelakoak egiten ditu — zure erritmo berria bihurtzen bada, batezbestekoa automatikoki egokituko da.",
+    "careLink": "Osasun oharra",
+    "careNoteT": "Ohar bat zure osasunaz",
+    "careNoteBody": "NutriSync-ek patroiak antzematen ditu — inoiz ez du diagnostikatzen. Noizbehinkako ziklo luze edo irregularrak ohikoak dira (estresa, bidaiak, gaixotasuna). Ziklo luzeak errepikatzen badira, edo zerbait gaizki dagoela sentitzen baduzu, kontsultatu zure mediku edo ginekologoarekin. Hemengo zure datuek elkarrizketa horretan lagun dezakete.",
+    "endPeriod": "Hilekoa amaitu",
+    "endPeriodSub": "Folikularrera zoaz",
+    "periodEndedT": "Hilekoa amaituta",
+    "periodEndedB1": "Erregistratuta",
+    "periodEndedB2": " eguneko hilekoa. Ongi etorri zure fase Folikularrera — iraupen honek zure baseline elikatzen du orain.",
+    "rebaseFyi": "ℹ️ 3 ziklo erregistratuta, zure batezbesteko pertsonalak gidatzen ditu orain eraztuna, egutegia eta iragarpenak.",
+    "outlierFyi": "Hau zure ohiko patroitik kanpo geratu da, beraz ez du batezbestekoa mugituko errepikatzen ez bada.",
+    "trends": "Joerak",
+    "trendsBrewT": "Zure joerak egosten ari dira",
+    "trendsBrewB": "Erregistratu gutxienez 2 ziklo oso eta hemen agertuko da zure grafika pertsonala — iraupenak, batezbestekoa eta tarte normala.",
+    "cyclesClosed": "ziklo itxita",
+    "trCycleLen": "Zikloaren iraupena",
+    "trLastN": "azken",
+    "trBand": "zure tarte normala",
+    "trOutlier": "patroitik kanpo",
+    "nextPeriodPred": "Hurrengo hilekoa aurreikusita",
+    "trHistory": "Zikloen historia",
+    "trEditHint": "Hasiera-data gaizki? Zuzendu uneko zikloa goiko arkatzarekin — iraganekoak zure hasiera erregistratuetatik birkalkulatzen dira.",
+    "legalHdr": "LEGALA",
+    "legalTerms": "Baldintzak",
+    "legalPrivacy": "Pribatutasun-politika",
+    "legalCookies": "Cookie-politika",
+    "legalHealth": "Osasun-oharra",
+    "legalNotice": "Lege-oharra",
+    "legalConsent": "Osasun-datuen baimena",
+    "legalBeta": "Beta pilotu akordioa",
+    "tapEnergy": "Ukitu zure energia erregistratzeko",
+    "back": "Atzera",
+    "daysToUnlock": "egun desblokeatzeko",
+    "ntf": {
+      "push": "Push jakinarazpenak",
+      "pushSub": "Etengailu nagusia — baimena eskatzen du aktibatzean",
+      "streaks": "Bolada ospakizunak",
+      "streaksSub": "Mugarri bat lortzen duzunean",
+      "reengage": "Itzulera goxoak",
+      "reengageSub": "Egun batzuk kanpoan bazaude",
+      "morning": "Goizeko gogorarazlearen ordua",
+      "evening": "Gaueko gogorarazlearen ordua"
+    },
+    "ntfSec": {
+      "streaks": "BOLADAK",
+      "reengage": "ITZULERAK",
+      "times": "ORDUTEGIAK"
+    },
+    "ntfDenied": "Baimena ukatuta — aktibatu NutriSync jakinarazpenak sistemaren Ezarpenetan.",
+    "ntfOld": "Push-a oraindik ez dago hemen erabilgarri — 0.21 bertsioarekin dator.",
+    "ntfPriv": "Blokeo-pantailak ez du inoiz osasun daturik erakusten — mezu osoa aplikazio barruan irekitzen da.",
+    "otherFood": "Bestelakoa — idatzi zer jan duzun",
+    "otherFoodPh": "adib. dilista entsalada",
+    "otherFoodSave": "Erregistratu"
   },
   "cat": {
     "Getting started": "Lehen pausoak",
@@ -1349,5 +1437,25 @@
     "Whole-Wheat Pasta": "Pasta integrala",
     "Yoga & Mobility": "Yoga eta mugikortasuna",
     "Zucchini (Calabacín)": "Kuiatxoa"
+  },
+  "gender": {
+    "woman": "Emakumea",
+    "nonbinary": "Ez-bitarra",
+    "pnts": "Nahiago dut ez esan"
+  },
+  "contra": {
+    "yes": "Bai, gaur egun",
+    "notanymore": "Jada ez",
+    "never": "Inoiz ez"
+  },
+  "cond": {
+    "adenomyosis": "Adenomiosia",
+    "irregular_cycles": "Ziklo irregularrak",
+    "hypothyroidism": "Hipotiroidismoa",
+    "pmos": "SOP",
+    "endometriosis": "Endometriosia",
+    "hashimoto_s": "Hashimoto",
+    "heavy_menstrual_bleeding": "Hileko odoljario ugaria",
+    "hyperthyroidism": "Hipertiroidismoa"
   }
 }

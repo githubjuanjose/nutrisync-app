@@ -185,7 +185,9 @@
     "saving": "Saving…",
     "cancel": "Cancel",
     "gotIt": "Got it",
-    "welP": "You are here because your body deserves better than guesswork. Lets sync your nutrition and movement to your natural rhythm."
+    "welP": "You are here because your body deserves better than guesswork. Lets sync your nutrition and movement to your natural rhythm.",
+    "done": "Done",
+    "feedbackReply": "Reply to your feedback"
   },
   "dows": [
     "SUN",
@@ -796,7 +798,10 @@
       "daily": "DAILY REMINDERS",
       "cycle": "CYCLE",
       "community": "COMMUNITY",
-      "quiet": "QUIET HOURS"
+      "quiet": "QUIET HOURS",
+      "streaks": "STREAKS",
+      "reengage": "RE-ENGAGE",
+      "times": "TIMES"
     },
     "ntf": {
       "daily": "Daily log reminder",
@@ -812,7 +817,15 @@
       "community": "Community activity",
       "communitySub": "Replies and streak milestones",
       "quiet": "Pause 10pm – 7am",
-      "quietSub": "No notifications overnight"
+      "quietSub": "No notifications overnight",
+      "push": "Push notifications",
+      "pushSub": "Master switch — asks permission when you turn it on",
+      "streaks": "Streak celebrations",
+      "streaksSub": "When you hit a milestone",
+      "reengage": "Gentle comebacks",
+      "reengageSub": "If you've been away a few days",
+      "morning": "Morning reminder time",
+      "evening": "Evening reminder time"
     },
     "ntfNote": "Push delivery requires notification permission (wired with the connectors work).",
     "sec": {
@@ -892,7 +905,75 @@
       "bioNo": "Not now",
       "bioUnlock": "Unlock NutriSync",
       "bioFallback": "Use password"
-    }
+    },
+    "graceAvg": "your average is",
+    "graceQ": "Has your period arrived?",
+    "graceNorm": "Cycles vary — that’s normal.",
+    "graceCta": "Log my period",
+    "dobPick": "Tap to select",
+    "heightFt": "Height (ft)",
+    "heightIn": "Height (in)",
+    "weightLb": "Weight (lb)",
+    "unitsHint": "Units can be changed in App Preferences.",
+    "invalidHeight": "That height looks off — please check it.",
+    "invalidWeight": "That weight looks off — please check it.",
+    "invalidCycleLen": "Cycle length must be a whole number between 15 and 90 days.",
+    "invalidDur": "Period duration must be between 1 and 14 days.",
+    "confirmRare": "Unusual value",
+    "confirmRareBody": "Cycle lengths outside 21–45 days are uncommon. Save anyway?",
+    "saveAnyway": "Save anyway",
+    "saveFail": "Could not save",
+    "saveFailBody": "Check your connection and try again.",
+    "unitsMetric": "Metric (kg, cm)",
+    "unitsImperial": "Imperial (lb, in)",
+    "heightLbl": "Height",
+    "weightLbl": "Weight",
+    "awaitingTitle": "Awaiting your new cycle",
+    "avgShort": "avg",
+    "cycleSavedT": "Cycle saved",
+    "cycleSavedN": "-day cycle saved.",
+    "cycleSavedD1": "You're on Menstrual · Day 1 — thanks for keeping your rhythm in sync.",
+    "cycleSavedAvg": "Your average is now",
+    "careCopy": "This cycle is running well past your pattern. One long cycle is common — but if this repeats or worries you, checking in with a professional is a good idea.",
+    "driftCopy": "This one is drifting past your usual range. Bodies do this — if it becomes your new rhythm, your baseline will adjust automatically.",
+    "careLink": "Health note",
+    "careNoteT": "A note on your health",
+    "careNoteBody": "NutriSync tracks patterns — it never diagnoses. Occasional long or irregular cycles are common (stress, travel, illness). If long cycles keep repeating, or you feel something is off, please check in with a doctor or gynaecologist. Your data here can help that conversation.",
+    "endPeriod": "End period",
+    "endPeriodSub": "moves you to Follicular",
+    "periodEndedT": "Period ended",
+    "periodEndedB1": "Logged a",
+    "periodEndedB2": "-day period. Welcome to your Follicular phase — this length now feeds your baseline.",
+    "rebaseFyi": "ℹ️ With 3 cycles logged, your personal average now leads your ring, calendar and predictions.",
+    "outlierFyi": "This one sat outside your usual pattern, so it won’t move your average unless it repeats.",
+    "trends": "Trends",
+    "trendsBrewT": "Your trends are brewing",
+    "trendsBrewB": "Log at least 2 full cycles and your personal chart appears here — lengths, your average, and your normal range.",
+    "cyclesClosed": "cycles closed",
+    "trCycleLen": "Cycle length",
+    "trLastN": "last",
+    "trBand": "your normal range",
+    "trOutlier": "outside pattern",
+    "nextPeriodPred": "Next period expected",
+    "trHistory": "Cycle history",
+    "trEditHint": "Wrong start date? Fix the current cycle with the pencil up top — past cycles recalculate from your logged starts.",
+    "legalHdr": "LEGAL",
+    "legalTerms": "Terms & conditions",
+    "legalPrivacy": "Privacy policy",
+    "legalCookies": "Cookie policy",
+    "legalHealth": "Health notice",
+    "legalNotice": "Legal notice",
+    "legalConsent": "Health-data consent",
+    "legalBeta": "Beta agreement",
+    "tapEnergy": "Tap to log your energy",
+    "back": "Back",
+    "daysToUnlock": "days to unlock",
+    "ntfDenied": "Permission denied — enable notifications for NutriSync in system Settings.",
+    "ntfOld": "Push isn't available here yet — it arrives with app version 0.21.",
+    "ntfPriv": "Your lock screen never shows health details — the full message opens inside the app.",
+    "otherFood": "Other — type what you had",
+    "otherFoodPh": "e.g. lentil salad",
+    "otherFoodSave": "Log it"
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",
@@ -983,7 +1064,10 @@
       "pick": "Tap to choose a date"
     },
     "city": {
-      "h": "This helps NutriSync localise tips and get a better understanding of you!"
+      "h": "This helps NutriSync localise tips and get a better understanding of you!",
+      "use": "Use my location",
+      "detecting": "Detecting your city…",
+      "fail": "We couldn't detect your city — please type it in."
     },
     "consent": {
       "hero": "Your data stays yours",
@@ -1007,5 +1091,25 @@
       "note": "You can update these answers anytime in Settings."
     }
   },
-  "cat": {}
+  "cat": {},
+  "gender": {
+    "woman": "Woman",
+    "nonbinary": "Non-binary",
+    "pnts": "Prefer not to say"
+  },
+  "contra": {
+    "yes": "Yes, currently",
+    "notanymore": "Not anymore",
+    "never": "Never"
+  },
+  "cond": {
+    "adenomyosis": "Adenomyosis",
+    "irregular_cycles": "Irregular cycles",
+    "hypothyroidism": "Hypothyroidism",
+    "pmos": "PCOS",
+    "endometriosis": "Endometriosis",
+    "hashimoto_s": "Hashimoto's",
+    "heavy_menstrual_bleeding": "Heavy menstrual bleeding",
+    "hyperthyroidism": "Hyperthyroidism"
+  }
 }
