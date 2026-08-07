@@ -882,7 +882,12 @@
     "ntfPriv": "Ton écran verrouillé n’affiche jamais de détails de santé — le message complet s’ouvre dans l’app.",
     "otherFood": "Autre — écris ce que tu as mangé",
     "otherFoodPh": "p. ex. salade de lentilles",
-    "otherFoodSave": "Enregistrer"
+    "otherFoodSave": "Enregistrer",
+    "fb": {
+      "attach": "📎 Joindre une capture",
+      "attached": "Capture jointe ✓ (touche pour retirer)",
+      "attachSoon": "Les captures arrivent avec la prochaine mise à jour."
+    }
   },
   "cat": {
     "Getting started": "Premiers pas",

@@ -883,7 +883,12 @@
     "ntfPriv": "ロック画面に健康の詳細は表示されません — メッセージ全文はアプリ内で開きます。",
     "otherFood": "その他 — 食べたものを入力",
     "otherFoodPh": "例：レンズ豆のサラダ",
-    "otherFoodSave": "記録する"
+    "otherFoodSave": "記録する",
+    "fb": {
+      "attach": "📎 スクリーンショットを添付",
+      "attached": "添付済み ✓（タップで削除）",
+      "attachSoon": "スクリーンショットは次のアップデートで使えます。"
+    }
   },
   "cat": {
     "Getting started": "はじめの一歩",

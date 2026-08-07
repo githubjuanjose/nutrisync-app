@@ -884,7 +884,12 @@
     "ntfPriv": "Je vergrendelscherm toont nooit gezondheidsdetails — het volledige bericht opent in de app.",
     "otherFood": "Anders — typ wat je hebt gegeten",
     "otherFoodPh": "bijv. linzensalade",
-    "otherFoodSave": "Loggen"
+    "otherFoodSave": "Loggen",
+    "fb": {
+      "attach": "📎 Screenshot toevoegen",
+      "attached": "Screenshot toegevoegd ✓ (tik om te verwijderen)",
+      "attachSoon": "Screenshots komen met de volgende update."
+    }
   },
   "cat": {
     "Getting started": "Aan de slag",

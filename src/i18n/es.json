@@ -1285,7 +1285,12 @@
     "ntfPriv": "Tu pantalla bloqueada nunca muestra detalles de salud — el mensaje completo se abre dentro de la app.",
     "otherFood": "Otro — escribe lo que comiste",
     "otherFoodPh": "p. ej. ensalada de lentejas",
-    "otherFoodSave": "Registrar"
+    "otherFoodSave": "Registrar",
+    "fb": {
+      "attach": "📎 Adjuntar captura",
+      "attached": "Captura adjunta ✓ (toca para quitar)",
+      "attachSoon": "Las capturas llegan con la próxima actualización de la app."
+    }
   },
   "cat": {
     "Getting started": "Primeros pasos",

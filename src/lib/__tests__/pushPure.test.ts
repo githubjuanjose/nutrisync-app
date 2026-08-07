@@ -58,3 +58,17 @@ describe('mapGrupoTab (N4: cada toque a su pestaña, jamás rompe)', () => {
     expect(mapGrupoTab(null)).toBe('Cycle');
   });
 });
+
+describe('shots (r16-F: adjunto del feedback)', () => {
+  const { buildShotPath, extFromUri } = require('../shots');
+  it('la ruta SIEMPRE cuelga de la carpeta de la usuaria (RLS)', () => {
+    expect(buildShotPath('u-1', 1723000000000)).toBe('u-1/1723000000000.jpg');
+    expect(buildShotPath('u-1', 5, 'PNG')).toBe('u-1/5.png');
+    expect(buildShotPath('u-1', 5, '../evil')).toBe('u-1/5.evil');
+  });
+  it('extensión desde uri: heic→jpg, query fuera, rara→jpg', () => {
+    expect(extFromUri('file:///a/IMG.HEIC')).toBe('jpg');
+    expect(extFromUri('file:///a/shot.png?x=1')).toBe('png');
+    expect(extFromUri(null)).toBe('jpg');
+  });
+});

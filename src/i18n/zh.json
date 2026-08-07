@@ -884,7 +884,12 @@
     "ntfPriv": "锁屏永远不会显示健康细节 — 完整消息在应用内打开。",
     "otherFood": "其他 — 输入你吃了什么",
     "otherFoodPh": "例如：扁豆沙拉",
-    "otherFoodSave": "记录"
+    "otherFoodSave": "记录",
+    "fb": {
+      "attach": "📎 添加截图",
+      "attached": "已添加截图 ✓（点按可移除）",
+      "attachSoon": "截图功能将随下次更新推出。"
+    }
   },
   "cat": {
     "Getting started": "新手入门",

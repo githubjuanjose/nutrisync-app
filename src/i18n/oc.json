@@ -884,7 +884,12 @@
     "ntfPriv": "L’ecran verrolhat mòstra pas jamai de detalhs de santat — lo messatge complet se dobrís dins l’aplicacion.",
     "otherFood": "Autre — escriu çò qu'as manjat",
     "otherFoodPh": "p. ex. ensalada de lentilhas",
-    "otherFoodSave": "Registrar"
+    "otherFoodSave": "Registrar",
+    "fb": {
+      "attach": "📎 Ajustar captura",
+      "attached": "Captura ajustada ✓ (tòca per la levar)",
+      "attachSoon": "Las capturas arriban amb la venenta mesa a jorn."
+    }
   },
   "cat": {
     "Getting started": "Prumèri passi",

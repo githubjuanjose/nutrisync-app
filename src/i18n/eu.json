@@ -885,7 +885,12 @@
     "ntfPriv": "Blokeo-pantailak ez du inoiz osasun daturik erakusten — mezu osoa aplikazio barruan irekitzen da.",
     "otherFood": "Bestelakoa — idatzi zer jan duzun",
     "otherFoodPh": "adib. dilista entsalada",
-    "otherFoodSave": "Erregistratu"
+    "otherFoodSave": "Erregistratu",
+    "fb": {
+      "attach": "📎 Erantsi pantaila-argazkia",
+      "attached": "Argazkia erantsita ✓ (kendu ukituz)",
+      "attachSoon": "Pantaila-argazkiak hurrengo eguneratzearekin datoz."
+    }
   },
   "cat": {
     "Getting started": "Lehen pausoak",

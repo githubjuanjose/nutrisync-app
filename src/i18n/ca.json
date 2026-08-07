@@ -883,7 +883,12 @@
     "ntfPriv": "La pantalla bloquejada mai mostra detalls de salut — el missatge complet s’obre dins l’app.",
     "otherFood": "Altres — escriu què has menjat",
     "otherFoodPh": "p. ex. amanida de llenties",
-    "otherFoodSave": "Registrar"
+    "otherFoodSave": "Registrar",
+    "fb": {
+      "attach": "📎 Adjuntar captura",
+      "attached": "Captura adjunta ✓ (toca per treure-la)",
+      "attachSoon": "Les captures arriben amb la propera actualització."
+    }
   },
   "cat": {
     "Getting started": "Primers passos",

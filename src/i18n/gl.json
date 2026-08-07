@@ -884,7 +884,12 @@
     "ntfPriv": "A túa pantalla bloqueada nunca amosa detalles de saúde — a mensaxe completa ábrese dentro da app.",
     "otherFood": "Outro — escribe o que comiches",
     "otherFoodPh": "p. ex. ensalada de lentellas",
-    "otherFoodSave": "Rexistrar"
+    "otherFoodSave": "Rexistrar",
+    "fb": {
+      "attach": "📎 Achegar captura",
+      "attached": "Captura achegada ✓ (toca para quitala)",
+      "attachSoon": "As capturas chegan coa próxima actualización."
+    }
   },
   "cat": {
     "Getting started": "Primeiros pasos",

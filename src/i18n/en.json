@@ -973,7 +973,12 @@
     "ntfPriv": "Your lock screen never shows health details — the full message opens inside the app.",
     "otherFood": "Other — type what you had",
     "otherFoodPh": "e.g. lentil salad",
-    "otherFoodSave": "Log it"
+    "otherFoodSave": "Log it",
+    "fb": {
+      "attach": "📎 Add screenshot",
+      "attached": "Screenshot attached ✓ (tap to remove)",
+      "attachSoon": "Screenshots arrive with the next app update."
+    }
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",

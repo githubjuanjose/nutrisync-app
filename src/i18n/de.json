@@ -884,7 +884,12 @@
     "ntfPriv": "Dein Sperrbildschirm zeigt nie Gesundheitsdetails — die vollständige Nachricht öffnet sich in der App.",
     "otherFood": "Anderes — tippe, was du gegessen hast",
     "otherFoodPh": "z. B. Linsensalat",
-    "otherFoodSave": "Eintragen"
+    "otherFoodSave": "Eintragen",
+    "fb": {
+      "attach": "📎 Screenshot anhängen",
+      "attached": "Screenshot angehängt ✓ (zum Entfernen tippen)",
+      "attachSoon": "Screenshots kommen mit dem nächsten Update."
+    }
   },
   "cat": {
     "Getting started": "Erste Schritte",

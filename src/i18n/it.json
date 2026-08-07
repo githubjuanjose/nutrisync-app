@@ -884,7 +884,12 @@
     "ntfPriv": "La schermata di blocco non mostra mai dettagli sulla salute — il messaggio completo si apre nell’app.",
     "otherFood": "Altro — scrivi cosa hai mangiato",
     "otherFoodPh": "es. insalata di lenticchie",
-    "otherFoodSave": "Registra"
+    "otherFoodSave": "Registra",
+    "fb": {
+      "attach": "📎 Allega screenshot",
+      "attached": "Screenshot allegato ✓ (tocca per rimuovere)",
+      "attachSoon": "Gli screenshot arrivano col prossimo aggiornamento."
+    }
   },
   "cat": {
     "Getting started": "Primi passi",
