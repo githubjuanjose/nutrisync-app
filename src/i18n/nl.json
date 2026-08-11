@@ -889,6 +889,51 @@
       "attach": "📎 Screenshot toevoegen",
       "attached": "Screenshot toegevoegd ✓ (tik om te verwijderen)",
       "attachSoon": "Screenshots komen met de volgende update."
+    },
+    "foto": {
+      "titulo": "Foto van je maaltijd",
+      "lead": "Maak een foto en NutriSync stelt voor wat er op je bord ligt. Je kunt het altijd corrigeren.",
+      "hacer": "Foto maken",
+      "elegir": "Kies uit galerij",
+      "privTit": "Wat er met je foto gebeurt",
+      "privTxt": "Hij blijft in je privéaccount. Voor de analyse wordt alleen de afbeelding verstuurd — nooit je naam, je cyclus of je locatie, en de locatiegegevens worden gewist voordat hij je telefoon verlaat.",
+      "queEs": "Welke maaltijd is dit?",
+      "analizar": "Deze maaltijd analyseren",
+      "otra": "Nog een maken",
+      "pasoPrep": "Foto voorbereiden…",
+      "pasoSube": "Opslaan in je account…",
+      "pasoIA": "Je bord lezen…",
+      "pasoGuarda": "Opslaan…",
+      "detectado": "Dit zie ik",
+      "total": "Totaal",
+      "macrosLuego": "Calorieën en macro's komen met de volgende update; voorlopig wordt je maaltijd opgeslagen met wat erin zit.",
+      "confirmar": "Klopt, sla het op",
+      "reintentar": "Opnieuw proberen",
+      "guardada": "Maaltijd opgeslagen",
+      "permTit": "Toestemming nodig",
+      "permCam": "NutriSync heeft de camera nodig om je maaltijd te fotograferen.",
+      "permGal": "NutriSync heeft toegang tot je foto's nodig om een maaltijd te kiezen.",
+      "errModulo": "Hiervoor is de nieuwste versie van de app nodig. Werk hem bij in de store en probeer het opnieuw.",
+      "errCamara": "De camera kon niet worden geopend.",
+      "errNoComida": "Ik zie geen eten op deze foto. Zullen we het opnieuw proberen?",
+      "errCupo": "Je hebt de analyselimiet van vandaag bereikt.",
+      "errRed": "Ik kon geen verbinding maken. Probeer het zo meteen opnieuw.",
+      "errPeso": "De foto is te groot. Probeer een andere.",
+      "errGenerico": "Ik kon de foto niet analyseren. Je kunt het opnieuw proberen.",
+      "errGuardar": "Het kon niet worden opgeslagen.",
+      "tipo": {
+        "breakfast": "Ontbijt",
+        "lunch": "Lunch",
+        "dinner": "Diner",
+        "snack": "Snack",
+        "drink": "Drankje"
+      },
+      "conf": {
+        "alta": "Hoge zekerheid",
+        "media": "Gemiddelde zekerheid",
+        "baja": "Laag — even controleren",
+        "sin": "—"
+      }
     }
   },
   "cat": {

@@ -888,6 +888,51 @@
       "attach": "📎 Adjuntar captura",
       "attached": "Captura adjunta ✓ (toca per treure-la)",
       "attachSoon": "Les captures arriben amb la propera actualització."
+    },
+    "foto": {
+      "titulo": "Foto del teu àpat",
+      "lead": "Fes una foto i NutriSync et proposarà què hi ha al plat. Sempre ho pots corregir.",
+      "hacer": "Fer una foto",
+      "elegir": "Triar de la galeria",
+      "privTit": "Què passa amb la teva foto",
+      "privTxt": "Es desa al teu compte privat. Per analitzar-la només hi viatja la imatge: mai el teu nom, el teu cicle ni la teva ubicació, i les dades de localització s'esborren abans que surti del mòbil.",
+      "queEs": "Quin àpat és?",
+      "analizar": "Analitzar aquest àpat",
+      "otra": "Fer-ne una altra",
+      "pasoPrep": "Preparant la foto…",
+      "pasoSube": "Desant-la al teu compte…",
+      "pasoIA": "Llegint el teu plat…",
+      "pasoGuarda": "Desant…",
+      "detectado": "Això és el que veig",
+      "total": "Total",
+      "macrosLuego": "Les calories i els macros arriben a la propera actualització; de moment el teu àpat queda desat amb el que conté.",
+      "confirmar": "Està bé, desa-ho",
+      "reintentar": "Tornar-ho a provar",
+      "guardada": "Àpat desat",
+      "permTit": "Falta un permís",
+      "permCam": "NutriSync necessita la càmera per fotografiar el teu àpat.",
+      "permGal": "NutriSync necessita accés a les teves fotos per triar un àpat.",
+      "errModulo": "Això necessita l'última versió de l'app. Actualitza-la des de la botiga i torna-ho a provar.",
+      "errCamara": "No s'ha pogut obrir la càmera.",
+      "errNoComida": "No hi veig menjar, en aquesta foto. Ho repetim?",
+      "errCupo": "Has arribat al límit d'anàlisis d'avui.",
+      "errRed": "No he pogut connectar. Torna-ho a provar d'aquí a un moment.",
+      "errPeso": "La foto és massa gran. Prova amb una altra.",
+      "errGenerico": "No he pogut analitzar la foto. Pots tornar-ho a provar.",
+      "errGuardar": "No s'ha pogut desar.",
+      "tipo": {
+        "breakfast": "Esmorzar",
+        "lunch": "Dinar",
+        "dinner": "Sopar",
+        "snack": "Berenar",
+        "drink": "Beguda"
+      },
+      "conf": {
+        "alta": "Confiança alta",
+        "media": "Confiança mitjana",
+        "baja": "Poca confiança: revisa-ho",
+        "sin": "—"
+      }
     }
   },
   "cat": {

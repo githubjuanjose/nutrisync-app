@@ -1,4 +1,4 @@
-import { mapPermission, buildPrefsUpsert } from '../pushPure';
+import { destinoPush, mapPermission, buildPrefsUpsert } from '../pushPure';
 
 describe('mapPermission (N1: cualquier cosa rara → volver a preguntar)', () => {
   it('estados claros', () => {
@@ -70,5 +70,22 @@ describe('shots (r16-F: adjunto del feedback)', () => {
     expect(extFromUri('file:///a/IMG.HEIC')).toBe('jpg');
     expect(extFromUri('file:///a/shot.png?x=1')).toBe('png');
     expect(extFromUri(null)).toBe('jpg');
+  });
+});
+
+describe('destinoPush — criterio de Pilar (10-ago)', () => {
+  it('el recordatorio de comida abre el REGISTRO, no solo la pestaña', () => {
+    expect(destinoPush('daily_meal')).toEqual({ tab: 'Cycle', pantalla: 'MealLog' });
+    expect(destinoPush('meal_reminder').pantalla).toBe('MealLog');
+  });
+  it('el aviso de cambio de fase lleva al calendario', () => {
+    expect(destinoPush('phase_luteal')).toEqual({ tab: 'Calendar' });
+    expect(destinoPush('new_cycle')).toEqual({ tab: 'Calendar' });
+  });
+  it('lo desconocido aterriza en la pestaña de siempre y NUNCA rompe', () => {
+    for (const g of [null, undefined, '', '   ', 'inventado', 42 as any, {} as any]) {
+      expect(() => destinoPush(g)).not.toThrow();
+      expect(destinoPush(g).tab).toBeTruthy();
+    }
   });
 });

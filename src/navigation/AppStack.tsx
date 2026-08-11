@@ -4,6 +4,7 @@ import MainTabs from './MainTabs';
 import MoodEnergyGate from '../screens/main/MoodEnergyGate';
 import MealLogScreen from '../screens/main/MealLogScreen';
 import MealHistoryScreen from '../screens/main/MealHistoryScreen';
+import MealPhotoScreen from '../screens/main/MealPhotoScreen';
 import LogMovementScreen from '../screens/main/LogMovementScreen';
 import MovementHistoryScreen from '../screens/main/MovementHistoryScreen';
 import FeedbackScreen from '../screens/settings/FeedbackScreen';
@@ -35,6 +36,7 @@ export default function AppStack() {
       <Stack.Screen name="EditHealth" component={EditHealthScreen} options={{ presentation: 'modal' }} />
       <Stack.Screen name="MealLog" component={MealLogScreen} />
       <Stack.Screen name="MealHistory" component={MealHistoryScreen} />
+      <Stack.Screen name="MealPhoto" component={MealPhotoScreen} />
       <Stack.Screen name="LogMovement" component={LogMovementScreen} />
       <Stack.Screen name="MovementHistory" component={MovementHistoryScreen} />
       <Stack.Screen name="NotificationCenter" component={NotificationCenterScreen} />

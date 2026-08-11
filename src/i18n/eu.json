@@ -890,6 +890,51 @@
       "attach": "📎 Erantsi pantaila-argazkia",
       "attached": "Argazkia erantsita ✓ (kendu ukituz)",
       "attachSoon": "Pantaila-argazkiak hurrengo eguneratzearekin datoz."
+    },
+    "foto": {
+      "titulo": "Zure otorduaren argazkia",
+      "lead": "Atera argazki bat eta NutriSync-ek platerean zer dagoen proposatuko dizu. Beti zuzen dezakezu.",
+      "hacer": "Argazkia atera",
+      "elegir": "Galeriatik hautatu",
+      "privTit": "Zer gertatzen da zure argazkiarekin",
+      "privTxt": "Zure kontu pribatuan gordetzen da. Aztertzeko irudia baino ez da bidaltzen: inoiz ez zure izena, zure zikloa edo zure kokapena, eta kokapen-datuak mugikorretik atera aurretik ezabatzen dira.",
+      "queEs": "Zein otordu da?",
+      "analizar": "Otordu hau aztertu",
+      "otra": "Beste bat atera",
+      "pasoPrep": "Argazkia prestatzen…",
+      "pasoSube": "Zure kontuan gordetzen…",
+      "pasoIA": "Zure platera irakurtzen…",
+      "pasoGuarda": "Gordetzen…",
+      "detectado": "Hau da ikusten dudana",
+      "total": "Guztira",
+      "macrosLuego": "Kaloriak eta makroak hurrengo eguneratzean iritsiko dira; oraingoz zure otordua duen edukiarekin gordeta geratzen da.",
+      "confirmar": "Ondo dago, gorde",
+      "reintentar": "Berriro saiatu",
+      "guardada": "Otordua gordeta",
+      "permTit": "Baimen bat falta da",
+      "permCam": "NutriSync-ek kamera behar du zure otordua argazkitzeko.",
+      "permGal": "NutriSync-ek zure argazkietarako sarbidea behar du otordu bat hautatzeko.",
+      "errModulo": "Honek aplikazioaren azken bertsioa behar du. Eguneratu dendatik eta saiatu berriro.",
+      "errCamara": "Ezin izan da kamera ireki.",
+      "errNoComida": "Ez dut janaririk ikusten argazki honetan. Berriro saiatuko gara?",
+      "errCupo": "Gaurko analisi-mugara iritsi zara.",
+      "errRed": "Ezin izan dut konektatu. Saiatu une batean.",
+      "errPeso": "Argazkia handiegia da. Saiatu beste batekin.",
+      "errGenerico": "Ezin izan dut argazkia aztertu. Berriro saia zaitezke.",
+      "errGuardar": "Ezin izan da gorde.",
+      "tipo": {
+        "breakfast": "Gosaria",
+        "lunch": "Bazkaria",
+        "dinner": "Afaria",
+        "snack": "Mokadua",
+        "drink": "Edaria"
+      },
+      "conf": {
+        "alta": "Konfiantza handia",
+        "media": "Konfiantza ertaina",
+        "baja": "Konfiantza gutxi: berrikusi",
+        "sin": "—"
+      }
     }
   },
   "cat": {

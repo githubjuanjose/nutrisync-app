@@ -889,6 +889,51 @@
       "attach": "📎 Achegar captura",
       "attached": "Captura achegada ✓ (toca para quitala)",
       "attachSoon": "As capturas chegan coa próxima actualización."
+    },
+    "foto": {
+      "titulo": "Foto da túa comida",
+      "lead": "Fai unha foto e NutriSync proporache o que hai no prato. Sempre podes corrixilo.",
+      "hacer": "Facer unha foto",
+      "elegir": "Escoller da galería",
+      "privTit": "Que pasa coa túa foto",
+      "privTxt": "Gárdase na túa conta privada. Para analizala só viaxa a imaxe: nunca o teu nome, o teu ciclo nin a túa localización, e os datos de localización bórranse antes de que saia do móbil.",
+      "queEs": "Que comida é?",
+      "analizar": "Analizar esta comida",
+      "otra": "Facer outra",
+      "pasoPrep": "Preparando a foto…",
+      "pasoSube": "Gardándoa na túa conta…",
+      "pasoIA": "Lendo o teu prato…",
+      "pasoGuarda": "Gardando…",
+      "detectado": "Isto é o que vexo",
+      "total": "Total",
+      "macrosLuego": "As calorías e os macros chegan na vindeira actualización; polo de agora a túa comida queda gardada co que contén.",
+      "confirmar": "Está ben, gárdao",
+      "reintentar": "Volver tentalo",
+      "guardada": "Comida gardada",
+      "permTit": "Falta un permiso",
+      "permCam": "NutriSync necesita a cámara para fotografar a túa comida.",
+      "permGal": "NutriSync necesita acceso ás túas fotos para escoller unha comida.",
+      "errModulo": "Isto necesita a última versión da app. Actualízaa desde a tenda e téntao de novo.",
+      "errCamara": "Non se puido abrir a cámara.",
+      "errNoComida": "Non vexo comida nesta foto. Repetimos?",
+      "errCupo": "Chegaches ao límite de análises de hoxe.",
+      "errRed": "Non puiden conectar. Téntao nun momento.",
+      "errPeso": "A foto é grande de máis. Proba con outra.",
+      "errGenerico": "Non puiden analizar a foto. Podes volver tentalo.",
+      "errGuardar": "Non se puido gardar.",
+      "tipo": {
+        "breakfast": "Almorzo",
+        "lunch": "Xantar",
+        "dinner": "Cea",
+        "snack": "Petisco",
+        "drink": "Bebida"
+      },
+      "conf": {
+        "alta": "Confianza alta",
+        "media": "Confianza media",
+        "baja": "Pouca confianza: revísao",
+        "sin": "—"
+      }
     }
   },
   "cat": {

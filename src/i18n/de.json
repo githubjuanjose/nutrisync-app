@@ -889,6 +889,51 @@
       "attach": "📎 Screenshot anhängen",
       "attached": "Screenshot angehängt ✓ (zum Entfernen tippen)",
       "attachSoon": "Screenshots kommen mit dem nächsten Update."
+    },
+    "foto": {
+      "titulo": "Foto deiner Mahlzeit",
+      "lead": "Mach ein Foto und NutriSync schlägt dir vor, was auf dem Teller liegt. Du kannst es jederzeit korrigieren.",
+      "hacer": "Foto aufnehmen",
+      "elegir": "Aus der Galerie wählen",
+      "privTit": "Was mit deinem Foto passiert",
+      "privTxt": "Es bleibt in deinem privaten Konto. Zur Analyse wird nur das Bild gesendet – nie dein Name, dein Zyklus oder dein Standort, und die Standortdaten werden entfernt, bevor es das Handy verlässt.",
+      "queEs": "Welche Mahlzeit ist das?",
+      "analizar": "Diese Mahlzeit analysieren",
+      "otra": "Noch eins aufnehmen",
+      "pasoPrep": "Foto wird vorbereitet…",
+      "pasoSube": "Wird in deinem Konto gespeichert…",
+      "pasoIA": "Dein Teller wird gelesen…",
+      "pasoGuarda": "Wird gespeichert…",
+      "detectado": "Das sehe ich",
+      "total": "Gesamt",
+      "macrosLuego": "Kalorien und Makros kommen mit dem nächsten Update; vorerst wird deine Mahlzeit mit ihrem Inhalt gespeichert.",
+      "confirmar": "Passt, speichern",
+      "reintentar": "Erneut versuchen",
+      "guardada": "Mahlzeit gespeichert",
+      "permTit": "Berechtigung nötig",
+      "permCam": "NutriSync braucht die Kamera, um deine Mahlzeit zu fotografieren.",
+      "permGal": "NutriSync braucht Zugriff auf deine Fotos, um eine Mahlzeit auszuwählen.",
+      "errModulo": "Dafür brauchst du die neueste App-Version. Aktualisiere sie im Store und versuch es noch einmal.",
+      "errCamara": "Die Kamera konnte nicht geöffnet werden.",
+      "errNoComida": "Ich sehe auf diesem Foto kein Essen. Noch einmal?",
+      "errCupo": "Du hast das heutige Analyse-Limit erreicht.",
+      "errRed": "Ich konnte keine Verbindung herstellen. Versuch es gleich noch einmal.",
+      "errPeso": "Das Foto ist zu groß. Versuch ein anderes.",
+      "errGenerico": "Ich konnte das Foto nicht analysieren. Du kannst es erneut versuchen.",
+      "errGuardar": "Es konnte nicht gespeichert werden.",
+      "tipo": {
+        "breakfast": "Frühstück",
+        "lunch": "Mittagessen",
+        "dinner": "Abendessen",
+        "snack": "Snack",
+        "drink": "Getränk"
+      },
+      "conf": {
+        "alta": "Hohe Sicherheit",
+        "media": "Mittlere Sicherheit",
+        "baja": "Gering – bitte prüfen",
+        "sin": "—"
+      }
     }
   },
   "cat": {

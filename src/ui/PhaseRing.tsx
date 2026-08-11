@@ -1,4 +1,5 @@
 import React from 'react';
+import { colorDeFase } from '../lib/fases';
 import { View, Text, StyleSheet } from 'react-native';
 import Svg, {
   Circle, Defs, LinearGradient, Stop, Path, ClipPath, G, Text as SvgText,
@@ -25,7 +26,7 @@ export function PhaseRing({
   const circ = 2 * Math.PI * r;
   const dash = circ * progress;
   const gap = circ - dash;
-  const base = phaseColor[phase];
+  const base = colorDeFase(phase);
 
   return (
     <View style={{ width: size, height: size }}>

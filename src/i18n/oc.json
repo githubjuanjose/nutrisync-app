@@ -889,6 +889,51 @@
       "attach": "📎 Ajustar captura",
       "attached": "Captura ajustada ✓ (tòca per la levar)",
       "attachSoon": "Las capturas arriban amb la venenta mesa a jorn."
+    },
+    "foto": {
+      "titulo": "Fòto de ton repais",
+      "lead": "Fai una fòto e NutriSync te prepausarà çò qu'i a dins l'escudèla. Pòdes totjorn o corregir.",
+      "hacer": "Faire una fòto",
+      "elegir": "Causir dins la galeria",
+      "privTit": "Çò que se passa amb ta fòto",
+      "privTxt": "Es gardada dins ton compte privat. Per l'analisar, sola l'imatge viatja: jamai ton nom, ton cicle o ta localizacion, e las donadas de localizacion son escafadas abans que sortisca del telefonet.",
+      "queEs": "Quin repais es?",
+      "analizar": "Analisar aqueste repais",
+      "otra": "Ne faire una autra",
+      "pasoPrep": "Preparacion de la fòto…",
+      "pasoSube": "Enregistrament dins ton compte…",
+      "pasoIA": "Lectura de ton plat…",
+      "pasoGuarda": "Enregistrament…",
+      "detectado": "Aquò es çò que vesi",
+      "total": "Total",
+      "macrosLuego": "Las calorias e los macros arriban a la propchana mesa a jorn; per ara ton repais es gardat amb çò que conten.",
+      "confirmar": "Es bon, garda-o",
+      "reintentar": "Tornar ensajar",
+      "guardada": "Repais gardat",
+      "permTit": "Manca una permission",
+      "permCam": "NutriSync a besonh de la camèra per fotografiar ton repais.",
+      "permGal": "NutriSync a besonh d'accedir a tas fòtos per causir un repais.",
+      "errModulo": "Aquò a besonh de la darrièra version de l'aplicacion. Met-la a jorn dins la botiga e torna ensajar.",
+      "errCamara": "La camèra a pas pogut dobrir.",
+      "errNoComida": "Vesi pas de manjar sus aquesta fòto. Tornam ensajar?",
+      "errCupo": "As atengut lo limit d'analisis del jorn.",
+      "errRed": "Ai pas pogut me connectar. Torna ensajar dins un moment.",
+      "errPeso": "La fòto es tròp granda. Ensaja amb una autra.",
+      "errGenerico": "Ai pas pogut analisar la fòto. Pòdes tornar ensajar.",
+      "errGuardar": "A pas pogut èsser gardat.",
+      "tipo": {
+        "breakfast": "Dejunar",
+        "lunch": "Dinnar",
+        "dinner": "Sopar",
+        "snack": "Merendar",
+        "drink": "Beguda"
+      },
+      "conf": {
+        "alta": "Fisança auta",
+        "media": "Fisança mejana",
+        "baja": "Fisança febla: verifica",
+        "sin": "—"
+      }
     }
   },
   "cat": {

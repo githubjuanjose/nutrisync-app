@@ -888,6 +888,51 @@
       "attach": "📎 Adjuntar captura",
       "attached": "Captura adjunta ✓ (toca per llevar-la)",
       "attachSoon": "Les captures arriben amb la pròxima actualització."
+    },
+    "foto": {
+      "titulo": "Foto del teu menjar",
+      "lead": "Fes una foto i NutriSync et proposarà què hi ha al plat. Sempre ho pots corregir.",
+      "hacer": "Fer una foto",
+      "elegir": "Triar de la galeria",
+      "privTit": "Què passa amb la teua foto",
+      "privTxt": "Es guarda al teu compte privat. Per a analitzar-la només hi viatja la imatge: mai el teu nom, el teu cicle ni la teua ubicació, i les dades de localització s'esborren abans que isca del mòbil.",
+      "queEs": "Quin menjar és?",
+      "analizar": "Analitzar aquest menjar",
+      "otra": "Fer-ne una altra",
+      "pasoPrep": "Preparant la foto…",
+      "pasoSube": "Guardant-la al teu compte…",
+      "pasoIA": "Llegint el teu plat…",
+      "pasoGuarda": "Guardant…",
+      "detectado": "Això és el que veig",
+      "total": "Total",
+      "macrosLuego": "Les calories i els macros arriben en la pròxima actualització; de moment el teu menjar queda guardat amb el que conté.",
+      "confirmar": "Està bé, guarda-ho",
+      "reintentar": "Tornar a provar-ho",
+      "guardada": "Menjar guardat",
+      "permTit": "Falta un permís",
+      "permCam": "NutriSync necessita la càmera per a fotografiar el teu menjar.",
+      "permGal": "NutriSync necessita accés a les teues fotos per a triar un menjar.",
+      "errModulo": "Això necessita l'última versió de l'app. Actualitza-la des de la botiga i torna-ho a provar.",
+      "errCamara": "No s'ha pogut obrir la càmera.",
+      "errNoComida": "No hi veig menjar, en esta foto. Ho repetim?",
+      "errCupo": "Has arribat al límit d'anàlisis de hui.",
+      "errRed": "No he pogut connectar. Torna-ho a provar d'ací a un moment.",
+      "errPeso": "La foto és massa gran. Prova amb una altra.",
+      "errGenerico": "No he pogut analitzar la foto. Pots tornar-ho a provar.",
+      "errGuardar": "No s'ha pogut guardar.",
+      "tipo": {
+        "breakfast": "Esmorzar",
+        "lunch": "Dinar",
+        "dinner": "Sopar",
+        "snack": "Berenar",
+        "drink": "Beguda"
+      },
+      "conf": {
+        "alta": "Confiança alta",
+        "media": "Confiança mitjana",
+        "baja": "Poca confiança: revisa-ho",
+        "sin": "—"
+      }
     }
   },
   "cat": {

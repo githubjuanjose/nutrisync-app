@@ -889,6 +889,51 @@
       "attach": "📎 Allega screenshot",
       "attached": "Screenshot allegato ✓ (tocca per rimuovere)",
       "attachSoon": "Gli screenshot arrivano col prossimo aggiornamento."
+    },
+    "foto": {
+      "titulo": "Foto del tuo pasto",
+      "lead": "Scatta una foto e NutriSync ti proporrà cosa c'è nel piatto. Puoi sempre correggere.",
+      "hacer": "Scatta una foto",
+      "elegir": "Scegli dalla galleria",
+      "privTit": "Cosa succede alla tua foto",
+      "privTxt": "Resta nel tuo account privato. Per l'analisi viene inviata solo l'immagine: mai il tuo nome, il tuo ciclo o la tua posizione, e i dati di localizzazione vengono rimossi prima che esca dal telefono.",
+      "queEs": "Che pasto è?",
+      "analizar": "Analizza questo pasto",
+      "otra": "Scattane un'altra",
+      "pasoPrep": "Preparo la foto…",
+      "pasoSube": "La salvo nel tuo account…",
+      "pasoIA": "Leggo il tuo piatto…",
+      "pasoGuarda": "Salvataggio…",
+      "detectado": "Ecco cosa vedo",
+      "total": "Totale",
+      "macrosLuego": "Calorie e macro arrivano con il prossimo aggiornamento; per ora il tuo pasto viene salvato con quello che contiene.",
+      "confirmar": "Va bene, salva",
+      "reintentar": "Riprova",
+      "guardada": "Pasto salvato",
+      "permTit": "Serve un permesso",
+      "permCam": "NutriSync ha bisogno della fotocamera per fotografare il tuo pasto.",
+      "permGal": "NutriSync ha bisogno di accedere alle tue foto per scegliere un pasto.",
+      "errModulo": "Serve l'ultima versione dell'app. Aggiornala dallo store e riprova.",
+      "errCamara": "Non è stato possibile aprire la fotocamera.",
+      "errNoComida": "In questa foto non vedo cibo. Riproviamo?",
+      "errCupo": "Hai raggiunto il limite di analisi di oggi.",
+      "errRed": "Non sono riuscita a connettermi. Riprova tra un momento.",
+      "errPeso": "La foto è troppo grande. Provane un'altra.",
+      "errGenerico": "Non sono riuscita ad analizzare la foto. Puoi riprovare.",
+      "errGuardar": "Non è stato possibile salvare.",
+      "tipo": {
+        "breakfast": "Colazione",
+        "lunch": "Pranzo",
+        "dinner": "Cena",
+        "snack": "Spuntino",
+        "drink": "Bevanda"
+      },
+      "conf": {
+        "alta": "Alta affidabilità",
+        "media": "Media affidabilità",
+        "baja": "Bassa: controlla",
+        "sin": "—"
+      }
     }
   },
   "cat": {

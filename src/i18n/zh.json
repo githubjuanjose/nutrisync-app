@@ -889,6 +889,51 @@
       "attach": "📎 添加截图",
       "attached": "已添加截图 ✓（点按可移除）",
       "attachSoon": "截图功能将随下次更新推出。"
+    },
+    "foto": {
+      "titulo": "这餐的照片",
+      "lead": "拍一张照片，NutriSync 会推测盘子里有什么。你随时可以修改。",
+      "hacer": "拍照",
+      "elegir": "从相册选择",
+      "privTit": "你的照片会怎样",
+      "privTxt": "照片保存在你的私人账户里。分析时只发送图像——不会发送你的姓名、周期或位置，位置信息在离开手机前就已删除。",
+      "queEs": "这是哪一餐？",
+      "analizar": "分析这一餐",
+      "otra": "再拍一张",
+      "pasoPrep": "正在准备照片…",
+      "pasoSube": "正在保存到你的账户…",
+      "pasoIA": "正在识别你的餐盘…",
+      "pasoGuarda": "正在保存…",
+      "detectado": "我看到的内容",
+      "total": "合计",
+      "macrosLuego": "热量和三大营养素将在下次更新中提供；目前先保存这一餐的内容。",
+      "confirmar": "没问题，保存",
+      "reintentar": "再试一次",
+      "guardada": "已保存这一餐",
+      "permTit": "需要权限",
+      "permCam": "NutriSync 需要使用相机来拍摄你的餐食。",
+      "permGal": "NutriSync 需要访问你的照片来选择餐食。",
+      "errModulo": "这需要最新版本的应用。请在应用商店更新后再试。",
+      "errCamara": "无法打开相机。",
+      "errNoComida": "这张照片里我没看到食物，要重拍吗？",
+      "errCupo": "你已达到今天的分析次数上限。",
+      "errRed": "连接失败，请稍后再试。",
+      "errPeso": "照片太大了，换一张试试。",
+      "errGenerico": "我无法分析这张照片，你可以再试一次。",
+      "errGuardar": "保存失败。",
+      "tipo": {
+        "breakfast": "早餐",
+        "lunch": "午餐",
+        "dinner": "晚餐",
+        "snack": "加餐",
+        "drink": "饮品"
+      },
+      "conf": {
+        "alta": "可信度高",
+        "media": "可信度中等",
+        "baja": "可信度低 — 请核对",
+        "sin": "—"
+      }
     }
   },
   "cat": {

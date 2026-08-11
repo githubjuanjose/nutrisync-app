@@ -37,3 +37,25 @@ export function mapGrupoTab(grupo: string | null | undefined): 'Progress' | 'Cal
   if (g.startsWith('phase_') || g === 'new_cycle' || g === 'end_period') return 'Calendar';
   return 'Cycle';
 }
+
+/**
+ * Toque en la notificación → DESTINO EXACTO (criterio de Pilar, 10-ago).
+ *
+ * `mapGrupoTab` dejaba a la usuaria en la pestaña y ahí se acababa el viaje:
+ * tenía que buscar el aviso que acababa de tocar. Pilar decidió a dónde va
+ * cada cosa: **el recordatorio de comida abre el registro de comida, y el
+ * aviso de cambio de fase lleva al calendario.**
+ *
+ * Devuelve `pantalla` solo cuando hay un destino más profundo que la pestaña.
+ * Lo desconocido nunca rompe: cae en la pestaña de siempre, sin pantalla.
+ */
+export type DestinoPush = { tab: 'Progress' | 'Calendar' | 'Cycle'; pantalla?: 'MealLog' };
+
+export function destinoPush(grupo: string | null | undefined): DestinoPush {
+  const g = typeof grupo === 'string' ? grupo.trim().toLowerCase() : '';
+  // Recordatorio de comida → directo al formulario de registro, no a la lista.
+  if (g === 'daily_meal' || g === 'meal_reminder' || g.startsWith('meal_')) {
+    return { tab: 'Cycle', pantalla: 'MealLog' };
+  }
+  return { tab: mapGrupoTab(g) };
+}

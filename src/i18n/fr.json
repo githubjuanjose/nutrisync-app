@@ -887,6 +887,51 @@
       "attach": "📎 Joindre une capture",
       "attached": "Capture jointe ✓ (touche pour retirer)",
       "attachSoon": "Les captures arrivent avec la prochaine mise à jour."
+    },
+    "foto": {
+      "titulo": "Photo de ton repas",
+      "lead": "Prends une photo et NutriSync te proposera ce qu'il y a dans l'assiette. Tu peux toujours corriger.",
+      "hacer": "Prendre une photo",
+      "elegir": "Choisir dans la galerie",
+      "privTit": "Ce qui arrive à ta photo",
+      "privTxt": "Elle reste dans ton compte privé. Pour l'analyse, seule l'image est envoyée : jamais ton nom, ton cycle ni ta position, et les données de localisation sont effacées avant qu'elle ne quitte le téléphone.",
+      "queEs": "Quel repas est-ce ?",
+      "analizar": "Analyser ce repas",
+      "otra": "En reprendre une",
+      "pasoPrep": "Préparation de la photo…",
+      "pasoSube": "Enregistrement dans ton compte…",
+      "pasoIA": "Lecture de ton assiette…",
+      "pasoGuarda": "Enregistrement…",
+      "detectado": "Voici ce que je vois",
+      "total": "Total",
+      "macrosLuego": "Les calories et les macros arrivent à la prochaine mise à jour ; pour l'instant ton repas est enregistré avec ce qu'il contient.",
+      "confirmar": "C'est bon, enregistre",
+      "reintentar": "Réessayer",
+      "guardada": "Repas enregistré",
+      "permTit": "Autorisation nécessaire",
+      "permCam": "NutriSync a besoin de l'appareil photo pour photographier ton repas.",
+      "permGal": "NutriSync a besoin d'accéder à tes photos pour choisir un repas.",
+      "errModulo": "Cela nécessite la dernière version de l'app. Mets-la à jour depuis le store et réessaie.",
+      "errCamara": "L'appareil photo n'a pas pu s'ouvrir.",
+      "errNoComida": "Je ne vois pas de nourriture sur cette photo. On recommence ?",
+      "errCupo": "Tu as atteint la limite d'analyses du jour.",
+      "errRed": "Je n'ai pas pu me connecter. Réessaie dans un instant.",
+      "errPeso": "La photo est trop grande. Essaie avec une autre.",
+      "errGenerico": "Je n'ai pas pu analyser la photo. Tu peux réessayer.",
+      "errGuardar": "L'enregistrement a échoué.",
+      "tipo": {
+        "breakfast": "Petit-déjeuner",
+        "lunch": "Déjeuner",
+        "dinner": "Dîner",
+        "snack": "En-cas",
+        "drink": "Boisson"
+      },
+      "conf": {
+        "alta": "Confiance élevée",
+        "media": "Confiance moyenne",
+        "baja": "Confiance faible : vérifie",
+        "sin": "—"
+      }
     }
   },
   "cat": {

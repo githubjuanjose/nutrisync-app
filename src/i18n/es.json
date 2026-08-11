@@ -1290,6 +1290,51 @@
       "attach": "📎 Adjuntar captura",
       "attached": "Captura adjunta ✓ (toca para quitar)",
       "attachSoon": "Las capturas llegan con la próxima actualización de la app."
+    },
+    "foto": {
+      "titulo": "Foto de tu comida",
+      "lead": "Haz una foto y NutriSync te propone lo que hay en el plato. Siempre puedes corregirlo.",
+      "hacer": "Hacer una foto",
+      "elegir": "Elegir de la galería",
+      "privTit": "Qué pasa con tu foto",
+      "privTxt": "Se guarda en tu cuenta privada. Para analizarla solo viaja la imagen: nunca tu nombre, tu ciclo ni tu ubicación, y los datos de localización se borran antes de que salga del móvil.",
+      "queEs": "¿Qué comida es?",
+      "analizar": "Analizar esta comida",
+      "otra": "Hacer otra",
+      "pasoPrep": "Preparando la foto…",
+      "pasoSube": "Guardándola en tu cuenta…",
+      "pasoIA": "Leyendo tu plato…",
+      "pasoGuarda": "Guardando…",
+      "detectado": "Esto es lo que veo",
+      "total": "Total",
+      "macrosLuego": "Las calorías y los macros llegan en la próxima actualización; por ahora tu comida queda guardada con lo que contiene.",
+      "confirmar": "Está bien, guárdalo",
+      "reintentar": "Volver a intentarlo",
+      "guardada": "Comida guardada",
+      "permTit": "Falta un permiso",
+      "permCam": "NutriSync necesita la cámara para fotografiar tu comida.",
+      "permGal": "NutriSync necesita acceso a tus fotos para elegir una comida.",
+      "errModulo": "Esto necesita la última versión de la app. Actualízala desde la tienda e inténtalo otra vez.",
+      "errCamara": "No se ha podido abrir la cámara.",
+      "errNoComida": "No veo comida en esta foto. ¿Repetimos?",
+      "errCupo": "Has llegado al límite de análisis de hoy.",
+      "errRed": "No he podido conectar. Inténtalo en un momento.",
+      "errPeso": "La foto es demasiado grande. Prueba con otra.",
+      "errGenerico": "No he podido analizar la foto. Puedes volver a intentarlo.",
+      "errGuardar": "No se ha podido guardar.",
+      "tipo": {
+        "breakfast": "Desayuno",
+        "lunch": "Comida",
+        "dinner": "Cena",
+        "snack": "Tentempié",
+        "drink": "Bebida"
+      },
+      "conf": {
+        "alta": "Confianza alta",
+        "media": "Confianza media",
+        "baja": "Poca confianza: revísalo",
+        "sin": "—"
+      }
     }
   },
   "cat": {

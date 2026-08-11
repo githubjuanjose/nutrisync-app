@@ -6,6 +6,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
 import { useT, useTc, useI18n } from '../../i18n';
+import { flags } from '../../lib/flags';
+import { etiquetaMood, etiquetaEnergia, etiquetaFlujo, pinta, MOODS, ENERGY, FLOWS } from '../../lib/etiquetas';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
 import { getProfile } from '../../lib/api';
@@ -44,9 +46,8 @@ const DropIcon = () => (
   </Svg>
 );
 
-const MOODS = ['Low', 'Meh', 'Okay', 'Good', 'Great'];
-const ENERGY = ['Low', 'Low', 'Mid', 'High', 'High'];
-const FLOWS = ['None', 'Light', 'Medium', 'Heavy'];
+// NS-0041/0043: las escalas y su traducción viven en lib/etiquetas (puras, con
+// unitarios). Aquí solo se pintan — un dato fuera de rango ya no tumba la app.
 const SYMPTOMS = ['Cramps', 'Bloating', 'Fatigue', 'Headache'];
 
 export default function NutriLogScreen() {
@@ -192,17 +193,17 @@ export default function NutriLogScreen() {
                 <Pressable style={styles.pillStat} onPress={cycleMood}>
                   <Image source={require('../../../assets/nutrilog/mood.png')} style={styles.pillIcon} />
                   <Text style={styles.pillLbl}>{t('mob.mood', 'Mood')}</Text>
-                  <Text style={styles.pillVal}>{quick.mood ? t('mob.valM.' + MOODS[quick.mood - 1].toLowerCase(), MOODS[quick.mood - 1]) : '—'}</Text>
+                  <Text style={styles.pillVal}>{pinta(etiquetaMood(quick.mood), t)}</Text>
                 </Pressable>
                 <Pressable style={styles.pillStat} onPress={cycleEnergy}>
                   <Image source={require('../../../assets/nutrilog/energy.png')} style={styles.pillIcon} />
                   <Text style={styles.pillLbl}>{t('mob.energy', 'Energy')}</Text>
-                  <Text style={styles.pillVal}>{quick.energy ? t('mob.valE.' + ENERGY[quick.energy - 1].toLowerCase(), ENERGY[quick.energy - 1]) : '—'}</Text>
+                  <Text style={styles.pillVal}>{pinta(etiquetaEnergia(quick.energy), t)}</Text>
                 </Pressable>
                 <Pressable style={styles.pillStat} onPress={cycleFlow}>
                   <Image source={require('../../../assets/nutrilog/flow.png')} style={styles.pillIcon} />
                   <Text style={styles.pillLbl}>{t('mob.flow', 'Flow')}</Text>
-                  <Text style={styles.pillVal}>{quick.flow_level != null ? t('mob.valF.' + FLOWS[quick.flow_level].toLowerCase(), FLOWS[quick.flow_level]) : '—'}</Text>
+                  <Text style={styles.pillVal}>{pinta(etiquetaFlujo(quick.flow_level), t)}</Text>
                 </Pressable>
               </View>
               <Text style={styles.section}>{t('mob.todaysSymptoms', "Today's Symptoms")}</Text>
@@ -257,9 +258,20 @@ export default function NutriLogScreen() {
           </View>
         </ScrollView>
 
-        <Pressable style={styles.cta} onPress={() => nav.navigate('MealLog')}>
-          <Text style={styles.ctaTxt}>+ {t('mob.logTodaysMeal', "Log Today's Meal")}</Text>
-        </Pressable>
+        {/* Epic P: la foto entra AL LADO del registro manual, no en su lugar.
+            La cámara es un atajo, no la única puerta (doc 39 §5). */}
+        <View style={styles.ctaFila}>
+          <Pressable style={styles.cta} onPress={() => nav.navigate('MealLog')}>
+            <Text style={styles.ctaTxt}>+ {t('mob.logTodaysMeal', "Log Today's Meal")}</Text>
+          </Pressable>
+          {flags.mealPhoto && (
+            <Pressable style={styles.ctaFoto} onPress={() => nav.navigate('MealPhoto')}
+              accessibilityRole="button"
+              accessibilityLabel={t('mob.foto.titulo', 'Photo of your meal')}>
+              <Text style={styles.ctaFotoTxt}>📷</Text>
+            </Pressable>
+          )}
+        </View>
       </SafeAreaView>
     </View>
   );
@@ -311,6 +323,9 @@ const styles = StyleSheet.create({
   rowTxt: { fontFamily: font.regular, fontSize: 14, color: colors.ink },
   rowTxtOn: { color: colors.muted, textDecorationLine: 'line-through' },
   // R3-38: bottom 84 — the floating tab bar sits at bottom 10–72 and was HIDING this CTA
-  cta: { position: 'absolute', left: 20, right: 20, bottom: 84, backgroundColor: colors.coral, borderRadius: radius.pill, height: 52, alignItems: 'center', justifyContent: 'center', ...shadow.card },
+  ctaFila: { position: 'absolute', left: 20, right: 20, bottom: 84, flexDirection: 'row', gap: 10 },
+  ctaFoto: { width: 52, height: 52, borderRadius: radius.pill, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, alignItems: 'center', justifyContent: 'center', ...shadow.card },
+  ctaFotoTxt: { fontSize: 22 },
+  cta: { flex: 1, backgroundColor: colors.coral, borderRadius: radius.pill, height: 52, alignItems: 'center', justifyContent: 'center', ...shadow.card },
   ctaTxt: { fontFamily: font.semibold, fontSize: 15, color: '#fff' },
 });

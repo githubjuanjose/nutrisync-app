@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { colorDeFase } from '../../lib/fases';
 import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
@@ -9,7 +10,7 @@ import { useT } from '../../i18n';
 export type LogItem = { name: string; tag: string | null };
 
 function MiniRing({ phase, day }: { phase: PhaseKey; day: number }) {
-  const c = phaseColor[phase];
+  const c = colorDeFase(phase);
   return (
     <View style={{ width: 130, height: 130 }}>
       <Svg width={130} height={130} viewBox="0 0 120 120">

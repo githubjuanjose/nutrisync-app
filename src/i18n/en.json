@@ -978,6 +978,51 @@
       "attach": "📎 Add screenshot",
       "attached": "Screenshot attached ✓ (tap to remove)",
       "attachSoon": "Screenshots arrive with the next app update."
+    },
+    "foto": {
+      "titulo": "Photo of your meal",
+      "lead": "Take a photo and NutriSync will suggest what's on your plate. You can always correct it.",
+      "hacer": "Take a photo",
+      "elegir": "Choose from gallery",
+      "privTit": "What happens to your photo",
+      "privTxt": "It stays in your private account. Only the image is sent for analysis — never your name, your cycle or your location, and the location data is removed before it leaves your phone.",
+      "queEs": "Which meal is it?",
+      "analizar": "Analyse this meal",
+      "otra": "Take another one",
+      "pasoPrep": "Preparing the photo…",
+      "pasoSube": "Saving it to your account…",
+      "pasoIA": "Reading your plate…",
+      "pasoGuarda": "Saving…",
+      "detectado": "What I can see",
+      "total": "Total",
+      "macrosLuego": "Calories and macros arrive in the next update — for now your meal is saved with what it contains.",
+      "confirmar": "Looks right, save it",
+      "reintentar": "Try again",
+      "guardada": "Meal saved",
+      "permTit": "Permission needed",
+      "permCam": "NutriSync needs the camera to photograph your meal.",
+      "permGal": "NutriSync needs access to your photos to pick a meal.",
+      "errModulo": "This needs the latest app version. Update from the store and try again.",
+      "errCamara": "The camera could not be opened.",
+      "errNoComida": "I can't see food in this photo. Shall we try again?",
+      "errCupo": "You've reached today's analysis limit.",
+      "errRed": "I couldn't connect. Try again in a moment.",
+      "errPeso": "That photo is too large. Try another one.",
+      "errGenerico": "I couldn't analyse the photo. You can try again.",
+      "errGuardar": "It couldn't be saved.",
+      "tipo": {
+        "breakfast": "Breakfast",
+        "lunch": "Lunch",
+        "dinner": "Dinner",
+        "snack": "Snack",
+        "drink": "Drink"
+      },
+      "conf": {
+        "alta": "High confidence",
+        "media": "Medium confidence",
+        "baja": "Low — please check",
+        "sin": "—"
+      }
     }
   },
   "ob": {

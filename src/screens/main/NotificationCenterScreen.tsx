@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { colorDeFase } from '../../lib/fases';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow, phaseColor, PhaseKey } from '../../theme';
@@ -51,7 +52,7 @@ export default function NotificationCenterScreen({ navigation }: any) {
         const tips = await fetchTips(ui);
 
         out.push({
-          icon: '🌙', accent: phaseColor[ui] ?? colors.coral,
+          icon: '🌙', accent: colorDeFase(ui),
           title: `You're in your ${ui} phase`,
           body: tips.daily_tip ?? `Day ${day} of ${len}. Your nutrition and movement guidance is tuned to this phase.`,
           when: 'Today',
