@@ -17,11 +17,23 @@ export const CONTRACEPTION: Record<string, string> = {
 
 const first = (a?: string[]) => (a && a.length ? a[0] : undefined);
 
+/**
+ * r17-j: UNA definición del contrato. saveOnboarding declaraba su propia copia
+ * de este tipo SIN dietOther: el wizard lo pasaba, tsc protestaba en el wizard
+ * (que estaba bien) y en runtime el valor llegaba igual — el tipo mentía sobre
+ * la función, y el error señalaba al inocente. Misma regla que las releases:
+ * dos definiciones de lo mismo es una de más.
+ */
+export type OnboardingExtra = {
+  firstName?: string; email?: string; city?: string;
+  lastPeriodStart: string; dietOther?: string;
+};
+
 /** Build the `users` + `cycles` payloads from collected answers. */
 export function buildPayloads(
   userId: string,
   answers: Record<string, string[]>,
-  extra: { firstName?: string; email?: string; city?: string; lastPeriodStart: string; dietOther?: string }
+  extra: OnboardingExtra
 ) {
   const usersRow = {
     id: userId,

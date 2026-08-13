@@ -2,6 +2,9 @@ export type RootStackParamList = {
   Welcome: undefined;
   Login: undefined;
   CreateAccount: undefined;
+  // Shown while `onboarded` is still unknown (r17-j: existía en el navigator
+  // desde el principio, pero nunca se declaró aquí — tsc llevaba razón)
+  Splash: undefined;
   // Onboarding (single wizard flow)
   Onboarding: undefined;
   // Daily gate

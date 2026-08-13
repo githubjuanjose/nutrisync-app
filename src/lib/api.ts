@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import { buildPayloads } from './onboardingMap';
+import { buildPayloads, OnboardingExtra } from './onboardingMap';
 import { planNewCycle, clampPeriodDur } from './cycleStats';
 
 export type UserRow = {
@@ -21,7 +21,7 @@ export type CycleRow = {
 export async function saveOnboarding(
   userId: string,
   answers: Record<string, string[]>,
-  extra: { firstName?: string; email?: string; city?: string; lastPeriodStart: string }
+  extra: OnboardingExtra   // r17-j: el tipo vive en onboardingMap, no se re-declara aquí
 ) {
   const { usersRow, cyclesRow } = buildPayloads(userId, answers, extra);
 

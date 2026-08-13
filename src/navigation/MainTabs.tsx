@@ -31,7 +31,11 @@ const INACTIVE = '#B8ADA4';
 
 export default function MainTabs() {
   return (
-    <Tab.Navigator initialRouteName="Cycle" sceneContainerStyle={{ backgroundColor: 'transparent' }}
+    // r17-j: fuera `sceneContainerStyle` — era API de la v6 y la v7 la IGNORABA
+    // en silencio desde la actualización. La app se veía bien igualmente porque
+    // el fondo transparente lo pone el navTheme de App.tsx, no esta prop: era
+    // código muerto que tsc llevaba meses señalando. Borrar, no migrar.
+    <Tab.Navigator initialRouteName="Cycle"
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: ACTIVE,

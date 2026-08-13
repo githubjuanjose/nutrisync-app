@@ -4,5 +4,9 @@
     "strict": true,
     "baseUrl": ".",
     "paths": { "@/*": ["src/*"] }
-  }
+  },
+  // r17-j: las Edge Functions son código DENO (imports por URL, global Deno) y
+  // este tsconfig es el de la APP. Mirarlas producía 5 errores eternos que
+  // enseñaban a ignorar la salida de tsc — y un tsc que se ignora no vigila.
+  "exclude": ["supabase/functions", "node_modules"]
 }

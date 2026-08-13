@@ -45,14 +45,30 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // r17-i (11-ago, cazado por Juanjo en un iPhone 17 Pro): el arranque hacía DOS
+  // viajes de red seguidos antes de que Face ID pudiera aparecer — refrescar el
+  // token y, encima, `check()` contra `cycles`. 3-5 segundos mirando un
+  // degradado. Y el segundo viaje no hace ninguna falta para esa decisión: para
+  // saber si toca Face ID basta con la sesión (local) y una marca en SecureStore
+  // (local). `loading` mezclaba dos preguntas y la lenta bloqueaba a la rápida.
+  //
+  // Ahora `loading` responde solo a «¿sé ya si hay sesión?». El onboarding se
+  // resuelve en paralelo y RootNavigator ya sabe esperarlo: tiene su rama para
+  // `onboarded === null`. La espera pasa a estar DESPUÉS de identificarse, que
+  // es donde molesta menos y donde la pantalla tiene algo que enseñar.
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data }) => {
+    supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
+      setLoading(false);              // ← la puerta biométrica ya puede decidir
       // Epic K (K4): access log mínimo al abrir con sesión
       if (data.session?.user?.id) {
         supabase.rpc('log_access', { p_platform: Platform.OS, p_version: String(Constants.expoConfig?.version ?? '') }).then(() => {}, () => {});
       }
-      await check(data.session?.user.id ?? null);
+      void check(data.session?.user.id ?? null);   // en paralelo: ya no bloquea
+    }, () => {
+      // Si getSession revienta, sin esto el arranque se queda mudo para siempre
+      // (r12-b9 llevado al boot: nunca una pantalla que espera sin fin).
+      setSession(null);
       setLoading(false);
     });
     const { data: sub } = supabase.auth.onAuthStateChange(async (_e, s) => {

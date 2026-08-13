@@ -109,6 +109,19 @@ export function useBioOffer() {
 /* Cold-start gate                                                     */
 /* ------------------------------------------------------------------ */
 
+/** Alas + marca. Una sola definición: la espera y el bloqueo enseñan lo mismo. */
+function Marca() {
+  return (
+    <View style={g.center}>
+      <Image source={require('../../assets/nutri-wings.png')} style={g.wings} resizeMode="contain" />
+      <Text style={g.brand}>
+        <Text style={{ color: colors.ink }}>Nutri</Text>
+        <Text style={{ color: colors.brandOrange }}>Sync</Text>
+      </Text>
+    </View>
+  );
+}
+
 export function BioGate({ children }: { children: React.ReactNode }) {
   const { session, loading, signOut } = useSession();
   const t = useT();
@@ -152,18 +165,24 @@ export function BioGate({ children }: { children: React.ReactNode }) {
   }, [state, tryUnlock]);
 
   if (state === 'open') return <>{children}</>;
-  if (state === 'checking') return <PeachBg />;
+
+  // r17-i: antes esto era un `<PeachBg />` pelado — un degradado con NADA
+  // encima. Unos segundos de pantalla vacía no se leen como «está arrancando»,
+  // se leen como «se ha colgado», y eso fue justo lo que reportó Juanjo. Ahora
+  // la espera enseña la misma cara que la pantalla de bloqueo, así que lo único
+  // que cambia al decidirse son los botones.
+  if (state === 'checking') {
+    return (
+      <PeachBg>
+        <SafeAreaView style={g.fill}><Marca /></SafeAreaView>
+      </PeachBg>
+    );
+  }
 
   return (
     <PeachBg>
       <SafeAreaView style={g.fill}>
-        <View style={g.center}>
-          <Image source={require('../../assets/nutri-wings.png')} style={g.wings} resizeMode="contain" />
-          <Text style={g.brand}>
-            <Text style={{ color: colors.ink }}>Nutri</Text>
-            <Text style={{ color: colors.brandOrange }}>Sync</Text>
-          </Text>
-        </View>
+        <Marca />
         <View style={g.actions}>
           <PrimaryButton label={t('mob.auth.bioUnlock', 'Unlock NutriSync')} onPress={tryUnlock} />
           <Pressable onPress={() => { signOut(); }} style={g.fallback} hitSlop={8}>
