@@ -8,7 +8,7 @@
  */
 import {
   rutaFoto, tipoPorHora, redimension, borradorUtil, nivelConfianza,
-  gramosTotales, motivoFallo, pesoAceptable, tipoValido,
+  gramosTotales, motivoFallo, pesoAceptable, tipoValido, bytesDesdeBase64,
   LADO_MAX, BYTES_MAX,
 } from '../foto';
 
@@ -156,6 +156,42 @@ describe('Epic P · lógica de la foto de comida', () => {
       expect(() => pesoAceptable(v)).not.toThrow();
       expect(() => tipoValido(v, 'snack')).not.toThrow();
       expect(() => rutaFoto(String(v), 1, v)).not.toThrow();
+    }
+  });
+});
+
+describe('r18 · base64 → bytes (el bug del estreno: la foto llegaba VACÍA)', () => {
+  // El vector clásico: 'hi' = aGk=. Si esto falla, nada de lo demás importa.
+  it('decodifica un vector conocido, con y sin padding', () => {
+    expect(Array.from(bytesDesdeBase64('aGk='))).toEqual([104, 105]);
+    expect(Array.from(bytesDesdeBase64('aGk'))).toEqual([104, 105]);
+    expect(Array.from(bytesDesdeBase64('aW1nIGJ5dGVzIGhlcmU='))).toEqual(
+      Array.from('img bytes here').map((c) => c.charCodeAt(0)));
+  });
+
+  it('respeta saltos de línea (los emisores de base64 los meten cada 76 col)', () => {
+    expect(Array.from(bytesDesdeBase64('aG\nVsbG8='))).toEqual([104, 101, 108, 108, 111]);
+  });
+
+  // La regla del negro en la gráfica: entrada rara → NADA, jamás basura que
+  // viaje al bucket como si fuera un JPEG.
+  it('vacío, null, undefined o caracteres inválidos → 0 bytes, no basura', () => {
+    expect(bytesDesdeBase64('').byteLength).toBe(0);
+    expect(bytesDesdeBase64(null).byteLength).toBe(0);
+    expect(bytesDesdeBase64(undefined).byteLength).toBe(0);
+    expect(bytesDesdeBase64('¡esto no es base64!').byteLength).toBe(0);
+  });
+
+  it('un JPEG de verdad empieza por FF D8 tras decodificar su cabecera', () => {
+    // '/9j/' es como empieza todo JPEG en base64
+    const b = bytesDesdeBase64('/9j/4AAQSkZJRg==');
+    expect(b[0]).toBe(0xff);
+    expect(b[1]).toBe(0xd8);
+  });
+
+  it('ida y vuelta con el tamaño exacto (sin bytes fantasma del padding)', () => {
+    for (const [b64, esperado] of [['QQ==', 1], ['QUI=', 2], ['QUJD', 3], ['QUJDRA==', 4]] as const) {
+      expect(bytesDesdeBase64(b64).byteLength).toBe(esperado);
     }
   });
 });

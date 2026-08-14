@@ -41,7 +41,7 @@ import { supabase } from '../../lib/supabase';
 import { notify } from '../../lib/notify';
 import {
   rutaFoto, tipoPorHora, redimension, borradorUtil, nivelConfianza,
-  gramosTotales, motivoFallo, pesoAceptable, tipoValido,
+  gramosTotales, motivoFallo, pesoAceptable, tipoValido, bytesDesdeBase64,
   CALIDAD_JPEG, TipoComida, ItemIA,
 } from '../../lib/foto';
 
@@ -142,18 +142,21 @@ export default function MealPhotoScreen({ navigation }: any) {
         Image.getSize(uri, (w, h) => res({ w, h }), () => res({ w: 0, h: 0 })));
       const escala = redimension(medida.w, medida.h);
       const acciones = escala ? [{ resize: escala }] : [];
+      // r18: base64 directo del manipulador. NUNCA fetch(file://) + blob aquí:
+      // en Android ese fetch lanza «Network request failed» y en iOS subía un
+      // Blob que el SDK serializa a 0 bytes (el 400 de OpenAI del estreno).
       const listo = await IM.manipulateAsync(uri, acciones, {
-        compress: CALIDAD_JPEG, format: IM.SaveFormat.JPEG,
+        compress: CALIDAD_JPEG, format: IM.SaveFormat.JPEG, base64: true,
       });
 
       // 2b · Subida al bucket privado, en SU carpeta (la RLS lo exige)
       setPaso(t('mob.foto.pasoSube', 'Saving it to your account…'));
-      const resp = await fetch(listo.uri);
-      const blob = await resp.blob();
-      if (!pesoAceptable(blob.size)) throw new Error('too_large');
+      const bytes = bytesDesdeBase64(listo.base64);
+      if (bytes.byteLength === 0) throw new Error('empty_image');   // jamás subir vacío
+      if (!pesoAceptable(bytes.byteLength)) throw new Error('too_large');
       const ruta = rutaFoto(userId, Date.now(), 'jpg');
       const up = await supabase.storage.from('meal-images')
-        .upload(ruta, blob, { contentType: 'image/jpeg', upsert: false });
+        .upload(ruta, bytes.buffer as ArrayBuffer, { contentType: 'image/jpeg', upsert: false });
       if (up.error) throw up.error;
 
       // 2c · La fila. Se crea DESPUÉS de la subida: así no quedan comidas

@@ -121,6 +121,35 @@ export function gramosTotales(items: ItemIA[] | null | undefined): number {
   }, 0);
 }
 
+/**
+ * base64 → bytes, en JS puro. (r18, el bug del estreno de la 0.22)
+ *
+ * POR QUÉ EXISTE: la pantalla subía la foto con `fetch(file://…)` + blob.
+ * En Android ese fetch lanza «Network request failed»; en iOS «funciona»
+ * pero supabase-js serializa mal el Blob de RN y sube 0 BYTES — y OpenAI
+ * contestaba «empty base64-encoded bytes» a la primera tester del piloto.
+ * El manipulador ya devuelve base64 (está en el binario 0.22): decodificamos
+ * aquí y subimos ArrayBuffer, que el SDK sí maneja bien.
+ *
+ * No usa `atob`: su presencia varía entre los runtimes vivos (0.18-0.22),
+ * y una función pura de 20 líneas se testea; un global que a veces está, no.
+ */
+const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+export function bytesDesdeBase64(b64: string | null | undefined): Uint8Array {
+  if (!b64) return new Uint8Array(0);
+  const s = b64.replace(/[\r\n=]+/g, '');
+  const n = s.length;
+  const out = new Uint8Array(Math.floor((n * 3) / 4));
+  let o = 0, buf = 0, bits = 0;
+  for (let i = 0; i < n; i++) {
+    const v = B64.indexOf(s[i]);
+    if (v < 0) return new Uint8Array(0);   // carácter inválido → vacío, no basura
+    buf = (buf << 6) | v; bits += 6;
+    if (bits >= 8) { bits -= 8; out[o++] = (buf >> bits) & 0xff; }
+  }
+  return out.subarray(0, o);
+}
+
 export type Motivo = { clave: string; texto: string };
 
 /**
