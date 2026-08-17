@@ -933,7 +933,25 @@
         "media": "Gemiddelde zekerheid",
         "baja": "Laag — even controleren",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "Uitstekend",
+        "great": "Heel goed",
+        "good": "Goed",
+        "fair": "Neutraal"
+      },
+      "logradaTit": "Maaltijd gelogd!",
+      "faseOk": "Een goede metgezel voor je huidige fase",
+      "fase": {
+        "menstrual": "menstruatiefase",
+        "follicular": "folliculaire fase",
+        "ovulatory": "ovulatiefase",
+        "luteal": "luteale fase"
+      },
+      "volver": "Terug naar start",
+      "verHistorial": "Maaltijdgeschiedenis bekijken",
+      "errTit": "Dat is niet gelukt",
+      "irManual": "Handmatig invoeren"
     }
   },
   "cat": {

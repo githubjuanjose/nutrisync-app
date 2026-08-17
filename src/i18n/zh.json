@@ -933,7 +933,25 @@
         "media": "可信度中等",
         "baja": "可信度低 — 请核对",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "极佳",
+        "great": "很好",
+        "good": "好",
+        "fair": "一般"
+      },
+      "logradaTit": "已记录这餐！",
+      "faseOk": "很适合你当前的周期阶段",
+      "fase": {
+        "menstrual": "月经期",
+        "follicular": "卵泡期",
+        "ovulatory": "排卵期",
+        "luteal": "黄体期"
+      },
+      "volver": "返回首页",
+      "verHistorial": "查看饮食记录",
+      "errTit": "没有成功",
+      "irManual": "改为手动记录"
     }
   },
   "cat": {

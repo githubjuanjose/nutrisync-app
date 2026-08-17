@@ -932,7 +932,25 @@
         "media": "Confiança mitjana",
         "baja": "Poca confiança: revisa-ho",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "Excel·lent",
+        "great": "Molt bé",
+        "good": "Bé",
+        "fair": "Neutre"
+      },
+      "logradaTit": "Àpat registrat!",
+      "faseOk": "Bona companyia per a la teua fase actual",
+      "fase": {
+        "menstrual": "fase menstrual",
+        "follicular": "fase fol·licular",
+        "ovulatory": "fase ovulatòria",
+        "luteal": "fase lútia"
+      },
+      "volver": "Tornar a l’inici",
+      "verHistorial": "Veure l’historial d’àpats",
+      "errTit": "No ha pogut ser",
+      "irManual": "Apuntar-la a mà"
     }
   },
   "cat": {

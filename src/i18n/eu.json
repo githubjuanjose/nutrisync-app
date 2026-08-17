@@ -934,7 +934,25 @@
         "media": "Konfiantza ertaina",
         "baja": "Konfiantza gutxi: berrikusi",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "Bikaina",
+        "great": "Oso ondo",
+        "good": "Ondo",
+        "fair": "Neutroa"
+      },
+      "logradaTit": "Otordua erregistratuta!",
+      "faseOk": "Lagun ona zure fase honetarako",
+      "fase": {
+        "menstrual": "hilekoaren fasea",
+        "follicular": "fase folikularra",
+        "ovulatory": "obulazio-fasea",
+        "luteal": "fase luteala"
+      },
+      "volver": "Hasierara itzuli",
+      "verHistorial": "Otorduen historia ikusi",
+      "errTit": "Ezin izan da",
+      "irManual": "Eskuz idatzi"
     }
   },
   "cat": {

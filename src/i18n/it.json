@@ -933,7 +933,25 @@
         "media": "Media affidabilità",
         "baja": "Bassa: controlla",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "Eccellente",
+        "great": "Molto bene",
+        "good": "Bene",
+        "fair": "Neutro"
+      },
+      "logradaTit": "Pasto registrato!",
+      "faseOk": "Una buona compagnia per la tua fase attuale",
+      "fase": {
+        "menstrual": "fase mestruale",
+        "follicular": "fase follicolare",
+        "ovulatory": "fase ovulatoria",
+        "luteal": "fase luteale"
+      },
+      "volver": "Torna alla home",
+      "verHistorial": "Vedi lo storico dei pasti",
+      "errTit": "Non ha funzionato",
+      "irManual": "Inserirlo a mano"
     }
   },
   "cat": {

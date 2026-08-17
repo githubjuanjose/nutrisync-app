@@ -933,7 +933,25 @@
         "media": "Fisança mejana",
         "baja": "Fisança febla: verifica",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "Excellent",
+        "great": "Fòrça plan",
+        "good": "Plan",
+        "fair": "Neutre"
+      },
+      "logradaTit": "Repais registrat!",
+      "faseOk": "Bona companhiá per ta fasa actuala",
+      "fase": {
+        "menstrual": "fasa menstruala",
+        "follicular": "fasa folliculara",
+        "ovulatory": "fasa ovulatòria",
+        "luteal": "fasa luteala"
+      },
+      "volver": "Tornar a l’acuèlh",
+      "verHistorial": "Veire l’istoric dels repaisses",
+      "errTit": "A pas capitat",
+      "irManual": "La notar a la man"
     }
   },
   "cat": {

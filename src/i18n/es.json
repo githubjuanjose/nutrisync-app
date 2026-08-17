@@ -1334,7 +1334,25 @@
         "media": "Confianza media",
         "baja": "Poca confianza: revísalo",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "Excelente",
+        "great": "Muy bien",
+        "good": "Bien",
+        "fair": "Neutro"
+      },
+      "logradaTit": "¡Comida registrada!",
+      "faseOk": "Buena compañía para tu fase actual",
+      "fase": {
+        "menstrual": "fase menstrual",
+        "follicular": "fase folicular",
+        "ovulatory": "fase ovulatoria",
+        "luteal": "fase lútea"
+      },
+      "volver": "Volver al inicio",
+      "verHistorial": "Ver historial de comidas",
+      "errTit": "No ha podido ser",
+      "irManual": "Apuntarla a mano"
     }
   },
   "cat": {

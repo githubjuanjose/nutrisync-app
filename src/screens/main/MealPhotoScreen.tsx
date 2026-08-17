@@ -44,8 +44,12 @@ import {
   gramosTotales, motivoFallo, pesoAceptable, tipoValido, bytesDesdeBase64,
   CALIDAD_JPEG, TipoComida, ItemIA,
 } from '../../lib/foto';
+import {
+  Alineacion, parseAlineacion, tierDeItem, claveDeTier,
+  fraseDeFasePermitida, faseDeSegmento, Tier,
+} from '../../lib/alineacion';
 
-type Fase = 'inicio' | 'previa' | 'trabajando' | 'borrador' | 'fallo';
+type Fase = 'inicio' | 'previa' | 'trabajando' | 'borrador' | 'guardada' | 'fallo';
 
 const TIPOS: { clave: TipoComida; icono: string; porDefecto: string }[] = [
   { clave: 'breakfast', icono: '🌅', porDefecto: 'Breakfast' },
@@ -78,6 +82,10 @@ export default function MealPhotoScreen({ navigation }: any) {
   const [nombre, setNombre] = useState<string>('');
   const [confianza, setConfianza] = useState<number | null>(null);
   const [error, setError] = useState<string>('');
+  // r19: alineación por fase (hoja Constanza/Pilar vía meal_alignment) y la
+  // clave del último fallo — decide qué salida ofrece la pantalla de error.
+  const [alin, setAlin] = useState<Alineacion>(() => parseAlineacion(null));
+  const [errClave, setErrClave] = useState<string>('');
   const [gramos, setGramos] = useState<Record<number, number>>({});
 
   // La hora es la SUYA, no la de Greenwich (NS-0010).
@@ -204,6 +212,7 @@ export default function MealPhotoScreen({ navigation }: any) {
       if (fila.data?.status === 'failed' || !borradorUtil({ ...bruto, items: detectados })) {
         const m = motivoFallo(fila.data?.failure_reason ?? (bruto?.is_food === false ? 'not_food' : ''));
         setError(t(m.clave, m.texto));
+        setErrClave(m.clave);   // r19: la clave decide qué salida ofrece la pantalla
         setFase('fallo');
         return;
       }
@@ -214,9 +223,17 @@ export default function MealPhotoScreen({ navigation }: any) {
       setConfianza(typeof fila.data?.ai_confidence === 'number' ? fila.data.ai_confidence : null);
       setTipo((prev) => tipoValido(bruto?.meal_type_guess, prev));
       setFase('borrador');
+
+      // r19: alineación por fase — en paralelo y sin bloquear: si el RPC
+      // falla o está apagado en la base, la pantalla queda igual que antes
+      // (sin chips), jamás rota. La forma la valida parseAlineacion.
+      supabase.rpc('meal_alignment', { p_meal_id: id })
+        .then((r) => setAlin(parseAlineacion(r.data)),
+              () => { /* silencio: sin alineación no hay chips, y ya */ });
     } catch (e: any) {
       const m = motivoFallo(e?.message ?? '');
       setError(e?.message && !/^[a-z_]+$/.test(e.message) ? e.message : t(m.clave, m.texto));
+      setErrClave(m.clave);
       setFase('fallo');
     } finally {
       setPaso('');
@@ -244,7 +261,9 @@ export default function MealPhotoScreen({ navigation }: any) {
         .eq('id', mealId);
       if (upd.error) throw upd.error;
       notify(t('mob.foto.guardada', 'Meal saved'), nombre || '');
-      navigation.goBack();
+      // r19 (diseño Lucía): la confirmación ES una pantalla, no un portazo —
+      // «Meal Logged!» con el resumen y la alineación, y ELLA decide salir.
+      setFase('guardada');
     } catch (e: any) {
       setError(e?.message ?? t('mob.foto.errGuardar', 'It could not be saved.'));
       setFase('fallo');
@@ -254,6 +273,7 @@ export default function MealPhotoScreen({ navigation }: any) {
   const reinicia = () => {
     setFase('inicio'); setUri(null); setMealId(null);
     setItems([]); setGramos({}); setError(''); setNombre(''); setConfianza(null);
+    setAlin(parseAlineacion(null)); setErrClave('');
   };
 
   // ── Pintado ───────────────────────────────────────────────────────────────
@@ -327,6 +347,13 @@ export default function MealPhotoScreen({ navigation }: any) {
           {fase === 'borrador' && (
             <>
               {!!nombre && <Text style={s.plato}>{nombre}</Text>}
+              {/* r19: badge global de alineación — SOLO si el motor está activo
+                  y hubo casado. Apagado en la base = esta línea no existe. */}
+              {alin.activo && alin.overall && (
+                <View style={[s.badge, s[('tier' + alin.overall) as keyof typeof s] as any]}>
+                  <Text style={s.badgeTxt}>✦ {t(claveDeTier(alin.overall), alin.overall)}</Text>
+                </View>
+              )}
               <View style={s.filaConf}>
                 <Text style={s.seccion}>{t('mob.foto.detectado', 'What I can see')}</Text>
                 <Text style={[s.conf, s['conf_' + nivelConfianza(confianza) as keyof typeof s] as any]}>
@@ -346,6 +373,14 @@ export default function MealPhotoScreen({ navigation }: any) {
                       {!!it.portion_description && (
                         <Text style={s.itemPor}>{it.portion_description}</Text>
                       )}
+                      {(() => {
+                        const tr = tierDeItem(alin, it.display_name);
+                        return tr ? (
+                          <View style={[s.tierChip, s[('tier' + tr) as keyof typeof s] as any]}>
+                            <Text style={s.tierChipTxt}>● {t(claveDeTier(tr), tr)}</Text>
+                          </View>
+                        ) : null;
+                      })()}
                     </View>
                     <View style={s.pasos}>
                       <Pressable hitSlop={10} onPress={() =>
@@ -379,13 +414,59 @@ export default function MealPhotoScreen({ navigation }: any) {
             </>
           )}
 
+          {/* r19 (diseño Lucía): confirmación como pantalla propia, no portazo */}
+          {fase === 'guardada' && (
+            <View style={s.centro}>
+              <View style={s.okCirculo}><Text style={s.okCheck}>✓</Text></View>
+              <Text style={s.logradaTit}>{t('mob.foto.logradaTit', 'Meal logged!')}</Text>
+              <Text style={s.logradaSub}>
+                {items.length} · {t('mob.foto.tipo.' + tipo, tipo)}
+              </Text>
+              {alin.activo && alin.overall && (
+                <View style={s.alinCard}>
+                  <View style={[s.badge, s[('tier' + alin.overall) as keyof typeof s] as any]}>
+                    <Text style={s.badgeTxt}>✦ {t(claveDeTier(alin.overall), alin.overall)}</Text>
+                  </View>
+                  {/* Regla del tono: frase de fase SOLO en positivo; en Good/
+                      Fair el chip habla y la app calla. Pendiente del sí de
+                      Pilar — cambiarlo vive en lib/alineacion.ts. */}
+                  {(() => {
+                    const f = faseDeSegmento(alin.segment);
+                    return fraseDeFasePermitida(alin.overall) && f ? (
+                      <Text style={s.alinTxt}>
+                        {t('mob.foto.faseOk', 'A good companion for your current phase')}
+                        {' · '}{t('mob.foto.fase.' + f, f)}
+                      </Text>
+                    ) : null;
+                  })()}
+                </View>
+              )}
+              <Pressable style={[s.boton, s.botonPri, s.botonAncho]} onPress={() => navigation.goBack()}>
+                <Text style={s.botonPriTxt}>{t('mob.foto.volver', 'Back to home')}</Text>
+              </Pressable>
+              <Pressable style={[s.boton, s.botonSec, s.botonAncho]}
+                onPress={() => navigation.navigate('MealHistory')}>
+                <Text style={s.botonSecTxt}>{t('mob.foto.verHistorial', 'View meal history')}</Text>
+              </Pressable>
+            </View>
+          )}
+
           {fase === 'fallo' && (
             <View style={s.fallo}>
-              <Text style={s.falloIco}>😕</Text>
+              <View style={s.errCirculo}><Text style={s.errIcoTxt}>!</Text></View>
+              <Text style={s.falloTit}>{t('mob.foto.errTit', 'That didn’t work')}</Text>
               <Text style={s.falloTxt}>{error}</Text>
-              <Pressable style={[s.boton, s.botonPri]} onPress={reinicia}>
+              <Pressable style={[s.boton, s.botonPri, s.botonAncho]} onPress={reinicia}>
                 <Text style={s.botonPriTxt}>{t('mob.foto.reintentar', 'Try again')}</Text>
               </Pressable>
+              {/* r19: el fallback permanente tiene BOTÓN cuando la visión no ve
+                  comida — el camino manual nunca es un callejón (diseño Lucía). */}
+              {errClave === 'mob.foto.errNoComida' && (
+                <Pressable style={[s.boton, s.botonSec, s.botonAncho]}
+                  onPress={() => navigation.navigate('MealLog')}>
+                  <Text style={s.botonSecTxt}>{t('mob.foto.irManual', 'Log it manually instead')}</Text>
+                </Pressable>
+              )}
             </View>
           )}
         </ScrollView>
@@ -450,8 +531,47 @@ const s = StyleSheet.create({
   nota: { fontFamily: font.regular, fontSize: 12, lineHeight: 18, color: colors.muted, marginTop: 8 },
   fallo: { alignItems: 'center', paddingVertical: 40 },
   falloIco: { fontSize: 40, marginBottom: 12 },
+  falloTit: { fontFamily: font.semibold, fontSize: 19, color: colors.ink, marginBottom: 6 },
   falloTxt: {
     fontFamily: font.regular, fontSize: 15, lineHeight: 22,
     color: colors.body, textAlign: 'center', marginBottom: 10,
   },
+
+  /* ── r19 · alineación y confirmación (diseño Lucía) ─────────────────── */
+  badge: {
+    alignSelf: 'flex-start', borderRadius: radius.pill,
+    paddingHorizontal: 14, paddingVertical: 6, marginBottom: 12,
+  },
+  badgeTxt: { fontFamily: font.semibold, fontSize: 13, color: colors.white },
+  tierChip: {
+    alignSelf: 'flex-start', borderRadius: radius.pill,
+    paddingHorizontal: 9, paddingVertical: 3, marginTop: 6,
+  },
+  tierChipTxt: { fontFamily: font.medium, fontSize: 11, color: colors.white },
+  tierExcellent: { backgroundColor: '#0F6E56' },
+  tierGreat: { backgroundColor: '#3D8B40' },
+  tierGood: { backgroundColor: '#B4700F' },
+  tierFair: { backgroundColor: '#8A7F78' },
+  okCirculo: {
+    width: 76, height: 76, borderRadius: 38, backgroundColor: colors.coral,
+    alignItems: 'center', justifyContent: 'center', marginBottom: 16,
+  },
+  okCheck: { fontFamily: font.semibold, fontSize: 38, color: colors.white },
+  errCirculo: {
+    width: 64, height: 64, borderRadius: 32, backgroundColor: '#F6C6BC',
+    alignItems: 'center', justifyContent: 'center', marginBottom: 14,
+  },
+  errIcoTxt: { fontFamily: font.semibold, fontSize: 30, color: colors.coralDeep },
+  logradaTit: { fontFamily: font.semibold, fontSize: 24, color: colors.ink, marginBottom: 4 },
+  logradaSub: { fontFamily: font.regular, fontSize: 14, color: colors.muted, marginBottom: 18 },
+  alinCard: {
+    alignSelf: 'stretch', backgroundColor: colors.white, borderRadius: radius.md,
+    borderWidth: 1, borderColor: colors.line, padding: 16, marginBottom: 18,
+    alignItems: 'center',
+  },
+  alinTxt: {
+    fontFamily: font.regular, fontSize: 13, lineHeight: 19,
+    color: colors.body, textAlign: 'center',
+  },
+  botonAncho: { alignSelf: 'stretch' },
 });

@@ -932,7 +932,25 @@
         "media": "確度は中程度",
         "baja": "確度が低い — ご確認ください",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "すばらしい",
+        "great": "とても良い",
+        "good": "良い",
+        "fair": "ふつう"
+      },
+      "logradaTit": "食事を記録しました！",
+      "faseOk": "今のフェーズにぴったりの食事",
+      "fase": {
+        "menstrual": "月経期",
+        "follicular": "卵胞期",
+        "ovulatory": "排卵期",
+        "luteal": "黄体期"
+      },
+      "volver": "ホームに戻る",
+      "verHistorial": "食事の履歴を見る",
+      "errTit": "うまくいきませんでした",
+      "irManual": "手動で記録する"
     }
   },
   "cat": {

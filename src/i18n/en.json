@@ -1022,7 +1022,25 @@
         "media": "Medium confidence",
         "baja": "Low — please check",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "Excellent",
+        "great": "Great",
+        "good": "Good",
+        "fair": "Fair"
+      },
+      "logradaTit": "Meal logged!",
+      "faseOk": "A good companion for your current phase",
+      "fase": {
+        "menstrual": "menstrual phase",
+        "follicular": "follicular phase",
+        "ovulatory": "ovulatory phase",
+        "luteal": "luteal phase"
+      },
+      "volver": "Back to home",
+      "verHistorial": "View meal history",
+      "errTit": "That didn’t work",
+      "irManual": "Log it manually instead"
     }
   },
   "ob": {

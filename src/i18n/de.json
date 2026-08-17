@@ -933,7 +933,25 @@
         "media": "Mittlere Sicherheit",
         "baja": "Gering – bitte prüfen",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "Ausgezeichnet",
+        "great": "Sehr gut",
+        "good": "Gut",
+        "fair": "Neutral"
+      },
+      "logradaTit": "Mahlzeit erfasst!",
+      "faseOk": "Eine gute Begleitung für deine aktuelle Phase",
+      "fase": {
+        "menstrual": "Menstruationsphase",
+        "follicular": "Follikelphase",
+        "ovulatory": "Ovulationsphase",
+        "luteal": "Lutealphase"
+      },
+      "volver": "Zur Startseite",
+      "verHistorial": "Mahlzeiten-Verlauf ansehen",
+      "errTit": "Das hat nicht geklappt",
+      "irManual": "Stattdessen manuell erfassen"
     }
   },
   "cat": {

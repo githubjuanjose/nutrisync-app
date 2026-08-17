@@ -931,7 +931,25 @@
         "media": "Confiance moyenne",
         "baja": "Confiance faible : vérifie",
         "sin": "—"
-      }
+      },
+      "tier": {
+        "excellent": "Excellent",
+        "great": "Très bien",
+        "good": "Bien",
+        "fair": "Neutre"
+      },
+      "logradaTit": "Repas enregistré !",
+      "faseOk": "Une bonne alliée pour ta phase actuelle",
+      "fase": {
+        "menstrual": "phase menstruelle",
+        "follicular": "phase folliculaire",
+        "ovulatory": "phase ovulatoire",
+        "luteal": "phase lutéale"
+      },
+      "volver": "Retour à l’accueil",
+      "verHistorial": "Voir l’historique des repas",
+      "errTit": "Ça n’a pas marché",
+      "irManual": "La saisir à la main"
     }
   },
   "cat": {
