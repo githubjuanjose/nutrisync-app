@@ -374,7 +374,7 @@ export default function MealPhotoScreen({ navigation }: any) {
                         <Text style={s.itemPor}>{it.portion_description}</Text>
                       )}
                       {(() => {
-                        const tr = tierDeItem(alin, it.display_name);
+                        const tr = tierDeItem(alin, it.display_name ?? '');
                         return tr ? (
                           <View style={[s.tierChip, s[('tier' + tr) as keyof typeof s] as any]}>
                             <Text style={s.tierChipTxt}>● {t(claveDeTier(tr), tr)}</Text>
