@@ -892,7 +892,7 @@
       "attachSoon": "Pantaila-argazkiak hurrengo eguneratzearekin datoz."
     },
     "foto": {
-      "titulo": "Zure otorduaren argazkia",
+      "titulo": "Erregistratu zure otordua",
       "lead": "Atera argazki bat eta NutriSync-ek platerean zer dagoen proposatuko dizu. Beti zuzen dezakezu.",
       "hacer": "Argazkia atera",
       "elegir": "Galeriatik hautatu",
@@ -952,7 +952,36 @@
       "volver": "Hasierara itzuli",
       "verHistorial": "Otorduen historia ikusi",
       "errTit": "Ezin izan da",
-      "irManual": "Eskuz idatzi"
+      "irManual": "Eskuz idatzi",
+      "metodoTit": "Nola erregistratu nahi duzu otordua?",
+      "metodoSub": "Aukeratu metodo bat elikagaiak gehitzeko eta zikloarekiko sintonia kalkulatzeko.",
+      "metodoScan": "Eskaneatu nire janaria",
+      "metodoScanSub": "Atera argazki bat eta berehala ezagutuko ditugu elikagaiak",
+      "metodoManual": "Eskuz gehitu",
+      "metodoManualSub": "Bilatu eta gehitu zuk zeuk elikagaiak gure basetik",
+      "bannerFase": "Otorduak erregistratzeak zure sintonia altu mantentzen du oraingo fasean",
+      "analizandoTit": "Zure otordua aztertzen…",
+      "analizandoSub": "Elikagaiak identifikatzen eta karga nutrizionala kalkulatzen",
+      "resultTit": "Eskaneoaren emaitza",
+      "alinSeccion": "Zure elikagaien lerrokatzea",
+      "addMas": "Gehitu elikagai gehiago",
+      "anadidos": "elikagai gehituta",
+      "sync": "Zikloarekiko sintonia",
+      "addTit": "Elikagaiak gehitu",
+      "buscar": "Bilatu elikagaiak…",
+      "quickAdd": "Gehitze azkarra",
+      "seleccionados": "hautatuta",
+      "limpiar": "Garbitu denak",
+      "confirmarIng": "Berretsi elikagaiak",
+      "errCargaIng": "Ezin izan ditugu elikagaiak kargatu. Egiaztatu konexioa eta saiatu berriro.",
+      "sinResultados": "Ezerk ez du bat egiten bilaketarekin.",
+      "tipsTit": "Aholkuak eskaneo hobea lortzeko:",
+      "tips1": "Saihestu itzal gogorrak eta argi gutxiko lekuak",
+      "tips2": "Elikagai bakoitza argi ikus dadila",
+      "addManualPorcion": "zuk gehitua"
+    },
+    "set": {
+      "otaEmbedded": "fabrikako paketea — OTA-rik gabe"
     }
   },
   "cat": {

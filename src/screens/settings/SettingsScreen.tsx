@@ -9,6 +9,7 @@ import { NutriOrb } from '../../ui/NutriOrb';
 import { isEnabled, FlagKey } from '../../lib/flags';
 import { useT } from '../../i18n';
 import Constants from 'expo-constants';
+import * as Updates from 'expo-updates';
 import { Linking } from 'react-native';
 import { SettingsIcon } from '../../ui/SettingsIcons';
 import { NutriAvatar } from '../../ui/NutriAvatar';
@@ -106,6 +107,17 @@ export default function SettingsScreen({ navigation }: any) {
               on the current build before filing feedback (half of Round 5 was
               already-fixed items seen on a stale build). */}
           <Text style={styles.verTxt}>NutriSync v{Constants.expoConfig?.version ?? '—'}</Text>
+          {/* r19-c: el update OTA que corre AHORA MISMO, visible — la noche del
+              17-ago se fue en cazar un update «invisible» juzgando por la
+              versión nativa, que las OTAs jamás cambian. Nunca más a ciegas.
+              (Fecha en UTC a propósito: es matrícula técnica, no día de la
+              usuaria — la regla NS-0010 no aplica aquí.) */}
+          <Text style={styles.verTxt}>
+            {Updates.isEnabled && !Updates.isEmbeddedLaunch && Updates.updateId
+              ? 'OTA ' + String(Updates.updateId).slice(0, 8)
+                + (Updates.createdAt ? ' · ' + new Date(Updates.createdAt).toISOString().slice(0, 16).replace('T', ' ') + ' UTC' : '')
+              : t('mob.set.otaEmbedded', 'factory bundle — no OTA applied yet')}
+          </Text>
         </ScrollView>
       </SafeAreaView>
     </View>

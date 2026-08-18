@@ -891,7 +891,7 @@
       "attachSoon": "Gli screenshot arrivano col prossimo aggiornamento."
     },
     "foto": {
-      "titulo": "Foto del tuo pasto",
+      "titulo": "Registra il tuo pasto",
       "lead": "Scatta una foto e NutriSync ti proporrà cosa c'è nel piatto. Puoi sempre correggere.",
       "hacer": "Scatta una foto",
       "elegir": "Scegli dalla galleria",
@@ -951,7 +951,36 @@
       "volver": "Torna alla home",
       "verHistorial": "Vedi lo storico dei pasti",
       "errTit": "Non ha funzionato",
-      "irManual": "Inserirlo a mano"
+      "irManual": "Inserirlo a mano",
+      "metodoTit": "Come vuoi registrare il tuo pasto?",
+      "metodoSub": "Scegli un metodo per aggiungere alimenti e calcolare la tua sintonia col ciclo.",
+      "metodoScan": "Scansiona il mio cibo",
+      "metodoScanSub": "Scatta una foto e riconosciamo subito gli alimenti",
+      "metodoManual": "Aggiungi a mano",
+      "metodoManualSub": "Cerca e aggiungi tu stessa gli alimenti dal nostro archivio",
+      "bannerFase": "Registrare i pasti mantiene alta la tua sintonia nella fase attuale",
+      "analizandoTit": "Analisi del tuo pasto…",
+      "analizandoSub": "Identificazione degli alimenti e calcolo del carico nutrizionale",
+      "resultTit": "Risultato della scansione",
+      "alinSeccion": "Allineamento dei tuoi alimenti",
+      "addMas": "Aggiungi altri alimenti",
+      "anadidos": "alimenti aggiunti",
+      "sync": "Sintonia col tuo ciclo",
+      "addTit": "Aggiungi alimenti",
+      "buscar": "Cerca alimenti…",
+      "quickAdd": "Aggiunta rapida",
+      "seleccionados": "selezionati",
+      "limpiar": "Rimuovi tutti",
+      "confirmarIng": "Conferma gli alimenti",
+      "errCargaIng": "Non siamo riusciti a caricare gli alimenti. Controlla la connessione e riprova.",
+      "sinResultados": "Niente corrisponde alla ricerca.",
+      "tipsTit": "Consigli per una scansione migliore:",
+      "tips1": "Evita ombre dure e ambienti poco illuminati",
+      "tips2": "Tieni ogni alimento ben visibile",
+      "addManualPorcion": "aggiunto da te"
+    },
+    "set": {
+      "otaEmbedded": "bundle di fabbrica — nessun OTA applicato"
     }
   },
   "cat": {

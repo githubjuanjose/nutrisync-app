@@ -1104,7 +1104,8 @@
       "Notifications": "Notificaciones y recordatorios",
       "NutritionalPreferences": "Preferencias nutricionales",
       "NutriAvatar": "Elige tu Nutri",
-      "Feedback": "Enviar comentarios"
+      "Feedback": "Enviar comentarios",
+      "otaEmbedded": "bundle de fábrica — sin OTA aplicada"
     },
     "ntfSec": {
       "daily": "RECORDATORIOS DIARIOS",
@@ -1292,7 +1293,7 @@
       "attachSoon": "Las capturas llegan con la próxima actualización de la app."
     },
     "foto": {
-      "titulo": "Foto de tu comida",
+      "titulo": "Registra tu comida",
       "lead": "Haz una foto y NutriSync te propone lo que hay en el plato. Siempre puedes corregirlo.",
       "hacer": "Hacer una foto",
       "elegir": "Elegir de la galería",
@@ -1352,7 +1353,33 @@
       "volver": "Volver al inicio",
       "verHistorial": "Ver historial de comidas",
       "errTit": "No ha podido ser",
-      "irManual": "Apuntarla a mano"
+      "irManual": "Apuntarla a mano",
+      "metodoTit": "¿Cómo quieres registrar tu comida?",
+      "metodoSub": "Elige un método para añadir alimentos y calcular tu sincronía con el ciclo.",
+      "metodoScan": "Escanear mi comida",
+      "metodoScanSub": "Haz una foto y reconocemos los alimentos al instante",
+      "metodoManual": "Añadir a mano",
+      "metodoManualSub": "Busca y añade tú misma los alimentos de nuestra base",
+      "bannerFase": "Registrar tus comidas mantiene alta tu sincronía en tu fase actual",
+      "analizandoTit": "Analizando tu comida…",
+      "analizandoSub": "Identificando alimentos y calculando su carga nutricional",
+      "resultTit": "Resultado del escaneo",
+      "alinSeccion": "Alineación de tus alimentos",
+      "addMas": "Añadir más alimentos",
+      "anadidos": "alimentos añadidos",
+      "sync": "Sincronía con tu ciclo",
+      "addTit": "Añadir alimentos",
+      "buscar": "Busca alimentos…",
+      "quickAdd": "Añadir rápido",
+      "seleccionados": "seleccionados",
+      "limpiar": "Quitar todos",
+      "confirmarIng": "Confirmar alimentos",
+      "errCargaIng": "No hemos podido cargar los alimentos. Revisa tu conexión y vuelve a intentarlo.",
+      "sinResultados": "Nada coincide con esa búsqueda.",
+      "tipsTit": "Trucos para un mejor escaneo:",
+      "tips1": "Evita sombras duras y sitios con poca luz",
+      "tips2": "Que cada alimento se vea con claridad",
+      "addManualPorcion": "añadido por ti"
     }
   },
   "cat": {

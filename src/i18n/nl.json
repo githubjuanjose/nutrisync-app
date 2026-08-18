@@ -891,7 +891,7 @@
       "attachSoon": "Screenshots komen met de volgende update."
     },
     "foto": {
-      "titulo": "Foto van je maaltijd",
+      "titulo": "Registreer je maaltijd",
       "lead": "Maak een foto en NutriSync stelt voor wat er op je bord ligt. Je kunt het altijd corrigeren.",
       "hacer": "Foto maken",
       "elegir": "Kies uit galerij",
@@ -951,7 +951,36 @@
       "volver": "Terug naar start",
       "verHistorial": "Maaltijdgeschiedenis bekijken",
       "errTit": "Dat is niet gelukt",
-      "irManual": "Handmatig invoeren"
+      "irManual": "Handmatig invoeren",
+      "metodoTit": "Hoe wil je je maaltijd registreren?",
+      "metodoSub": "Kies een methode om ingrediënten toe te voegen en je cyclus-score te berekenen.",
+      "metodoScan": "Scan mijn eten",
+      "metodoScanSub": "Maak een foto en we herkennen de ingrediënten direct",
+      "metodoManual": "Handmatig toevoegen",
+      "metodoManualSub": "Zoek en voeg zelf ingrediënten toe uit onze database",
+      "bannerFase": "Maaltijden registreren houdt je cyclus-score hoog in je huidige fase",
+      "analizandoTit": "Je maaltijd wordt geanalyseerd…",
+      "analizandoSub": "Ingrediënten herkennen en voedingswaarde berekenen",
+      "resultTit": "Scanresultaat",
+      "alinSeccion": "Afstemming van je ingrediënten",
+      "addMas": "Meer ingrediënten toevoegen",
+      "anadidos": "ingrediënten toegevoegd",
+      "sync": "Cyclus-syncscore",
+      "addTit": "Ingrediënten toevoegen",
+      "buscar": "Zoek ingrediënten…",
+      "quickAdd": "Snel toevoegen",
+      "seleccionados": "geselecteerd",
+      "limpiar": "Alles wissen",
+      "confirmarIng": "Ingrediënten bevestigen",
+      "errCargaIng": "We konden de ingrediënten niet laden. Controleer je verbinding en probeer opnieuw.",
+      "sinResultados": "Niets komt overeen met je zoekopdracht.",
+      "tipsTit": "Tips voor een betere scan:",
+      "tips1": "Vermijd harde schaduwen en donkere plekken",
+      "tips2": "Houd elk ingrediënt goed zichtbaar",
+      "addManualPorcion": "door jou toegevoegd"
+    },
+    "set": {
+      "otaEmbedded": "fabrieksbundel — nog geen OTA"
     }
   },
   "cat": {

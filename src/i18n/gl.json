@@ -891,7 +891,7 @@
       "attachSoon": "As capturas chegan coa próxima actualización."
     },
     "foto": {
-      "titulo": "Foto da túa comida",
+      "titulo": "Rexistra a túa comida",
       "lead": "Fai unha foto e NutriSync proporache o que hai no prato. Sempre podes corrixilo.",
       "hacer": "Facer unha foto",
       "elegir": "Escoller da galería",
@@ -951,7 +951,36 @@
       "volver": "Volver ao inicio",
       "verHistorial": "Ver historial de comidas",
       "errTit": "Non puido ser",
-      "irManual": "Anotala a man"
+      "irManual": "Anotala a man",
+      "metodoTit": "Como queres rexistrar a túa comida?",
+      "metodoSub": "Escolle un método para engadir alimentos e calcular a túa sincronía co ciclo.",
+      "metodoScan": "Escanear a miña comida",
+      "metodoScanSub": "Fai unha foto e recoñecemos os alimentos ao instante",
+      "metodoManual": "Engadir á man",
+      "metodoManualSub": "Busca e engade ti mesma os alimentos da nosa base",
+      "bannerFase": "Rexistrar as comidas mantén alta a túa sincronía na fase actual",
+      "analizandoTit": "Analizando a túa comida…",
+      "analizandoSub": "Identificando alimentos e calculando a carga nutricional",
+      "resultTit": "Resultado do escaneo",
+      "alinSeccion": "Aliñamento dos teus alimentos",
+      "addMas": "Engadir máis alimentos",
+      "anadidos": "alimentos engadidos",
+      "sync": "Sincronía co teu ciclo",
+      "addTit": "Engadir alimentos",
+      "buscar": "Busca alimentos…",
+      "quickAdd": "Engadido rápido",
+      "seleccionados": "seleccionados",
+      "limpiar": "Quitalos todos",
+      "confirmarIng": "Confirmar os alimentos",
+      "errCargaIng": "Non puidemos cargar os alimentos. Revisa a conexión e téntao de novo.",
+      "sinResultados": "Nada coincide con esa busca.",
+      "tipsTit": "Consellos para un mellor escaneo:",
+      "tips1": "Evita sombras duras e sitios con pouca luz",
+      "tips2": "Que cada alimento se vexa con claridade",
+      "addManualPorcion": "engadido por ti"
+    },
+    "set": {
+      "otaEmbedded": "paquete de fábrica — sen OTA aplicada"
     }
   },
   "cat": {

@@ -792,7 +792,8 @@
       "Notifications": "Notifications & Reminders",
       "NutritionalPreferences": "Nutritional Preferences",
       "NutriAvatar": "Choose Your Nutri",
-      "Feedback": "Send Feedback"
+      "Feedback": "Send Feedback",
+      "otaEmbedded": "factory bundle — no OTA applied yet"
     },
     "ntfSec": {
       "daily": "DAILY REMINDERS",
@@ -980,7 +981,7 @@
       "attachSoon": "Screenshots arrive with the next app update."
     },
     "foto": {
-      "titulo": "Photo of your meal",
+      "titulo": "Log Your Meal",
       "lead": "Take a photo and NutriSync will suggest what's on your plate. You can always correct it.",
       "hacer": "Take a photo",
       "elegir": "Choose from gallery",
@@ -1040,7 +1041,33 @@
       "volver": "Back to home",
       "verHistorial": "View meal history",
       "errTit": "That didn’t work",
-      "irManual": "Log it manually instead"
+      "irManual": "Log it manually instead",
+      "metodoTit": "How would you like to log your meal?",
+      "metodoSub": "Select a method below to add ingredients and calculate your cycle sync score.",
+      "metodoScan": "Scan My Food",
+      "metodoScanSub": "Take a photo and we'll identify ingredients instantly",
+      "metodoManual": "Add Manually",
+      "metodoManualSub": "Search and add ingredients yourself from our database",
+      "bannerFase": "Logging meals keeps your cycle sync score high during your current phase",
+      "analizandoTit": "Analyzing your meal…",
+      "analizandoSub": "Identifying ingredients and calculating nutritional load",
+      "resultTit": "Scan Results",
+      "alinSeccion": "Ingredient Alignment Score",
+      "addMas": "Add more ingredients",
+      "anadidos": "ingredients added",
+      "sync": "Cycle Sync Score",
+      "addTit": "Add Ingredients",
+      "buscar": "Search ingredients…",
+      "quickAdd": "Quick add",
+      "seleccionados": "selected",
+      "limpiar": "Clear all",
+      "confirmarIng": "Confirm ingredients",
+      "errCargaIng": "We couldn't load the ingredients. Check your connection and try again.",
+      "sinResultados": "Nothing matches that search.",
+      "tipsTit": "Tips for a better scan:",
+      "tips1": "Avoid harsh shadows or dim environments",
+      "tips2": "Keep each ingredient clearly visible",
+      "addManualPorcion": "added by you"
     }
   },
   "ob": {

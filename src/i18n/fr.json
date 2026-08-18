@@ -889,7 +889,7 @@
       "attachSoon": "Les captures arrivent avec la prochaine mise à jour."
     },
     "foto": {
-      "titulo": "Photo de ton repas",
+      "titulo": "Enregistre ton repas",
       "lead": "Prends une photo et NutriSync te proposera ce qu'il y a dans l'assiette. Tu peux toujours corriger.",
       "hacer": "Prendre une photo",
       "elegir": "Choisir dans la galerie",
@@ -949,7 +949,36 @@
       "volver": "Retour à l’accueil",
       "verHistorial": "Voir l’historique des repas",
       "errTit": "Ça n’a pas marché",
-      "irManual": "La saisir à la main"
+      "irManual": "La saisir à la main",
+      "metodoTit": "Comment veux-tu enregistrer ton repas ?",
+      "metodoSub": "Choisis une méthode pour ajouter des aliments et calculer ta synchronisation avec ton cycle.",
+      "metodoScan": "Scanner mon repas",
+      "metodoScanSub": "Prends une photo et on identifie les aliments instantanément",
+      "metodoManual": "Ajouter à la main",
+      "metodoManualSub": "Cherche et ajoute toi-même les aliments de notre base",
+      "bannerFase": "Enregistrer tes repas maintient ta synchronisation élevée pendant ta phase actuelle",
+      "analizandoTit": "Analyse de ton repas…",
+      "analizandoSub": "Identification des aliments et calcul de la charge nutritionnelle",
+      "resultTit": "Résultat du scan",
+      "alinSeccion": "Alignement de tes aliments",
+      "addMas": "Ajouter plus d'aliments",
+      "anadidos": "aliments ajoutés",
+      "sync": "Synchronisation avec ton cycle",
+      "addTit": "Ajouter des aliments",
+      "buscar": "Cherche des aliments…",
+      "quickAdd": "Ajout rapide",
+      "seleccionados": "sélectionnés",
+      "limpiar": "Tout effacer",
+      "confirmarIng": "Confirmer les aliments",
+      "errCargaIng": "Impossible de charger les aliments. Vérifie ta connexion et réessaie.",
+      "sinResultados": "Rien ne correspond à cette recherche.",
+      "tipsTit": "Astuces pour un meilleur scan :",
+      "tips1": "Évite les ombres dures et les endroits sombres",
+      "tips2": "Garde chaque aliment bien visible",
+      "addManualPorcion": "ajouté par toi"
+    },
+    "set": {
+      "otaEmbedded": "bundle d'usine — aucune OTA appliquée"
     }
   },
   "cat": {

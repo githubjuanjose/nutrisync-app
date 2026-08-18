@@ -890,7 +890,7 @@
       "attachSoon": "スクリーンショットは次のアップデートで使えます。"
     },
     "foto": {
-      "titulo": "食事の写真",
+      "titulo": "食事を記録",
       "lead": "写真を撮ると、NutriSync がお皿の中身を提案します。いつでも修正できます。",
       "hacer": "写真を撮る",
       "elegir": "ギャラリーから選ぶ",
@@ -950,7 +950,36 @@
       "volver": "ホームに戻る",
       "verHistorial": "食事の履歴を見る",
       "errTit": "うまくいきませんでした",
-      "irManual": "手動で記録する"
+      "irManual": "手動で記録する",
+      "metodoTit": "どの方法で記録しますか？",
+      "metodoSub": "方法を選んで食材を追加し、サイクル同期スコアを計算します。",
+      "metodoScan": "料理をスキャン",
+      "metodoScanSub": "写真を撮ると食材をすぐに認識します",
+      "metodoManual": "手動で追加",
+      "metodoManualSub": "データベースから自分で検索して追加できます",
+      "bannerFase": "食事を記録すると今のフェーズでの同期スコアが保たれます",
+      "analizandoTit": "食事を分析中…",
+      "analizandoSub": "食材を特定し、栄養バランスを計算しています",
+      "resultTit": "スキャン結果",
+      "alinSeccion": "食材アラインメント",
+      "addMas": "食材を追加",
+      "anadidos": "件の食材を追加",
+      "sync": "サイクル同期スコア",
+      "addTit": "食材を追加",
+      "buscar": "食材を検索…",
+      "quickAdd": "クイック追加",
+      "seleccionados": "選択中",
+      "limpiar": "すべて解除",
+      "confirmarIng": "食材を確定",
+      "errCargaIng": "食材を読み込めませんでした。接続を確認してもう一度お試しください。",
+      "sinResultados": "一致する食材がありません。",
+      "tipsTit": "うまくスキャンするコツ：",
+      "tips1": "強い影や暗い場所を避けましょう",
+      "tips2": "食材一つひとつがよく見えるように",
+      "addManualPorcion": "あなたが追加"
+    },
+    "set": {
+      "otaEmbedded": "初期バンドル — OTA未適用"
     }
   },
   "cat": {

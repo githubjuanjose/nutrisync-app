@@ -891,7 +891,7 @@
       "attachSoon": "Screenshots kommen mit dem nächsten Update."
     },
     "foto": {
-      "titulo": "Foto deiner Mahlzeit",
+      "titulo": "Mahlzeit erfassen",
       "lead": "Mach ein Foto und NutriSync schlägt dir vor, was auf dem Teller liegt. Du kannst es jederzeit korrigieren.",
       "hacer": "Foto aufnehmen",
       "elegir": "Aus der Galerie wählen",
@@ -951,7 +951,36 @@
       "volver": "Zur Startseite",
       "verHistorial": "Mahlzeiten-Verlauf ansehen",
       "errTit": "Das hat nicht geklappt",
-      "irManual": "Stattdessen manuell erfassen"
+      "irManual": "Stattdessen manuell erfassen",
+      "metodoTit": "Wie möchtest du deine Mahlzeit erfassen?",
+      "metodoSub": "Wähle eine Methode, um Lebensmittel hinzuzufügen und deinen Zyklus-Sync zu berechnen.",
+      "metodoScan": "Essen scannen",
+      "metodoScanSub": "Mach ein Foto — wir erkennen die Zutaten sofort",
+      "metodoManual": "Manuell hinzufügen",
+      "metodoManualSub": "Suche und füge Lebensmittel selbst aus unserer Datenbank hinzu",
+      "bannerFase": "Mahlzeiten zu erfassen hält deinen Zyklus-Sync in deiner aktuellen Phase hoch",
+      "analizandoTit": "Deine Mahlzeit wird analysiert…",
+      "analizandoSub": "Zutaten werden erkannt und die Nährstofflast berechnet",
+      "resultTit": "Scan-Ergebnis",
+      "alinSeccion": "Ausrichtung deiner Lebensmittel",
+      "addMas": "Weitere Lebensmittel hinzufügen",
+      "anadidos": "Lebensmittel erfasst",
+      "sync": "Zyklus-Sync-Score",
+      "addTit": "Lebensmittel hinzufügen",
+      "buscar": "Lebensmittel suchen…",
+      "quickAdd": "Schnell hinzufügen",
+      "seleccionados": "ausgewählt",
+      "limpiar": "Alle entfernen",
+      "confirmarIng": "Zutaten bestätigen",
+      "errCargaIng": "Die Lebensmittel konnten nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.",
+      "sinResultados": "Nichts passt zu dieser Suche.",
+      "tipsTit": "Tipps für einen besseren Scan:",
+      "tips1": "Vermeide harte Schatten und dunkle Umgebungen",
+      "tips2": "Halte jede Zutat gut sichtbar",
+      "addManualPorcion": "von dir hinzugefügt"
+    },
+    "set": {
+      "otaEmbedded": "Werks-Bundle — noch kein OTA-Update"
     }
   },
   "cat": {

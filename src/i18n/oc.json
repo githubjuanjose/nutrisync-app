@@ -891,7 +891,7 @@
       "attachSoon": "Las capturas arriban amb la venenta mesa a jorn."
     },
     "foto": {
-      "titulo": "Fòto de ton repais",
+      "titulo": "Enregistra ton repais",
       "lead": "Fai una fòto e NutriSync te prepausarà çò qu'i a dins l'escudèla. Pòdes totjorn o corregir.",
       "hacer": "Faire una fòto",
       "elegir": "Causir dins la galeria",
@@ -951,7 +951,36 @@
       "volver": "Tornar a l’acuèlh",
       "verHistorial": "Veire l’istoric dels repaisses",
       "errTit": "A pas capitat",
-      "irManual": "La notar a la man"
+      "irManual": "La notar a la man",
+      "metodoTit": "Cossí vòles enregistrar ton repais?",
+      "metodoSub": "Causís un metòde per apondre aliments e calcular ta sincronia amb lo cicle.",
+      "metodoScan": "Escanejar mon manjar",
+      "metodoScanSub": "Fai una fòto e reconeissèm los aliments sulpic",
+      "metodoManual": "Apondre a la man",
+      "metodoManualSub": "Cèrca e apond tu meteissa los aliments de nòstra basa",
+      "bannerFase": "Enregistrar los repaisses manten nauta ta sincronia dins la fasa actuala",
+      "analizandoTit": "Analisant ton repais…",
+      "analizandoSub": "Identificant aliments e calculant la carga nutricionala",
+      "resultTit": "Resultat de l'escanatge",
+      "alinSeccion": "Alinhament de tos aliments",
+      "addMas": "Apondre mai d'aliments",
+      "anadidos": "aliments aponduts",
+      "sync": "Sincronia amb ton cicle",
+      "addTit": "Apondre aliments",
+      "buscar": "Cèrca aliments…",
+      "quickAdd": "Apondre lèu",
+      "seleccionados": "seleccionats",
+      "limpiar": "Escafar totes",
+      "confirmarIng": "Confirmar los aliments",
+      "errCargaIng": "Avèm pas pogut cargar los aliments. Verifica ta connexion e tòrna ensajar.",
+      "sinResultados": "Res correspond pas a la cèrca.",
+      "tipsTit": "Conselhs per un melhor escanatge:",
+      "tips1": "Evita ombras duras e luòcs escurs",
+      "tips2": "Que cada aliment se veja clarament",
+      "addManualPorcion": "apondut per tu"
+    },
+    "set": {
+      "otaEmbedded": "paquet d'origina — cap d'OTA aplicada"
     }
   },
   "cat": {

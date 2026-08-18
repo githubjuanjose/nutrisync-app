@@ -890,7 +890,7 @@
       "attachSoon": "Les captures arriben amb la propera actualització."
     },
     "foto": {
-      "titulo": "Foto del teu àpat",
+      "titulo": "Registra el teu àpat",
       "lead": "Fes una foto i NutriSync et proposarà què hi ha al plat. Sempre ho pots corregir.",
       "hacer": "Fer una foto",
       "elegir": "Triar de la galeria",
@@ -950,7 +950,36 @@
       "volver": "Tornar a l’inici",
       "verHistorial": "Veure l’historial d’àpats",
       "errTit": "No ha pogut ser",
-      "irManual": "Apuntar-la a mà"
+      "irManual": "Apuntar-la a mà",
+      "metodoTit": "Com vols registrar el teu àpat?",
+      "metodoSub": "Tria un mètode per afegir aliments i calcular la teva sincronia amb el cicle.",
+      "metodoScan": "Escaneja el meu menjar",
+      "metodoScanSub": "Fes una foto i reconeixem els aliments a l'instant",
+      "metodoManual": "Afegeix a mà",
+      "metodoManualSub": "Cerca i afegeix tu mateixa els aliments de la nostra base",
+      "bannerFase": "Registrar els àpats manté alta la teva sincronia en la fase actual",
+      "analizandoTit": "Analitzant el teu àpat…",
+      "analizandoSub": "Identificant aliments i calculant la càrrega nutricional",
+      "resultTit": "Resultat de l'escaneig",
+      "alinSeccion": "Alineació dels teus aliments",
+      "addMas": "Afegeix més aliments",
+      "anadidos": "aliments afegits",
+      "sync": "Sincronia amb el teu cicle",
+      "addTit": "Afegir aliments",
+      "buscar": "Cerca aliments…",
+      "quickAdd": "Afegit ràpid",
+      "seleccionados": "seleccionats",
+      "limpiar": "Esborra'ls tots",
+      "confirmarIng": "Confirma els aliments",
+      "errCargaIng": "No hem pogut carregar els aliments. Revisa la connexió i torna-ho a provar.",
+      "sinResultados": "Res no coincideix amb la cerca.",
+      "tipsTit": "Consells per a un millor escaneig:",
+      "tips1": "Evita ombres dures i llocs amb poca llum",
+      "tips2": "Que cada aliment es vegi amb claredat",
+      "addManualPorcion": "afegit per tu"
+    },
+    "set": {
+      "otaEmbedded": "paquet de fàbrica — cap OTA aplicada"
     }
   },
   "cat": {

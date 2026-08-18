@@ -891,7 +891,7 @@
       "attachSoon": "截图功能将随下次更新推出。"
     },
     "foto": {
-      "titulo": "这餐的照片",
+      "titulo": "记录你的餐食",
       "lead": "拍一张照片，NutriSync 会推测盘子里有什么。你随时可以修改。",
       "hacer": "拍照",
       "elegir": "从相册选择",
@@ -951,7 +951,36 @@
       "volver": "返回首页",
       "verHistorial": "查看饮食记录",
       "errTit": "没有成功",
-      "irManual": "改为手动记录"
+      "irManual": "改为手动记录",
+      "metodoTit": "你想如何记录这餐？",
+      "metodoSub": "选择一种方式添加食材，并计算你的周期同步分数。",
+      "metodoScan": "扫描我的食物",
+      "metodoScanSub": "拍张照片，我们立刻识别食材",
+      "metodoManual": "手动添加",
+      "metodoManualSub": "自己从数据库中搜索并添加食材",
+      "bannerFase": "记录餐食能在当前阶段保持高同步分数",
+      "analizandoTit": "正在分析你的餐食…",
+      "analizandoSub": "正在识别食材并计算营养负荷",
+      "resultTit": "扫描结果",
+      "alinSeccion": "食材匹配评分",
+      "addMas": "添加更多食材",
+      "anadidos": "种食材已添加",
+      "sync": "周期同步分数",
+      "addTit": "添加食材",
+      "buscar": "搜索食材…",
+      "quickAdd": "快速添加",
+      "seleccionados": "已选择",
+      "limpiar": "清除全部",
+      "confirmarIng": "确认食材",
+      "errCargaIng": "无法加载食材。请检查网络后重试。",
+      "sinResultados": "没有匹配的结果。",
+      "tipsTit": "获得更好扫描效果的小贴士：",
+      "tips1": "避免强烈阴影或光线昏暗",
+      "tips2": "让每种食材清晰可见",
+      "addManualPorcion": "由你添加"
+    },
+    "set": {
+      "otaEmbedded": "出厂包 — 尚未应用OTA"
     }
   },
   "cat": {
