@@ -170,17 +170,30 @@ export async function recomputeCAS(userId: string) {
   if (!ctx) return;
   const date = todayISO();
 
-  const [{ count: nTotal }, { count: nChecked }] = await Promise.all([
+  // F3 (UST-03): la ventana del DIA es la LOCAL de la usuaria (NS-0010) —
+  // los límites los pone el móvil, el servidor solo filtra confirmed_at.
+  const d0 = new Date(); d0.setHours(0, 0, 0, 0);
+  const d1 = new Date(d0); d1.setDate(d1.getDate() + 1);
+
+  const [{ count: nTotal }, { count: nChecked }, alinDia, { count: nMeals }] = await Promise.all([
     supabase.from('nutrition_checklist').select('id', { count: 'exact', head: true }).eq('user_id', userId).eq('date', date),
     supabase.from('nutrition_checklist').select('id', { count: 'exact', head: true }).eq('user_id', userId).eq('date', date).eq('checked', true),
+    supabase.rpc('ns_alineacion_del_dia', { p_desde: d0.toISOString(), p_hasta: d1.toISOString() })
+      .then((r) => r, () => ({ data: null } as any)),   // sin RPC no hay tiers, jamás rompe
+    supabase.from('meal_logs').select('id', { count: 'exact', head: true }).eq('user_id', userId).eq('date', date),
   ]);
+  const dayTiers: string[] = Array.isArray((alinDia?.data as any)?.tiers)
+    ? ((alinDia!.data as any).tiers as any[]).map((t) => String(t?.tier ?? '')).filter(Boolean)
+    : [];
   const { data: moveRows } = await supabase
     // r12-b4: la CATEGORÍA es el respaldo cuando el ítem no declara intensidad
     .from('movement_checklist').select('intensity_level,category_tag,checked').eq('user_id', userId).eq('date', date);
 
   const fitnessIntensity = highestIntensity(moveRows ?? []);
   const gateDone = log?.mood != null && log?.energy != null;
-  const nutritionDone = (nTotal ?? 0) > 0;
+  // F1/F2 (UST-03): una comida registrada (manual O por foto, vía meal_logs)
+  // también cuenta como «nutrición hecha» para la constancia del día.
+  const nutritionDone = (nTotal ?? 0) > 0 || (nMeals ?? 0) > 0;
   const movementDone = (moveRows?.length ?? 0) > 0;
   const logsCompleted = [gateDone, nutritionDone, movementDone].filter(Boolean).length;
 
@@ -193,6 +206,7 @@ export async function recomputeCAS(userId: string) {
     performanceIntensity: fitnessIntensity,
     nutritionChecked: nChecked ?? 0,
     nutritionTotal: nTotal ?? 0,
+    dayTiers,
     fitnessIntensity,
     logsCompleted,
   });

@@ -975,7 +975,8 @@
       "tipsTit": "Astuces pour un meilleur scan :",
       "tips1": "Évite les ombres dures et les endroits sombres",
       "tips2": "Garde chaque aliment bien visible",
-      "addManualPorcion": "ajouté par toi"
+      "addManualPorcion": "ajouté par toi",
+      "anadido": "aliment ajouté"
     },
     "set": {
       "otaEmbedded": "bundle d'usine — aucune OTA appliquée"

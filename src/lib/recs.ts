@@ -81,7 +81,7 @@ export async function getQuickLog(userId: string): Promise<{ mood: number | null
 }
 
 /** Meal logging with type (R2-C). Falls back cleanly if the column migration hasn't run. */
-export async function saveMealTyped(userId: string, description: string, mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack', ctx?: { day?: number; phase?: string }) {
+export async function saveMealTyped(userId: string, description: string, mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'drink', ctx?: { day?: number; phase?: string }) {
   const row: Record<string, any> = {
     user_id: userId, date: todayISO(), description,
     cycle_day: ctx?.day ?? null, phase: ctx?.phase ?? null, meal_type: mealType,

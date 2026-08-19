@@ -35,6 +35,8 @@ import { useT } from '../../i18n';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
 import { notify } from '../../lib/notify';
+import { recomputeCAS } from '../../lib/daily';
+import { localDayISO } from '../../lib/localDay';
 import {
   rutaFoto, tipoPorHora, redimension, borradorUtil, nivelConfianza,
   gramosTotales, motivoFallo, pesoAceptable, tipoValido, bytesDesdeBase64,
@@ -335,6 +337,31 @@ export default function MealPhotoScreen({ navigation }: any) {
         .update({ status: 'confirmed', confirmed_at: new Date().toISOString(), meal_type: tipo })
         .eq('id', mealId);
       if (upd.error) throw upd.error;
+
+      // F1 (UST-03 · Pilar, 18-ago): la foto ESCRIBE en el historial — las
+      // comidas en TEXTO, sin imagen. Idempotente por capture_id (índice
+      // único parcial). Si fallara, la confirmación MANDA: jamás rompe el ok.
+      try {
+        const ya = await supabase.from('meal_logs')
+          .select('id').eq('capture_id', mealId).maybeSingle();
+        if (!ya.data) {
+          const nombres = items.map((i) => i.display_name).filter(Boolean).join(', ');
+          const row: Record<string, any> = {
+            user_id: userId, date: localDayISO(),
+            description: (nombre ? nombre + ' — ' : '') + nombres,
+            meal_type: tipo, origen: 'foto', capture_id: mealId,
+          };
+          let ins = await supabase.from('meal_logs').insert(row);
+          if (ins.error && /origen|capture_id/.test(ins.error.message)) {
+            // patrón R2-C: si la migración aún no corrió, entra sin el enlace
+            delete row.origen; delete row.capture_id;
+            ins = await supabase.from('meal_logs').insert(row);
+          }
+        }
+        // F2/F3: FUEL y el score del día se enteran solos
+        recomputeCAS(userId!).then(() => {}, () => {});
+      } catch { /* el historial se recupera en la próxima confirmación */ }
+
       notify(t('mob.foto.guardada', 'Meal saved'), nombre || '');
       // Diseño Lucía: la confirmación ES una pantalla, no un portazo.
       setFase('guardada');
@@ -571,7 +598,11 @@ export default function MealPhotoScreen({ navigation }: any) {
               <View style={s.okCirculo}><Text style={s.okCheck}>✓</Text></View>
               <Text style={s.logradaTit}>{t('mob.foto.logradaTit', 'Meal logged!')}</Text>
               <Text style={s.logradaSub}>
-                {items.length} {t('mob.foto.anadidos', 'ingredients added')} · {t('mob.foto.tipo.' + tipo, tipo)}
+                {items.length}{' '}
+                {items.length === 1
+                  ? t('mob.foto.anadido', 'ingredient added')
+                  : t('mob.foto.anadidos', 'ingredients added')}
+                {' · '}{t('mob.foto.tipo.' + tipo, tipo)}
               </Text>
 
               {alin.activo && alin.overall && (

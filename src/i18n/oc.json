@@ -977,7 +977,8 @@
       "tipsTit": "Conselhs per un melhor escanatge:",
       "tips1": "Evita ombras duras e luòcs escurs",
       "tips2": "Que cada aliment se veja clarament",
-      "addManualPorcion": "apondut per tu"
+      "addManualPorcion": "apondut per tu",
+      "anadido": "aliment apondut"
     },
     "set": {
       "otaEmbedded": "paquet d'origina — cap d'OTA aplicada"
