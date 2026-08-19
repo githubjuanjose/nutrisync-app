@@ -982,6 +982,42 @@
     },
     "set": {
       "otaEmbedded": "paquet d'origina — cap d'OTA aplicada"
+    },
+    "tiempo": {
+      "ayer": "Ièr",
+      "tri": "T",
+      "mes": {
+        "1": "gen",
+        "2": "feb",
+        "3": "mar",
+        "4": "abr",
+        "5": "mai",
+        "6": "junh",
+        "7": "julh",
+        "8": "ago",
+        "9": "set",
+        "10": "oct",
+        "11": "nov",
+        "12": "dec"
+      }
+    },
+    "bodyInsights": "Senhals de ton còs",
+    "hoy": {
+      "comidas": "Repaisses de uèi",
+      "comidasDe": "Repaisses d’aquel jorn",
+      "sinComidas": "Res enregistrat aqueste jorn",
+      "sugerencias": "Suggestions de ta fasa",
+      "enAyer": "Enregistrant per IÈR",
+      "soloLectura": "Jorn de consulta solament",
+      "agregado": {
+        "cas": "CAS MEJAN",
+        "comidas": "REPAISSES",
+        "mood": "UMOR MEJANA",
+        "energia": "ENERGIA MEJANA",
+        "mezcla": "Mescla d’alinhament",
+        "dias": "jorns amb donadas",
+        "vacio": "Pas encara de donadas d’aqueste periòde"
+      }
     }
   },
   "cat": {

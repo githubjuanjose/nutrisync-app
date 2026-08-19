@@ -11,7 +11,8 @@ import { SuccessRing, DotActive } from '../../ui/SuccessRing';
 import { useSession } from '../../state/SessionProvider';
 import { getCurrentCycle } from '../../lib/api';
 import { cycleDay, cycleDayActual, phaseForDay } from '../../lib/cas';
-import { saveMealTyped, searchFoods } from '../../lib/recs';
+import { saveMealTyped, searchFoods, fetchDailyRecs, orderedCategories, DailyRecs } from '../../lib/recs';
+import { useI18n } from '../../i18n';
 
 /**
  * R2-C · screen 3 — Log Meal. Meal-type tabs, food search over the content DB,
@@ -27,16 +28,24 @@ const TYPES = [
   { k: 'snack', label: 'Snacks' },
 ] as const;
 
-export default function MealLogScreen() {
+export default function MealLogScreen({ route }: any) {
   const t = useT();
+  const { lang } = useI18n();
   const nav = useNavigation<any>();
   const { userId } = useSession();
+  // L5 (UST-02 v2): registro retroactivo de AYER — la fecha llega del Today.
+  const fecha: string | undefined = route?.params?.fecha;
   const [mealType, setMealType] = useState<typeof TYPES[number]['k']>('breakfast');
   const [q, setQ] = useState('');
   const [results, setResults] = useState<{ id: string; name: string; category: string }[]>([]);
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  // T1 (UST-02): las sugerencias de fase viven AQUÍ ahora, no en el Today.
+  const [recs, setRecs] = useState<DailyRecs | null>(null);
+  useEffect(() => { fetchDailyRecs(lang).then(setRecs).catch(() => {}); }, [lang]);
+  const sugerencias = orderedCategories(recs?.nutri_basics)
+    .flatMap(([, items]) => items.slice(0, 2)).slice(0, 6);
 
   useEffect(() => {
     const h = setTimeout(() => { searchFoods(q).then(setResults).catch(() => setResults([])); }, 250);
@@ -51,7 +60,7 @@ export default function MealLogScreen() {
       const len = cycle?.cycle_length ?? 28;
       const day = cycle ? cycleDayActual(cycle.last_period_start_date, new Date()) : undefined;
       const phase = day ? phaseForDay(day, len, cycle?.period_duration ?? 5) : undefined;
-      await saveMealTyped(userId, text.trim(), mealType, { day, phase });
+      await saveMealTyped(userId, text.trim(), mealType, { day, phase }, fecha);
       Keyboard.dismiss();   // R6-f4: keyboard must not linger over the confirmation
       setDone(true); setText('');
     } finally { setBusy(false); }
@@ -70,6 +79,11 @@ export default function MealLogScreen() {
 
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.fill} keyboardVerticalOffset={8}>
           <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 30 }} keyboardShouldPersistTaps="handled">
+            {fecha ? (
+              <View style={styles.ayerAviso}>
+                <Text style={styles.ayerAvisoTxt}>🕘 {t('mob.hoy.enAyer', 'Logging for yesterday')}</Text>
+              </View>
+            ) : null}
             {/* meal-type tabs */}
             <View style={styles.tabs}>
               {TYPES.map((m) => (
@@ -78,6 +92,22 @@ export default function MealLogScreen() {
                 </Pressable>
               ))}
             </View>
+
+            {/* T1 (UST-02): sugerencias de la fase — el motor de Constanza,
+                ahora en contexto: un toque las añade al texto del registro. */}
+            {sugerencias.length > 0 && (
+              <>
+                <Text style={styles.sugTitulo}>✦ {t('mob.hoy.sugerencias', 'Phase picks')}</Text>
+                <View style={styles.sugFila}>
+                  {sugerencias.map((s) => (
+                    <Pressable key={s.id} style={styles.sugChip}
+                      onPress={() => setText((p) => (p ? p + ', ' : '') + s.name)}>
+                      <Text style={styles.sugChipTxt}>＋ {s.name}</Text>
+                    </Pressable>
+                  ))}
+                </View>
+              </>
+            )}
 
             {/* search */}
             <View style={styles.search}>
@@ -140,6 +170,12 @@ export default function MealLogScreen() {
 }
 
 const styles = StyleSheet.create({
+  ayerAviso: { backgroundColor: '#FFF3E0', borderRadius: 12, paddingVertical: 8, paddingHorizontal: 12, marginBottom: 12, borderWidth: 1, borderColor: '#F5DFC0' },
+  ayerAvisoTxt: { fontFamily: font.semibold, fontSize: 12.5, color: '#8a5a00', textAlign: 'center' },
+  sugTitulo: { fontFamily: font.semibold, fontSize: 12, letterSpacing: 0.5, color: colors.coral, marginTop: 16, marginBottom: 8 },
+  sugFila: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  sugChip: { backgroundColor: colors.white, borderRadius: radius.pill, borderWidth: 1, borderColor: '#F0E2D8', paddingHorizontal: 12, paddingVertical: 7 },
+  sugChipTxt: { fontFamily: font.medium, fontSize: 12.5, color: colors.ink },
   fill: { flex: 1, backgroundColor: 'transparent' },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 4 },
   back: { fontSize: 30, color: colors.ink, width: 24, marginTop: -3 },

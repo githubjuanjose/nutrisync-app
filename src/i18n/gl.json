@@ -982,6 +982,42 @@
     },
     "set": {
       "otaEmbedded": "paquete de fábrica — sen OTA aplicada"
+    },
+    "tiempo": {
+      "ayer": "Onte",
+      "tri": "T",
+      "mes": {
+        "1": "xan",
+        "2": "feb",
+        "3": "mar",
+        "4": "abr",
+        "5": "mai",
+        "6": "xuñ",
+        "7": "xul",
+        "8": "ago",
+        "9": "set",
+        "10": "out",
+        "11": "nov",
+        "12": "dec"
+      }
+    },
+    "bodyInsights": "Sinais do teu corpo",
+    "hoy": {
+      "comidas": "Comidas de hoxe",
+      "comidasDe": "Comidas dese día",
+      "sinComidas": "Nada rexistrado este día",
+      "sugerencias": "Suxestións da túa fase",
+      "enAyer": "Rexistrando en ONTE",
+      "soloLectura": "Día só de consulta",
+      "agregado": {
+        "cas": "CAS MEDIO",
+        "comidas": "COMIDAS",
+        "mood": "ÁNIMO MEDIO",
+        "energia": "ENERXÍA MEDIA",
+        "mezcla": "Mestura de aliñamento",
+        "dias": "días con datos",
+        "vacio": "Aínda non hai datos deste período"
+      }
     }
   },
   "cat": {

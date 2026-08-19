@@ -116,9 +116,11 @@ function LineaEscaneo() {
   );
 }
 
-export default function MealPhotoScreen({ navigation }: any) {
+export default function MealPhotoScreen({ navigation, route }: any) {
   const t = useT();
   const { userId } = useSession();
+  // L5 (UST-02 v2): desde el Today de AYER se registra con fecha de ayer.
+  const fechaLog: string | undefined = route?.params?.fecha;
 
   const [fase, setFase] = useState<Fase>('inicio');
   const [uri, setUri] = useState<string | null>(null);
@@ -347,7 +349,7 @@ export default function MealPhotoScreen({ navigation }: any) {
         if (!ya.data) {
           const nombres = items.map((i) => i.display_name).filter(Boolean).join(', ');
           const row: Record<string, any> = {
-            user_id: userId, date: localDayISO(),
+            user_id: userId, date: fechaLog ?? localDayISO(),
             description: (nombre ? nombre + ' — ' : '') + nombres,
             meal_type: tipo, origen: 'foto', capture_id: mealId,
           };
@@ -415,7 +417,7 @@ export default function MealPhotoScreen({ navigation }: any) {
                 </View>
               </Pressable>
 
-              <Pressable style={s.metodoCard} onPress={() => navigation.navigate('MealLog')}>
+              <Pressable style={s.metodoCard} onPress={() => navigation.navigate('MealLog', fechaLog ? { fecha: fechaLog } : undefined)}>
                 <View style={s.metodoIco}><Text style={s.metodoIcoTxt}>✏️</Text></View>
                 <View style={{ flex: 1 }}>
                   <Text style={s.metodoTit}>{t('mob.foto.metodoManual', 'Add Manually')}</Text>

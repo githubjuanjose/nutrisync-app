@@ -983,6 +983,42 @@
     },
     "set": {
       "otaEmbedded": "fabrikako paketea — OTA-rik gabe"
+    },
+    "tiempo": {
+      "ayer": "Atzo",
+      "tri": "H",
+      "mes": {
+        "1": "urt",
+        "2": "ots",
+        "3": "mar",
+        "4": "api",
+        "5": "mai",
+        "6": "eka",
+        "7": "uzt",
+        "8": "abu",
+        "9": "ira",
+        "10": "urr",
+        "11": "aza",
+        "12": "abe"
+      }
+    },
+    "bodyInsights": "Zure gorputzaren seinaleak",
+    "hoy": {
+      "comidas": "Gaurko otorduak",
+      "comidasDe": "Egun horretako otorduak",
+      "sinComidas": "Egun honetan ez da ezer erregistratu",
+      "sugerencias": "Zure faseko gomendioak",
+      "enAyer": "ATZOrako erregistratzen",
+      "soloLectura": "Irakurtzeko soilik",
+      "agregado": {
+        "cas": "BATEZ BESTEKO CAS",
+        "comidas": "OTORDUAK",
+        "mood": "BATEZ BESTEKO ALDARTEA",
+        "energia": "BATEZ BESTEKO ENERGIA",
+        "mezcla": "Lerrokatze nahasketa",
+        "dias": "datudun egunak",
+        "vacio": "Oraindik ez dago aldi honetako daturik"
+      }
     }
   },
   "cat": {

@@ -81,9 +81,11 @@ export async function getQuickLog(userId: string): Promise<{ mood: number | null
 }
 
 /** Meal logging with type (R2-C). Falls back cleanly if the column migration hasn't run. */
-export async function saveMealTyped(userId: string, description: string, mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'drink', ctx?: { day?: number; phase?: string }) {
+export async function saveMealTyped(userId: string, description: string, mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'drink', ctx?: { day?: number; phase?: string }, fecha?: string) {
+  // L5 (UST-02 v2): fecha opcional para el registro retroactivo de AYER.
+  // El trigger meal_logs_fecha de la base rechaza cualquier cosa más vieja.
   const row: Record<string, any> = {
-    user_id: userId, date: todayISO(), description,
+    user_id: userId, date: fecha ?? todayISO(), description,
     cycle_day: ctx?.day ?? null, phase: ctx?.phase ?? null, meal_type: mealType,
   };
   let { error } = await supabase.from('meal_logs').insert(row);
@@ -108,6 +110,76 @@ export async function countMealsToday(userId: string): Promise<number> {
   const { count } = await supabase.from('meal_logs')
     .select('id', { count: 'exact', head: true }).eq('user_id', userId).eq('date', todayISO());
   return count ?? 0;
+}
+
+/* ── UST-02 v2 · el Today viaja en el tiempo ──────────────────────────────
+   Variantes POR FECHA de lo que antes era solo-hoy, más los agregados de
+   periodo y las miniaturas firmadas (L2: foto pequeña real, del bucket
+   privado — URL firmada corta, jamás pública). */
+
+export async function countMealsDe(userId: string, fecha: string): Promise<number> {
+  const { count } = await supabase.from('meal_logs')
+    .select('id', { count: 'exact', head: true }).eq('user_id', userId).eq('date', fecha);
+  return count ?? 0;
+}
+
+export type MealDelDia = {
+  id: number; description: string; meal_type: string | null;
+  capture_id: string | null; created_at: string;
+};
+export async function fetchMealsDe(userId: string, fecha: string): Promise<MealDelDia[]> {
+  const { data } = await supabase.from('meal_logs')
+    .select('id,description,meal_type,capture_id,created_at')
+    .eq('user_id', userId).eq('date', fecha).order('created_at', { ascending: true });
+  return (data as MealDelDia[]) ?? [];
+}
+
+export async function getQuickLogDe(userId: string, fecha: string): Promise<{ mood: number | null; energy: number | null; flow_level: number | null; pain_symptoms: string[] }> {
+  const { data } = await supabase.from('daily_logs')
+    .select('mood,energy,flow_level,pain_symptoms')
+    .eq('user_id', userId).eq('date', fecha).maybeSingle();
+  const d = (data as any) ?? {};
+  return { mood: d.mood ?? null, energy: d.energy ?? null, flow_level: d.flow_level ?? null, pain_symptoms: d.pain_symptoms ?? [] };
+}
+
+/** Miniaturas de las comidas por foto: capture_id → URL firmada (1 h). */
+export async function fetchMiniaturas(captureIds: string[]): Promise<Record<string, string>> {
+  if (!captureIds.length) return {};
+  const { data: caps } = await supabase.from('meal_captures')
+    .select('id,image_path').in('id', captureIds);
+  const filas = (caps as { id: string; image_path: string | null }[]) ?? [];
+  const conRuta = filas.filter((c) => !!c.image_path);
+  if (!conRuta.length) return {};
+  const { data: firmadas } = await supabase.storage.from('meal-images')
+    .createSignedUrls(conRuta.map((c) => c.image_path as string), 3600);
+  const porRuta: Record<string, string> = {};
+  (firmadas ?? []).forEach((f: any) => { if (f?.signedUrl && f?.path) porRuta[f.path] = f.signedUrl; });
+  const out: Record<string, string> = {};
+  conRuta.forEach((c) => { const u = porRuta[c.image_path as string]; if (u) out[c.id] = u; });
+  return out;
+}
+
+export type Agregado = {
+  cas_medio: number; dias_con_datos: number; mood_medio: number;
+  energia_media: number; comidas: number;
+  tiers: { excellent: number; great: number; good: number; fair: number } | null;
+};
+export async function fetchAgregado(desde: string, hasta: string): Promise<Agregado | null> {
+  const { data, error } = await supabase.rpc('ns_agregado_periodo', { p_desde: desde, p_hasta: hasta });
+  if (error || !data) return null;
+  return data as Agregado;
+}
+
+/** Tiers de alineación de un día: pares meal_id→tier (misma RPC que el CAS). */
+export async function fetchTiersDe(desdeISO: string, hastaISO: string): Promise<{ meal_id: string; tier: string }[]> {
+  const { data, error } = await supabase.rpc('ns_alineacion_del_dia', {
+    p_desde: new Date(desdeISO + 'T00:00:00').toISOString(),
+    p_hasta: new Date(hastaISO + 'T00:00:00').toISOString(),
+  });
+  if (error || !Array.isArray((data as any)?.tiers)) return [];
+  return ((data as any).tiers as any[])
+    .map((x) => ({ meal_id: String(x?.meal_id ?? ''), tier: String(x?.tier ?? '') }))
+    .filter((x) => x.meal_id && x.tier);
 }
 
 /** R2-D · free-text movement log (movement_logs table; falls back to no-op if the migration hasn't run). */

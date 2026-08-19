@@ -982,6 +982,42 @@
     },
     "set": {
       "otaEmbedded": "fabrieksbundel — nog geen OTA"
+    },
+    "tiempo": {
+      "ayer": "Gisteren",
+      "tri": "K",
+      "mes": {
+        "1": "jan",
+        "2": "feb",
+        "3": "mrt",
+        "4": "apr",
+        "5": "mei",
+        "6": "jun",
+        "7": "jul",
+        "8": "aug",
+        "9": "sep",
+        "10": "okt",
+        "11": "nov",
+        "12": "dec"
+      }
+    },
+    "bodyInsights": "Signalen van je lichaam",
+    "hoy": {
+      "comidas": "Maaltijden vandaag",
+      "comidasDe": "Maaltijden die dag",
+      "sinComidas": "Niets gelogd deze dag",
+      "sugerencias": "Tips voor je fase",
+      "enAyer": "Loggen voor GISTEREN",
+      "soloLectura": "Alleen-lezen dag",
+      "agregado": {
+        "cas": "GEM. CAS",
+        "comidas": "MAALTIJDEN",
+        "mood": "GEM. STEMMING",
+        "energia": "GEM. ENERGIE",
+        "mezcla": "Afstemmingsmix",
+        "dias": "dagen met data",
+        "vacio": "Nog geen data voor deze periode"
+      }
     }
   },
   "cat": {

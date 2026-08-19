@@ -1069,6 +1069,42 @@
       "tips2": "Keep each ingredient clearly visible",
       "addManualPorcion": "added by you",
       "anadido": "ingredient added"
+    },
+    "tiempo": {
+      "ayer": "Yesterday",
+      "tri": "Q",
+      "mes": {
+        "1": "Jan",
+        "2": "Feb",
+        "3": "Mar",
+        "4": "Apr",
+        "5": "May",
+        "6": "Jun",
+        "7": "Jul",
+        "8": "Aug",
+        "9": "Sep",
+        "10": "Oct",
+        "11": "Nov",
+        "12": "Dec"
+      }
+    },
+    "bodyInsights": "Body Insights",
+    "hoy": {
+      "comidas": "Today's Meals",
+      "comidasDe": "Meals that day",
+      "sinComidas": "Nothing logged this day",
+      "sugerencias": "Phase picks",
+      "enAyer": "Logging for yesterday",
+      "soloLectura": "Read-only day",
+      "agregado": {
+        "cas": "AVG CAS",
+        "comidas": "MEALS LOGGED",
+        "mood": "AVG MOOD",
+        "energia": "AVG ENERGY",
+        "mezcla": "Alignment mix",
+        "dias": "days with data",
+        "vacio": "No data for this period yet"
+      }
     }
   },
   "ob": {

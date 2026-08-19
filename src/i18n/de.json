@@ -982,6 +982,42 @@
     },
     "set": {
       "otaEmbedded": "Werks-Bundle — noch kein OTA-Update"
+    },
+    "tiempo": {
+      "ayer": "Gestern",
+      "tri": "Q",
+      "mes": {
+        "1": "Jan",
+        "2": "Feb",
+        "3": "Mär",
+        "4": "Apr",
+        "5": "Mai",
+        "6": "Jun",
+        "7": "Jul",
+        "8": "Aug",
+        "9": "Sep",
+        "10": "Okt",
+        "11": "Nov",
+        "12": "Dez"
+      }
+    },
+    "bodyInsights": "Signale deines Körpers",
+    "hoy": {
+      "comidas": "Mahlzeiten heute",
+      "comidasDe": "Mahlzeiten an dem Tag",
+      "sinComidas": "Nichts an diesem Tag erfasst",
+      "sugerencias": "Tipps für deine Phase",
+      "enAyer": "Eintrag für GESTERN",
+      "soloLectura": "Nur-Lese-Tag",
+      "agregado": {
+        "cas": "Ø CAS",
+        "comidas": "MAHLZEITEN",
+        "mood": "Ø STIMMUNG",
+        "energia": "Ø ENERGIE",
+        "mezcla": "Alignment-Mix",
+        "dias": "Tage mit Daten",
+        "vacio": "Noch keine Daten für diesen Zeitraum"
+      }
     }
   },
   "cat": {

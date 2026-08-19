@@ -982,6 +982,42 @@
     },
     "set": {
       "otaEmbedded": "bundle di fabbrica — nessun OTA applicato"
+    },
+    "tiempo": {
+      "ayer": "Ieri",
+      "tri": "T",
+      "mes": {
+        "1": "gen",
+        "2": "feb",
+        "3": "mar",
+        "4": "apr",
+        "5": "mag",
+        "6": "giu",
+        "7": "lug",
+        "8": "ago",
+        "9": "set",
+        "10": "ott",
+        "11": "nov",
+        "12": "dic"
+      }
+    },
+    "bodyInsights": "Segnali del tuo corpo",
+    "hoy": {
+      "comidas": "Pasti di oggi",
+      "comidasDe": "Pasti di quel giorno",
+      "sinComidas": "Niente registrato questo giorno",
+      "sugerencias": "Consigli della tua fase",
+      "enAyer": "Registrazione per IERI",
+      "soloLectura": "Giorno di sola lettura",
+      "agregado": {
+        "cas": "CAS MEDIO",
+        "comidas": "PASTI",
+        "mood": "UMORE MEDIO",
+        "energia": "ENERGIA MEDIA",
+        "mezcla": "Mix di allineamento",
+        "dias": "giorni con dati",
+        "vacio": "Ancora nessun dato per questo periodo"
+      }
     }
   },
   "cat": {

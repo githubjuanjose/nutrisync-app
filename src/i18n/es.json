@@ -1381,6 +1381,42 @@
       "tips2": "Que cada alimento se vea con claridad",
       "addManualPorcion": "añadido por ti",
       "anadido": "alimento añadido"
+    },
+    "tiempo": {
+      "ayer": "Ayer",
+      "tri": "T",
+      "mes": {
+        "1": "ene",
+        "2": "feb",
+        "3": "mar",
+        "4": "abr",
+        "5": "may",
+        "6": "jun",
+        "7": "jul",
+        "8": "ago",
+        "9": "sep",
+        "10": "oct",
+        "11": "nov",
+        "12": "dic"
+      }
+    },
+    "bodyInsights": "Señales de tu cuerpo",
+    "hoy": {
+      "comidas": "Comidas de hoy",
+      "comidasDe": "Comidas de ese día",
+      "sinComidas": "Nada registrado este día",
+      "sugerencias": "Sugerencias de tu fase",
+      "enAyer": "Registrando en AYER",
+      "soloLectura": "Día solo de consulta",
+      "agregado": {
+        "cas": "CAS MEDIO",
+        "comidas": "COMIDAS",
+        "mood": "ÁNIMO MEDIO",
+        "energia": "ENERGÍA MEDIA",
+        "mezcla": "Mezcla de alineación",
+        "dias": "días con datos",
+        "vacio": "Aún no hay datos de este periodo"
+      }
     }
   },
   "cat": {

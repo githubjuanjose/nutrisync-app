@@ -981,6 +981,42 @@
     },
     "set": {
       "otaEmbedded": "paquet de fàbrica — cap OTA aplicada"
+    },
+    "tiempo": {
+      "ayer": "Ahir",
+      "tri": "T",
+      "mes": {
+        "1": "gen",
+        "2": "febr",
+        "3": "març",
+        "4": "abr",
+        "5": "maig",
+        "6": "juny",
+        "7": "jul",
+        "8": "ag",
+        "9": "set",
+        "10": "oct",
+        "11": "nov",
+        "12": "des"
+      }
+    },
+    "bodyInsights": "Senyals del teu cos",
+    "hoy": {
+      "comidas": "Menjars de hui",
+      "comidasDe": "Menjars d’eixe dia",
+      "sinComidas": "Res registrat este dia",
+      "sugerencias": "Suggeriments de la teua fase",
+      "enAyer": "Registrant en AHIR",
+      "soloLectura": "Dia només de consulta",
+      "agregado": {
+        "cas": "CAS MITJÀ",
+        "comidas": "MENJARS",
+        "mood": "ÀNIM MITJÀ",
+        "energia": "ENERGIA MITJANA",
+        "mezcla": "Mescla d’alineació",
+        "dias": "dies amb dades",
+        "vacio": "Encara no hi ha dades d’este període"
+      }
     }
   },
   "cat": {
