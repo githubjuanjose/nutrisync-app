@@ -76,6 +76,7 @@ export function redimension(
 }
 
 export type ItemIA = {
+  id?: string;                       // fila real de meal_capture_items (editor 0.22.6)
   display_name?: string;
   portion_description?: string;
   estimated_grams?: number;
@@ -181,4 +182,21 @@ export function pesoAceptable(bytes: number | null | undefined): boolean {
 export function tipoValido(v: unknown, respaldo: TipoComida): TipoComida {
   const permitidos: TipoComida[] = ['breakfast', 'lunch', 'dinner', 'snack', 'drink', 'other'];
   return permitidos.includes(v as TipoComida) ? (v as TipoComida) : respaldo;
+}
+
+/** F1 (UST-04, 21-ago — el lunch de Pilar bajo Dinner): la elección MANUAL
+ *  manda SIEMPRE. El guess de la visión solo rellena si ella no tocó los
+ *  chips (r12-b4: el valor por defecto es una elección, y es SUYA). */
+export function eligeTipo(tocado: boolean, guess: unknown, previo: TipoComida): TipoComida {
+  return tocado ? previo : tipoValido(guess, previo);
+}
+
+/** F6 (UST-04): al editar los items de un escaneo, la fila de meal_logs se
+ *  RESINCRONIZA. Conserva el «Nombre — » del plato si ya lo llevaba;
+ *  History y el escaneo dejan de divergir porque ambos beben de los items. */
+export function resincronizaDescripcion(descActual: string | null | undefined, nombres: string[]): string {
+  const lista = nombres.filter((n) => !!n && n.trim() !== '').join(', ');
+  const d = (descActual ?? '').trim();
+  const idx = d.indexOf(' — ');
+  return idx > 0 ? d.slice(0, idx + 3) + lista : lista;
 }

@@ -978,7 +978,9 @@
       "tips1": "Vermeide harte Schatten und dunkle Umgebungen",
       "tips2": "Halte jede Zutat gut sichtbar",
       "addManualPorcion": "von dir hinzugefügt",
-      "anadido": "Lebensmittel erfasst"
+      "anadido": "Lebensmittel erfasst",
+      "sinScore": "Noch kein Score",
+      "cambiarTipo": "Falsche Mahlzeit? Verschieben:"
     },
     "set": {
       "otaEmbedded": "Werks-Bundle — noch kein OTA-Update"
@@ -1017,7 +1019,14 @@
         "mezcla": "Alignment-Mix",
         "dias": "Tage mit Daten",
         "vacio": "Noch keine Daten für diesen Zeitraum"
-      }
+      },
+      "sinAlineacion": "Mahlzeiten gespeichert — das Alignment lernt diese Lebensmittel noch, heute zählt neutral."
+    },
+    "editor": {
+      "titulo": "Gescannte Mahlzeit bearbeiten",
+      "pista": "Namen antippen zum Korrigieren, ✕ zum Entfernen. Verlauf und Score ziehen mit.",
+      "vacio": "Nichts übrig — füge unten eine Zutat hinzu.",
+      "listo": "Fertig"
     }
   },
   "cat": {

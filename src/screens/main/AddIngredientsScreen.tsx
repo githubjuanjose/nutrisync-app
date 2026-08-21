@@ -22,6 +22,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { font } from '../../theme';
 import { useT } from '../../i18n';
 import { supabase } from '../../lib/supabase';
+import { cargaGlosario, decoraNombre } from '../../lib/glosario';   // F7 (UST-04)
 
 const P = {
   ink: '#3D1E25', sub: '#7D6469', naranja: '#FF5D00', naranjaSoft: '#FFF1E6',
@@ -52,6 +53,7 @@ export default function AddIngredientsScreen({ navigation, route }: any) {
       }, () => setEstado('error'));
   };
   useEffect(carga, []);
+  useEffect(() => { cargaGlosario().then(() => setTodos((p) => [...p]), () => {}); }, []);
 
   const rapidos = useMemo(
     () => QUICK
@@ -145,7 +147,8 @@ export default function AddIngredientsScreen({ navigation, route }: any) {
                       <Pressable key={a.food_id} onPress={() => alterna(a)}
                         style={[s.quickChip, sel[a.food_id] && s.quickChipOn]}>
                         <Text style={[s.quickChipTxt, sel[a.food_id] && s.quickChipTxtOn]}>
-                          {a.food_name.split(' (')[0]} {sel[a.food_id] ? '✓' : '＋'}
+                          {/* F7 (UST-04): el paréntesis ES la ayuda — se enseña */}
+                          {decoraNombre(a.food_name)} {sel[a.food_id] ? '✓' : '＋'}
                         </Text>
                       </Pressable>
                     ))}

@@ -977,7 +977,9 @@
       "tips1": "Evita ombres dures i llocs amb poca llum",
       "tips2": "Que cada aliment es veja amb claredat",
       "addManualPorcion": "afegit per tu",
-      "anadido": "aliment afegit"
+      "anadido": "aliment afegit",
+      "sinScore": "Encara sense score",
+      "cambiarTipo": "Menjar equivocat? Mou-lo:"
     },
     "set": {
       "otaEmbedded": "paquet de fàbrica — cap OTA aplicada"
@@ -1016,7 +1018,14 @@
         "mezcla": "Mescla d’alineació",
         "dias": "dies amb dades",
         "vacio": "Encara no hi ha dades d’este període"
-      }
+      },
+      "sinAlineacion": "Menjars guardats — l’alineació encara està aprenent estos aliments, així que hui puntua neutre."
+    },
+    "editor": {
+      "titulo": "Edita el menjar escanejat",
+      "pista": "Toca un nom per a corregir-lo, ✕ per a llevar-lo. El teu historial i el teu score s’actualitzen amb tu.",
+      "vacio": "No queda res — afig un ingredient davall.",
+      "listo": "Fet"
     }
   },
   "cat": {

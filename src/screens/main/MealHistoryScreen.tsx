@@ -110,6 +110,14 @@ export default function MealHistoryScreen() {
                         <View key={r.id} style={styles.mealRow}>
                           <Image source={require('../../../assets/nutrilog/synced.png')} style={styles.synced} />
                           <Text style={styles.mealTxt} numberOfLines={2}>{r.description}</Text>
+                          {/* F6 (UST-04, NS-0069/0070): la comida por foto se
+                              REABRE y se corrige — misma verdad que el escaneo */}
+                          {!!r.capture_id && (
+                            <Pressable hitSlop={10}
+                              onPress={() => nav.navigate('EditarEscaneo', { mealId: r.capture_id, mealLogId: r.id })}>
+                              <Text style={styles.editar}>✎</Text>
+                            </Pressable>
+                          )}
                         </View>
                       )) : (
                         <Text style={styles.noEntry}>{t('mob.noEntry', 'No entry')}</Text>
@@ -152,6 +160,7 @@ const styles = StyleSheet.create({
   mealRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 2 },
   synced: { width: 14, height: 14 },
   mealTxt: { flex: 1, fontFamily: font.regular, fontSize: 13.5, color: colors.ink },
+  editar: { fontFamily: font.semibold, fontSize: 14, color: '#7D6469', paddingHorizontal: 4 },
   noEntry: { fontFamily: font.regular, fontSize: 12.5, color: colors.faint, fontStyle: 'italic' },
   cta: { position: 'absolute', left: 20, right: 20, bottom: 18, backgroundColor: colors.coral, borderRadius: radius.pill, height: 52, alignItems: 'center', justifyContent: 'center', ...shadow.card },
   ctaTxt: { fontFamily: font.semibold, fontSize: 15, color: '#fff' },

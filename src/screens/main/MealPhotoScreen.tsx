@@ -21,10 +21,10 @@
  * Toda la lógica probable vive en lib/foto.ts (20 unitarios) y
  * lib/alineacion.ts (11). Aquí queda el IO y el pintado.
  */
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   View, Text, StyleSheet, Pressable, Image, ScrollView,
-  ActivityIndicator, Platform, Linking, Animated, Easing,
+  ActivityIndicator, Platform, Linking, Animated, Easing, TextInput,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -39,9 +39,10 @@ import { recomputeCAS } from '../../lib/daily';
 import { localDayISO } from '../../lib/localDay';
 import {
   rutaFoto, tipoPorHora, redimension, borradorUtil, nivelConfianza,
-  gramosTotales, motivoFallo, pesoAceptable, tipoValido, bytesDesdeBase64,
-  CALIDAD_JPEG, TipoComida, ItemIA,
+  gramosTotales, motivoFallo, pesoAceptable, eligeTipo, bytesDesdeBase64,
+  resincronizaDescripcion, CALIDAD_JPEG, TipoComida, ItemIA,
 } from '../../lib/foto';
+import { cargaGlosario, decoraNombre } from '../../lib/glosario';
 import {
   Alineacion, parseAlineacion, tierDeItem, claveDeTier,
   fraseDeFasePermitida, faseDeSegmento, Tier,
@@ -138,6 +139,15 @@ export default function MealPhotoScreen({ navigation, route }: any) {
 
   // La hora es la SUYA, no la de Greenwich (NS-0010).
   const [tipo, setTipo] = useState<TipoComida>(() => tipoPorHora(new Date().getHours()));
+  // F1 (UST-04): si ELLA tocó los chips, su elección manda — el guess no pisa.
+  const tipoTocado = useRef(false);
+  const eligeManual = (x: TipoComida) => { tipoTocado.current = true; setTipo(x); };
+  // F7: glosario ES para decorar nombres — carga perezosa, jamás rompe.
+  const [, setGlosarioListo] = useState(false);
+  useEffect(() => { cargaGlosario().then(() => setGlosarioListo(true), () => {}); }, []);
+  // F6: edición inline de un item (corregir el «vino» que era Coca-Cola).
+  const [editIdx, setEditIdx] = useState<number | null>(null);
+  const [editTxt, setEditTxt] = useState('');
 
   const totalGramos = useMemo(
     () => gramosTotales(items.map((it, i) => ({ ...it, estimated_grams: gramos[i] ?? it.estimated_grams }))),
@@ -156,10 +166,11 @@ export default function MealPhotoScreen({ navigation, route }: any) {
   const recarga = useCallback(async () => {
     if (!mealId) return;
     const filas = await supabase.from('meal_capture_items')
-      .select('detected_name, portion_description, estimated_grams, confidence')
+      .select('id, detected_name, portion_description, estimated_grams, confidence')
       .eq('meal_id', mealId).order('created_at');
     if (!filas.error) {
       setItems((filas.data ?? []).map((f: any) => ({
+        id: f.id,
         display_name: f.detected_name,
         portion_description: f.portion_description,
         estimated_grams: typeof f.estimated_grams === 'number' ? f.estimated_grams : undefined,
@@ -275,13 +286,14 @@ export default function MealPhotoScreen({ navigation, route }: any) {
         supabase.from('meal_captures')
           .select('status, ai_confidence, failure_reason, raw_ai_analysis').eq('id', id).single(),
         supabase.from('meal_capture_items')
-          .select('detected_name, portion_description, estimated_grams, confidence')
+          .select('id, detected_name, portion_description, estimated_grams, confidence')
           .eq('meal_id', id).order('created_at'),
       ]);
       if (fila.error) throw fila.error;
 
       const bruto: any = fila.data?.raw_ai_analysis ?? null;
       const detectados: ItemIA[] = (filas.data ?? []).map((f: any) => ({
+        id: f.id,
         display_name: f.detected_name,
         portion_description: f.portion_description,
         estimated_grams: typeof f.estimated_grams === 'number' ? f.estimated_grams : undefined,
@@ -300,7 +312,9 @@ export default function MealPhotoScreen({ navigation, route }: any) {
       setGramos({});
       setNombre(String(bruto?.meal_name ?? ''));
       setConfianza(typeof fila.data?.ai_confidence === 'number' ? fila.data.ai_confidence : null);
-      setTipo((prev) => tipoValido(bruto?.meal_type_guess, prev));
+      // F1 (UST-04, lunch de Pilar bajo Dinner): el guess SOLO rellena si ella
+      // no tocó los chips. Su elección manda siempre.
+      setTipo((prev) => eligeTipo(tipoTocado.current, bruto?.meal_type_guess, prev));
       setFase('borrador');
 
       // r19: alineación por fase — en paralelo y sin bloquear: si el RPC
@@ -377,7 +391,64 @@ export default function MealPhotoScreen({ navigation, route }: any) {
     setFase('inicio'); setUri(null); setMealId(null);
     setItems([]); setGramos({}); setError(''); setNombre(''); setConfianza(null);
     setAlin(parseAlineacion(null)); setErrClave(''); setPasoIdx(0);
+    setEditIdx(null); setEditTxt(''); tipoTocado.current = false;
   };
+
+  /* ── F6 (UST-04): el plato es SUYO — borrar el vino fantasma, corregir el
+     nombre. Tras cada cambio: re-alineación + resync de meal_logs si ya se
+     confirmó + recompute. La cadena entera, no solo el tramo tocado (r18-d). */
+  const trasCambioDeItems = useCallback(async () => {
+    if (!mealId) return;
+    await recarga();
+    try {
+      const vivos = await supabase.from('meal_capture_items')
+        .select('detected_name').eq('meal_id', mealId).order('created_at');
+      const nombres = (vivos.data ?? []).map((f: any) => String(f.detected_name ?? ''));
+      const log = await supabase.from('meal_logs')
+        .select('id, description').eq('capture_id', mealId).maybeSingle();
+      if (log.data) {
+        await supabase.from('meal_logs')
+          .update({ description: resincronizaDescripcion(log.data.description, nombres) })
+          .eq('id', log.data.id);
+        recomputeCAS(userId!).then(() => {}, () => {});
+      }
+    } catch { /* el resync reintenta en la próxima edición */ }
+  }, [mealId, recarga, userId]);
+
+  const borraItem = useCallback(async (it: ItemIA) => {
+    if (!it.id) return;
+    try {
+      await supabase.from('meal_capture_items').delete().eq('id', it.id);
+      await trasCambioDeItems();
+    } catch { /* sin drama: la fila sigue y ella reintenta */ }
+  }, [trasCambioDeItems]);
+
+  const corrigeItem = useCallback(async (it: ItemIA, nuevo: string) => {
+    const limpio = nuevo.trim();
+    if (!it.id || !limpio || limpio === it.display_name) { setEditIdx(null); return; }
+    try {
+      // El ANTES y el DESPUÉS: la corrección enseña (mismo patrón que gramos).
+      await supabase.from('meal_capture_edits').insert({
+        meal_id: mealId, user_id: userId, edit_reason: 'nombre',
+        before_value: { name: it.display_name ?? null },
+        after_value: { name: limpio },
+      }).then(() => {}, () => {});
+      await supabase.from('meal_capture_items')
+        .update({ detected_name: limpio }).eq('id', it.id);
+      setEditIdx(null); setEditTxt('');
+      await trasCambioDeItems();
+    } catch { setEditIdx(null); }
+  }, [mealId, userId, trasCambioDeItems]);
+
+  // F1: cambiar el tipo TAMBIÉN después de guardar (la última puerta).
+  const cambiaTipoGuardada = useCallback(async (nuevo: TipoComida) => {
+    tipoTocado.current = true; setTipo(nuevo);
+    if (!mealId) return;
+    try {
+      await supabase.from('meal_captures').update({ meal_type: nuevo }).eq('id', mealId);
+      await supabase.from('meal_logs').update({ meal_type: nuevo }).eq('capture_id', mealId);
+    } catch { /* el chip queda; la base se resincroniza en la próxima */ }
+  }, [mealId]);
 
   const faseBanner = faseDeSegmento(segBanner);
 
@@ -458,7 +529,7 @@ export default function MealPhotoScreen({ navigation, route }: any) {
               <Text style={s.seccion}>{t('mob.foto.queEs', 'Which meal is it?')}</Text>
               <View style={s.chips}>
                 {TIPOS.map((x) => (
-                  <Pressable key={x.clave} onPress={() => setTipo(x.clave)}
+                  <Pressable key={x.clave} onPress={() => eligeManual(x.clave)}
                     style={[s.chip, tipo === x.clave && s.chipOn]}>
                     <Text style={[s.chipTxt, tipo === x.clave && s.chipTxtOn]}>
                       {x.icono} {t('mob.foto.tipo.' + x.clave, x.porDefecto)}
@@ -523,6 +594,18 @@ export default function MealPhotoScreen({ navigation, route }: any) {
                 <Text style={s.confBaja}>{t('mob.foto.conf.baja', 'Low — please check')}</Text>
               )}
 
+              {/* F1: el tipo también se corrige AQUÍ, con el plato delante. */}
+              <View style={s.chips}>
+                {TIPOS.map((x) => (
+                  <Pressable key={x.clave} onPress={() => eligeManual(x.clave)}
+                    style={[s.chip, tipo === x.clave && s.chipOn]}>
+                    <Text style={[s.chipTxt, tipo === x.clave && s.chipTxtOn]}>
+                      {x.icono} {t('mob.foto.tipo.' + x.clave, x.porDefecto)}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+
               <View style={s.filaSeccion}>
                 <Text style={s.seccion}>{t('mob.foto.alinSeccion', 'Ingredient Alignment Score')}</Text>
               </View>
@@ -539,7 +622,25 @@ export default function MealPhotoScreen({ navigation, route }: any) {
                   return (
                     <View key={i} style={[s.itemFila, i > 0 && s.itemFilaBorde]}>
                       <View style={{ flex: 1, paddingRight: 8 }}>
-                        <Text style={s.itemNom}>{it.display_name}</Text>
+                        {editIdx === i ? (
+                          <View style={s.editFila}>
+                            <TextInput
+                              value={editTxt} onChangeText={setEditTxt} autoFocus
+                              style={s.editInput} returnKeyType="done"
+                              onSubmitEditing={() => corrigeItem(it, editTxt)}
+                            />
+                            <Pressable hitSlop={8} onPress={() => corrigeItem(it, editTxt)}>
+                              <Text style={s.editOk}>✓</Text>
+                            </Pressable>
+                          </View>
+                        ) : (
+                          <Pressable onPress={() => { setEditIdx(i); setEditTxt(it.display_name ?? ''); }} hitSlop={6}>
+                            <Text style={s.itemNom}>
+                              {decoraNombre(it.display_name)}
+                              <Text style={s.editLapiz}>  ✎</Text>
+                            </Text>
+                          </Pressable>
+                        )}
                         {!!it.portion_description && (
                           <Text style={s.itemPor}>{it.portion_description}</Text>
                         )}
@@ -555,12 +656,24 @@ export default function MealPhotoScreen({ navigation, route }: any) {
                           </Pressable>
                         </View>
                       </View>
-                      {tr && (
-                        <View style={s.tierPill}>
-                          <View style={[s.tierDot, { backgroundColor: TIER_DOT[tr] }]} />
-                          <Text style={s.tierPillTxt}>{t(claveDeTier(tr), tr)}</Text>
-                        </View>
-                      )}
+                      <View style={s.itemLado}>
+                        {tr ? (
+                          <View style={s.tierPill}>
+                            <View style={[s.tierDot, { backgroundColor: TIER_DOT[tr] }]} />
+                            <Text style={s.tierPillTxt}>{t(claveDeTier(tr), tr)}</Text>
+                          </View>
+                        ) : alin.activo ? (
+                          /* F4: el silencio del matcher, dicho en voz alta */
+                          <View style={[s.tierPill, s.tierPillNeutra]}>
+                            <Text style={s.tierPillNeutraTxt}>{t('mob.foto.sinScore', 'No score yet')}</Text>
+                          </View>
+                        ) : null}
+                        {!!it.id && (
+                          <Pressable hitSlop={10} onPress={() => borraItem(it)}>
+                            <Text style={s.borraItem}>✕</Text>
+                          </Pressable>
+                        )}
+                      </View>
                     </View>
                   );
                 })}
@@ -606,6 +719,20 @@ export default function MealPhotoScreen({ navigation, route }: any) {
                   : t('mob.foto.anadidos', 'ingredients added')}
                 {' · '}{t('mob.foto.tipo.' + tipo, tipo)}
               </Text>
+
+              {/* F1: última puerta — si quedó en la comida equivocada, se
+                  mueve AQUÍ y la fila del historial se muda con ella. */}
+              <Text style={s.cambiaTipo}>{t('mob.foto.cambiarTipo', 'Wrong meal? Move it:')}</Text>
+              <View style={s.chips}>
+                {TIPOS.map((x) => (
+                  <Pressable key={x.clave} onPress={() => cambiaTipoGuardada(x.clave)}
+                    style={[s.chip, tipo === x.clave && s.chipOn]}>
+                    <Text style={[s.chipTxt, tipo === x.clave && s.chipTxtOn]}>
+                      {x.icono} {t('mob.foto.tipo.' + x.clave, x.porDefecto)}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
 
               {alin.activo && alin.overall && (
                 <View style={s.syncCard}>
@@ -789,6 +916,20 @@ const s = StyleSheet.create({
   },
   tierDot: { width: 8, height: 8, borderRadius: 4 },
   tierPillTxt: { fontFamily: font.semibold, fontSize: 12, color: P.ink },
+  /* F4/F6 (UST-04, 0.22.6) */
+  tierPillNeutra: { backgroundColor: P.chipBg, borderWidth: 1, borderColor: P.linea },
+  tierPillNeutraTxt: { fontFamily: font.medium, fontSize: 11, color: P.sub },
+  itemLado: { alignItems: 'flex-end', gap: 6 },
+  borraItem: { fontFamily: font.semibold, fontSize: 14, color: P.sub, paddingHorizontal: 6, paddingVertical: 2 },
+  editLapiz: { fontSize: 12, color: P.sub },
+  editFila: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  editInput: {
+    flex: 1, borderWidth: 1, borderColor: P.naranja, borderRadius: 8,
+    paddingHorizontal: 8, paddingVertical: 4, fontFamily: font.medium,
+    fontSize: 14, color: P.ink, backgroundColor: P.blanco,
+  },
+  editOk: { fontFamily: font.bold, fontSize: 16, color: P.naranja, paddingHorizontal: 4 },
+  cambiaTipo: { fontFamily: font.medium, fontSize: 12, color: P.sub, marginTop: 14, marginBottom: 6 },
   pasos: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 6 },
   pasoBtn: { fontFamily: font.semibold, fontSize: 20, color: P.naranja, width: 22, textAlign: 'center' },
   gramos: { fontFamily: font.semibold, fontSize: 13.5, color: P.ink, minWidth: 54, textAlign: 'center' },

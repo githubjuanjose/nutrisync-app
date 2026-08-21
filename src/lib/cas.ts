@@ -155,9 +155,20 @@ export function component3Nutrition(checked: number, total: number) {
 export const TIER_PESOS: Record<string, number> = {
   Excellent: 100, Great: 75, Good: 50, Fair: 25,
 };
-export function component3NutritionV2(dayTiers: string[], checked: number, total: number) {
+/** UST-04 F2 (21-ago): día CON comidas pero sin datos de alineación → NEUTRO,
+ *  ni premio ni castigo. El 0 mudo era el «nothing affects my scores» de
+ *  Pilar: comía, la hoja no cubría sus platos, el checklist ya no existe en
+ *  el Today… y el componente la castigaba con 0 por un hueco NUESTRO. */
+export const NEUTRAL_C3 = 15;
+
+export function component3NutritionV2(
+  dayTiers: string[], checked: number, total: number, mealsLogged = 0,
+) {
   const validos = dayTiers.filter((t) => TIER_PESOS[t] != null);
-  if (!validos.length) return component3Nutrition(checked, total);
+  if (!validos.length) {
+    if (total > 0) return component3Nutrition(checked, total); // transición checklist
+    return mealsLogged > 0 ? NEUTRAL_C3 : 0;
+  }
   const media = validos.reduce((s, t) => s + TIER_PESOS[t], 0) / validos.length;
   return Math.round((media / 100) * 30);
 }
@@ -192,6 +203,9 @@ export function computeDailyCAS(input: {
   /** F3: tiers de alineación de las comidas del día (foto). Con datos, el
    *  componente 3 puntúa por tiers; sin ellos, checklist (transición). */
   dayTiers?: string[];
+  /** UST-04 F2: nº de comidas registradas del día — sin tiers ni checklist,
+   *  comer sin datos de alineación puntúa NEUTRO, no 0. */
+  mealsLogged?: number;
   fitnessIntensity?: Intensity | null;
   logsCompleted: number;
 }) {
@@ -201,7 +215,7 @@ export function computeDailyCAS(input: {
     phase: input.phase, energy: input.energy, mood: input.mood,
     sleep: input.sleep, appetite: input.appetite, performanceIntensity: input.performanceIntensity,
   }).points;
-  const c3 = component3NutritionV2(input.dayTiers ?? [], input.nutritionChecked, input.nutritionTotal);
+  const c3 = component3NutritionV2(input.dayTiers ?? [], input.nutritionChecked, input.nutritionTotal, input.mealsLogged ?? 0);
   const c4 = component4Fitness({ phase: input.phase, loggedIntensity: input.fitnessIntensity });
   const c5 = component5Logging(input.logsCompleted);
   return { blocked: false, total: c1.points + c2 + c3 + c4 + c5, c1: c1.points, c2, c3, c4, c5 };

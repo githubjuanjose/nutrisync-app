@@ -978,7 +978,9 @@
       "tips1": "Evita ombras duras e luòcs escurs",
       "tips2": "Que cada aliment se veja clarament",
       "addManualPorcion": "apondut per tu",
-      "anadido": "aliment apondut"
+      "anadido": "aliment apondut",
+      "sinScore": "Encara sens score",
+      "cambiarTipo": "Repais marrit? Desplaça-lo:"
     },
     "set": {
       "otaEmbedded": "paquet d'origina — cap d'OTA aplicada"
@@ -1017,7 +1019,14 @@
         "mezcla": "Mescla d’alinhament",
         "dias": "jorns amb donadas",
         "vacio": "Pas encara de donadas d’aqueste periòde"
-      }
+      },
+      "sinAlineacion": "Repaisses salvats — l’alinhament apren encara aquestes aliments, doncas uèi puntua neutre."
+    },
+    "editor": {
+      "titulo": "Editar lo repais escanejat",
+      "pista": "Tòca un nom per lo corregir, ✕ per lo levar. Ton istoric e ton score s’actualizan amb tu.",
+      "vacio": "Res demòra pas — apond un ingredient çai-jos.",
+      "listo": "Fach"
     }
   },
   "cat": {

@@ -1380,7 +1380,9 @@
       "tips1": "Evita sombras duras y sitios con poca luz",
       "tips2": "Que cada alimento se vea con claridad",
       "addManualPorcion": "añadido por ti",
-      "anadido": "alimento añadido"
+      "anadido": "alimento añadido",
+      "sinScore": "Sin score aún",
+      "cambiarTipo": "¿Comida equivocada? Muévela:"
     },
     "tiempo": {
       "ayer": "Ayer",
@@ -1416,7 +1418,14 @@
         "mezcla": "Mezcla de alineación",
         "dias": "días con datos",
         "vacio": "Aún no hay datos de este periodo"
-      }
+      },
+      "sinAlineacion": "Comidas guardadas — la alineación aún está aprendiendo estos alimentos, así que hoy puntúa neutro."
+    },
+    "editor": {
+      "titulo": "Editar comida escaneada",
+      "pista": "Toca un nombre para corregirlo, ✕ para quitarlo. Tu historial y tu score se actualizan contigo.",
+      "vacio": "No queda nada — añade un ingrediente abajo.",
+      "listo": "Listo"
     }
   },
   "cat": {

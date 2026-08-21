@@ -12,6 +12,7 @@ import { useSession } from '../../state/SessionProvider';
 import { getCurrentCycle } from '../../lib/api';
 import { cycleDay, cycleDayActual, phaseForDay } from '../../lib/cas';
 import { saveMealTyped, searchFoods, fetchDailyRecs, orderedCategories, DailyRecs } from '../../lib/recs';
+import { cargaGlosario, decoraNombre } from '../../lib/glosario';   // F7 (UST-04)
 import { useI18n } from '../../i18n';
 
 /**
@@ -44,6 +45,7 @@ export default function MealLogScreen({ route }: any) {
   // T1 (UST-02): las sugerencias de fase viven AQUÍ ahora, no en el Today.
   const [recs, setRecs] = useState<DailyRecs | null>(null);
   useEffect(() => { fetchDailyRecs(lang).then(setRecs).catch(() => {}); }, [lang]);
+  useEffect(() => { cargaGlosario().then(() => setRecs((p) => (p ? { ...p } : p)), () => {}); }, []);
   const sugerencias = orderedCategories(recs?.nutri_basics)
     .flatMap(([, items]) => items.slice(0, 2)).slice(0, 6);
 
@@ -102,7 +104,7 @@ export default function MealLogScreen({ route }: any) {
                   {sugerencias.map((s) => (
                     <Pressable key={s.id} style={styles.sugChip}
                       onPress={() => setText((p) => (p ? p + ', ' : '') + s.name)}>
-                      <Text style={styles.sugChipTxt}>＋ {s.name}</Text>
+                      <Text style={styles.sugChipTxt}>＋ {decoraNombre(s.name)}</Text>
                     </Pressable>
                   ))}
                 </View>

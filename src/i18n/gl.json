@@ -978,7 +978,9 @@
       "tips1": "Evita sombras duras e sitios con pouca luz",
       "tips2": "Que cada alimento se vexa con claridade",
       "addManualPorcion": "engadido por ti",
-      "anadido": "alimento engadido"
+      "anadido": "alimento engadido",
+      "sinScore": "Aínda sen score",
+      "cambiarTipo": "Comida equivocada? Móvea:"
     },
     "set": {
       "otaEmbedded": "paquete de fábrica — sen OTA aplicada"
@@ -1017,7 +1019,14 @@
         "mezcla": "Mestura de aliñamento",
         "dias": "días con datos",
         "vacio": "Aínda non hai datos deste período"
-      }
+      },
+      "sinAlineacion": "Comidas gardadas — o aliñamento aínda está aprendendo estes alimentos, así que hoxe puntúa neutro."
+    },
+    "editor": {
+      "titulo": "Editar comida escaneada",
+      "pista": "Toca un nome para corrixilo, ✕ para quitalo. O teu historial e o teu score actualízanse contigo.",
+      "vacio": "Non queda nada — engade un ingrediente abaixo.",
+      "listo": "Feito"
     }
   },
   "cat": {

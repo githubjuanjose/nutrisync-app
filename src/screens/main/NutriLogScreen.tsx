@@ -35,6 +35,7 @@ import { useSession } from '../../state/SessionProvider';
 import { getProfile } from '../../lib/api';
 import { pickVariantIndex } from '../../ui/NutriAvatar';
 import { localDayISO } from '../../lib/localDay';
+import { cargaGlosario, decoraNombre } from '../../lib/glosario';   // F7 (UST-04)
 import {
   Periodo, periodoHoy, atras, adelante, rango, esEditable, etiqueta, sumaDias,
 } from '../../lib/tiempo';
@@ -109,6 +110,9 @@ export default function NutriLogScreen() {
   const esDia = periodo.tipo === 'dia';
   const esHoy = esDia && (periodo as any).fecha === hoyISO;
   const editable = esEditable(periodo, hoyISO);
+
+  // F7 (UST-04): glosario ES — carga perezosa; el re-render llega con carga()
+  useEffect(() => { cargaGlosario().then(() => {}, () => {}); }, []);
 
   useEffect(() => {
     if (!userId) return;
@@ -304,7 +308,7 @@ export default function NutriLogScreen() {
                         <Text style={styles.syncChipTxt}>● {t('phaseNames.' + (recs?.phase || ''), recs?.phase || '').toUpperCase()} SYNC</Text>
                       </View>
                     </View>
-                    <Text style={styles.recetaNombre}>{tc(item.name)}</Text>
+                    <Text style={styles.recetaNombre}>{decoraNombre(tc(item.name))}</Text>
                   </View>
                 </View>
               ))}
@@ -328,16 +332,28 @@ export default function NutriLogScreen() {
                           {m.meal_type ? t('mob.foto.tipo.' + m.meal_type, m.meal_type) + ' · ' : ''}{horaDe(m.created_at)}
                         </Text>
                       </View>
-                      {tr && (
+                      {tr ? (
                         <View style={styles.tierPill}>
                           <View style={[styles.tierDot, { backgroundColor: TIER_DOT[tr] ?? '#9E9E9E' }]} />
                           <Text style={styles.tierTxt}>{t('mob.foto.tier.' + tr.toLowerCase(), tr)}</Text>
                         </View>
-                      )}
+                      ) : m.capture_id ? (
+                        /* F4 (UST-04): el silencio del matcher, dicho — no un hueco */
+                        <View style={[styles.tierPill, styles.tierPillNeutra]}>
+                          <Text style={styles.tierNeutraTxt}>{t('mob.foto.sinScore', 'No score yet')}</Text>
+                        </View>
+                      ) : null}
                     </View>
                   );
                 })}
               </View>
+
+              {/* F2 (UST-04): comió pero la alineación aún no conoce sus platos
+                  — el día puntúa NEUTRO y aquí se dice por qué. */}
+              {esHoy && meals.length > 0 && tiers.length === 0 && (
+                <Text style={styles.sinAlin}>{t('mob.hoy.sinAlineacion',
+                  'Meals saved — alignment is still learning these foods, so today scores neutral.')}</Text>
+              )}
 
               {!esHoy && editable && (
                 <View style={styles.ayerAviso}>
@@ -464,6 +480,9 @@ const styles = StyleSheet.create({
   tierPill: { flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: '#F5F0F2', borderRadius: radius.pill, paddingHorizontal: 9, paddingVertical: 4 },
   tierDot: { width: 8, height: 8, borderRadius: 4 },
   tierTxt: { fontFamily: font.semibold, fontSize: 10.5, color: colors.ink },
+  tierPillNeutra: { borderWidth: 1, borderColor: '#F3E6E1', backgroundColor: 'transparent' },
+  tierNeutraTxt: { fontFamily: font.medium, fontSize: 10, color: '#7D6469' },
+  sinAlin: { fontFamily: font.regular, fontSize: 12, color: '#7D6469', marginTop: 8, marginHorizontal: 2 },
   vacio: { fontFamily: font.regular, fontSize: 13, color: colors.muted, paddingVertical: 14, textAlign: 'center' },
 
   ayerAviso: { backgroundColor: '#FFF3E0', borderRadius: 12, paddingVertical: 8, paddingHorizontal: 12, marginTop: 14, borderWidth: 1, borderColor: '#F5DFC0' },

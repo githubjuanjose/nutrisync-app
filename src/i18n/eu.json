@@ -979,7 +979,9 @@
       "tips1": "Saihestu itzal gogorrak eta argi gutxiko lekuak",
       "tips2": "Elikagai bakoitza argi ikus dadila",
       "addManualPorcion": "zuk gehitua",
-      "anadido": "elikagai gehituta"
+      "anadido": "elikagai gehituta",
+      "sinScore": "Oraindik punturik ez",
+      "cambiarTipo": "Otordu okerra? Mugitu:"
     },
     "set": {
       "otaEmbedded": "fabrikako paketea — OTA-rik gabe"
@@ -1018,7 +1020,14 @@
         "mezcla": "Lerrokatze nahasketa",
         "dias": "datudun egunak",
         "vacio": "Oraindik ez dago aldi honetako daturik"
-      }
+      },
+      "sinAlineacion": "Otorduak gordeta — lerrokatzea oraindik janari hauek ikasten ari da; gaur neutro puntuatzen du."
+    },
+    "editor": {
+      "titulo": "Editatu eskaneatutako otordua",
+      "pista": "Ukitu izen bat zuzentzeko, ✕ kentzeko. Zure historia eta puntuazioa zurekin eguneratzen dira.",
+      "vacio": "Ez da ezer geratzen — gehitu osagai bat behean.",
+      "listo": "Eginda"
     }
   },
   "cat": {

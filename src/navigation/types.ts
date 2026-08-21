@@ -19,6 +19,7 @@ export type RootStackParamList = {
   MealHistory: undefined;
   MealPhoto: { fecha?: string } | undefined;
   AddIngredients: { mealId: string };
+  EditarEscaneo: { mealId: string; mealLogId?: number };
   LogMovement: undefined;
   MovementHistory: undefined;
   NotificationCenter: undefined;

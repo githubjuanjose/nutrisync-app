@@ -96,14 +96,22 @@ export async function saveMealTyped(userId: string, description: string, mealTyp
   if (error) throw error;
 }
 
-export type MealRow = { id: number; date: string; description: string; meal_type: string | null; phase: string | null };
+export type MealRow = { id: number; date: string; description: string; meal_type: string | null; phase: string | null; capture_id?: string | null };
 export async function fetchMealHistory(userId: string, days = 30): Promise<MealRow[]> {
   const since = new Date(); since.setDate(since.getDate() - days);
-  const { data } = await supabase.from('meal_logs')
-    .select('id,date,description,meal_type,phase')
+  // UST-04 F6: capture_id viaja para poder REABRIR el escaneo y editarlo.
+  // Si la migración 0.22.4 no corrió, la columna no existe: se reintenta sin ella.
+  let r = await supabase.from('meal_logs')
+    .select('id,date,description,meal_type,phase,capture_id')
     .eq('user_id', userId).gte('date', localDayISO(since))
     .order('date', { ascending: false }).order('id', { ascending: true });
-  return (data as MealRow[]) ?? [];
+  if (r.error && /capture_id/.test(r.error.message)) {
+    r = await supabase.from('meal_logs')
+      .select('id,date,description,meal_type,phase')
+      .eq('user_id', userId).gte('date', localDayISO(since))
+      .order('date', { ascending: false }).order('id', { ascending: true }) as any;
+  }
+  return (r.data as MealRow[]) ?? [];
 }
 
 export async function countMealsToday(userId: string): Promise<number> {

@@ -1068,7 +1068,9 @@
       "tips1": "Avoid harsh shadows or dim environments",
       "tips2": "Keep each ingredient clearly visible",
       "addManualPorcion": "added by you",
-      "anadido": "ingredient added"
+      "anadido": "ingredient added",
+      "sinScore": "No score yet",
+      "cambiarTipo": "Wrong meal? Move it:"
     },
     "tiempo": {
       "ayer": "Yesterday",
@@ -1104,7 +1106,14 @@
         "mezcla": "Alignment mix",
         "dias": "days with data",
         "vacio": "No data for this period yet"
-      }
+      },
+      "sinAlineacion": "Meals saved — alignment is still learning these foods, so today scores neutral."
+    },
+    "editor": {
+      "titulo": "Edit scanned meal",
+      "pista": "Tap a name to fix it, ✕ to remove it. Your history and score update with you.",
+      "vacio": "Nothing left — add an ingredient below.",
+      "listo": "Done"
     }
   },
   "ob": {

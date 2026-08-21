@@ -207,6 +207,7 @@ export async function recomputeCAS(userId: string) {
     nutritionChecked: nChecked ?? 0,
     nutritionTotal: nTotal ?? 0,
     dayTiers,
+    mealsLogged: nMeals ?? 0,   // UST-04 F2: comer sin datos de alineación = neutro, no 0
     fitnessIntensity,
     logsCompleted,
   });

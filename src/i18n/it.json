@@ -978,7 +978,9 @@
       "tips1": "Evita ombre dure e ambienti poco illuminati",
       "tips2": "Tieni ogni alimento ben visibile",
       "addManualPorcion": "aggiunto da te",
-      "anadido": "alimento aggiunto"
+      "anadido": "alimento aggiunto",
+      "sinScore": "Ancora nessun punteggio",
+      "cambiarTipo": "Pasto sbagliato? Spostalo:"
     },
     "set": {
       "otaEmbedded": "bundle di fabbrica — nessun OTA applicato"
@@ -1017,7 +1019,14 @@
         "mezcla": "Mix di allineamento",
         "dias": "giorni con dati",
         "vacio": "Ancora nessun dato per questo periodo"
-      }
+      },
+      "sinAlineacion": "Pasti salvati — l’allineamento sta ancora imparando questi cibi, quindi oggi conta neutro."
+    },
+    "editor": {
+      "titulo": "Modifica pasto scansionato",
+      "pista": "Tocca un nome per correggerlo, ✕ per rimuoverlo. Storico e punteggio si aggiornano con te.",
+      "vacio": "Non resta niente — aggiungi un ingrediente qui sotto.",
+      "listo": "Fatto"
     }
   },
   "cat": {

@@ -976,7 +976,9 @@
       "tips1": "Évite les ombres dures et les endroits sombres",
       "tips2": "Garde chaque aliment bien visible",
       "addManualPorcion": "ajouté par toi",
-      "anadido": "aliment ajouté"
+      "anadido": "aliment ajouté",
+      "sinScore": "Pas encore de score",
+      "cambiarTipo": "Mauvais repas ? Déplace-le :"
     },
     "set": {
       "otaEmbedded": "bundle d'usine — aucune OTA appliquée"
@@ -1015,7 +1017,14 @@
         "mezcla": "Répartition d’alignement",
         "dias": "jours avec données",
         "vacio": "Pas encore de données pour cette période"
-      }
+      },
+      "sinAlineacion": "Repas enregistrés — l’alignement apprend encore ces aliments, donc aujourd’hui compte neutre."
+    },
+    "editor": {
+      "titulo": "Modifier le repas scanné",
+      "pista": "Touche un nom pour le corriger, ✕ pour le retirer. Ton historique et ton score se mettent à jour avec toi.",
+      "vacio": "Plus rien — ajoute un ingrédient ci-dessous.",
+      "listo": "Terminé"
     }
   },
   "cat": {

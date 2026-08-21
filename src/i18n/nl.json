@@ -978,7 +978,9 @@
       "tips1": "Vermijd harde schaduwen en donkere plekken",
       "tips2": "Houd elk ingrediënt goed zichtbaar",
       "addManualPorcion": "door jou toegevoegd",
-      "anadido": "ingrediënt toegevoegd"
+      "anadido": "ingrediënt toegevoegd",
+      "sinScore": "Nog geen score",
+      "cambiarTipo": "Verkeerde maaltijd? Verplaats:"
     },
     "set": {
       "otaEmbedded": "fabrieksbundel — nog geen OTA"
@@ -1017,7 +1019,14 @@
         "mezcla": "Afstemmingsmix",
         "dias": "dagen met data",
         "vacio": "Nog geen data voor deze periode"
-      }
+      },
+      "sinAlineacion": "Maaltijden opgeslagen — de afstemming leert deze voeding nog, dus vandaag telt neutraal."
+    },
+    "editor": {
+      "titulo": "Gescande maaltijd bewerken",
+      "pista": "Tik op een naam om te corrigeren, ✕ om te verwijderen. Je geschiedenis en score bewegen mee.",
+      "vacio": "Niets over — voeg hieronder een ingrediënt toe.",
+      "listo": "Klaar"
     }
   },
   "cat": {
