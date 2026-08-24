@@ -981,7 +981,8 @@
       "addManualPorcion": "zuk gehitua",
       "anadido": "elikagai gehituta",
       "sinScore": "Oraindik punturik ez",
-      "cambiarTipo": "Otordu okerra? Mugitu:"
+      "cambiarTipo": "Otordu okerra? Mugitu:",
+      "anilloSin": "Janari hauetako bat ere ez dago oraindik lerrokatze-orrian — zure otorduak berdin balio du zure egunean."
     },
     "set": {
       "otaEmbedded": "fabrikako paketea — OTA-rik gabe"

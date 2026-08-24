@@ -980,7 +980,8 @@
       "addManualPorcion": "door jou toegevoegd",
       "anadido": "ingrediënt toegevoegd",
       "sinScore": "Nog geen score",
-      "cambiarTipo": "Verkeerde maaltijd? Verplaats:"
+      "cambiarTipo": "Verkeerde maaltijd? Verplaats:",
+      "anilloSin": "Geen van deze voedingsmiddelen staat nog in het afstemmingsblad — je maaltijd telt gewoon mee in je dag."
     },
     "set": {
       "otaEmbedded": "fabrieksbundel — nog geen OTA"

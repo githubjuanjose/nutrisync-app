@@ -978,7 +978,8 @@
       "addManualPorcion": "ajouté par toi",
       "anadido": "aliment ajouté",
       "sinScore": "Pas encore de score",
-      "cambiarTipo": "Mauvais repas ? Déplace-le :"
+      "cambiarTipo": "Mauvais repas ? Déplace-le :",
+      "anilloSin": "Aucun de ces aliments n’est encore dans la feuille d’alignement — ton repas compte quand même dans ta journée."
     },
     "set": {
       "otaEmbedded": "bundle d'usine — aucune OTA appliquée"

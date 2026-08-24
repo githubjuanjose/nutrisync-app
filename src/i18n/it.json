@@ -980,7 +980,8 @@
       "addManualPorcion": "aggiunto da te",
       "anadido": "alimento aggiunto",
       "sinScore": "Ancora nessun punteggio",
-      "cambiarTipo": "Pasto sbagliato? Spostalo:"
+      "cambiarTipo": "Pasto sbagliato? Spostalo:",
+      "anilloSin": "Nessuno di questi cibi è ancora nel foglio di allineamento — il tuo pasto conta comunque nella tua giornata."
     },
     "set": {
       "otaEmbedded": "bundle di fabbrica — nessun OTA applicato"

@@ -980,7 +980,8 @@
       "addManualPorcion": "engadido por ti",
       "anadido": "alimento engadido",
       "sinScore": "Aínda sen score",
-      "cambiarTipo": "Comida equivocada? Móvea:"
+      "cambiarTipo": "Comida equivocada? Móvea:",
+      "anilloSin": "Ningún destes alimentos está aínda na folla de aliñamento — a túa comida conta igual no teu día."
     },
     "set": {
       "otaEmbedded": "paquete de fábrica — sen OTA aplicada"

@@ -734,15 +734,27 @@ export default function MealPhotoScreen({ navigation, route }: any) {
                 ))}
               </View>
 
-              {alin.activo && alin.overall && (
+              {/* Paseo Pilar 24-ago: el anillo se ESCONDÍA cuando la comida no
+                  tenía media (nada casado) — el mismo silencio que matamos en
+                  los items (F4), vivo en el agregado. Ahora la tarjeta siempre
+                  habla: tier si lo hay, «sin score aún» si no. */}
+              {alin.activo && (
                 <View style={s.syncCard}>
                   <Text style={s.syncTit}>{t('mob.foto.sync', 'Cycle Sync Score')}</Text>
+                  {alin.overall ? (
                   <View style={s.syncAnillo}>
                     <Anillo frac={RING_FRAC[alin.overall]} />
                     <View style={s.syncCentro}>
                       <Text style={s.syncTier}>{t(claveDeTier(alin.overall), alin.overall)}</Text>
                     </View>
                   </View>
+                  ) : (
+                  <View style={s.syncVacio}>
+                    <Text style={s.syncVacioTit}>{t('mob.foto.sinScore', 'No score yet')}</Text>
+                    <Text style={s.syncVacioTxt}>{t('mob.foto.anilloSin',
+                      'None of these foods are in the alignment sheet yet — your meal still counts in your day.')}</Text>
+                  </View>
+                  )}
                   {/* Regla del tono: frase de fase SOLO en positivo; en Good/
                       Fair el anillo habla y la app calla. Pendiente del sí de
                       Pilar — cambiarlo vive en lib/alineacion.ts. */}
@@ -930,6 +942,10 @@ const s = StyleSheet.create({
   },
   editOk: { fontFamily: font.bold, fontSize: 16, color: P.naranja, paddingHorizontal: 4 },
   cambiaTipo: { fontFamily: font.medium, fontSize: 12, color: P.sub, marginTop: 14, marginBottom: 6 },
+  /* 0.22.7 · anillo honesto (paseo Pilar 24-ago) */
+  syncVacio: { alignItems: 'center', paddingVertical: 18, paddingHorizontal: 12 },
+  syncVacioTit: { fontFamily: font.bold, fontSize: 16, color: P.sub },
+  syncVacioTxt: { fontFamily: font.regular, fontSize: 12.5, color: P.sub, textAlign: 'center', marginTop: 6, lineHeight: 18 },
   pasos: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 6 },
   pasoBtn: { fontFamily: font.semibold, fontSize: 20, color: P.naranja, width: 22, textAlign: 'center' },
   gramos: { fontFamily: font.semibold, fontSize: 13.5, color: P.ink, minWidth: 54, textAlign: 'center' },

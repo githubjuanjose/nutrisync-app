@@ -979,7 +979,8 @@
       "addManualPorcion": "あなたが追加",
       "anadido": "件の食材を追加",
       "sinScore": "スコアはまだ",
-      "cambiarTipo": "食事の種類が違う？移動："
+      "cambiarTipo": "食事の種類が違う？移動：",
+      "anilloSin": "これらの食品はまだアラインメント表にありません — それでも食事は今日の記録に数えられます。"
     },
     "set": {
       "otaEmbedded": "初期バンドル — OTA未適用"

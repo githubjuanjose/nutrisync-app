@@ -1382,7 +1382,8 @@
       "addManualPorcion": "añadido por ti",
       "anadido": "alimento añadido",
       "sinScore": "Sin score aún",
-      "cambiarTipo": "¿Comida equivocada? Muévela:"
+      "cambiarTipo": "¿Comida equivocada? Muévela:",
+      "anilloSin": "Ninguno de estos alimentos está aún en la hoja de alineación — tu comida cuenta igual en tu día."
     },
     "tiempo": {
       "ayer": "Ayer",

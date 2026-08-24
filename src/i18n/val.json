@@ -979,7 +979,8 @@
       "addManualPorcion": "afegit per tu",
       "anadido": "aliment afegit",
       "sinScore": "Encara sense score",
-      "cambiarTipo": "Menjar equivocat? Mou-lo:"
+      "cambiarTipo": "Menjar equivocat? Mou-lo:",
+      "anilloSin": "Cap d’estos aliments està encara en la fulla d’alineació — el teu menjar compta igual en el teu dia."
     },
     "set": {
       "otaEmbedded": "paquet de fàbrica — cap OTA aplicada"

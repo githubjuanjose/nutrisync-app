@@ -980,7 +980,8 @@
       "addManualPorcion": "由你添加",
       "anadido": "种食材已添加",
       "sinScore": "暂无评分",
-      "cambiarTipo": "选错餐了？移动到："
+      "cambiarTipo": "选错餐了？移动到：",
+      "anilloSin": "这些食物尚未加入匹配表 — 你的这餐仍会计入今天。"
     },
     "set": {
       "otaEmbedded": "出厂包 — 尚未应用OTA"

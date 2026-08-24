@@ -980,7 +980,8 @@
       "addManualPorcion": "apondut per tu",
       "anadido": "aliment apondut",
       "sinScore": "Encara sens score",
-      "cambiarTipo": "Repais marrit? Desplaça-lo:"
+      "cambiarTipo": "Repais marrit? Desplaça-lo:",
+      "anilloSin": "Cap d’aquestes aliments es pas encara dins la fuèlha d’alinhament — ton repais compta parièr dins ta jornada."
     },
     "set": {
       "otaEmbedded": "paquet d'origina — cap d'OTA aplicada"

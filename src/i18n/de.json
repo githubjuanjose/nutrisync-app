@@ -980,7 +980,8 @@
       "addManualPorcion": "von dir hinzugefügt",
       "anadido": "Lebensmittel erfasst",
       "sinScore": "Noch kein Score",
-      "cambiarTipo": "Falsche Mahlzeit? Verschieben:"
+      "cambiarTipo": "Falsche Mahlzeit? Verschieben:",
+      "anilloSin": "Keines dieser Lebensmittel steht bisher im Alignment-Blatt — deine Mahlzeit zählt trotzdem für deinen Tag."
     },
     "set": {
       "otaEmbedded": "Werks-Bundle — noch kein OTA-Update"

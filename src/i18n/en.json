@@ -1070,7 +1070,8 @@
       "addManualPorcion": "added by you",
       "anadido": "ingredient added",
       "sinScore": "No score yet",
-      "cambiarTipo": "Wrong meal? Move it:"
+      "cambiarTipo": "Wrong meal? Move it:",
+      "anilloSin": "None of these foods are in the alignment sheet yet — your meal still counts in your day."
     },
     "tiempo": {
       "ayer": "Yesterday",
