@@ -8,6 +8,7 @@ import { LoadingView } from '../../ui/LoadingView';
 import { CycleRingInteractive } from '../../ui/CycleRingInteractive';
 import { GraceBanner } from '../../ui/GraceBanner';
 import { useSession } from '../../state/SessionProvider';
+import WearInvite from '../../ui/WearInvite';
 import { getProfile, getCurrentCycle, UserRow, CycleRow } from '../../lib/api';
 import { cycleDay, cycleDayActual, phaseForDay, displayPhase, cycleProgress } from '../../lib/cas';
 import { getTodayLog, getTodayScore, DailyLog } from '../../lib/daily';
@@ -88,6 +89,7 @@ export default function CycleScreen({ navigation }: any) {
       <LinearGradient colors={screenGrad.colors as any} locations={screenGrad.locations as any} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top']}>
         <ScrollView contentContainerStyle={{ paddingBottom: 30 }} showsVerticalScrollIndicator={false}>
+          <WearInvite navigation={navigation} />
           <View style={styles.header}>
             <View style={styles.brandLockup}>
               <Image source={WINGS} style={styles.brandMark} resizeMode="contain" />

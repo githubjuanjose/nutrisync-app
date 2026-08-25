@@ -20,6 +20,7 @@ export type RootStackParamList = {
   MealPhoto: { fecha?: string } | undefined;
   AddIngredients: { mealId: string };
   EditarEscaneo: { mealId: string; mealLogId?: number };
+  HealthConsent: { provider?: string } | undefined;
   LogMovement: undefined;
   MovementHistory: undefined;
   NotificationCenter: undefined;

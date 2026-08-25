@@ -1027,6 +1027,46 @@
       "pista": "Toca un nom per a corregir-lo, ✕ per a llevar-lo. El teu historial i el teu score s’actualitzen amb tu.",
       "vacio": "No queda res — afig un ingredient davall.",
       "listo": "Fet"
+    },
+    "wear": {
+      "titulo": "El teu telèfon ja sap part d'açò",
+      "intro": "NutriSync pot omplir el que el teu rellotge o mòbil ja registren — son, entrenaments, la teua regla. Tries senyal a senyal, pots canviar d'opinió quan vulgues, i el que tu escrius guanya sempre: les teues dades omplin buits, mai no et corregixen.",
+      "esenciales": "LES TRES ESSENCIALS",
+      "opcionales": "OPCIONALS — SUMEN, NO OBLIGUEN",
+      "escribirSec": "TORNAR",
+      "escribirTitulo": "Escriure la meua regla a Salut",
+      "escribirTexto": "Si registres la teua regla ací, NutriSync l'escriu també a Apple Salut perquè les teues altres apps estiguen al dia. Apagat fins que tu l'encengues.",
+      "conectar": "Connectar",
+      "ahoraNo": "Ara no",
+      "luego": "Pots connectar-ho més tard des d'Ajustos → Dispositius connectats.",
+      "listoTitulo": "Connectat",
+      "listoTexto": "El teu telèfon omplirà el que ja sap. El que tu escrius guanya sempre.",
+      "permTitulo": "Permisos",
+      "permTexto": "Pots ajustar els permisos quan vulgues a Salut.",
+      "sinBuild": "Esta versió encara no inclou el connector de Salut — la teua tria queda guardada i la sincronització començarà amb la pròxima actualització.",
+      "invTitulo": "El teu telèfon pot omplir açò per tu",
+      "invTexto": "Son, entrenaments i la teua regla: si el teu telèfon ja els sap, deixa de teclejar-los. Tu tries què compartir i pots apagar-ho quan vulgues.",
+      "invBoton": "Connectar Salut",
+      "n": {
+        "sleep": "Son",
+        "workout": "Entrenaments",
+        "flow": "Flux menstrual",
+        "energy": "Energia activa",
+        "steps": "Passos",
+        "rhr": "FC en repòs",
+        "hrv": "Variabilitat cardíaca",
+        "temp": "Temperatura de monyica"
+      },
+      "pq": {
+        "sleep_minutes": "Ompli el teu descans del dia sense teclejar-lo.",
+        "workout": "Marca a l'anell el moviment que ja has fet.",
+        "menstrual_flow": "Si ja registres la regla a Salut, no la repetixes ací.",
+        "active_energy": "Ajusta les recomanacions de nutrició al que gastes de veritat.",
+        "steps": "Distingix un dia actiu d'un de sedentari.",
+        "resting_hr": "Senyal de recuperació: puja quan el cos demana descans.",
+        "hrv": "Acompanya la fase del cicle i ajuda a decidir intensitat.",
+        "wrist_temperature": "La pujada després de l'ovulació confirma en quina fase estàs."
+      }
     }
   },
   "cat": {

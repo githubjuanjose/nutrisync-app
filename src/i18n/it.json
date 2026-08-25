@@ -1028,6 +1028,46 @@
       "pista": "Tocca un nome per correggerlo, ✕ per rimuoverlo. Storico e punteggio si aggiornano con te.",
       "vacio": "Non resta niente — aggiungi un ingrediente qui sotto.",
       "listo": "Fatto"
+    },
+    "wear": {
+      "titulo": "Il tuo telefono sa già parte di tutto questo",
+      "intro": "NutriSync può compilare ciò che il tuo orologio o telefono già registrano — sonno, allenamenti, il tuo ciclo. Scegli segnale per segnale, puoi cambiare idea quando vuoi, e ciò che scrivi tu vince sempre: i tuoi dati riempiono i vuoti, non ti correggono mai.",
+      "esenciales": "LE TRE ESSENZIALI",
+      "opcionales": "OPZIONALI — IN PIÙ, MAI OBBLIGATE",
+      "escribirSec": "RESTITUIRE",
+      "escribirTitulo": "Scrivere il mio ciclo in Salute",
+      "escribirTexto": "Se registri il ciclo qui, NutriSync lo scrive anche in Apple Salute così le tue altre app restano aggiornate. Spento finché non lo attivi tu.",
+      "conectar": "Collega",
+      "ahoraNo": "Non ora",
+      "luego": "Puoi collegarlo più tardi da Impostazioni → Dispositivi collegati.",
+      "listoTitulo": "Collegato",
+      "listoTexto": "Il tuo telefono compilerà ciò che già sa. Ciò che scrivi tu vince sempre.",
+      "permTitulo": "Permessi",
+      "permTexto": "Puoi regolare i permessi quando vuoi in Salute.",
+      "sinBuild": "Questa versione non include ancora il connettore Salute — la tua scelta è salvata e la sincronizzazione partirà col prossimo aggiornamento.",
+      "invTitulo": "Il tuo telefono può compilare questo per te",
+      "invTexto": "Sonno, allenamenti e il tuo ciclo: se il telefono li sa già, smetti di digitarli. Scegli tu cosa condividere e puoi spegnerlo quando vuoi.",
+      "invBoton": "Collega Salute",
+      "n": {
+        "sleep": "Sonno",
+        "workout": "Allenamenti",
+        "flow": "Flusso mestruale",
+        "energy": "Energia attiva",
+        "steps": "Passi",
+        "rhr": "FC a riposo",
+        "hrv": "Variabilità cardiaca",
+        "temp": "Temperatura del polso"
+      },
+      "pq": {
+        "sleep_minutes": "Compila il tuo riposo del giorno senza digitarlo.",
+        "workout": "Segna sull'anello il movimento già fatto.",
+        "menstrual_flow": "Se registri già il ciclo in Salute, non lo ripeti qui.",
+        "active_energy": "Adatta i consigli nutrizionali a ciò che consumi davvero.",
+        "steps": "Distingue un giorno attivo da uno sedentario.",
+        "resting_hr": "Segnale di recupero: sale quando il corpo chiede riposo.",
+        "hrv": "Accompagna la fase del ciclo e aiuta a decidere l'intensità.",
+        "wrist_temperature": "Il rialzo dopo l'ovulazione conferma in che fase sei."
+      }
     }
   },
   "cat": {

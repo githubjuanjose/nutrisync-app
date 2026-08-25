@@ -1028,6 +1028,46 @@
       "pista": "Toca un nome para corrixilo, ✕ para quitalo. O teu historial e o teu score actualízanse contigo.",
       "vacio": "Non queda nada — engade un ingrediente abaixo.",
       "listo": "Feito"
+    },
+    "wear": {
+      "titulo": "O teu teléfono xa sabe parte disto",
+      "intro": "NutriSync pode encher o que o teu reloxo ou móbil xa rexistran — sono, adestramentos, a túa regra. Escolles sinal a sinal, podes cambiar de opinión cando queiras, e o que ti escribes gaña sempre: os teus datos enchen ocos, nunca te corrixen.",
+      "esenciales": "AS TRES ESENCIAIS",
+      "opcionales": "OPCIONAIS — SUMAN, NON OBRIGAN",
+      "escribirSec": "DEVOLVER",
+      "escribirTitulo": "Escribir a miña regra en Saúde",
+      "escribirTexto": "Se rexistras a túa regra aquí, NutriSync escríbea tamén en Apple Saúde para que as túas outras apps estean ao día. Apagado ata que ti o acendas.",
+      "conectar": "Conectar",
+      "ahoraNo": "Agora non",
+      "luego": "Podes conectalo despois desde Axustes → Dispositivos conectados.",
+      "listoTitulo": "Conectado",
+      "listoTexto": "O teu teléfono encherá o que xa sabe. O que ti escribes gaña sempre.",
+      "permTitulo": "Permisos",
+      "permTexto": "Podes axustar os permisos cando queiras en Saúde.",
+      "sinBuild": "Esta versión aínda non inclúe o conector de Saúde — a túa escolla queda gardada e a sincronización comezará coa próxima actualización.",
+      "invTitulo": "O teu teléfono pode encher isto por ti",
+      "invTexto": "Sono, adestramentos e a túa regra: se o teu teléfono xa os sabe, deixa de teclealos. Ti escolles que compartir e podes apagalo cando queiras.",
+      "invBoton": "Conectar Saúde",
+      "n": {
+        "sleep": "Sono",
+        "workout": "Adestramentos",
+        "flow": "Fluxo menstrual",
+        "energy": "Enerxía activa",
+        "steps": "Pasos",
+        "rhr": "FC en repouso",
+        "hrv": "Variabilidade cardíaca",
+        "temp": "Temperatura de pulso"
+      },
+      "pq": {
+        "sleep_minutes": "Enche o teu descanso do día sen teclealo.",
+        "workout": "Marca no anel o movemento que xa fixeches.",
+        "menstrual_flow": "Se xa rexistras a regra en Saúde, non a repites aquí.",
+        "active_energy": "Axusta as recomendacións de nutrición ao que gastas de verdade.",
+        "steps": "Distingue un día activo dun sedentario.",
+        "resting_hr": "Sinal de recuperación: sobe cando o corpo pide descanso.",
+        "hrv": "Acompaña a fase do ciclo e axuda a decidir intensidade.",
+        "wrist_temperature": "A subida tras a ovulación confirma en que fase estás."
+      }
     }
   },
   "cat": {

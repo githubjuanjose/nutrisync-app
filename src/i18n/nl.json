@@ -1028,6 +1028,46 @@
       "pista": "Tik op een naam om te corrigeren, ✕ om te verwijderen. Je geschiedenis en score bewegen mee.",
       "vacio": "Niets over — voeg hieronder een ingrediënt toe.",
       "listo": "Klaar"
+    },
+    "wear": {
+      "titulo": "Je telefoon weet hier al een deel van",
+      "intro": "NutriSync kan invullen wat je horloge of telefoon al bijhouden — slaap, workouts, je menstruatie. Je kiest signaal voor signaal, je kunt altijd van gedachten veranderen, en wat jij schrijft wint altijd: jouw data vullen gaten, ze corrigeren je nooit.",
+      "esenciales": "DE DRIE ESSENTIËLE",
+      "opcionales": "OPTIONEEL — MOOI MEEGENOMEN",
+      "escribirSec": "TERUGGEVEN",
+      "escribirTitulo": "Mijn menstruatie terugschrijven naar Health",
+      "escribirTexto": "Als je je menstruatie hier registreert, schrijft NutriSync die ook naar Apple Health, zodat je andere apps bij blijven. Uit totdat jij het aanzet.",
+      "conectar": "Verbinden",
+      "ahoraNo": "Nu niet",
+      "luego": "Je kunt later verbinden via Instellingen → Verbonden apparaten.",
+      "listoTitulo": "Verbonden",
+      "listoTexto": "Je telefoon vult nu in wat hij al weet. Wat jij schrijft wint altijd.",
+      "permTitulo": "Machtigingen",
+      "permTexto": "Je kunt machtigingen altijd aanpassen in Health.",
+      "sinBuild": "Deze versie bevat de Health-connector nog niet — je keuze is opgeslagen en de synchronisatie start bij de volgende update.",
+      "invTitulo": "Je telefoon kan dit voor je invullen",
+      "invTexto": "Slaap, workouts en je menstruatie: als je telefoon ze al kent, stop met typen. Jij kiest wat je deelt en je kunt het altijd uitzetten.",
+      "invBoton": "Health verbinden",
+      "n": {
+        "sleep": "Slaap",
+        "workout": "Workouts",
+        "flow": "Menstruatievloed",
+        "energy": "Actieve energie",
+        "steps": "Stappen",
+        "rhr": "Rusthartslag",
+        "hrv": "Hartslagvariabiliteit",
+        "temp": "Polstemperatuur"
+      },
+      "pq": {
+        "sleep_minutes": "Vult je rust van de dag in zonder typen.",
+        "workout": "Zet de beweging die je al deed op je ring.",
+        "menstrual_flow": "Registreer je je menstruatie al in Health, dan herhaal je die hier niet.",
+        "active_energy": "Stemt voedingsadvies af op wat je echt verbruikt.",
+        "steps": "Onderscheidt een actieve dag van een zittende.",
+        "resting_hr": "Herstelsignaal: stijgt wanneer je lichaam om rust vraagt.",
+        "hrv": "Volgt de cyclusfase en helpt intensiteit te kiezen.",
+        "wrist_temperature": "De stijging na de eisprong bevestigt je fase."
+      }
     }
   },
   "cat": {

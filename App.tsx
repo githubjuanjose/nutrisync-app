@@ -14,6 +14,7 @@ import { LanguageProvider } from './src/i18n';
 import { PeachBg } from './src/ui/PeachBg';
 import { BioGate, BioOfferModal, useBioOffer } from './src/ui/BioLock';
 import { useOtaAutoApply } from './src/lib/otaAutoApply';
+import { useSyncSalud } from './src/lib/health/sync';
 import { usePushTap, navRef } from './src/lib/pushTap';
 
 // One soft radial-peach behind the whole app; every screen renders transparent on top.
@@ -24,6 +25,7 @@ function AppInner() {
   const bio = useBioOffer();
   useOtaAutoApply();   // r14: las OTA se aplican solas al abrir/volver — adiós al «cierra dos veces»
   usePushTap();        // N4 (0.21): toque en la notificación → su pestaña (guardas para runtimes viejos)
+  useSyncSalud();      // O1 (0.23): sincroniza Salud al abrir/volver — guardas dentro, jamás rompe el arranque
   return (
     <View style={{ flex: 1 }}>
       <PeachBg style={StyleSheet.absoluteFill} />

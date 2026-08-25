@@ -1427,6 +1427,46 @@
       "pista": "Toca un nombre para corregirlo, ✕ para quitarlo. Tu historial y tu score se actualizan contigo.",
       "vacio": "No queda nada — añade un ingrediente abajo.",
       "listo": "Listo"
+    },
+    "wear": {
+      "titulo": "Tu teléfono ya sabe parte de esto",
+      "intro": "NutriSync puede rellenar lo que tu reloj o tu móvil ya registran — sueño, entrenamientos, tu período. Eliges señal a señal, puedes cambiar de opinión cuando quieras, y lo que tú escribes gana siempre: tus datos rellenan huecos, jamás te corrigen.",
+      "esenciales": "LAS TRES ESENCIALES",
+      "opcionales": "OPCIONALES — SUMAN, NO OBLIGAN",
+      "escribirSec": "DEVOLVER",
+      "escribirTitulo": "Escribir mi período en Salud",
+      "escribirTexto": "Si registras tu período aquí, NutriSync lo escribe también en Apple Salud para que tus otras apps estén al día. Apagado hasta que tú lo enciendas.",
+      "conectar": "Conectar",
+      "ahoraNo": "Ahora no",
+      "luego": "Puedes conectarlo luego desde Ajustes → Dispositivos conectados.",
+      "listoTitulo": "Conectado",
+      "listoTexto": "Tu teléfono rellenará lo que ya sabe. Lo que tú escribes gana siempre.",
+      "permTitulo": "Permisos",
+      "permTexto": "Puedes ajustar los permisos cuando quieras en Salud.",
+      "sinBuild": "Este build aún no incluye el conector de Salud — tu elección queda guardada y la sincronización arrancará con la próxima actualización.",
+      "invTitulo": "Tu teléfono puede rellenar esto por ti",
+      "invTexto": "Sueño, entrenamientos y tu período: si tu teléfono ya los sabe, deja de teclearlos. Tú eliges qué compartir y puedes apagarlo cuando quieras.",
+      "invBoton": "Conectar Salud",
+      "n": {
+        "sleep": "Sueño",
+        "workout": "Entrenamientos",
+        "flow": "Flujo menstrual",
+        "energy": "Energía activa",
+        "steps": "Pasos",
+        "rhr": "FC en reposo",
+        "hrv": "Variabilidad cardíaca",
+        "temp": "Temperatura de muñeca"
+      },
+      "pq": {
+        "sleep_minutes": "Rellena tu descanso del día sin que lo teclees.",
+        "workout": "Marca en tu anillo el movimiento que ya has hecho.",
+        "menstrual_flow": "Si ya registras tu período en Salud, no lo repites aquí.",
+        "active_energy": "Ajusta las recomendaciones de nutrición a lo que gastas de verdad.",
+        "steps": "Distingue un día activo de uno sedentario.",
+        "resting_hr": "Señal de recuperación: sube cuando el cuerpo pide descanso.",
+        "hrv": "Acompaña a la fase del ciclo y ayuda a decidir intensidad.",
+        "wrist_temperature": "La subida tras la ovulación confirma en qué fase estás."
+      }
     }
   },
   "cat": {

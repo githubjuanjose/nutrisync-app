@@ -25,6 +25,12 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
   useEffect(() => { refresh(); }, [userId]);
 
   const onConnect = (key: string, name: string, scopes: string[]) => {
+    // UST-06 F4: las plataformas nativas de salud tienen consent PROPIO,
+    // señal a señal — el diálogo genérico queda para el resto de proveedores.
+    if (key === 'apple_health' || key === 'health_connect') {
+      navigation.navigate('HealthConsent', { provider: key });
+      return;
+    }
     notify(
       `Connect ${name}?`,
       `NutriSync will read: ${scopes.join(', ')}. Data is stored privately under your account and used only to personalise your guidance. You can disconnect any time.`,

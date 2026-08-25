@@ -7,6 +7,7 @@ import Svg, { Path } from 'react-native-svg';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { saveEditPeriod, getTodayLog, recomputeCAS } from '../../lib/daily';
+import { escribirFlujoSiProcede } from '../../lib/health/sync';
 import { startNewCycle, endPeriod, getCurrentCycle, CycleRow } from '../../lib/api';
 import { cycleDayActual, phaseForDay } from '../../lib/cas';
 import { ChipGroup } from '../../ui/Chips';
@@ -172,6 +173,9 @@ export default function EditPeriodScreen({ navigation }: any) {
         sex_logged: sex.includes('Unprotected') ? 'unprotected' : sex.includes('Protected') ? 'protected' : null,
         period_notes: notes.trim() || null,
       });
+      // O2 (UST-06 F2): reciprocidad con Salud — fuera del camino crítico del
+      // guardado; si falla, falla en silencio y el guardado de ella queda intacto.
+      escribirFlujoSiProcede(userId, flow);
       navigation.goBack();
     } catch (e: any) {
       // R3-17: never pretend a failed save worked

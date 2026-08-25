@@ -39,7 +39,18 @@
     },
     "android": {
       "package": "com.nutrisynccollective.app",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "android.permission.health.READ_SLEEP",
+        "android.permission.health.READ_EXERCISE",
+        "android.permission.health.READ_MENSTRUATION",
+        "android.permission.health.READ_STEPS",
+        "android.permission.health.READ_ACTIVE_CALORIES_BURNED",
+        "android.permission.health.READ_RESTING_HEART_RATE",
+        "android.permission.health.READ_HEART_RATE_VARIABILITY",
+        "android.permission.health.READ_SKIN_TEMPERATURE",
+        "android.permission.health.WRITE_MENSTRUATION"
+      ]
     },
     "plugins": [
       "expo-font",
@@ -59,16 +70,30 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "NutriSync uses your approximate location once to suggest your city during setup."
+          "locationWhenInUsePermission": "NutriSync usa tu ubicación aproximada una vez para sugerir tu ciudad al configurar y, si grabas un paseo o una carrera, para medir tu ruta y distancia mientras usas la app. Las rutas se quedan en tu dispositivo."
         }
       ],
       [
         "@kingstinct/react-native-healthkit",
         {
-          "NSHealthShareUsageDescription": "NutriSync lee tu sueño, tu actividad y los datos de tu ciclo para rellenar tu día sin que lo teclees y ajustar las recomendaciones a lo que de verdad has hecho. Solo lectura: NutriSync no escribe nada en Salud.",
+          "NSHealthShareUsageDescription": "NutriSync lee las señales de Salud que tú elijas — sueño, entrenamientos y flujo menstrual, más las opcionales que actives — para rellenar tu registro diario por ti y ajustar las recomendaciones a lo que de verdad has hecho. Tú eliges señal a señal y lo que tú escribes gana siempre. Nunca se usa para publicidad.",
+          "NSHealthUpdateUsageDescription": "Si tú lo activas, NutriSync escribe el período que registras aquí también en Apple Salud, para que tus otras apps estén al día. Apagado hasta que tú lo enciendas.",
           "background": false
         }
-      ]
+      ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "NutriSync usa los datos de movimiento para contar tus pasos y afinar tu anillo de movimiento."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "NutriSync usa la cámara para fotografiar tus comidas cuando decides escanearlas."
+        }
+      ],
+      "react-native-health-connect"
     ],
     "icon": "./assets/icon.png"
   }

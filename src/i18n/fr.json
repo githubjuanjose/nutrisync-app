@@ -1026,6 +1026,46 @@
       "pista": "Touche un nom pour le corriger, ✕ pour le retirer. Ton historique et ton score se mettent à jour avec toi.",
       "vacio": "Plus rien — ajoute un ingrédient ci-dessous.",
       "listo": "Terminé"
+    },
+    "wear": {
+      "titulo": "Ton téléphone sait déjà une partie de tout ça",
+      "intro": "NutriSync peut remplir ce que ta montre ou ton téléphone enregistrent déjà — sommeil, entraînements, tes règles. Tu choisis signal par signal, tu peux changer d'avis à tout moment, et ce que tu écris gagne toujours : tes données comblent des vides, elles ne te corrigent jamais.",
+      "esenciales": "LES TROIS ESSENTIELS",
+      "opcionales": "OPTIONNELS — EN PLUS, JAMAIS OBLIGÉS",
+      "escribirSec": "RENDRE",
+      "escribirTitulo": "Écrire mes règles dans Santé",
+      "escribirTexto": "Si tu enregistres tes règles ici, NutriSync les écrit aussi dans Apple Santé pour que tes autres apps restent à jour. Désactivé tant que tu ne l'actives pas.",
+      "conectar": "Connecter",
+      "ahoraNo": "Pas maintenant",
+      "luego": "Tu peux te connecter plus tard depuis Réglages → Appareils connectés.",
+      "listoTitulo": "Connecté",
+      "listoTexto": "Ton téléphone remplira ce qu'il sait déjà. Ce que tu écris gagne toujours.",
+      "permTitulo": "Autorisations",
+      "permTexto": "Tu peux ajuster les autorisations à tout moment dans Santé.",
+      "sinBuild": "Cette version n'inclut pas encore le connecteur Santé — ton choix est enregistré et la synchronisation démarrera à la prochaine mise à jour.",
+      "invTitulo": "Ton téléphone peut remplir ça pour toi",
+      "invTexto": "Sommeil, entraînements et tes règles : si ton téléphone les connaît déjà, arrête de les taper. Tu choisis quoi partager et tu peux tout couper quand tu veux.",
+      "invBoton": "Connecter Santé",
+      "n": {
+        "sleep": "Sommeil",
+        "workout": "Entraînements",
+        "flow": "Flux menstruel",
+        "energy": "Énergie active",
+        "steps": "Pas",
+        "rhr": "FC au repos",
+        "hrv": "Variabilité cardiaque",
+        "temp": "Température du poignet"
+      },
+      "pq": {
+        "sleep_minutes": "Remplit ton repos du jour sans le taper.",
+        "workout": "Marque sur ton anneau le mouvement déjà fait.",
+        "menstrual_flow": "Si tu enregistres déjà tes règles dans Santé, tu ne les répètes pas ici.",
+        "active_energy": "Ajuste les recommandations nutrition à ce que tu dépenses vraiment.",
+        "steps": "Distingue un jour actif d'un jour sédentaire.",
+        "resting_hr": "Signal de récupération : elle monte quand le corps demande du repos.",
+        "hrv": "Suit la phase du cycle et aide à décider l'intensité.",
+        "wrist_temperature": "La hausse après l'ovulation confirme ta phase."
+      }
     }
   },
   "cat": {

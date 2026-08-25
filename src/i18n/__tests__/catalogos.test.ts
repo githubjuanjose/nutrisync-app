@@ -46,7 +46,7 @@ function claves(obj: any, prefijo = ''): string[] {
 }
 
 /** Bloques que YA están cerrados en los 14 idiomas y no pueden regresar. */
-const BLOQUES_CERRADOS = ['mob.foto'];
+const BLOQUES_CERRADOS = ['mob.foto', 'mob.wear'];
 
 describe('catálogos de idioma', () => {
   it('los 14 idiomas existen', () => {

@@ -1029,6 +1029,46 @@
       "pista": "Ukitu izen bat zuzentzeko, ✕ kentzeko. Zure historia eta puntuazioa zurekin eguneratzen dira.",
       "vacio": "Ez da ezer geratzen — gehitu osagai bat behean.",
       "listo": "Eginda"
+    },
+    "wear": {
+      "titulo": "Zure telefonoak badaki honen zati bat",
+      "intro": "NutriSync-ek zure erlojuak edo telefonoak dagoeneko erregistratzen dutena bete dezake — loa, entrenamenduak, zure hilekoa. Seinalez seinale aukeratzen duzu, noiznahi alda dezakezu iritzia, eta zuk idatzitakoak beti irabazten du: zure datuek hutsuneak betetzen dituzte, inoiz ez zaituzte zuzentzen.",
+      "esenciales": "HIRU FUNTSEZKOAK",
+      "opcionales": "AUKERAKOAK — GEHITU, EZ BEHARTU",
+      "escribirSec": "ITZULI",
+      "escribirTitulo": "Nire hilekoa Osasunean idatzi",
+      "escribirTexto": "Hemen zure hilekoa erregistratzen baduzu, NutriSync-ek Apple Osasunean ere idazten du, zure beste aplikazioak egunean egon daitezen. Itzalita zuk piztu arte.",
+      "conectar": "Konektatu",
+      "ahoraNo": "Orain ez",
+      "luego": "Geroago konekta dezakezu Ezarpenak → Konektatutako gailuak atalean.",
+      "listoTitulo": "Konektatuta",
+      "listoTexto": "Zure telefonoak dakiena beteko du. Zuk idatzitakoak beti irabazten du.",
+      "permTitulo": "Baimenak",
+      "permTexto": "Baimenak noiznahi doitu ditzakezu Osasunean.",
+      "sinBuild": "Bertsio honek oraindik ez du Osasun konektorea — zure aukera gordeta dago eta sinkronizazioa hurrengo eguneratzearekin hasiko da.",
+      "invTitulo": "Zure telefonoak hau bete dezake zure ordez",
+      "invTexto": "Loa, entrenamenduak eta zure hilekoa: zure telefonoak badakizki, utzi teklatzeari. Zuk aukeratzen duzu zer partekatu eta noiznahi itzal dezakezu.",
+      "invBoton": "Osasuna konektatu",
+      "n": {
+        "sleep": "Loa",
+        "workout": "Entrenamenduak",
+        "flow": "Hileko fluxua",
+        "energy": "Energia aktiboa",
+        "steps": "Pausoak",
+        "rhr": "BM atsedenean",
+        "hrv": "Bihotz-aldakortasuna",
+        "temp": "Eskumuturreko tenperatura"
+      },
+      "pq": {
+        "sleep_minutes": "Zure eguneko atsedena betetzen du teklatzeko beharrik gabe.",
+        "workout": "Dagoeneko egin duzun mugimendua markatzen du zure eraztunean.",
+        "menstrual_flow": "Hilekoa Osasunean erregistratzen baduzu, ez duzu hemen errepikatzen.",
+        "active_energy": "Nutrizio-gomendioak benetan gastatzen duzunera doitzen ditu.",
+        "steps": "Egun aktibo bat sedentario batetik bereizten du.",
+        "resting_hr": "Errekuperazio-seinalea: gorputzak atsedena eskatzen duenean igotzen da.",
+        "hrv": "Zikloaren faseari jarraitzen dio eta intentsitatea erabakitzen laguntzen du.",
+        "wrist_temperature": "Obulazioaren ondorengo igoerak zein fasetan zauden berresten du."
+      }
     }
   },
   "cat": {

@@ -1028,6 +1028,46 @@
       "pista": "Namen antippen zum Korrigieren, ✕ zum Entfernen. Verlauf und Score ziehen mit.",
       "vacio": "Nichts übrig — füge unten eine Zutat hinzu.",
       "listo": "Fertig"
+    },
+    "wear": {
+      "titulo": "Dein Handy weiß schon einen Teil davon",
+      "intro": "NutriSync kann ausfüllen, was deine Uhr oder dein Handy schon aufzeichnen — Schlaf, Workouts, deine Periode. Du wählst Signal für Signal, kannst es jederzeit ändern, und was du schreibst, gewinnt immer: Deine Daten füllen Lücken, sie korrigieren dich nie.",
+      "esenciales": "DIE DREI WESENTLICHEN",
+      "opcionales": "OPTIONAL — NETT ZU HABEN",
+      "escribirSec": "ZURÜCKGEBEN",
+      "escribirTitulo": "Meine Periode in Health zurückschreiben",
+      "escribirTexto": "Wenn du deine Periode hier einträgst, schreibt NutriSync sie auch in Apple Health, damit deine anderen Apps aktuell bleiben. Aus, bis du es einschaltest.",
+      "conectar": "Verbinden",
+      "ahoraNo": "Jetzt nicht",
+      "luego": "Du kannst später unter Einstellungen → Verbundene Geräte verbinden.",
+      "listoTitulo": "Verbunden",
+      "listoTexto": "Dein Handy füllt jetzt aus, was es schon weiß. Was du schreibst, gewinnt immer.",
+      "permTitulo": "Berechtigungen",
+      "permTexto": "Du kannst Berechtigungen jederzeit in Health anpassen.",
+      "sinBuild": "Diese Version enthält den Health-Connector noch nicht — deine Wahl ist gespeichert und die Synchronisierung startet mit dem nächsten Update.",
+      "invTitulo": "Dein Handy kann das für dich ausfüllen",
+      "invTexto": "Schlaf, Workouts und deine Periode: Wenn dein Handy sie schon kennt, hör auf zu tippen. Du wählst, was du teilst, und kannst es jederzeit ausschalten.",
+      "invBoton": "Health verbinden",
+      "n": {
+        "sleep": "Schlaf",
+        "workout": "Workouts",
+        "flow": "Menstruationsfluss",
+        "energy": "Aktivenergie",
+        "steps": "Schritte",
+        "rhr": "Ruhepuls",
+        "hrv": "Herzfrequenzvariabilität",
+        "temp": "Handgelenktemperatur"
+      },
+      "pq": {
+        "sleep_minutes": "Füllt deine Erholung des Tages aus, ohne zu tippen.",
+        "workout": "Trägt die Bewegung, die du schon gemacht hast, in deinen Ring ein.",
+        "menstrual_flow": "Wenn du deine Periode schon in Health einträgst, wiederholst du sie hier nicht.",
+        "active_energy": "Passt die Ernährungsempfehlungen an deinen echten Verbrauch an.",
+        "steps": "Unterscheidet einen aktiven Tag von einem sitzenden.",
+        "resting_hr": "Erholungssignal: steigt, wenn der Körper Ruhe braucht.",
+        "hrv": "Begleitet die Zyklusphase und hilft bei der Intensität.",
+        "wrist_temperature": "Der Anstieg nach dem Eisprung bestätigt deine Phase."
+      }
     }
   },
   "cat": {

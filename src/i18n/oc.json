@@ -1028,6 +1028,46 @@
       "pista": "Tòca un nom per lo corregir, ✕ per lo levar. Ton istoric e ton score s’actualizan amb tu.",
       "vacio": "Res demòra pas — apond un ingredient çai-jos.",
       "listo": "Fach"
+    },
+    "wear": {
+      "titulo": "Ton telefòn sap ja una part d'aquò",
+      "intro": "NutriSync pòt emplenar çò que ton relòtge o ton telefòn enregistran ja — sòm, entraïnaments, tas règlas. Causisses senhal per senhal, pòdes cambiar d'idèa quand vòlgas, e çò qu'escrives ganha totjorn: tas donadas emplenan de voids, jamai te corregisson.",
+      "esenciales": "LAS TRES ESSENCIALAS",
+      "opcionales": "OPCIONALAS — AJUSTAN, OBLIGAN PAS",
+      "escribirSec": "TORNAR",
+      "escribirTitulo": "Escriure mas règlas dins Santat",
+      "escribirTexto": "S'enregistras tas règlas aicí, NutriSync las escriu tanben dins Apple Santat per que tas autras aplicacions sián a jorn. Atudat fins que l'alugues.",
+      "conectar": "Connectar",
+      "ahoraNo": "Ara non",
+      "luego": "Pòdes connectar mai tard dins Reglatges → Aparelhs connectats.",
+      "listoTitulo": "Connectat",
+      "listoTexto": "Ton telefòn emplenarà çò que sap ja. Çò qu'escrives ganha totjorn.",
+      "permTitulo": "Permissions",
+      "permTexto": "Pòdes ajustar las permissions quand vòlgas dins Santat.",
+      "sinBuild": "Aquesta version inclutz pas encara lo connector de Santat — ta causida es salvada e la sincronizacion començarà amb la pròxima mesa a jorn.",
+      "invTitulo": "Ton telefòn pòt emplenar aquò per tu",
+      "invTexto": "Sòm, entraïnaments e tas règlas: se ton telefòn los sap ja, daissa de los picar. Causisses çò que partejas e pòdes atudar quand vòlgas.",
+      "invBoton": "Connectar Santat",
+      "n": {
+        "sleep": "Sòm",
+        "workout": "Entraïnaments",
+        "flow": "Flux menstrual",
+        "energy": "Energia activa",
+        "steps": "Passes",
+        "rhr": "FC en repaus",
+        "hrv": "Variabilitat cardiaca",
+        "temp": "Temperatura del ponhet"
+      },
+      "pq": {
+        "sleep_minutes": "Emplena ton repaus del jorn sens lo picar.",
+        "workout": "Marca dins l'anèl lo movement qu'as ja fach.",
+        "menstrual_flow": "S'enregistras ja tas règlas dins Santat, las repetisses pas aicí.",
+        "active_energy": "Ajusta las recomandacions de nutricion a çò que despensas vertadièrament.",
+        "steps": "Distinguís un jorn actiu d'un jorn sedentari.",
+        "resting_hr": "Senhal de recuperacion: monta quand lo còs demanda de repaus.",
+        "hrv": "Acompanha la fasa del cicle e ajuda a decidir l'intensitat.",
+        "wrist_temperature": "La montada aprèp l'ovulacion confirma dins quina fasa siás."
+      }
     }
   },
   "cat": {

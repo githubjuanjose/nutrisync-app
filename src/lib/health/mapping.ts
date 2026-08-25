@@ -175,7 +175,8 @@ export type DailySuggestion = {
 
 export type ExistingLog = {
   sleep_quality?: string | null;
-  workout_logged?: boolean | null;
+  /** En la tabla real es el NOMBRE del entreno (string) — aquí solo importa si está vacío. */
+  workout_logged?: boolean | string | null;
   flow_level?: number | null;
 } | null;
 

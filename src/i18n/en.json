@@ -1115,6 +1115,46 @@
       "pista": "Tap a name to fix it, ✕ to remove it. Your history and score update with you.",
       "vacio": "Nothing left — add an ingredient below.",
       "listo": "Done"
+    },
+    "wear": {
+      "titulo": "Your phone already knows part of this",
+      "intro": "NutriSync can fill in what your watch or phone already records — sleep, workouts, your period. You choose signal by signal, you can change your mind any time, and what you write always wins: your data fills gaps, it never corrects you.",
+      "esenciales": "THE ESSENTIAL THREE",
+      "opcionales": "OPTIONAL — NICE TO HAVE",
+      "escribirSec": "GIVE BACK",
+      "escribirTitulo": "Write my period back to Health",
+      "escribirTexto": "If you log your period here, NutriSync writes it to Apple Health too, so your other apps stay in sync. Off until you turn it on.",
+      "conectar": "Connect",
+      "ahoraNo": "Not now",
+      "luego": "You can connect later from Settings → Connected Devices.",
+      "listoTitulo": "Connected",
+      "listoTexto": "Your phone will now fill in what it already knows. What you write always wins.",
+      "permTitulo": "Permissions",
+      "permTexto": "You can adjust permissions any time in Health.",
+      "sinBuild": "This build does not include the Health connector yet — your choice is saved and sync will start with the next update.",
+      "invTitulo": "Your phone can fill this in for you",
+      "invTexto": "Sleep, workouts and your period — if your phone already knows them, stop typing them. You choose what to share, and you can turn it off any time.",
+      "invBoton": "Connect Health",
+      "n": {
+        "sleep": "Sleep",
+        "workout": "Workouts",
+        "flow": "Menstrual flow",
+        "energy": "Active energy",
+        "steps": "Steps",
+        "rhr": "Resting heart rate",
+        "hrv": "Heart rate variability",
+        "temp": "Wrist temperature"
+      },
+      "pq": {
+        "sleep_minutes": "Fills in your rest for the day without typing it.",
+        "workout": "Marks the movement you already did on your daily ring.",
+        "menstrual_flow": "If you already log your period in Health, you don't repeat it here.",
+        "active_energy": "Tunes nutrition recommendations to what you actually burn.",
+        "steps": "Tells an active day from a sedentary one.",
+        "resting_hr": "A recovery signal: it rises when your body is asking for rest.",
+        "hrv": "Tracks your cycle phase and helps decide intensity.",
+        "wrist_temperature": "The rise after ovulation confirms which phase you are in."
+      }
     }
   },
   "ob": {
