@@ -268,7 +268,10 @@ export default function NutriLogScreen() {
                   </Pressable>
                 </View>
                 {esHoy && (
-                  <View style={styles.symRow}>
+                  /* r22 (Juanjo 25-ago): los 4 síntomas en UNA línea — scroll
+                     horizontal para que ningún idioma la rompa en dos. */
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}
+                    style={{ marginTop: 12 }} contentContainerStyle={styles.symRow}>
                     {SYMPTOMS.map((s) => {
                       const on = quick.pain_symptoms.includes(s);
                       return (
@@ -277,7 +280,7 @@ export default function NutriLogScreen() {
                         </Pressable>
                       );
                     })}
-                  </View>
+                  </ScrollView>
                 )}
               </View>
 
@@ -295,24 +298,8 @@ export default function NutriLogScreen() {
                 </View>
               </View>
 
-              {/* ── 3 recetas de la fase (solo hoy; puente L6) ── */}
-              {esHoy && recetas.map(({ cat, item }) => (
-                <View key={item.id} style={styles.receta}>
-                  <View style={styles.recetaFoto}>
-                    <Text style={{ fontSize: 24 }}>{CAT_EMOJI[cat.toLowerCase()] ?? '🍽'}</Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                      <Text style={styles.recetaKicker}>{tc(cat).toUpperCase()}</Text>
-                      <View style={styles.syncChip}>
-                        <Text style={styles.syncChipTxt}>● {t('phaseNames.' + (recs?.phase || ''), recs?.phase || '').toUpperCase()} SYNC</Text>
-                      </View>
-                    </View>
-                    <Text style={styles.recetaNombre}>{decoraNombre(tc(item.name))}</Text>
-                  </View>
-                </View>
-              ))}
-
+              {/* r22 (Juanjo 25-ago): el CTA sube — comidas + botón entre
+                  Fuel/Vitality y las recomendaciones, la acción primero. */}
               {/* ── comidas del día ── */}
               <Text style={styles.section}>{esHoy ? t('mob.hoy.comidas', "Today's Meals") : t('mob.hoy.comidasDe', 'Meals that day')}</Text>
               <View style={styles.mealsCard}>
@@ -371,6 +358,25 @@ export default function NutriLogScreen() {
                   <Text style={styles.ctaTxt}>📷  + {t('mob.logTodaysMeal', "Log Today's Meal")}</Text>
                 </Pressable>
               )}
+
+              {/* ── 3 recetas de la fase (solo hoy; puente L6) ── */}
+              {esHoy && recetas.map(({ cat, item }) => (
+                <View key={item.id} style={styles.receta}>
+                  <View style={styles.recetaFoto}>
+                    <Text style={{ fontSize: 24 }}>{CAT_EMOJI[cat.toLowerCase()] ?? '🍽'}</Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                      <Text style={styles.recetaKicker}>{tc(cat).toUpperCase()}</Text>
+                      <View style={styles.syncChip}>
+                        <Text style={styles.syncChipTxt}>● {t('phaseNames.' + (recs?.phase || ''), recs?.phase || '').toUpperCase()} SYNC</Text>
+                      </View>
+                    </View>
+                    <Text style={styles.recetaNombre}>{decoraNombre(tc(item.name))}</Text>
+                  </View>
+                </View>
+              ))}
+
             </>
           ) : (
             /* ── vista agregada (L4, propuesta aceptada — revisión posterior) ── */
@@ -449,7 +455,7 @@ const styles = StyleSheet.create({
   indIcon: { width: 22, height: 22, marginBottom: 4 },
   indVal: { fontFamily: font.semibold, fontSize: 13, color: colors.ink },
   indLbl: { fontFamily: font.regular, fontSize: 10.5, color: colors.muted, marginTop: 1 },
-  symRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 12 },
+  symRow: { flexDirection: 'row', gap: 8, paddingRight: 6 },
   sym: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: radius.pill, backgroundColor: colors.white, borderWidth: 1, borderColor: '#EADFD5' },
   symOn: { backgroundColor: colors.coral, borderColor: colors.coral },
   symTxt: { fontFamily: font.medium, fontSize: 12, color: colors.muted },
