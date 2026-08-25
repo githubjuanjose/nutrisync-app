@@ -41,4 +41,15 @@ describe('decide — una sola decisión', () => {
   it('descarga que no trae nada nuevo → nada (LA protección anti-bucle)', () => {
     expect(decide({ ...base, fetchedNew: false })).toBe('none');
   });
+
+  /* r22 (los 5-7 s de arranque): el arranque DESCARGA, la vuelta APLICA. */
+  it('arranque en frío con OTA nueva → defer (jamás reiniciar en la cara del arranque)', () => {
+    expect(decide({ ...base, phase: 'launch' })).toBe('defer');
+  });
+  it('vuelta a primer plano con OTA nueva → reload (el momento indoloro)', () => {
+    expect(decide({ ...base, phase: 'resume' })).toBe('reload');
+  });
+  it('en el arranque, sin nada nuevo → none (el defer no se inventa trabajo)', () => {
+    expect(decide({ ...base, phase: 'launch', fetchedNew: false })).toBe('none');
+  });
 });

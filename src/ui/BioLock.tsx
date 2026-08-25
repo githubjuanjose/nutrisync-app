@@ -136,9 +136,13 @@ export function BioGate({ children }: { children: React.ReactNode }) {
     (async () => {
       try {
         if (!session) { setState('open'); return; }
-        if ((await SecureStore.getItemAsync(KEY_ENABLED)) !== '1') { setState('open'); return; }
-        if (!(await canUseBiometrics())) { setState('open'); return; }
-        setState('locked');
+        // r22: las dos comprobaciones en PARALELO — cada await en serie era
+        // otro peldaño antes de que Face ID pudiera ni aparecer.
+        const [activado, puede] = await Promise.all([
+          SecureStore.getItemAsync(KEY_ENABLED),
+          canUseBiometrics(),
+        ]);
+        setState(activado === '1' && puede ? 'locked' : 'open');
       } catch {
         setState('open');
       }

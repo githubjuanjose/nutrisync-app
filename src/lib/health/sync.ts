@@ -167,8 +167,10 @@ export function useSyncSalud(): void {
       if (Date.now() - ultima.current < MIN_ENTRE_SYNCS_MS) return;
       ultima.current = Date.now();
       try {
-        const { data } = await supabase.auth.getUser();
-        if (data?.user?.id) await syncSaludAlAbrir(data.user.id);
+        // r22: getSession es LOCAL (getUser era un viaje de red en cada arranque).
+        const { data } = await supabase.auth.getSession();
+        const uid = data?.session?.user?.id;
+        if (uid) await syncSaludAlAbrir(uid);
       } catch { /* el arranque de la app JAMÁS depende de esto */ }
     };
     corre();

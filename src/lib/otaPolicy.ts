@@ -27,14 +27,24 @@ export function shouldCheck(
   return nowMs - lastCheckMs >= minIntervalMin * 60_000;
 }
 
-/** Traduce el resultado de expo-updates a UNA decisión. */
+/** Traduce el resultado de expo-updates a UNA decisión.
+ *
+ *  r22 (25-ago, los 5-7 s de arranque de Juanjo): recargar EN EL ARRANQUE era
+ *  pagar el precio en el peor momento — arranque → descarga → reinicio entero
+ *  → SEGUNDO Face ID. Ahora el arranque solo DESCARGA (defer) y la recarga se
+ *  aplica al volver a primer plano, donde el re-lock de 5 min ya iba a pedir
+ *  Face ID igualmente. Si la app muere antes de volver, expo-updates lanza la
+ *  descargada en el siguiente arranque en frío: la actualización nunca se
+ *  pierde, solo deja de cobrarse en la cara del arranque. */
 export function decide(input: {
   enabled: boolean;          // Updates.isEnabled (false en Expo Go y en dev)
   isWeb: boolean;            // en la PWA no existe expo-updates: jamás actuar
   checkAvailable: boolean;   // checkForUpdateAsync().isAvailable
   fetchedNew: boolean;       // fetchUpdateAsync().isNew
-}): 'reload' | 'none' {
+  phase?: 'launch' | 'resume';   // ¿arranque en frío o vuelta a primer plano?
+}): 'reload' | 'defer' | 'none' {
   if (!input.enabled || input.isWeb) return 'none';
   if (!input.checkAvailable) return 'none';
-  return input.fetchedNew ? 'reload' : 'none';
+  if (!input.fetchedNew) return 'none';
+  return input.phase === 'launch' ? 'defer' : 'reload';
 }
