@@ -284,22 +284,8 @@ export default function NutriLogScreen() {
                 )}
               </View>
 
-              {/* ── Nutri Basics ── */}
-              <View style={styles.statRow}>
-                <View style={styles.stat}>
-                  <View style={styles.statHead}><MealIcon /><Text style={styles.statTag}>FUEL</Text></View>
-                  <Text style={styles.statVal}>{nMeals} / 3</Text>
-                  <Text style={styles.statLbl}>{t('mob.mealsLogged', 'Meals Logged')}</Text>
-                </View>
-                <View style={styles.stat}>
-                  <View style={styles.statHead}><DropIcon /><Text style={styles.statTag}>VITALITY</Text></View>
-                  <Text style={styles.statVal}>1.8 L</Text>
-                  <Text style={styles.statLbl}>{t('mob.hydrationRec', 'Hydration Rec')}</Text>
-                </View>
-              </View>
-
-              {/* r22 (Juanjo 25-ago): el CTA sube — comidas + botón entre
-                  Fuel/Vitality y las recomendaciones, la acción primero. */}
+              {/* r22 (Juanjo 25-ago): v2 con la pantalla en la mano — comidas + botón
+                  JUSTO tras Body Insights; Fuel/Vitality y recomendaciones debajo. */}
               {/* ── comidas del día ── */}
               <Text style={styles.section}>{esHoy ? t('mob.hoy.comidas', "Today's Meals") : t('mob.hoy.comidasDe', 'Meals that day')}</Text>
               <View style={styles.mealsCard}>
@@ -358,6 +344,21 @@ export default function NutriLogScreen() {
                   <Text style={styles.ctaTxt}>📷  + {t('mob.logTodaysMeal', "Log Today's Meal")}</Text>
                 </Pressable>
               )}
+
+              {/* ── Nutri Basics ── */}
+              <View style={styles.statRow}>
+                <View style={styles.stat}>
+                  <View style={styles.statHead}><MealIcon /><Text style={styles.statTag}>FUEL</Text></View>
+                  <Text style={styles.statVal}>{nMeals} / 3</Text>
+                  <Text style={styles.statLbl}>{t('mob.mealsLogged', 'Meals Logged')}</Text>
+                </View>
+                <View style={styles.stat}>
+                  <View style={styles.statHead}><DropIcon /><Text style={styles.statTag}>VITALITY</Text></View>
+                  <Text style={styles.statVal}>1.8 L</Text>
+                  <Text style={styles.statLbl}>{t('mob.hydrationRec', 'Hydration Rec')}</Text>
+                </View>
+              </View>
+
 
               {/* ── 3 recetas de la fase (solo hoy; puente L6) ── */}
               {esHoy && recetas.map(({ cat, item }) => (

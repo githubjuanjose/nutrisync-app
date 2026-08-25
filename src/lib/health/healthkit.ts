@@ -15,6 +15,7 @@
  * funciones por nombre (v14/v13) y falla con mensaje claro si no las halla.
  */
 import { Platform } from 'react-native';
+import { cargaHK } from './hkNativo';
 import type { RawSample, SignalType } from './mapping';
 
 /* ── Identificadores de HealthKit por señal ────────────────────────────── */
@@ -53,20 +54,17 @@ export function nivelAFlujoHK(level: number): number | null {
   }
 }
 
-/* ── Carga perezosa del módulo nativo ──────────────────────────────────── */
+/* ── Carga perezosa del módulo nativo ────────────────────────────────────
+   El require REAL vive en hkNativo.native.ts: Metro solo lo resuelve en
+   iOS/Android, así que el literal del paquete nativo jamás entra al bundle
+   web (guardián pwa-tests). En web, cargaHK() devuelve null y punto. */
 type HKModulo = Record<string, any>;
 let _hk: HKModulo | null | undefined;
 
 function modulo(): HKModulo | null {
   if (_hk !== undefined) return _hk;
   if (Platform.OS !== 'ios') { _hk = null; return _hk; }
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const m = require('@kingstinct/react-native-healthkit');
-    _hk = (m?.default && typeof m.default === 'object' && Object.keys(m.default).length ? { ...m, ...m.default } : m) as HKModulo;
-  } catch {
-    _hk = null; // runtime sin el binario (OTA sobre build viejo): apagado limpio
-  }
+  _hk = cargaHK() as HKModulo | null; // null = runtime sin binario (OTA vieja): apagado limpio
   return _hk;
 }
 
