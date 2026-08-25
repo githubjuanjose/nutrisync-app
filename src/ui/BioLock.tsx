@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Modal, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, Modal, Pressable, Image, AppState } from 'react-native';
+import { debeRelock } from '../lib/relock';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
 import * as LocalAuthentication from 'expo-local-authentication';
@@ -147,6 +148,24 @@ export function BioGate({ children }: { children: React.ReactNode }) {
   // Fallback path: signing out drops the session → release the gate to login.
   useEffect(() => {
     if (!session && state === 'locked') setState('open');
+  }, [session, state]);
+
+  // Timeouts 0.23.0 (UST-06 G1): 5 min en segundo plano con el candado activo
+  // → la vuelta re-bloquea. La decisión vive en lib/relock (pura, con tests).
+  const fondoDesde = useRef<number | null>(null);
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', async (s) => {
+      if (s === 'background') { fondoDesde.current = Date.now(); return; }
+      if (s !== 'active' || fondoDesde.current == null) return;
+      const fuera = Date.now() - fondoDesde.current;
+      fondoDesde.current = null;
+      try {
+        if (!session || state === 'locked') return;
+        const activado = (await SecureStore.getItemAsync(KEY_ENABLED)) === '1';
+        if (debeRelock(fuera, activado) && (await canUseBiometrics())) setState('locked');
+      } catch { /* ante la duda, no bloquear: el candado jamás rompe la vuelta */ }
+    });
+    return () => sub.remove();
   }, [session, state]);
 
   const tryUnlock = useCallback(async () => {
