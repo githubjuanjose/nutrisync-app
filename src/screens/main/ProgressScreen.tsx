@@ -201,7 +201,11 @@ export default function ProgressScreen({ navigation }: any) {
   // CSS — past cycles scored with the same formula over their CLOSED window
   // (vs the first-cycle baseline; the baseline cycle itself is not scored).
   const cssFor = (rows: ScoreRow[]) => cycleStabilityV2(me, symp, baseRange, rows[0].date, rows[rows.length - 1].date);
-  const scorable = completed.slice(1);
+  // r24-c: la referencia ya no es siempre completed[0] (se califica en
+  // cssWindows) — se excluye POR RANGO el ciclo que hace de referencia.
+  const scorable = win.ready
+    ? completed.filter((c) => c.length && !(c[0].date === win.base.from && c[c.length - 1].date === win.base.to))
+    : [];
   const cssLast = scorable.length ? cssFor(scorable[scorable.length - 1]) : null;
   const cssBest = (() => {
     const vals = [...scorable.map(cssFor), stabilityPct].filter((v) => v != null) as number[];

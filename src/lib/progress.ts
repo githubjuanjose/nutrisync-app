@@ -152,17 +152,27 @@ export type CssWindows =
 
 export function cssWindows(
   me: { date: string; mood: number | null; energy: number | null }[],
-  closedCycleRows: ScoreRow[][],           // ciclos CERRADOS (el 1º es la referencia)
+  closedCycleRows: ScoreRow[][],           // ciclos CERRADOS, en orden temporal
   currentCycleStartISO: string | null,
 ): CssWindows {
-  // camino preferente: ya existe un ciclo cerrado → referencia real
-  if (closedCycleRows.length && currentCycleStartISO) {
-    const first = closedCycleRows[0];
-    return {
-      ready: true, vsFirstWeek: false,
-      base: { from: first[0].date, to: first[first.length - 1].date },
-      currentFrom: currentCycleStartISO,
-    };
+  // r24-c (2º bug CSS de Pilar, 31-ago · sonda 2026-08-31-sonda-css-pilar.sql):
+  // la referencia se CALIFICA. Antes era SIEMPRE el primer ciclo cerrado; el
+  // «ciclo 1» real de Pilar era un muñón de 3 días (primeras pruebas de julio)
+  // y bloqueaba el CSS para siempre, con un ciclo 2 de 33 días completos
+  // esperando al lado. Ahora: PRIMER ciclo cerrado con ≥7 días con ánimo Y
+  // energía registrados; los muñones se saltan; sin candidato → escalera r12-b2.
+  const completos = new Set(me.filter((r) => r.mood != null && r.energy != null).map((r) => r.date));
+  if (currentCycleStartISO) {
+    const ref = closedCycleRows.find(
+      (c) => c.length > 0 && c.filter((r) => completos.has(r.date)).length >= 7,
+    );
+    if (ref) {
+      return {
+        ready: true, vsFirstWeek: false,
+        base: { from: ref[0].date, to: ref[ref.length - 1].date },
+        currentFrom: currentCycleStartISO,
+      };
+    }
   }
   // escalera: primeros 7 días registrados vs los siguientes (≥5, sin solape)
   const logged = me

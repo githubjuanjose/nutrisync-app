@@ -95,15 +95,35 @@ const logged = (n: number, from = '2026-07-01') =>
   }));
 
 describe('cssWindows — desbloqueo honesto sin ciclo cerrado', () => {
-  it('con ciclo cerrado usa ESE como referencia (camino preferente)', () => {
-    const closed = [[{ date: '2026-06-01' }, { date: '2026-06-28' }]] as any;
-    const w = cssWindows(logged(30), closed, '2026-07-01');
+  it('con ciclo cerrado BIEN REGISTRADO usa ESE como referencia (camino preferente, contrato r24-c)', () => {
+    const closed = [logged(10, '2026-06-01') as any];   // 10 días con ánimo+energía dentro
+    const me = [...logged(10, '2026-06-01'), ...logged(30, '2026-07-01')];
+    const w = cssWindows(me, closed, '2026-07-01');
     expect(w.ready).toBe(true);
     if (w.ready) {
       expect(w.vsFirstWeek).toBe(false);
-      expect(w.base).toEqual({ from: '2026-06-01', to: '2026-06-28' });
+      expect(w.base).toEqual({ from: '2026-06-01', to: '2026-06-10' });
       expect(w.currentFrom).toBe('2026-07-01');
     }
+  });
+  it('r24-c (2º bug Pilar): el muñón de 3 días NO vale — salta al primer ciclo con ≥7 días completos', () => {
+    // la forma EXACTA de la sonda: muñón 2-4 jul (3 días) + ciclo 2 de 33 días (28 jul→29 ago)
+    const me = [...logged(3, '2026-07-02'), ...logged(33, '2026-07-28')];
+    const closed = [logged(3, '2026-07-02') as any, logged(33, '2026-07-28') as any];
+    const w = cssWindows(me, closed, '2026-09-01');
+    expect(w.ready).toBe(true);
+    if (w.ready) {
+      expect(w.vsFirstWeek).toBe(false);
+      expect(w.base).toEqual({ from: '2026-07-28', to: '2026-08-29' });
+      expect(w.currentFrom).toBe('2026-09-01');
+    }
+  });
+  it('r24-c: si NINGÚN ciclo cerrado da la talla, cae a la escalera de primera semana', () => {
+    const me = logged(12, '2026-07-01');
+    const closed = [logged(3, '2026-06-01') as any];    // solo un muñón
+    const w = cssWindows(me, closed, '2026-07-13');
+    expect(w.ready).toBe(true);
+    if (w.ready) expect(w.vsFirstWeek).toBe(true);
   });
   it('caso Pilar: 11 días y sin ciclo cerrado → bloqueado con cuenta atrás clara', () => {
     const w = cssWindows(logged(11), [], '2026-07-01');
