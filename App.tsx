@@ -14,6 +14,10 @@ import { LanguageProvider } from './src/i18n';
 import { PeachBg } from './src/ui/PeachBg';
 import { BioGate, BioOfferModal, useBioOffer } from './src/ui/BioLock';
 import { useOtaAutoApply } from './src/lib/otaAutoApply';
+import { iniciarCrash } from './src/lib/crash';
+
+// r24-f: Crashlytics sin identidad — no-op en runtimes sin el módulo nativo.
+iniciarCrash();
 import { useSyncSalud } from './src/lib/health/sync';
 import { usePushTap, navRef } from './src/lib/pushTap';
 
