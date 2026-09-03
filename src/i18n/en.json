@@ -1155,7 +1155,8 @@
         "hrv": "Tracks your cycle phase and helps decide intensity.",
         "wrist_temperature": "The rise after ovulation confirms which phase you are in."
       }
-    }
+    },
+    "stepsToday": "Today, from Health"
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",

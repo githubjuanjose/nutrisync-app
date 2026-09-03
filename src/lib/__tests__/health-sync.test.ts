@@ -55,19 +55,22 @@ describe('resumenDeHoy — solo cuenta lo de HOY local', () => {
   const fila = (type: HealthSignalRow['type'], value: number, ts: string, metadata: any = {}): HealthSignalRow =>
     ({ provider: 'apple_health', type, value, unit: 'min', start_ts: ts, end_ts: ts, metadata });
 
-  it('suma sueño y entreno del día y trae el flujo como texto', () => {
+  it('suma sueño, entreno y pasos del día y trae el flujo como texto', () => {
     const r = resumenDeHoy([
       fila('sleep_minutes', 420, '2026-08-25T07:00:00'),
       fila('workout', 45, '2026-08-25T09:00:00'),
+      fila('steps', 12000, '2026-08-25T10:00:00'),
+      fila('steps', 5000, '2026-08-25T18:00:00'),          // r24-i: dos tramos suman
       fila('menstrual_flow', 3, '2026-08-25T08:00:00', { flow_text: 'medium' }),
       fila('sleep_minutes', 400, '2026-08-24T07:00:00'),   // ayer: fuera
+      fila('steps', 9999, '2026-08-24T10:00:00'),          // ayer: fuera
     ], hoy);
-    expect(r).toEqual({ sleepMinutes: 420, workoutMinutes: 45, flow: 'medium' });
+    expect(r).toEqual({ sleepMinutes: 420, workoutMinutes: 45, flow: 'medium', steps: 17000 });
   });
 
   it('sin señales de hoy: todo null (nada de ceros que parezcan datos)', () => {
     const r = resumenDeHoy([fila('workout', 30, '2026-08-20T09:00:00')], hoy);
-    expect(r).toEqual({ sleepMinutes: null, workoutMinutes: null, flow: null });
+    expect(r).toEqual({ sleepMinutes: null, workoutMinutes: null, flow: null, steps: null });
   });
 });
 

@@ -1467,7 +1467,8 @@
         "hrv": "Acompaña a la fase del ciclo y ayuda a decidir intensidad.",
         "wrist_temperature": "La subida tras la ovulación confirma en qué fase estás."
       }
-    }
+    },
+    "stepsToday": "Hoy, desde Salud"
   },
   "cat": {
     "Getting started": "Primeros pasos",

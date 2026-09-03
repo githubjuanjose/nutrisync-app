@@ -1066,7 +1066,8 @@
         "hrv": "Suit la phase du cycle et aide à décider l'intensité.",
         "wrist_temperature": "La hausse après l'ovulation confirme ta phase."
       }
-    }
+    },
+    "stepsToday": "Aujourd'hui, via Santé"
   },
   "cat": {
     "Getting started": "Premiers pas",

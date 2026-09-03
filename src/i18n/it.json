@@ -1068,7 +1068,8 @@
         "hrv": "Accompagna la fase del ciclo e aiuta a decidere l'intensità.",
         "wrist_temperature": "Il rialzo dopo l'ovulazione conferma in che fase sei."
       }
-    }
+    },
+    "stepsToday": "Oggi, da Salute"
   },
   "cat": {
     "Getting started": "Primi passi",

@@ -1067,7 +1067,8 @@
         "hrv": "Acompanya la fase del cicle i ajuda a decidir intensitat.",
         "wrist_temperature": "La pujada després de l'ovulació confirma en quina fase estàs."
       }
-    }
+    },
+    "stepsToday": "Hui, des de Salut"
   },
   "cat": {
     "Getting started": "Primers passos",

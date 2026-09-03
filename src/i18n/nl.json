@@ -1068,7 +1068,8 @@
         "hrv": "Volgt de cyclusfase en helpt intensiteit te kiezen.",
         "wrist_temperature": "De stijging na de eisprong bevestigt je fase."
       }
-    }
+    },
+    "stepsToday": "Vandaag, uit Gezondheid"
   },
   "cat": {
     "Getting started": "Aan de slag",

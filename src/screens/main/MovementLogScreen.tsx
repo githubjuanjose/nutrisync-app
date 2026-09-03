@@ -12,6 +12,7 @@ import { getProfile } from '../../lib/api';
 import { pickVariantIndex } from '../../ui/NutriAvatar';
 import { saveChecklist, normalizeIntensity, categoryIntensity } from '../../lib/daily';
 import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib/recs';
+import { pasosDeHoy } from '../../lib/health/sync';
 
 /**
  * R2-D · Movement Log — screens 1+2 (Daily Tip / Body Insight, movement context).
@@ -60,6 +61,7 @@ export default function MovementLogScreen() {
   const [others, setOthers] = useState<string[]>([]);
   const [otherOpen, setOtherOpen] = useState(false);
   const [otherTxt, setOtherTxt] = useState('');
+  const [steps, setSteps] = useState<number | null>(null);   // r24-i: pasos de Salud (base)
 
   const load = useCallback(async () => {
     if (!userId) { setLoading(false); return; }
@@ -69,6 +71,7 @@ export default function MovementLogScreen() {
     const known = new Set(Object.values(r?.movement_basics ?? {}).flat().map((i) => i.name));
     setOthers([...ck].filter((n) => !known.has(n)));
     setLoading(false);
+    pasosDeHoy(userId).then(setSteps).catch(() => {});   // r24-i: pasos de Salud, sin bloquear
   }, [userId]);
   useEffect(() => { load(); }, [load]);
   useEffect(() => { const u = nav.addListener('focus', load); return u; }, [nav, load]);  // R8-f30
@@ -173,8 +176,8 @@ export default function MovementLogScreen() {
             </View>
             <View style={styles.stat}>
               <View style={styles.statHead}><StepsIcon /><Text style={styles.statTag}>STEPS</Text></View>
-              <Text style={styles.statVal}>—</Text>
-              <Text style={styles.statLbl}>{t('mob.stepsSync', 'Syncs with devices')}</Text>
+              <Text style={styles.statVal}>{steps == null ? '—' : steps.toLocaleString()}</Text>
+              <Text style={styles.statLbl}>{steps == null ? t('mob.stepsSync', 'Syncs with devices') : t('mob.stepsToday', 'Today, from Health')}</Text>
             </View>
           </View>
 

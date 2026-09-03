@@ -1069,7 +1069,8 @@
         "hrv": "Zikloaren faseari jarraitzen dio eta intentsitatea erabakitzen laguntzen du.",
         "wrist_temperature": "Obulazioaren ondorengo igoerak zein fasetan zauden berresten du."
       }
-    }
+    },
+    "stepsToday": "Gaur, Osasunetik"
   },
   "cat": {
     "Getting started": "Lehen pausoak",

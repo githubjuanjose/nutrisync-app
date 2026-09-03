@@ -1068,7 +1068,8 @@
         "hrv": "Begleitet die Zyklusphase und hilft bei der Intensität.",
         "wrist_temperature": "Der Anstieg nach dem Eisprung bestätigt deine Phase."
       }
-    }
+    },
+    "stepsToday": "Heute, aus Health"
   },
   "cat": {
     "Getting started": "Erste Schritte",

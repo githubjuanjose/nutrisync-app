@@ -1068,7 +1068,8 @@
         "hrv": "伴随周期阶段，帮助决定强度。",
         "wrist_temperature": "排卵后的升高确认你所处的阶段。"
       }
-    }
+    },
+    "stepsToday": "今天，来自“健康”"
   },
   "cat": {
     "Getting started": "新手入门",
