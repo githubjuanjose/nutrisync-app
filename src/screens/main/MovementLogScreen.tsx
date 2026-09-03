@@ -82,18 +82,9 @@ export default function MovementLogScreen() {
       if (want) {
         const tipos = SIGNALS.filter((s) => s.esencial).map((s) => s.type) as SignalType[];
         if (!tipos.includes('steps' as SignalType)) tipos.push('steps' as SignalType);
-        const disp = await hkDisponible();
-        if (disp) await hkPedirPermisos(tipos, false);
+        if (await hkDisponible()) await hkPedirPermisos(tipos, false);
         await connectProvider(userId, 'apple_health', tipos as string[]);
-        // r24-m · DIAGNÓSTICO EN PANTALLA (temporal): lee pasos de las últimas 48 h
-        // directo del adaptador y enseña disponible/nº/error — para ver DÓNDE se
-        // corta la cadena en vez de suponer. Se quita cuando entren los pasos.
-        try {
-          const { hkLeer } = await import('../../lib/health/healthkit');
-          const desde = new Date(Date.now() - 2 * 86400000).toISOString();
-          const r = await hkLeer(['steps' as SignalType], desde, new Date().toISOString());
-          notify('Salud · diagnóstico', `disponible=${disp} · muestras=${r.muestras.length} · ok=${r.ok} · err=${r.error ?? '—'}`);
-        } catch (d: any) { notify('Salud · diagnóstico', `excepción: ${d?.message ?? d}`); }
+        // r24-m: diagnóstico retirado — cadena verificada en dispositivo (3-sep).
         syncSaludAlAbrir(userId).then(() => pasosDeHoy(userId).then(setSteps).catch(() => {})).catch(() => {});
       } else {
         await disconnectProvider(userId, 'apple_health');
