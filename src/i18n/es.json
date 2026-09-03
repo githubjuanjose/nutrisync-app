@@ -1472,7 +1472,17 @@
       "connectCta": "Conecta para sincronizar pasos, sueño y entrenos",
       "connectedManage": "Conectado · sincronizando tus pasos",
       "connecting": "Conectando…",
-      "manageAll": "Gestionar todos los dispositivos y apps"
+      "manageAll": "Gestionar todos los dispositivos y apps",
+      "b": {
+        "today": "Hoy",
+        "cycle": "Este ciclo",
+        "phase": "Esta fase",
+        "month": "Este mes",
+        "quarter": "Este trimestre",
+        "ytd": "En lo que va de año",
+        "total": "Total"
+      },
+      "stepsCockpit": "Resumen de pasos"
     },
     "stepsToday": "Hoy, desde Salud"
   },

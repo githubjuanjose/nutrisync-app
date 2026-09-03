@@ -1073,7 +1073,17 @@
       "connectCta": "Connetti per sincronizzare passi, sonno e allenamenti",
       "connectedManage": "Connesso · sincronizzo i passi",
       "connecting": "Connessione…",
-      "manageAll": "Gestisci tutti i dispositivi e le app"
+      "manageAll": "Gestisci tutti i dispositivi e le app",
+      "b": {
+        "today": "Oggi",
+        "cycle": "Questo ciclo",
+        "phase": "Questa fase",
+        "month": "Questo mese",
+        "quarter": "Questo trimestre",
+        "ytd": "Da inizio anno",
+        "total": "Totale"
+      },
+      "stepsCockpit": "Riepilogo passi"
     },
     "stepsToday": "Oggi, da Salute"
   },

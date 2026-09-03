@@ -1073,7 +1073,17 @@
       "connectCta": "Connècta per sincronizar passes, sòm e entraïnaments",
       "connectedManage": "Connectat · sincronizacion de las passes",
       "connecting": "Connexion…",
-      "manageAll": "Gerir totes los aparelhs e apps"
+      "manageAll": "Gerir totes los aparelhs e apps",
+      "b": {
+        "today": "Uèi",
+        "cycle": "Aqueste cicle",
+        "phase": "Aquesta fasa",
+        "month": "Aqueste mes",
+        "quarter": "Aqueste trimèstre",
+        "ytd": "Dempuèi lo començament de l'an",
+        "total": "Total"
+      },
+      "stepsCockpit": "Resumit de las passes"
     },
     "stepsToday": "Uèi, dempuèi Santat"
   },

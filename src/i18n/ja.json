@@ -1072,7 +1072,17 @@
       "connectCta": "歩数・睡眠・運動を同期するには接続",
       "connectedManage": "接続済み・歩数を同期中",
       "connecting": "接続中…",
-      "manageAll": "すべてのデバイスとアプリを管理"
+      "manageAll": "すべてのデバイスとアプリを管理",
+      "b": {
+        "today": "今日",
+        "cycle": "今周期",
+        "phase": "今フェーズ",
+        "month": "今月",
+        "quarter": "今四半期",
+        "ytd": "今年",
+        "total": "累計"
+      },
+      "stepsCockpit": "歩数の概要"
     },
     "stepsToday": "今日、ヘルスケアから"
   },

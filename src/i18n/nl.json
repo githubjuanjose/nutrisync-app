@@ -1073,7 +1073,17 @@
       "connectCta": "Verbind om stappen, slaap en workouts te synchroniseren",
       "connectedManage": "Verbonden · stappen synchroniseren",
       "connecting": "Verbinden…",
-      "manageAll": "Alle apparaten en apps beheren"
+      "manageAll": "Alle apparaten en apps beheren",
+      "b": {
+        "today": "Vandaag",
+        "cycle": "Deze cyclus",
+        "phase": "Deze fase",
+        "month": "Deze maand",
+        "quarter": "Dit kwartaal",
+        "ytd": "Dit jaar",
+        "total": "Totaal"
+      },
+      "stepsCockpit": "Stappenoverzicht"
     },
     "stepsToday": "Vandaag, uit Gezondheid"
   },

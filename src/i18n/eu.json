@@ -1074,7 +1074,17 @@
       "connectCta": "Konektatu urratsak, loa eta entrenamenduak sinkronizatzeko",
       "connectedManage": "Konektatuta · urratsak sinkronizatzen",
       "connecting": "Konektatzen…",
-      "manageAll": "Kudeatu gailu eta app guztiak"
+      "manageAll": "Kudeatu gailu eta app guztiak",
+      "b": {
+        "today": "Gaur",
+        "cycle": "Ziklo hau",
+        "phase": "Fase hau",
+        "month": "Hilabete hau",
+        "quarter": "Hiruhileko hau",
+        "ytd": "Aurten",
+        "total": "Guztira"
+      },
+      "stepsCockpit": "Urratsen laburpena"
     },
     "stepsToday": "Gaur, Osasunetik"
   },

@@ -1073,7 +1073,17 @@
       "connectCta": "Conecta para sincronizar pasos, sono e adestramentos",
       "connectedManage": "Conectado · sincronizando os pasos",
       "connecting": "Conectando…",
-      "manageAll": "Xestionar todos os dispositivos e apps"
+      "manageAll": "Xestionar todos os dispositivos e apps",
+      "b": {
+        "today": "Hoxe",
+        "cycle": "Este ciclo",
+        "phase": "Esta fase",
+        "month": "Este mes",
+        "quarter": "Este trimestre",
+        "ytd": "No que vai de ano",
+        "total": "Total"
+      },
+      "stepsCockpit": "Resumo de pasos"
     },
     "stepsToday": "Hoxe, desde Saúde"
   },

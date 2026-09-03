@@ -13,6 +13,7 @@ import { pickVariantIndex } from '../../ui/NutriAvatar';
 import { saveChecklist, normalizeIntensity, categoryIntensity } from '../../lib/daily';
 import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib/recs';
 import { pasosDeHoy, syncSaludAlAbrir } from '../../lib/health/sync';
+import { cargarCockpitPasos, PasosCockpit, BucketPasos } from '../../lib/health/cockpit';
 import { getConnections, connectProvider, disconnectProvider } from '../../lib/health/connections';
 import { hkDisponible, hkPedirPermisos } from '../../lib/health/healthkit';
 import { SIGNALS, SignalType } from '../../lib/health/mapping';
@@ -69,6 +70,15 @@ export default function MovementLogScreen() {
   const [steps, setSteps] = useState<number | null>(null);   // r24-i: pasos de Salud (base)
   const [healthOn, setHealthOn] = useState<boolean | null>(null);   // r24-j: ¿Apple Health conectado?
   const [healthBusy, setHealthBusy] = useState(false);              // r24-l: el switch en curso
+  const [cockpit, setCockpit] = useState<PasosCockpit | null>(null); // r24-o: pasos por periodo
+
+  // r24-o · carga el cockpit de pasos (hoy/ciclo/fase/mes/trimestre/YTD/total).
+  const recargaCockpit = useCallback(() => {
+    if (!userId) return;
+    cargarCockpitPasos(userId, recs?.cycle_day ?? null, recs?.phase ?? null)
+      .then(setCockpit).catch(() => {});
+  }, [userId, recs?.cycle_day, recs?.phase]);
+  useEffect(() => { recargaCockpit(); }, [recargaCockpit]);
 
   // r24-l · switch de Apple Salud EN EL MOMENTO (petición Juanjo: que conecte al
   // tocar, no que lleve a otra pantalla). ON = pide permisos + registra consentimiento
@@ -255,6 +265,32 @@ export default function MovementLogScreen() {
             </View>
           ) : null}
 
+          {/* r24-o · Cockpit de actividad: pasos acumulados por periodo */}
+          {flags.connectors && healthOn && cockpit ? (
+            <View style={styles.cockpit}>
+              <View style={styles.cockpitHead}>
+                <StepsIcon />
+                <Text style={styles.cockpitTitle}>{t('mob.wear.stepsCockpit', 'Steps overview')}</Text>
+              </View>
+              <View style={styles.cockpitGrid}>
+                {([
+                  ['hoy', t('mob.wear.b.today', 'Today')],
+                  ['ciclo', t('mob.wear.b.cycle', 'This cycle')],
+                  ['fase', t('mob.wear.b.phase', 'This phase')],
+                  ['mes', t('mob.wear.b.month', 'This month')],
+                  ['trimestre', t('mob.wear.b.quarter', 'This quarter')],
+                  ['ytd', t('mob.wear.b.ytd', 'Year to date')],
+                  ['total', t('mob.wear.b.total', 'All time')],
+                ] as [BucketPasos, string][]).map(([k, label]) => (
+                  <View key={k} style={styles.cockpitCell}>
+                    <Text style={styles.cockpitVal}>{(cockpit[k] ?? 0).toLocaleString()}</Text>
+                    <Text style={styles.cockpitLbl}>{label}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ) : null}
+
           {tab === 'insight' && ins?.quote ? (
             <View style={styles.quote}><Text style={styles.quoteTxt}>“{ins.quote}”</Text></View>
           ) : null}
@@ -339,6 +375,13 @@ const styles = StyleSheet.create({
   healthAction: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
   manageRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 12, backgroundColor: '#fff', borderRadius: radius.lg, paddingVertical: 13, paddingHorizontal: 14, ...shadow.card },
   manageTxt: { flex: 1, fontFamily: font.semibold, fontSize: 13.5, color: colors.ink },
+  cockpit: { backgroundColor: '#fff', borderRadius: radius.lg, padding: 14, marginTop: 12, ...shadow.card },
+  cockpitHead: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
+  cockpitTitle: { fontFamily: font.semibold, fontSize: 14, color: colors.ink },
+  cockpitGrid: { flexDirection: 'row', flexWrap: 'wrap' },
+  cockpitCell: { width: '33.33%', paddingVertical: 8, paddingRight: 6 },
+  cockpitVal: { fontFamily: font.semibold, fontSize: 18, color: colors.coralDeep },
+  cockpitLbl: { fontFamily: font.regular, fontSize: 11, color: colors.muted, marginTop: 1 },
   sectionNote: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2, marginBottom: 8 },
   tabs: { flexDirection: 'row', marginHorizontal: 18, marginTop: 12, backgroundColor: '#F6EEE7', borderRadius: radius.pill, padding: 4, gap: 4 },
   tab: { flex: 1, height: 38, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },

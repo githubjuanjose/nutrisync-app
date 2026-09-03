@@ -1073,7 +1073,17 @@
       "connectCta": "连接以同步步数、睡眠和运动",
       "connectedManage": "已连接 · 正在同步步数",
       "connecting": "连接中…",
-      "manageAll": "管理所有设备和应用"
+      "manageAll": "管理所有设备和应用",
+      "b": {
+        "today": "今天",
+        "cycle": "本周期",
+        "phase": "本阶段",
+        "month": "本月",
+        "quarter": "本季度",
+        "ytd": "年初至今",
+        "total": "累计"
+      },
+      "stepsCockpit": "步数概览"
     },
     "stepsToday": "今天，来自“健康”"
   },

@@ -1073,7 +1073,17 @@
       "connectCta": "Verbinden, um Schritte, Schlaf und Workouts zu synchronisieren",
       "connectedManage": "Verbunden · Schritte werden synchronisiert",
       "connecting": "Verbinden…",
-      "manageAll": "Alle Geräte & Apps verwalten"
+      "manageAll": "Alle Geräte & Apps verwalten",
+      "b": {
+        "today": "Heute",
+        "cycle": "Dieser Zyklus",
+        "phase": "Diese Phase",
+        "month": "Dieser Monat",
+        "quarter": "Dieses Quartal",
+        "ytd": "Seit Jahresbeginn",
+        "total": "Gesamt"
+      },
+      "stepsCockpit": "Schritte-Übersicht"
     },
     "stepsToday": "Heute, aus Health"
   },

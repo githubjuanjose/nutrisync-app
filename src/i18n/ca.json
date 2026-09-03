@@ -1072,7 +1072,17 @@
       "connectCta": "Connecta per sincronitzar passos, son i entrenaments",
       "connectedManage": "Connectat · sincronitzant els passos",
       "connecting": "Connectant…",
-      "manageAll": "Gestiona tots els dispositius i apps"
+      "manageAll": "Gestiona tots els dispositius i apps",
+      "b": {
+        "today": "Avui",
+        "cycle": "Aquest cicle",
+        "phase": "Aquesta fase",
+        "month": "Aquest mes",
+        "quarter": "Aquest trimestre",
+        "ytd": "Del que va d'any",
+        "total": "Total"
+      },
+      "stepsCockpit": "Resum de passes"
     },
     "stepsToday": "Avui, des de Salut"
   },

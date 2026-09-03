@@ -1071,7 +1071,17 @@
       "connectCta": "Connecte pour synchroniser pas, sommeil et séances",
       "connectedManage": "Connecté · synchronisation des pas",
       "connecting": "Connexion…",
-      "manageAll": "Gérer tous les appareils et apps"
+      "manageAll": "Gérer tous les appareils et apps",
+      "b": {
+        "today": "Aujourd'hui",
+        "cycle": "Ce cycle",
+        "phase": "Cette phase",
+        "month": "Ce mois",
+        "quarter": "Ce trimestre",
+        "ytd": "Depuis le début de l'année",
+        "total": "Total"
+      },
+      "stepsCockpit": "Aperçu des pas"
     },
     "stepsToday": "Aujourd'hui, via Santé"
   },
