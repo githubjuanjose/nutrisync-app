@@ -221,9 +221,13 @@ export default function MovementLogScreen() {
 
           {/* r24-n · acceso arriba a la pantalla completa con TODOS los proveedores */}
           {flags.connectors ? (
-            <Pressable style={styles.manageRow} onPress={() => nav.navigate('ConnectedDevices')}>
+            <Pressable style={styles.manageRow} onPress={() => nav.navigate('ConnectedDevices')}
+              accessibilityRole="button" hitSlop={8}>
+              <StepsIcon />
               <Text style={styles.manageTxt}>{t('mob.wear.manageAll', 'Manage all devices & apps')}</Text>
-              <Text style={styles.manageChevron}>›</Text>
+              <Svg width={18} height={18} viewBox="0 0 24 24">
+                <Path d="M9 5l7 7-7 7" stroke="#E4572E" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </Svg>
             </Pressable>
           ) : null}
 
@@ -333,9 +337,8 @@ const styles = StyleSheet.create({
   healthName: { fontFamily: font.semibold, fontSize: 14, color: colors.ink },
   healthSub: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2 },
   healthAction: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
-  manageRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 12, paddingHorizontal: 4 },
-  manageTxt: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
-  manageChevron: { fontFamily: font.semibold, fontSize: 18, color: colors.coralDeep },
+  manageRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 12, backgroundColor: '#fff', borderRadius: radius.lg, paddingVertical: 13, paddingHorizontal: 14, ...shadow.card },
+  manageTxt: { flex: 1, fontFamily: font.semibold, fontSize: 13.5, color: colors.ink },
   sectionNote: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2, marginBottom: 8 },
   tabs: { flexDirection: 'row', marginHorizontal: 18, marginTop: 12, backgroundColor: '#F6EEE7', borderRadius: radius.pill, padding: 4, gap: 4 },
   tab: { flex: 1, height: 38, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
