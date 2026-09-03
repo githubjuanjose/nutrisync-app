@@ -22,7 +22,14 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
     setConnected(new Set(rows.map((r) => r.provider)));
     setLoading(false);
   };
-  useEffect(() => { refresh(); }, [userId]);
+  // r24-l: re-leer al ENTRAR y cada vez que la pantalla recupera el foco — al
+  // volver de HealthConsent (donde Apple Salud conecta) el estado se refresca
+  // solo, sin tener que salir y entrar.
+  useEffect(() => {
+    refresh();
+    const unsub = navigation.addListener('focus', refresh);
+    return unsub;
+  }, [userId, navigation]);
 
   const onConnect = (key: string, name: string, scopes: string[]) => {
     // UST-06 F4: las plataformas nativas de salud tienen consent PROPIO,
@@ -40,8 +47,9 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
           text: 'Connect', onPress: async () => {
             if (!userId) return;
             setBusy(key);
+            setConnected((s) => new Set(s).add(key));   // r24-l: respuesta inmediata
             try { await connectProvider(userId, key, scopes); await refresh(); }
-            catch (e: any) { notify('Could not connect', e?.message ?? 'Try again.'); }
+            catch (e: any) { setConnected((s) => { const n = new Set(s); n.delete(key); return n; }); notify('Could not connect', e?.message ?? 'Try again.'); }
             finally { setBusy(null); }
           },
         },
@@ -56,8 +64,9 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
         text: 'Disconnect', style: 'destructive', onPress: async () => {
           if (!userId) return;
           setBusy(key);
+          setConnected((s) => { const n = new Set(s); n.delete(key); return n; });   // r24-l: respuesta inmediata
           try { await disconnectProvider(userId, key); await refresh(); }
-          catch (e: any) { notify('Could not disconnect', e?.message ?? 'Try again.'); }
+          catch (e: any) { setConnected((s) => new Set(s).add(key)); notify('Could not disconnect', e?.message ?? 'Try again.'); }
           finally { setBusy(null); }
         },
       },
