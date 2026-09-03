@@ -228,6 +228,14 @@ export default function MovementLogScreen() {
             </View>
           </View>
 
+          {/* r24-n · acceso arriba a la pantalla completa con TODOS los proveedores */}
+          {flags.connectors ? (
+            <Pressable style={styles.manageRow} onPress={() => nav.navigate('ConnectedDevices')}>
+              <Text style={styles.manageTxt}>{t('mob.wear.manageAll', 'Manage all devices & apps')}</Text>
+              <Text style={styles.manageChevron}>›</Text>
+            </Pressable>
+          ) : null}
+
           {/* r24-l · switch real de Apple Salud, acción en el momento */}
           {flags.connectors && healthOn !== null ? (
             <View style={styles.healthRow}>
@@ -334,6 +342,9 @@ const styles = StyleSheet.create({
   healthName: { fontFamily: font.semibold, fontSize: 14, color: colors.ink },
   healthSub: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2 },
   healthAction: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
+  manageRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 12, paddingHorizontal: 4 },
+  manageTxt: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
+  manageChevron: { fontFamily: font.semibold, fontSize: 18, color: colors.coralDeep },
   sectionNote: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2, marginBottom: 8 },
   tabs: { flexDirection: 'row', marginHorizontal: 18, marginTop: 12, backgroundColor: '#F6EEE7', borderRadius: radius.pill, padding: 4, gap: 4 },
   tab: { flex: 1, height: 38, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },

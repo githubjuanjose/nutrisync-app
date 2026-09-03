@@ -1072,7 +1072,8 @@
       "connectWord": "连接",
       "connectCta": "连接以同步步数、睡眠和运动",
       "connectedManage": "已连接 · 正在同步步数",
-      "connecting": "连接中…"
+      "connecting": "连接中…",
+      "manageAll": "管理所有设备和应用"
     },
     "stepsToday": "今天，来自“健康”"
   },

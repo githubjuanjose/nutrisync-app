@@ -1159,7 +1159,8 @@
       "connectWord": "Connect",
       "connectCta": "Connect to sync your steps, sleep and workouts",
       "connectedManage": "Connected · syncing your steps",
-      "connecting": "Connecting…"
+      "connecting": "Connecting…",
+      "manageAll": "Manage all devices & apps"
     },
     "stepsToday": "Today, from Health"
   },

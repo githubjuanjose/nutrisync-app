@@ -1471,7 +1471,8 @@
       "connectWord": "Conectar",
       "connectCta": "Conecta para sincronizar pasos, sueño y entrenos",
       "connectedManage": "Conectado · sincronizando tus pasos",
-      "connecting": "Conectando…"
+      "connecting": "Conectando…",
+      "manageAll": "Gestionar todos los dispositivos y apps"
     },
     "stepsToday": "Hoy, desde Salud"
   },

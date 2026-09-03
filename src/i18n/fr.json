@@ -1070,7 +1070,8 @@
       "connectWord": "Connecter",
       "connectCta": "Connecte pour synchroniser pas, sommeil et séances",
       "connectedManage": "Connecté · synchronisation des pas",
-      "connecting": "Connexion…"
+      "connecting": "Connexion…",
+      "manageAll": "Gérer tous les appareils et apps"
     },
     "stepsToday": "Aujourd'hui, via Santé"
   },

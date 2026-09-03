@@ -1071,7 +1071,8 @@
       "connectWord": "Connecta",
       "connectCta": "Connecta per sincronitzar passos, son i entrenaments",
       "connectedManage": "Connectat · sincronitzant els passos",
-      "connecting": "Connectant…"
+      "connecting": "Connectant…",
+      "manageAll": "Gestiona tots els dispositius i apps"
     },
     "stepsToday": "Avui, des de Salut"
   },
