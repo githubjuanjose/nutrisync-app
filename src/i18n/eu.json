@@ -1068,7 +1068,11 @@
         "resting_hr": "Errekuperazio-seinalea: gorputzak atsedena eskatzen duenean igotzen da.",
         "hrv": "Zikloaren faseari jarraitzen dio eta intentsitatea erabakitzen laguntzen du.",
         "wrist_temperature": "Obulazioaren ondorengo igoerak zein fasetan zauden berresten du."
-      }
+      },
+      "appleHealth": "Apple Osasuna",
+      "connectWord": "Konektatu",
+      "connectCta": "Konektatu urratsak, loa eta entrenamenduak sinkronizatzeko",
+      "connectedManage": "Konektatuta · sakatu kudeatzeko"
     },
     "stepsToday": "Gaur, Osasunetik"
   },

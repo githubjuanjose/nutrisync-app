@@ -1466,7 +1466,11 @@
         "resting_hr": "Señal de recuperación: sube cuando el cuerpo pide descanso.",
         "hrv": "Acompaña a la fase del ciclo y ayuda a decidir intensidad.",
         "wrist_temperature": "La subida tras la ovulación confirma en qué fase estás."
-      }
+      },
+      "appleHealth": "Apple Salud",
+      "connectWord": "Conectar",
+      "connectCta": "Conecta para sincronizar pasos, sueño y entrenos",
+      "connectedManage": "Conectado · toca para gestionar"
     },
     "stepsToday": "Hoy, desde Salud"
   },

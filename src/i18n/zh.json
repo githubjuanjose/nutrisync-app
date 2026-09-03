@@ -1067,7 +1067,11 @@
         "resting_hr": "恢复信号：身体需要休息时会升高。",
         "hrv": "伴随周期阶段，帮助决定强度。",
         "wrist_temperature": "排卵后的升高确认你所处的阶段。"
-      }
+      },
+      "appleHealth": "Apple 健康",
+      "connectWord": "连接",
+      "connectCta": "连接以同步步数、睡眠和运动",
+      "connectedManage": "已连接 · 点按管理"
     },
     "stepsToday": "今天，来自“健康”"
   },

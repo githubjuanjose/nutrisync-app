@@ -13,6 +13,8 @@ import { pickVariantIndex } from '../../ui/NutriAvatar';
 import { saveChecklist, normalizeIntensity, categoryIntensity } from '../../lib/daily';
 import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib/recs';
 import { pasosDeHoy } from '../../lib/health/sync';
+import { getConnections } from '../../lib/health/connections';
+import { flags } from '../../lib/flags';
 
 /**
  * R2-D · Movement Log — screens 1+2 (Daily Tip / Body Insight, movement context).
@@ -62,6 +64,7 @@ export default function MovementLogScreen() {
   const [otherOpen, setOtherOpen] = useState(false);
   const [otherTxt, setOtherTxt] = useState('');
   const [steps, setSteps] = useState<number | null>(null);   // r24-i: pasos de Salud (base)
+  const [healthOn, setHealthOn] = useState<boolean | null>(null);   // r24-j: ¿Apple Health conectado?
 
   const load = useCallback(async () => {
     if (!userId) { setLoading(false); return; }
@@ -72,6 +75,11 @@ export default function MovementLogScreen() {
     setOthers([...ck].filter((n) => !known.has(n)));
     setLoading(false);
     pasosDeHoy(userId).then(setSteps).catch(() => {});   // r24-i: pasos de Salud, sin bloquear
+    if (flags.connectors) {                              // r24-j: estado de conexión de Apple Health
+      getConnections(userId)
+        .then((cx) => setHealthOn(cx.some((c) => c.provider === 'apple_health' && c.status === 'connected')))
+        .catch(() => setHealthOn(false));
+    }
   }, [userId]);
   useEffect(() => { load(); }, [load]);
   useEffect(() => { const u = nav.addListener('focus', load); return u; }, [nav, load]);  // R8-f30
@@ -181,6 +189,23 @@ export default function MovementLogScreen() {
             </View>
           </View>
 
+          {/* r24-j · acceso directo a conectar/gestionar Apple Salud desde aquí */}
+          {flags.connectors && healthOn !== null ? (
+            <Pressable
+              style={styles.healthRow}
+              onPress={() => nav.navigate(healthOn ? 'ConnectedDevices' : 'HealthConsent', healthOn ? undefined : { provider: 'apple_health' })}
+            >
+              <StepsIcon />
+              <View style={{ flex: 1, marginLeft: 10 }}>
+                <Text style={styles.healthName}>{t('mob.wear.appleHealth', 'Apple Health')}</Text>
+                <Text style={styles.healthSub}>
+                  {healthOn ? t('mob.wear.connectedManage', 'Connected · tap to manage') : t('mob.wear.connectCta', 'Connect to sync your steps, sleep and workouts')}
+                </Text>
+              </View>
+              <Text style={styles.healthAction}>{healthOn ? '⚙︎' : t('mob.wear.connectWord', 'Connect')}</Text>
+            </Pressable>
+          ) : null}
+
           {tab === 'insight' && ins?.quote ? (
             <View style={styles.quote}><Text style={styles.quoteTxt}>“{ins.quote}”</Text></View>
           ) : null}
@@ -259,6 +284,10 @@ const styles = StyleSheet.create({
   statHead: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   mostRec: { fontFamily: font.semibold, fontSize: 9, color: '#2D9E63', backgroundColor: '#E8F7F0', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 8, overflow: 'hidden' },
   sectionSub: { fontFamily: font.medium, fontSize: 13.5, color: colors.ink, marginTop: 2 },
+  healthRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', borderRadius: radius.lg, padding: 14, marginTop: 12, ...shadow.card },
+  healthName: { fontFamily: font.semibold, fontSize: 14, color: colors.ink },
+  healthSub: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2 },
+  healthAction: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
   sectionNote: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2, marginBottom: 8 },
   tabs: { flexDirection: 'row', marginHorizontal: 18, marginTop: 12, backgroundColor: '#F6EEE7', borderRadius: radius.pill, padding: 4, gap: 4 },
   tab: { flex: 1, height: 38, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
