@@ -15,6 +15,20 @@ import type { HealthSignalRow } from './mapping';
 export type BucketPasos = 'hoy' | 'ciclo' | 'fase' | 'mes' | 'trimestre' | 'ytd' | 'total';
 export type PasosCockpit = Record<BucketPasos, number>;
 
+/** Familia de fase: daily_scores guarda granular (early_luteal, late_luteal…);
+ *  el badge/recs usan la gruesa (luteal). Comparamos por familia para que
+ *  «This phase» sume TODOS los días de la fase actual, no solo el sub-tramo.
+ *  r24-q: sin esto, late_luteal !== luteal → fase siempre 0. */
+export function familiaFase(s: string | null | undefined): string | null {
+  if (!s) return null;
+  const x = s.toLowerCase();
+  if (x.includes('menstru')) return 'menstrual';
+  if (x.includes('ovulat') || x.includes('ovulac')) return 'ovulatory';
+  if (x.includes('luteal') || x.includes('lutea')) return 'luteal';
+  if (x.includes('follic') || x.includes('folic')) return 'follicular';
+  return x;
+}
+
 /** Inicio del trimestre natural (Q1 ene, Q2 abr, Q3 jul, Q4 oct) en ISO YYYY-MM-DD. */
 export function inicioTrimestreISO(hoyISO: string): string {
   const [y, m] = hoyISO.split('-').map(Number);
@@ -86,9 +100,9 @@ export async function cargarCockpitPasos(
       const { data: sc } = await supabase.from('daily_scores')
         .select('date,phase').eq('user_id', userId)
         .gte('date', cicloDesde).lte('date', hoy);
-      const fa = faseActual.toLowerCase();
+      const fa = familiaFase(faseActual);
       diasFase = new Set((sc ?? [])
-        .filter((r: any) => (r.phase ?? '').toLowerCase() === fa)
+        .filter((r: any) => familiaFase(r.phase) === fa)
         .map((r: any) => r.date));
     }
 

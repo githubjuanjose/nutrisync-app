@@ -1,7 +1,25 @@
 /**
  * Cockpit de actividad (r24-o) — unitarios de la parte PURA (r11c-2).
  */
-import { agregaPasos, inicioTrimestreISO, inicioCicloISO } from '../health/cockpit';
+import { agregaPasos, inicioTrimestreISO, inicioCicloISO, familiaFase } from '../health/cockpit';
+
+describe('familiaFase — granular (daily_scores) → familia (badge/recs)', () => {
+  it('mapea los sub-tramos lúteos a luteal', () => {
+    expect(familiaFase('late_luteal')).toBe('luteal');
+    expect(familiaFase('early_luteal')).toBe('luteal');
+    expect(familiaFase('luteal')).toBe('luteal');
+  });
+  it('resto de familias', () => {
+    expect(familiaFase('ovulatory')).toBe('ovulatory');
+    expect(familiaFase('follicular')).toBe('follicular');
+    expect(familiaFase('menstrual')).toBe('menstrual');
+  });
+  it('vacío o desconocido', () => {
+    expect(familiaFase(null)).toBeNull();
+    expect(familiaFase('')).toBeNull();
+    expect(familiaFase('raro')).toBe('raro');
+  });
+});
 
 describe('inicioTrimestreISO', () => {
   it('mapea el mes a su trimestre natural', () => {
