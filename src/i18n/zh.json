@@ -1071,7 +1071,8 @@
       "appleHealth": "Apple 健康",
       "connectWord": "连接",
       "connectCta": "连接以同步步数、睡眠和运动",
-      "connectedManage": "已连接 · 点按管理"
+      "connectedManage": "已连接 · 正在同步步数",
+      "connecting": "连接中…"
     },
     "stepsToday": "今天，来自“健康”"
   },

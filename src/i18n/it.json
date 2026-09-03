@@ -1071,7 +1071,8 @@
       "appleHealth": "Apple Salute",
       "connectWord": "Connetti",
       "connectCta": "Connetti per sincronizzare passi, sonno e allenamenti",
-      "connectedManage": "Connesso · tocca per gestire"
+      "connectedManage": "Connesso · sincronizzo i passi",
+      "connecting": "Connessione…"
     },
     "stepsToday": "Oggi, da Salute"
   },

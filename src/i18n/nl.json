@@ -1071,7 +1071,8 @@
       "appleHealth": "Apple Gezondheid",
       "connectWord": "Verbinden",
       "connectCta": "Verbind om stappen, slaap en workouts te synchroniseren",
-      "connectedManage": "Verbonden · tik om te beheren"
+      "connectedManage": "Verbonden · stappen synchroniseren",
+      "connecting": "Verbinden…"
     },
     "stepsToday": "Vandaag, uit Gezondheid"
   },

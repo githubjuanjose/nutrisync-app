@@ -1071,7 +1071,8 @@
       "appleHealth": "Apple Santat",
       "connectWord": "Connectar",
       "connectCta": "Connècta per sincronizar passes, sòm e entraïnaments",
-      "connectedManage": "Connectat · tòca per gerir"
+      "connectedManage": "Connectat · sincronizacion de las passes",
+      "connecting": "Connexion…"
     },
     "stepsToday": "Uèi, dempuèi Santat"
   },

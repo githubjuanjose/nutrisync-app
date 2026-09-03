@@ -1071,7 +1071,8 @@
       "appleHealth": "Apple Saúde",
       "connectWord": "Conectar",
       "connectCta": "Conecta para sincronizar pasos, sono e adestramentos",
-      "connectedManage": "Conectado · toca para xestionar"
+      "connectedManage": "Conectado · sincronizando os pasos",
+      "connecting": "Conectando…"
     },
     "stepsToday": "Hoxe, desde Saúde"
   },

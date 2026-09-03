@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, Image, TextInput, Switch } from 'react-native';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -12,8 +12,11 @@ import { getProfile } from '../../lib/api';
 import { pickVariantIndex } from '../../ui/NutriAvatar';
 import { saveChecklist, normalizeIntensity, categoryIntensity } from '../../lib/daily';
 import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib/recs';
-import { pasosDeHoy } from '../../lib/health/sync';
-import { getConnections } from '../../lib/health/connections';
+import { pasosDeHoy, syncSaludAlAbrir } from '../../lib/health/sync';
+import { getConnections, connectProvider, disconnectProvider } from '../../lib/health/connections';
+import { hkDisponible, hkPedirPermisos } from '../../lib/health/healthkit';
+import { SIGNALS, SignalType } from '../../lib/health/mapping';
+import { notify } from '../../lib/notify';
 import { flags } from '../../lib/flags';
 
 /**
@@ -65,6 +68,32 @@ export default function MovementLogScreen() {
   const [otherTxt, setOtherTxt] = useState('');
   const [steps, setSteps] = useState<number | null>(null);   // r24-i: pasos de Salud (base)
   const [healthOn, setHealthOn] = useState<boolean | null>(null);   // r24-j: ¿Apple Health conectado?
+  const [healthBusy, setHealthBusy] = useState(false);              // r24-l: el switch en curso
+
+  // r24-l · switch de Apple Salud EN EL MOMENTO (petición Juanjo: que conecte al
+  // tocar, no que lleve a otra pantalla). ON = pide permisos + registra consentimiento
+  // + sincroniza; OFF = revoca. Optimista con reversión si algo falla.
+  const toggleHealth = useCallback(async (want: boolean) => {
+    if (!userId || healthBusy) return;
+    setHealthBusy(true);
+    const antes = healthOn;
+    setHealthOn(want);   // respuesta inmediata del toggle
+    try {
+      if (want) {
+        const tipos = SIGNALS.filter((s) => s.esencial).map((s) => s.type) as SignalType[];
+        if (!tipos.includes('steps' as SignalType)) tipos.push('steps' as SignalType);
+        if (await hkDisponible()) await hkPedirPermisos(tipos, false);
+        await connectProvider(userId, 'apple_health', tipos as string[]);
+        syncSaludAlAbrir(userId).then(() => pasosDeHoy(userId).then(setSteps).catch(() => {})).catch(() => {});
+      } else {
+        await disconnectProvider(userId, 'apple_health');
+        setSteps(null);
+      }
+    } catch (e: any) {
+      setHealthOn(antes);   // revertir: el toggle no miente
+      notify(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
+    } finally { setHealthBusy(false); }
+  }, [userId, healthOn, healthBusy, t]);
 
   const load = useCallback(async () => {
     if (!userId) { setLoading(false); return; }
@@ -189,21 +218,28 @@ export default function MovementLogScreen() {
             </View>
           </View>
 
-          {/* r24-j · acceso directo a conectar/gestionar Apple Salud desde aquí */}
+          {/* r24-l · switch real de Apple Salud, acción en el momento */}
           {flags.connectors && healthOn !== null ? (
-            <Pressable
-              style={styles.healthRow}
-              onPress={() => nav.navigate(healthOn ? 'ConnectedDevices' : 'HealthConsent', healthOn ? undefined : { provider: 'apple_health' })}
-            >
+            <View style={styles.healthRow}>
               <StepsIcon />
               <View style={{ flex: 1, marginLeft: 10 }}>
                 <Text style={styles.healthName}>{t('mob.wear.appleHealth', 'Apple Health')}</Text>
                 <Text style={styles.healthSub}>
-                  {healthOn ? t('mob.wear.connectedManage', 'Connected · tap to manage') : t('mob.wear.connectCta', 'Connect to sync your steps, sleep and workouts')}
+                  {healthBusy
+                    ? t('mob.wear.connecting', 'Connecting…')
+                    : healthOn
+                      ? t('mob.wear.connectedManage', 'Connected · syncing your steps')
+                      : t('mob.wear.connectCta', 'Connect to sync your steps, sleep and workouts')}
                 </Text>
               </View>
-              <Text style={styles.healthAction}>{healthOn ? '⚙︎' : t('mob.wear.connectWord', 'Connect')}</Text>
-            </Pressable>
+              <Switch
+                value={!!healthOn}
+                onValueChange={toggleHealth}
+                disabled={healthBusy}
+                trackColor={{ true: colors.coral, false: '#E7DCD3' }}
+                thumbColor="#fff"
+              />
+            </View>
           ) : null}
 
           {tab === 'insight' && ins?.quote ? (

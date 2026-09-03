@@ -1070,7 +1070,8 @@
       "appleHealth": "ヘルスケア",
       "connectWord": "接続",
       "connectCta": "歩数・睡眠・運動を同期するには接続",
-      "connectedManage": "接続済み・タップで管理"
+      "connectedManage": "接続済み・歩数を同期中",
+      "connecting": "接続中…"
     },
     "stepsToday": "今日、ヘルスケアから"
   },

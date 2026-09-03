@@ -1470,7 +1470,8 @@
       "appleHealth": "Apple Salud",
       "connectWord": "Conectar",
       "connectCta": "Conecta para sincronizar pasos, sueño y entrenos",
-      "connectedManage": "Conectado · toca para gestionar"
+      "connectedManage": "Conectado · sincronizando tus pasos",
+      "connecting": "Conectando…"
     },
     "stepsToday": "Hoy, desde Salud"
   },

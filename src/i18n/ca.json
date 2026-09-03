@@ -1070,7 +1070,8 @@
       "appleHealth": "Apple Salut",
       "connectWord": "Connecta",
       "connectCta": "Connecta per sincronitzar passos, son i entrenaments",
-      "connectedManage": "Connectat · toca per gestionar"
+      "connectedManage": "Connectat · sincronitzant els passos",
+      "connecting": "Connectant…"
     },
     "stepsToday": "Avui, des de Salut"
   },

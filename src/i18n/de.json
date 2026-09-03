@@ -1071,7 +1071,8 @@
       "appleHealth": "Apple Health",
       "connectWord": "Verbinden",
       "connectCta": "Verbinden, um Schritte, Schlaf und Workouts zu synchronisieren",
-      "connectedManage": "Verbunden · zum Verwalten tippen"
+      "connectedManage": "Verbunden · Schritte werden synchronisiert",
+      "connecting": "Verbinden…"
     },
     "stepsToday": "Heute, aus Health"
   },

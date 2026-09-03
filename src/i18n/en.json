@@ -1158,7 +1158,8 @@
       "appleHealth": "Apple Health",
       "connectWord": "Connect",
       "connectCta": "Connect to sync your steps, sleep and workouts",
-      "connectedManage": "Connected · tap to manage"
+      "connectedManage": "Connected · syncing your steps",
+      "connecting": "Connecting…"
     },
     "stepsToday": "Today, from Health"
   },
