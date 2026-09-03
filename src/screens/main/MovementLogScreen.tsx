@@ -79,6 +79,20 @@ export default function MovementLogScreen() {
       .then(setCockpit).catch(() => {});
   }, [userId, recs?.cycle_day, recs?.phase]);
   useEffect(() => { recargaCockpit(); }, [recargaCockpit]);
+  // r24-p · al volver a la pantalla, re-lee pasos de hoy y cockpit — el sync de
+  // fondo puede haber subido los pasos DESPUÉS de la primera carga (por eso el
+  // cockpit mostraba Today=0 mientras la tarjeta de arriba ya tenía el dato).
+  useEffect(() => {
+    const unsub = nav.addListener('focus', () => {
+      if (!userId) return;
+      pasosDeHoy(userId).then(setSteps).catch(() => {});
+      recargaCockpit();
+    });
+    return unsub;
+  }, [nav, userId, recargaCockpit]);
+  // r24-p · cuando la tarjeta de pasos de hoy recibe dato fresco (post-sync),
+  // el cockpit se recarga — así Today/This month dejan de ir por detrás.
+  useEffect(() => { if (steps != null) recargaCockpit(); }, [steps]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // r24-l · switch de Apple Salud EN EL MOMENTO (petición Juanjo: que conecte al
   // tocar, no que lleve a otra pantalla). ON = pide permisos + registra consentimiento
