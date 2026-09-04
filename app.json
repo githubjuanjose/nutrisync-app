@@ -54,7 +54,7 @@
       ]
     },
     "plugins": [
-      ["expo-build-properties", {"ios": {"useFrameworks": "static"}, "android": {"minSdkVersion": 26}}],
+      ["expo-build-properties", {"ios": {"useFrameworks": "dynamic"}, "android": {"minSdkVersion": 26}}],
       "@react-native-firebase/app",
       "@react-native-firebase/crashlytics",
       "expo-font",
