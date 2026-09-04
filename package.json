@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "eas-build-post-install": "[ -d ios ] && cp GoogleService-Info.plist ios/GoogleService-Info.plist || true"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.4.1",
