@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, Image, TextInput, Switch } from 'react-native';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -12,6 +12,13 @@ import { getProfile } from '../../lib/api';
 import { pickVariantIndex } from '../../ui/NutriAvatar';
 import { saveChecklist, normalizeIntensity, categoryIntensity } from '../../lib/daily';
 import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib/recs';
+import { pasosDeHoy, syncSaludAlAbrir } from '../../lib/health/sync';
+import { cargarCockpitPasos, PasosCockpit, BucketPasos } from '../../lib/health/cockpit';
+import { getConnections, connectProvider, disconnectProvider } from '../../lib/health/connections';
+import { hkDisponible, hkPedirPermisos } from '../../lib/health/healthkit';
+import { SIGNALS, SignalType } from '../../lib/health/mapping';
+import { notify } from '../../lib/notify';
+import { flags } from '../../lib/flags';
 
 /**
  * R2-D · Movement Log — screens 1+2 (Daily Tip / Body Insight, movement context).
@@ -60,6 +67,58 @@ export default function MovementLogScreen() {
   const [others, setOthers] = useState<string[]>([]);
   const [otherOpen, setOtherOpen] = useState(false);
   const [otherTxt, setOtherTxt] = useState('');
+  const [steps, setSteps] = useState<number | null>(null);   // r24-i: pasos de Salud (base)
+  const [healthOn, setHealthOn] = useState<boolean | null>(null);   // r24-j: ¿Apple Health conectado?
+  const [healthBusy, setHealthBusy] = useState(false);              // r24-l: el switch en curso
+  const [cockpit, setCockpit] = useState<PasosCockpit | null>(null); // r24-o: pasos por periodo
+
+  // r24-o · carga el cockpit de pasos (hoy/ciclo/fase/mes/trimestre/YTD/total).
+  const recargaCockpit = useCallback(() => {
+    if (!userId) return;
+    cargarCockpitPasos(userId, recs?.cycle_day ?? null, recs?.phase ?? null)
+      .then(setCockpit).catch(() => {});
+  }, [userId, recs?.cycle_day, recs?.phase]);
+  useEffect(() => { recargaCockpit(); }, [recargaCockpit]);
+  // r24-p · al volver a la pantalla, re-lee pasos de hoy y cockpit — el sync de
+  // fondo puede haber subido los pasos DESPUÉS de la primera carga (por eso el
+  // cockpit mostraba Today=0 mientras la tarjeta de arriba ya tenía el dato).
+  useEffect(() => {
+    const unsub = nav.addListener('focus', () => {
+      if (!userId) return;
+      pasosDeHoy(userId).then(setSteps).catch(() => {});
+      recargaCockpit();
+    });
+    return unsub;
+  }, [nav, userId, recargaCockpit]);
+  // r24-p · cuando la tarjeta de pasos de hoy recibe dato fresco (post-sync),
+  // el cockpit se recarga — así Today/This month dejan de ir por detrás.
+  useEffect(() => { if (steps != null) recargaCockpit(); }, [steps]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // r24-l · switch de Apple Salud EN EL MOMENTO (petición Juanjo: que conecte al
+  // tocar, no que lleve a otra pantalla). ON = pide permisos + registra consentimiento
+  // + sincroniza; OFF = revoca. Optimista con reversión si algo falla.
+  const toggleHealth = useCallback(async (want: boolean) => {
+    if (!userId || healthBusy) return;
+    setHealthBusy(true);
+    const antes = healthOn;
+    setHealthOn(want);   // respuesta inmediata del toggle
+    try {
+      if (want) {
+        const tipos = SIGNALS.filter((s) => s.esencial).map((s) => s.type) as SignalType[];
+        if (!tipos.includes('steps' as SignalType)) tipos.push('steps' as SignalType);
+        if (await hkDisponible()) await hkPedirPermisos(tipos, false);
+        await connectProvider(userId, 'apple_health', tipos as string[]);
+        // r24-m: diagnóstico retirado — cadena verificada en dispositivo (3-sep).
+        syncSaludAlAbrir(userId).then(() => pasosDeHoy(userId).then(setSteps).catch(() => {})).catch(() => {});
+      } else {
+        await disconnectProvider(userId, 'apple_health');
+        setSteps(null);
+      }
+    } catch (e: any) {
+      setHealthOn(antes);   // revertir: el toggle no miente
+      notify(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
+    } finally { setHealthBusy(false); }
+  }, [userId, healthOn, healthBusy, t]);
 
   const load = useCallback(async () => {
     if (!userId) { setLoading(false); return; }
@@ -69,6 +128,12 @@ export default function MovementLogScreen() {
     const known = new Set(Object.values(r?.movement_basics ?? {}).flat().map((i) => i.name));
     setOthers([...ck].filter((n) => !known.has(n)));
     setLoading(false);
+    pasosDeHoy(userId).then(setSteps).catch(() => {});   // r24-i: pasos de Salud, sin bloquear
+    if (flags.connectors) {                              // r24-j: estado de conexión de Apple Health
+      getConnections(userId)
+        .then((cx) => setHealthOn(cx.some((c) => c.provider === 'apple_health' && c.status === 'connected')))
+        .catch(() => setHealthOn(false));
+    }
   }, [userId]);
   useEffect(() => { load(); }, [load]);
   useEffect(() => { const u = nav.addListener('focus', load); return u; }, [nav, load]);  // R8-f30
@@ -173,10 +238,72 @@ export default function MovementLogScreen() {
             </View>
             <View style={styles.stat}>
               <View style={styles.statHead}><StepsIcon /><Text style={styles.statTag}>STEPS</Text></View>
-              <Text style={styles.statVal}>—</Text>
-              <Text style={styles.statLbl}>{t('mob.stepsSync', 'Syncs with devices')}</Text>
+              <Text style={styles.statVal}>{steps == null ? '—' : steps.toLocaleString()}</Text>
+              <Text style={styles.statLbl}>{steps == null ? t('mob.stepsSync', 'Syncs with devices') : t('mob.stepsToday', 'Today, from Health')}</Text>
             </View>
           </View>
+
+          {/* r24-n · acceso arriba a la pantalla completa con TODOS los proveedores */}
+          {flags.connectors ? (
+            <Pressable style={styles.manageRow} onPress={() => nav.navigate('ConnectedDevices')}
+              accessibilityRole="button" hitSlop={8}>
+              <StepsIcon />
+              <Text style={styles.manageTxt}>{t('mob.wear.manageAll', 'Manage all devices & apps')}</Text>
+              <Svg width={18} height={18} viewBox="0 0 24 24">
+                <Path d="M9 5l7 7-7 7" stroke="#E4572E" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </Svg>
+            </Pressable>
+          ) : null}
+
+          {/* r24-l · switch real de Apple Salud, acción en el momento */}
+          {flags.connectors && healthOn !== null ? (
+            <View style={styles.healthRow}>
+              <StepsIcon />
+              <View style={{ flex: 1, marginLeft: 10 }}>
+                <Text style={styles.healthName}>{t('mob.wear.appleHealth', 'Apple Health')}</Text>
+                <Text style={styles.healthSub}>
+                  {healthBusy
+                    ? t('mob.wear.connecting', 'Connecting…')
+                    : healthOn
+                      ? t('mob.wear.connectedManage', 'Connected · syncing your steps')
+                      : t('mob.wear.connectCta', 'Connect to sync your steps, sleep and workouts')}
+                </Text>
+              </View>
+              <Switch
+                value={!!healthOn}
+                onValueChange={toggleHealth}
+                disabled={healthBusy}
+                trackColor={{ true: colors.coral, false: '#E7DCD3' }}
+                thumbColor="#fff"
+              />
+            </View>
+          ) : null}
+
+          {/* r24-o · Cockpit de actividad: pasos acumulados por periodo */}
+          {flags.connectors && healthOn && cockpit ? (
+            <View style={styles.cockpit}>
+              <View style={styles.cockpitHead}>
+                <StepsIcon />
+                <Text style={styles.cockpitTitle}>{t('mob.wear.stepsCockpit', 'Steps overview')}</Text>
+              </View>
+              <View style={styles.cockpitGrid}>
+                {([
+                  ['hoy', t('mob.wear.b.today', 'Today')],
+                  ['ciclo', t('mob.wear.b.cycle', 'This cycle')],
+                  ['fase', t('mob.wear.b.phase', 'This phase')],
+                  ['mes', t('mob.wear.b.month', 'This month')],
+                  ['trimestre', t('mob.wear.b.quarter', 'This quarter')],
+                  ['ytd', t('mob.wear.b.ytd', 'Year to date')],
+                  ['total', t('mob.wear.b.total', 'All time')],
+                ] as [BucketPasos, string][]).map(([k, label]) => (
+                  <View key={k} style={styles.cockpitCell}>
+                    <Text style={styles.cockpitVal}>{(cockpit[k] ?? 0).toLocaleString()}</Text>
+                    <Text style={styles.cockpitLbl}>{label}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ) : null}
 
           {tab === 'insight' && ins?.quote ? (
             <View style={styles.quote}><Text style={styles.quoteTxt}>“{ins.quote}”</Text></View>
@@ -256,6 +383,19 @@ const styles = StyleSheet.create({
   statHead: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   mostRec: { fontFamily: font.semibold, fontSize: 9, color: '#2D9E63', backgroundColor: '#E8F7F0', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 8, overflow: 'hidden' },
   sectionSub: { fontFamily: font.medium, fontSize: 13.5, color: colors.ink, marginTop: 2 },
+  healthRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', borderRadius: radius.lg, padding: 14, marginTop: 12, ...shadow.card },
+  healthName: { fontFamily: font.semibold, fontSize: 14, color: colors.ink },
+  healthSub: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2 },
+  healthAction: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
+  manageRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 12, backgroundColor: '#fff', borderRadius: radius.lg, paddingVertical: 13, paddingHorizontal: 14, ...shadow.card },
+  manageTxt: { flex: 1, fontFamily: font.semibold, fontSize: 13.5, color: colors.ink },
+  cockpit: { backgroundColor: '#fff', borderRadius: radius.lg, padding: 14, marginTop: 12, ...shadow.card },
+  cockpitHead: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
+  cockpitTitle: { fontFamily: font.semibold, fontSize: 14, color: colors.ink },
+  cockpitGrid: { flexDirection: 'row', flexWrap: 'wrap' },
+  cockpitCell: { width: '33.33%', paddingVertical: 8, paddingRight: 6 },
+  cockpitVal: { fontFamily: font.semibold, fontSize: 18, color: colors.coralDeep },
+  cockpitLbl: { fontFamily: font.regular, fontSize: 11, color: colors.muted, marginTop: 1 },
   sectionNote: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2, marginBottom: 8 },
   tabs: { flexDirection: 'row', marginHorizontal: 18, marginTop: 12, backgroundColor: '#F6EEE7', borderRadius: radius.pill, padding: 4, gap: 4 },
   tab: { flex: 1, height: 38, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },

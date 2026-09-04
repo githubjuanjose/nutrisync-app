@@ -1067,8 +1067,25 @@
         "resting_hr": "Segnale di recupero: sale quando il corpo chiede riposo.",
         "hrv": "Accompagna la fase del ciclo e aiuta a decidere l'intensità.",
         "wrist_temperature": "Il rialzo dopo l'ovulazione conferma in che fase sei."
-      }
-    }
+      },
+      "appleHealth": "Apple Salute",
+      "connectWord": "Connetti",
+      "connectCta": "Connetti per sincronizzare passi, sonno e allenamenti",
+      "connectedManage": "Connesso · sincronizzo i passi",
+      "connecting": "Connessione…",
+      "manageAll": "Gestisci tutti i dispositivi e le app",
+      "b": {
+        "today": "Oggi",
+        "cycle": "Questo ciclo",
+        "phase": "Questa fase",
+        "month": "Questo mese",
+        "quarter": "Questo trimestre",
+        "ytd": "Da inizio anno",
+        "total": "Totale"
+      },
+      "stepsCockpit": "Riepilogo passi"
+    },
+    "stepsToday": "Oggi, da Salute"
   },
   "cat": {
     "Getting started": "Primi passi",

@@ -58,8 +58,8 @@ export function minutosDeSuenoPorDia(
 export function resumenDeHoy(
   filas: HealthSignalRow[],
   hoyLocal: string,
-): { sleepMinutes: number | null; workoutMinutes: number | null; flow: string | null } {
-  let sueno = 0, entreno = 0;
+): { sleepMinutes: number | null; workoutMinutes: number | null; flow: string | null; steps: number | null } {
+  let sueno = 0, entreno = 0, pasos = 0;
   let flujo: string | null = null;
   for (const f of filas) {
     const fin = f.end_ts ?? f.start_ts;
@@ -67,6 +67,7 @@ export function resumenDeHoy(
     if (dia !== hoyLocal) continue;
     if (f.type === 'sleep_minutes') sueno += f.value ?? 0;
     if (f.type === 'workout') entreno += f.value ?? 0;
+    if (f.type === 'steps') pasos += f.value ?? 0;   // r24-i: la tarjeta STEPS los pinta
     if (f.type === 'menstrual_flow') {
       const texto = (f.metadata as any)?.flow_text;
       if (typeof texto === 'string') flujo = texto;
@@ -76,7 +77,24 @@ export function resumenDeHoy(
     sleepMinutes: sueno > 0 ? Math.round(sueno) : null,
     workoutMinutes: entreno > 0 ? Math.round(entreno) : null,
     flow: flujo,
+    steps: pasos > 0 ? Math.round(pasos) : null,
   };
+}
+
+/** r24-i · Lee de la BASE los pasos de hoy (ya sincronizados por
+ *  syncSaludAlAbrir). Puro-IO, jamás lanza: la tarjeta cae a null en silencio.
+ *  Devuelve null si no hay conexión, no hay dato o falla algo. */
+export async function pasosDeHoy(userId: string | null | undefined): Promise<number | null> {
+  try {
+    if (!userId) return null;
+    const desde = new Date(); desde.setDate(desde.getDate() - 1);
+    const { data } = await supabase.from('health_signal')
+      .select('type,value,start_ts,end_ts')
+      .eq('user_id', userId).eq('type', 'steps')
+      .gte('start_ts', desde.toISOString());
+    const filas = (data as HealthSignalRow[]) ?? [];
+    return resumenDeHoy(filas, localDayISO(new Date())).steps;
+  } catch { return null; }
 }
 
 /* ── El runner: se llama al abrir la app ─────────────────────────────────── */

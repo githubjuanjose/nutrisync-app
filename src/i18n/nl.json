@@ -1067,8 +1067,25 @@
         "resting_hr": "Herstelsignaal: stijgt wanneer je lichaam om rust vraagt.",
         "hrv": "Volgt de cyclusfase en helpt intensiteit te kiezen.",
         "wrist_temperature": "De stijging na de eisprong bevestigt je fase."
-      }
-    }
+      },
+      "appleHealth": "Apple Gezondheid",
+      "connectWord": "Verbinden",
+      "connectCta": "Verbind om stappen, slaap en workouts te synchroniseren",
+      "connectedManage": "Verbonden · stappen synchroniseren",
+      "connecting": "Verbinden…",
+      "manageAll": "Alle apparaten en apps beheren",
+      "b": {
+        "today": "Vandaag",
+        "cycle": "Deze cyclus",
+        "phase": "Deze fase",
+        "month": "Deze maand",
+        "quarter": "Dit kwartaal",
+        "ytd": "Dit jaar",
+        "total": "Totaal"
+      },
+      "stepsCockpit": "Stappenoverzicht"
+    },
+    "stepsToday": "Vandaag, uit Gezondheid"
   },
   "cat": {
     "Getting started": "Aan de slag",

@@ -1066,8 +1066,25 @@
         "resting_hr": "Senyal de recuperació: puja quan el cos demana descans.",
         "hrv": "Acompanya la fase del cicle i ajuda a decidir intensitat.",
         "wrist_temperature": "La pujada després de l'ovulació confirma en quina fase ets."
-      }
-    }
+      },
+      "appleHealth": "Apple Salut",
+      "connectWord": "Connecta",
+      "connectCta": "Connecta per sincronitzar passos, son i entrenaments",
+      "connectedManage": "Connectat · sincronitzant els passos",
+      "connecting": "Connectant…",
+      "manageAll": "Gestiona tots els dispositius i apps",
+      "b": {
+        "today": "Avui",
+        "cycle": "Aquest cicle",
+        "phase": "Aquesta fase",
+        "month": "Aquest mes",
+        "quarter": "Aquest trimestre",
+        "ytd": "Del que va d'any",
+        "total": "Total"
+      },
+      "stepsCockpit": "Resum de passes"
+    },
+    "stepsToday": "Avui, des de Salut"
   },
   "cat": {
     "Getting started": "Primers passos",

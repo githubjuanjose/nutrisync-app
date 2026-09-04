@@ -1066,8 +1066,25 @@
         "resting_hr": "回復のサイン：体が休息を求めると上がります。",
         "hrv": "周期のフェーズに寄り添い、強度の判断を助けます。",
         "wrist_temperature": "排卵後の上昇がどのフェーズかを確かめます。"
-      }
-    }
+      },
+      "appleHealth": "ヘルスケア",
+      "connectWord": "接続",
+      "connectCta": "歩数・睡眠・運動を同期するには接続",
+      "connectedManage": "接続済み・歩数を同期中",
+      "connecting": "接続中…",
+      "manageAll": "すべてのデバイスとアプリを管理",
+      "b": {
+        "today": "今日",
+        "cycle": "今周期",
+        "phase": "今フェーズ",
+        "month": "今月",
+        "quarter": "今四半期",
+        "ytd": "今年",
+        "total": "累計"
+      },
+      "stepsCockpit": "歩数の概要"
+    },
+    "stepsToday": "今日、ヘルスケアから"
   },
   "cat": {
     "Getting started": "はじめの一歩",

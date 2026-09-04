@@ -1154,8 +1154,25 @@
         "resting_hr": "A recovery signal: it rises when your body is asking for rest.",
         "hrv": "Tracks your cycle phase and helps decide intensity.",
         "wrist_temperature": "The rise after ovulation confirms which phase you are in."
-      }
-    }
+      },
+      "appleHealth": "Apple Health",
+      "connectWord": "Connect",
+      "connectCta": "Connect to sync your steps, sleep and workouts",
+      "connectedManage": "Connected · syncing your steps",
+      "connecting": "Connecting…",
+      "manageAll": "Manage all devices & apps",
+      "b": {
+        "today": "Today",
+        "cycle": "This cycle",
+        "phase": "This phase",
+        "month": "This month",
+        "quarter": "This quarter",
+        "ytd": "Year to date",
+        "total": "All time"
+      },
+      "stepsCockpit": "Steps overview"
+    },
+    "stepsToday": "Today, from Health"
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",

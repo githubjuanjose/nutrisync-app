@@ -1067,8 +1067,25 @@
         "resting_hr": "Senhal de recuperacion: monta quand lo còs demanda de repaus.",
         "hrv": "Acompanha la fasa del cicle e ajuda a decidir l'intensitat.",
         "wrist_temperature": "La montada aprèp l'ovulacion confirma dins quina fasa siás."
-      }
-    }
+      },
+      "appleHealth": "Apple Santat",
+      "connectWord": "Connectar",
+      "connectCta": "Connècta per sincronizar passes, sòm e entraïnaments",
+      "connectedManage": "Connectat · sincronizacion de las passes",
+      "connecting": "Connexion…",
+      "manageAll": "Gerir totes los aparelhs e apps",
+      "b": {
+        "today": "Uèi",
+        "cycle": "Aqueste cicle",
+        "phase": "Aquesta fasa",
+        "month": "Aqueste mes",
+        "quarter": "Aqueste trimèstre",
+        "ytd": "Dempuèi lo començament de l'an",
+        "total": "Total"
+      },
+      "stepsCockpit": "Resumit de las passes"
+    },
+    "stepsToday": "Uèi, dempuèi Santat"
   },
   "cat": {
     "Getting started": "Prumèri passi",

@@ -103,7 +103,12 @@ export async function hkPedirPermisos(
     const escribir = escribirFlujo ? [CAT_FLUJO] : [];
     const f = fn(m, ['requestAuthorization', 'requestAuthorizationAsync']);
     if (!f) return { ok: false, error: 'requestAuthorization no existe en esta versión del módulo' };
-    await f(escribir, leer);
+    // r24-k: v14 (Nitro) toma UN objeto {toShare,toRead}. La forma vieja
+    // f(escribir, leer) pasaba los tipos de LECTURA en un 2º argumento que v14
+    // IGNORA → no se pedía permiso de lectura y toda query volvía vacía. Se
+    // intenta v14 primero y se cae a la firma v13 de dos arrays.
+    await Promise.resolve(f({ toShare: escribir, toRead: leer }))
+      .catch(() => f(escribir, leer));
     return { ok: true };
   } catch (e: any) {
     return { ok: false, error: e?.message ?? 'permiso rechazado' };
@@ -111,24 +116,35 @@ export async function hkPedirPermisos(
 }
 
 /* ── Lectura O1: ventana → RawSample[] ─────────────────────────────────── */
+/* r24-k (3-sep, verificado contra @kingstinct 14.0.2 .d.ts): en v14 (Nitro) el
+   rango va ANIDADO bajo filter.date, no suelto en filter — con la forma vieja
+   el filtro se ignoraba y la query volvía VACÍA (por eso 0 pasos en la base
+   con conexión y permiso OK). limit:0 = TODAS las muestras (así lo documenta el
+   paquete). Se conserva el fallback v13 (filter suelto / from-to). */
+const optV14 = (desde: Date, hasta: Date) =>
+  ({ filter: { date: { startDate: desde, endDate: hasta } }, limit: 0, ascending: true });
+
 async function muestrasCuantitativas(m: HKModulo, id: string, desde: Date, hasta: Date): Promise<any[]> {
   const f = fn(m, ['queryQuantitySamples', 'getQuantitySamples']);
   if (!f) return [];
-  const r = await f(id, { filter: { startDate: desde, endDate: hasta }, limit: 0, ascending: true })
-    .catch(() => f(id, { from: desde, to: hasta })); // forma v13
+  const r = await f(id, optV14(desde, hasta))
+    .catch(() => f(id, { filter: { startDate: desde, endDate: hasta }, limit: 0 })) // forma intermedia
+    .catch(() => f(id, { from: desde, to: hasta }));                                // forma v13
   return Array.isArray(r) ? r : (r?.samples ?? []);
 }
 async function muestrasCategoria(m: HKModulo, id: string, desde: Date, hasta: Date): Promise<any[]> {
   const f = fn(m, ['queryCategorySamples', 'getCategorySamples']);
   if (!f) return [];
-  const r = await f(id, { filter: { startDate: desde, endDate: hasta }, limit: 0, ascending: true })
+  const r = await f(id, optV14(desde, hasta))
+    .catch(() => f(id, { filter: { startDate: desde, endDate: hasta }, limit: 0 }))
     .catch(() => f(id, { from: desde, to: hasta }));
   return Array.isArray(r) ? r : (r?.samples ?? []);
 }
 async function entrenamientos(m: HKModulo, desde: Date, hasta: Date): Promise<any[]> {
   const f = fn(m, ['queryWorkoutSamples', 'queryWorkouts', 'getWorkouts']);
   if (!f) return [];
-  const r = await f({ filter: { startDate: desde, endDate: hasta }, limit: 0, ascending: true })
+  const r = await f(optV14(desde, hasta))
+    .catch(() => f({ filter: { startDate: desde, endDate: hasta }, limit: 0 }))
     .catch(() => f({ from: desde, to: hasta }));
   return Array.isArray(r) ? r : (r?.samples ?? r?.workouts ?? []);
 }

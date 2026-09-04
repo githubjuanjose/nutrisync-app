@@ -1067,8 +1067,25 @@
         "resting_hr": "Erholungssignal: steigt, wenn der Körper Ruhe braucht.",
         "hrv": "Begleitet die Zyklusphase und hilft bei der Intensität.",
         "wrist_temperature": "Der Anstieg nach dem Eisprung bestätigt deine Phase."
-      }
-    }
+      },
+      "appleHealth": "Apple Health",
+      "connectWord": "Verbinden",
+      "connectCta": "Verbinden, um Schritte, Schlaf und Workouts zu synchronisieren",
+      "connectedManage": "Verbunden · Schritte werden synchronisiert",
+      "connecting": "Verbinden…",
+      "manageAll": "Alle Geräte & Apps verwalten",
+      "b": {
+        "today": "Heute",
+        "cycle": "Dieser Zyklus",
+        "phase": "Diese Phase",
+        "month": "Dieser Monat",
+        "quarter": "Dieses Quartal",
+        "ytd": "Seit Jahresbeginn",
+        "total": "Gesamt"
+      },
+      "stepsCockpit": "Schritte-Übersicht"
+    },
+    "stepsToday": "Heute, aus Health"
   },
   "cat": {
     "Getting started": "Erste Schritte",
