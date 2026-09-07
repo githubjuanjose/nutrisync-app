@@ -2,7 +2,7 @@
   "expo": {
     "name": "NutriSync",
     "slug": "nutrisync",
-    "version": "0.23.0",
+    "version": "0.23.1",
     "orientation": "portrait",
     "scheme": "nutrisync",
     "userInterfaceStyle": "light",
@@ -26,6 +26,7 @@
       "**/*"
     ],
     "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.nutrisynccollective.app",
       "config": {
@@ -53,7 +54,9 @@
       ]
     },
     "plugins": [
-      ["expo-build-properties", {"android": {"minSdkVersion": 26}}],
+      ["expo-build-properties", {"ios": {"useFrameworks": "dynamic"}, "android": {"minSdkVersion": 26}}],
+      "@react-native-firebase/app",
+      "@react-native-firebase/crashlytics",
       "expo-font",
       [
         "expo-notifications",
