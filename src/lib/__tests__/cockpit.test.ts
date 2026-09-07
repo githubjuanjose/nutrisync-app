@@ -1,7 +1,7 @@
 /**
  * Cockpit de actividad (r24-o) — unitarios de la parte PURA (r11c-2).
  */
-import { agregaPasos, inicioTrimestreISO, inicioCicloISO, familiaFase, diasDeFase } from '../health/cockpit';
+import { agregaPasos, inicioTrimestreISO, inicioCicloISO, familiaFase, diasDeFase, zonaHoraria } from '../health/cockpit';
 
 describe('familiaFase — granular (daily_scores) → familia (badge/recs)', () => {
   it('mapea los sub-tramos lúteos a luteal', () => {
@@ -108,5 +108,12 @@ describe('diasDeFase — la fase de un día se CALCULA del ciclo, no se lee de l
   });
   it('un largo de ciclo absurdo cae al estándar de 28', () => {
     expect(diasDeFase('2026-09-07', 20, 3, 'luteal')!.size).toBe(4);
+  });
+});
+
+describe('zonaHoraria — la app le dice a la base qué día es para ella (NS-0010)', () => {
+  it('devuelve una zona IANA o null, nunca revienta', () => {
+    const z = zonaHoraria();
+    expect(z === null || typeof z === 'string').toBe(true);
   });
 });

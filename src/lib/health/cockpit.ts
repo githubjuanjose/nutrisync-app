@@ -10,8 +10,12 @@
  */
 import { supabase } from '../supabase';
 import { localDayISO } from '../localDay';
-import type { HealthSignalRow } from './mapping';
 import { phaseForDay } from '../cas';
+
+/** Zona IANA del dispositivo, o null si el runtime no la sabe (entonces manda el desfase en minutos). */
+export function zonaHoraria(): string | null {
+  try { const z = Intl.DateTimeFormat().resolvedOptions().timeZone; return z && z !== 'UTC' ? z : (z || null); } catch { return null; }
+}
 
 export type BucketPasos = 'hoy' | 'ciclo' | 'fase' | 'mes' | 'trimestre' | 'ytd' | 'total';
 export type PasosCockpit = Record<BucketPasos, number>;
@@ -109,14 +113,17 @@ export async function cargarCockpitPasos(
   try {
     if (!userId) return null;
     const hoy = localDayISO(new Date());
-    // Ventana generosa (piloto): 2 años cubre total/YTD/trimestre/mes/ciclo.
+    // 7-sep · LA BASE SUMA, EL MÓVIL PINTA. Antes se pedían las filas crudas de health_signal para
+    // sumarlas aquí, y PostgREST devuelve como mucho 1.000: con 8.159 muestras (18 días de reloj)
+    // llegaban las mil primeras y el cockpit enseñaba 13.243 para todo cuando la base tenía 207.675.
+    // pasos_por_dia() devuelve UNA fila por DÍA LOCAL (NS-0010: la app le dice su zona horaria).
     const desde = new Date(); desde.setFullYear(desde.getFullYear() - 2);
-    const { data } = await supabase.from('health_signal')
-      .select('type,value,start_ts,end_ts')
-      .eq('user_id', userId).eq('type', 'steps')
-      .gte('start_ts', desde.toISOString());
-    const filas = ((data as HealthSignalRow[]) ?? []).map((r) => ({
-      dayISO: localDayISO(new Date(r.end_ts ?? r.start_ts)), value: Number(r.value ?? 0),
+    const { data, error } = await supabase.rpc('pasos_por_dia', {
+      p_desde: localDayISO(desde), p_tz: zonaHoraria(), p_offset_min: -new Date().getTimezoneOffset(),
+    });
+    if (error) return null;                       // la tarjeta cae a «—»: mejor nada que un total falso
+    const filas = ((data as { dia: string; pasos: number | string }[]) ?? []).map((r) => ({
+      dayISO: String(r.dia).slice(0, 10), value: Number(r.pasos ?? 0),
     }));
 
     const cicloDesde = inicioCicloISO(hoy, cycleDay);
