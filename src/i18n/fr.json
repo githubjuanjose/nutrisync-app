@@ -1081,7 +1081,12 @@
         "ytd": "Depuis le début de l'année",
         "total": "Total"
       },
-      "stepsCockpit": "Aperçu des pas"
+      "stepsCockpit": "Aperçu des pas",
+      "manageSignals": "Gérer les signaux",
+      "chooseSignals": "Choisir quoi suivre",
+      "guardar": "Enregistrer les modifications",
+      "guardadoTitulo": "Enregistré",
+      "guardadoTexto": "Votre choix est enregistré. Désormais NutriSync ne lit que ce que vous avez sélectionné."
     },
     "stepsToday": "Aujourd'hui, via Santé"
   },

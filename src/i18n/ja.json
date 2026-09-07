@@ -1082,7 +1082,12 @@
         "ytd": "今年",
         "total": "累計"
       },
-      "stepsCockpit": "歩数の概要"
+      "stepsCockpit": "歩数の概要",
+      "manageSignals": "シグナルを管理",
+      "chooseSignals": "記録する項目を選ぶ",
+      "guardar": "変更を保存",
+      "guardadoTitulo": "保存しました",
+      "guardadoTexto": "選択内容を保存しました。今後 NutriSync は選択した項目のみを読み取ります。"
     },
     "stepsToday": "今日、ヘルスケアから"
   },

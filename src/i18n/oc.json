@@ -1083,7 +1083,12 @@
         "ytd": "Dempuèi lo començament de l'an",
         "total": "Total"
       },
-      "stepsCockpit": "Resumit de las passes"
+      "stepsCockpit": "Resumit de las passes",
+      "manageSignals": "Gerir los senhals",
+      "chooseSignals": "Causís çò que vòls seguir",
+      "guardar": "Salvar los cambiaments",
+      "guardadoTitulo": "Salvat",
+      "guardadoTexto": "Ta causida es salvada. D'ara enlà NutriSync legís pas que çò qu'as seleccionat."
     },
     "stepsToday": "Uèi, dempuèi Santat"
   },

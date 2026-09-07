@@ -15,13 +15,22 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState<string | null>(null);
   const [connected, setConnected] = useState<Set<string>>(new Set());
+  // UST-09 C1 · qué señales tiene consentidas cada conexión viva (de la base)
+  const [scopesDe, setScopesDe] = useState<Record<string, string[]>>({});
 
   const refresh = async () => {
     if (!userId) { setLoading(false); return; }
     const rows = await getConnections(userId);
     setConnected(new Set(rows.map((r) => r.provider)));
+    setScopesDe(Object.fromEntries(rows.map((r) => [r.provider, r.scopes ?? []])));
     setLoading(false);
   };
+
+  // UST-09 C1 · las plataformas de salud tienen consent señal a señal: con la
+  // conexión viva se EDITA en la misma pantalla (antes solo «Disconnect» — la
+  // elección granular desaparecía al conectar desde el switch de Movimiento).
+  const tieneConsentPropio = (key: string) => key === 'apple_health' || key === 'health_connect';
+  const onManage = (key: string) => navigation.navigate('HealthConsent', { provider: key, edit: true });
   // r24-l: re-leer al ENTRAR y cada vez que la pantalla recupera el foco — al
   // volver de HealthConsent (donde Apple Salud conecta) el estado se refresca
   // solo, sin tener que salir y entrar.
@@ -100,12 +109,26 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
                   <Text style={styles.icon}>{p.icon}</Text>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.name}>{p.name}</Text>
-                    <Text style={styles.sub}>{on ? t('ui.connectedWord', 'Connected') : ok ? p.scopes.slice(0, 3).join(' · ') : `${p.platform === 'ios' ? 'iOS' : 'Android'} only`}</Text>
+                    <Text style={styles.sub}>
+                      {on
+                        ? (scopesDe[p.key]?.length
+                            ? `${t('ui.connectedWord', 'Connected')} · ${scopesDe[p.key].filter((s) => s !== 'write_flow').slice(0, 3).join(' · ').replace(/_/g, ' ')}`
+                            : t('ui.connectedWord', 'Connected'))
+                        : ok ? p.scopes.slice(0, 3).join(' · ') : `${p.platform === 'ios' ? 'iOS' : 'Android'} only`}
+                    </Text>
                   </View>
                   {on ? (
-                    <Pressable onPress={() => onDisconnect(p.key, p.name)} disabled={busy === p.key} style={[styles.btn, styles.btnOff]}>
-                      <Text style={styles.btnOffTxt}>{t('mob.disconnect', "Disconnect")}</Text>
-                    </Pressable>
+                    <View style={styles.btnCol}>
+                      {tieneConsentPropio(p.key) ? (
+                        <Pressable onPress={() => onManage(p.key)} disabled={busy === p.key} style={[styles.btn, styles.btnManage]}
+                          accessibilityRole="button">
+                          <Text style={styles.btnManageTxt}>{t('mob.wear.manageSignals', 'Manage signals')}</Text>
+                        </Pressable>
+                      ) : null}
+                      <Pressable onPress={() => onDisconnect(p.key, p.name)} disabled={busy === p.key} style={[styles.btn, styles.btnOff]}>
+                        <Text style={styles.btnOffTxt}>{t('mob.disconnect', "Disconnect")}</Text>
+                      </Pressable>
+                    </View>
                   ) : (
                     <Pressable onPress={() => onConnect(p.key, p.name, p.scopes)} disabled={busy === p.key || !ok} style={[styles.btn, styles.btnOn, !ok && styles.btnDim]}>
                       <Text style={styles.btnOnTxt}>{busy === p.key ? '…' : t('ui.connectWord', 'Connect')}</Text>
@@ -142,6 +165,10 @@ const styles = StyleSheet.create({
   btnOnTxt: { fontFamily: font.semibold, fontSize: 12.5, color: '#fff' },
   btnOff: { borderWidth: 1, borderColor: colors.line, backgroundColor: colors.white },
   btnOffTxt: { fontFamily: font.semibold, fontSize: 12.5, color: colors.muted },
+  // UST-09 C1 · dos botones apilados a la derecha cuando la conexión está viva
+  btnCol: { alignItems: 'flex-end', gap: 6 },
+  btnManage: { borderWidth: 1, borderColor: colors.coral, backgroundColor: colors.white },
+  btnManageTxt: { fontFamily: font.semibold, fontSize: 12.5, color: colors.coral },
   btnDim: { opacity: 0.4 },
   note: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 16, lineHeight: 17, paddingHorizontal: 4 },
 });

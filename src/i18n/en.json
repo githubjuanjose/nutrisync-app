@@ -1170,7 +1170,12 @@
         "ytd": "Year to date",
         "total": "All time"
       },
-      "stepsCockpit": "Steps overview"
+      "stepsCockpit": "Steps overview",
+      "manageSignals": "Manage signals",
+      "chooseSignals": "Choose what to track",
+      "guardar": "Save changes",
+      "guardadoTitulo": "Saved",
+      "guardadoTexto": "Your choice is saved. From now on NutriSync reads only what you selected."
     },
     "stepsToday": "Today, from Health"
   },

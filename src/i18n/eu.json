@@ -1084,7 +1084,12 @@
         "ytd": "Aurten",
         "total": "Guztira"
       },
-      "stepsCockpit": "Urratsen laburpena"
+      "stepsCockpit": "Urratsen laburpena",
+      "manageSignals": "Kudeatu seinaleak",
+      "chooseSignals": "Aukeratu zer jarraitu",
+      "guardar": "Gorde aldaketak",
+      "guardadoTitulo": "Gordeta",
+      "guardadoTexto": "Zure aukera gorde da. Hemendik aurrera NutriSync-ek hautatu duzuna bakarrik irakurtzen du."
     },
     "stepsToday": "Gaur, Osasunetik"
   },

@@ -1083,7 +1083,12 @@
         "ytd": "Seit Jahresbeginn",
         "total": "Gesamt"
       },
-      "stepsCockpit": "Schritte-Übersicht"
+      "stepsCockpit": "Schritte-Übersicht",
+      "manageSignals": "Signale verwalten",
+      "chooseSignals": "Wähle, was erfasst wird",
+      "guardar": "Änderungen speichern",
+      "guardadoTitulo": "Gespeichert",
+      "guardadoTexto": "Deine Auswahl ist gespeichert. Ab jetzt liest NutriSync nur, was du ausgewählt hast."
     },
     "stepsToday": "Heute, aus Health"
   },

@@ -1083,7 +1083,12 @@
         "ytd": "Dit jaar",
         "total": "Totaal"
       },
-      "stepsCockpit": "Stappenoverzicht"
+      "stepsCockpit": "Stappenoverzicht",
+      "manageSignals": "Signalen beheren",
+      "chooseSignals": "Kies wat je bijhoudt",
+      "guardar": "Wijzigingen opslaan",
+      "guardadoTitulo": "Opgeslagen",
+      "guardadoTexto": "Je keuze is opgeslagen. Vanaf nu leest NutriSync alleen wat je hebt geselecteerd."
     },
     "stepsToday": "Vandaag, uit Gezondheid"
   },

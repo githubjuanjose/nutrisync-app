@@ -1083,7 +1083,12 @@
         "ytd": "No que vai de ano",
         "total": "Total"
       },
-      "stepsCockpit": "Resumo de pasos"
+      "stepsCockpit": "Resumo de pasos",
+      "manageSignals": "Xestionar sinais",
+      "chooseSignals": "Escolle que seguir",
+      "guardar": "Gardar cambios",
+      "guardadoTitulo": "Gardado",
+      "guardadoTexto": "A túa elección está gardada. A partir de agora NutriSync só le o que seleccionaches."
     },
     "stepsToday": "Hoxe, desde Saúde"
   },

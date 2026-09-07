@@ -22,6 +22,19 @@ export async function connectProvider(userId: string, provider: string, scopes: 
   if (error) throw error;
 }
 
+/** UST-09 C1 · EDITAR las señales de una conexión viva: solo scopes + consent_ts
+ *  (connected_at se conserva — la edición no es una conexión nueva). sync.ts lee
+ *  los scopes de la base en cada corrida, así que surte efecto en la siguiente. */
+export async function updateProviderScopes(userId: string, provider: string, scopes: string[]) {
+  const { error } = await supabase
+    .from('connected_providers')
+    .update({ scopes, consent_ts: new Date().toISOString() })
+    .eq('user_id', userId)
+    .eq('provider', provider)
+    .eq('status', 'connected');
+  if (error) throw error;
+}
+
 /** Revoke a connection — stops future sync (E-P3). */
 export async function disconnectProvider(userId: string, provider: string) {
   const { error } = await supabase

@@ -1083,7 +1083,12 @@
         "ytd": "Da inizio anno",
         "total": "Totale"
       },
-      "stepsCockpit": "Riepilogo passi"
+      "stepsCockpit": "Riepilogo passi",
+      "manageSignals": "Gestisci i segnali",
+      "chooseSignals": "Scegli cosa monitorare",
+      "guardar": "Salva le modifiche",
+      "guardadoTitulo": "Salvato",
+      "guardadoTexto": "La tua scelta è salvata. D'ora in poi NutriSync legge solo ciò che hai selezionato."
     },
     "stepsToday": "Oggi, da Salute"
   },

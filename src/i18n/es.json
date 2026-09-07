@@ -1482,7 +1482,12 @@
         "ytd": "En lo que va de año",
         "total": "Total"
       },
-      "stepsCockpit": "Resumen de pasos"
+      "stepsCockpit": "Resumen de pasos",
+      "manageSignals": "Gestionar señales",
+      "chooseSignals": "Elige qué seguir",
+      "guardar": "Guardar cambios",
+      "guardadoTitulo": "Guardado",
+      "guardadoTexto": "Tu elección está guardada. A partir de ahora NutriSync solo lee lo que has seleccionado."
     },
     "stepsToday": "Hoy, desde Salud"
   },

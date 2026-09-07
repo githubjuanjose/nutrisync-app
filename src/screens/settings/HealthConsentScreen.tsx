@@ -6,8 +6,14 @@
  * APAGADO. Nada bloquea: «Ahora no» es un final digno, y todo se revoca en un
  * toque desde Dispositivos conectados. Textos BORRADOR pendientes de Pilar
  * (validación de producto — firma UST-06); son JS: se retocan por OTA.
+ *
+ * UST-2026-09-07-09 · C1 — MODO EDICIÓN: si el proveedor YA está conectado
+ * (switch de Movimiento o Connected Devices), la pantalla se abre con las
+ * señales consentidas precargadas, el botón dice «Save changes» y a HealthKit
+ * solo se le piden los tipos NUEVOS (lib/health/scopes.ts, puro + unitarios).
+ * Antes esta pantalla solo se alcanzaba sin conexión: regresión r24-l/n.
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, font, radius, shadow } from '../../theme';
@@ -15,7 +21,8 @@ import { notify } from '../../lib/notify';
 import { useSession } from '../../state/SessionProvider';
 import { useT } from '../../i18n';
 import { SIGNALS, SignalType } from '../../lib/health/mapping';
-import { connectProvider } from '../../lib/health/connections';
+import { connectProvider, getConnections, updateProviderScopes } from '../../lib/health/connections';
+import { scopesAEstado, estadoAScopes, tiposNuevos, hayQuePedir } from '../../lib/health/scopes';
 import { hkDisponible, hkPedirPermisos } from '../../lib/health/healthkit';
 import { syncSaludAlAbrir } from '../../lib/health/sync';
 
@@ -42,6 +49,28 @@ export default function HealthConsentScreen({ navigation, route }: any) {
   );
   const [escribir, setEscribir] = useState(false);
   const [busy, setBusy] = useState(false);
+  // C1 · modo edición: scopes que YA tiene la conexión (null = no conectada → alta normal)
+  const [scopesAntes, setScopesAntes] = useState<string[] | null>(null);
+  const editando = scopesAntes !== null;
+
+  // C1 · al entrar, si el proveedor ya está conectado, precargar lo consentido.
+  // Se lee de la base (la verdad), no de params: el switch de Movimiento
+  // conecta con las esenciales + pasos sin pasar por aquí.
+  useEffect(() => {
+    let vivo = true;
+    (async () => {
+      try {
+        if (!userId) return;
+        const con = (await getConnections(userId)).find((c) => c.provider === provider);
+        if (!vivo || !con) return;
+        const e = scopesAEstado(con.scopes);
+        setSel(e.tipos.size ? e.tipos : new Set(SIGNALS.filter((s) => s.esencial).map((s) => s.type)));
+        setEscribir(e.escribir);
+        setScopesAntes(con.scopes ?? []);
+      } catch { /* sin conexión legible → alta normal; nunca en blanco */ }
+    })();
+    return () => { vivo = false; };
+  }, [userId, provider]);
 
   const toggle = (tp: SignalType) =>
     setSel((p) => { const n = new Set(p); n.has(tp) ? n.delete(tp) : n.add(tp); return n; });
@@ -51,13 +80,18 @@ export default function HealthConsentScreen({ navigation, route }: any) {
     setBusy(true);
     try {
       const tipos = Array.from(sel);
+      // Editando: a HealthKit solo se le piden los tipos NUEVOS (o el write-back recién activado).
+      const aPedir = editando ? tiposNuevos(scopesAntes!, tipos) : tipos;
+      const pedir = editando ? hayQuePedir(scopesAntes!, tipos, escribir) : true;
       if (esApple) {
         if (await hkDisponible()) {
-          const r = await hkPedirPermisos(tipos, escribir);
-          if (!r.ok) {
-            // Apple no cuenta qué se concedió (privacidad): registramos la
-            // intención; la lectura solo trae lo realmente permitido.
-            notify(t('mob.wear.permTitulo', 'Permissions'), r.error ?? t('mob.wear.permTexto', 'You can adjust permissions any time in Health.'));
+          if (pedir) {
+            const r = await hkPedirPermisos(aPedir, escribir);
+            if (!r.ok) {
+              // Apple no cuenta qué se concedió (privacidad): registramos la
+              // intención; la lectura solo trae lo realmente permitido.
+              notify(t('mob.wear.permTitulo', 'Permissions'), r.error ?? t('mob.wear.permTexto', 'You can adjust permissions any time in Health.'));
+            }
           }
         } else {
           notify(nombreProv, t('mob.wear.sinBuild', 'This build does not include the Health connector yet — your choice is saved and sync will start with the next update.'));
@@ -67,10 +101,16 @@ export default function HealthConsentScreen({ navigation, route }: any) {
         // registrar el consentimiento ya deja la sincronización lista.
         notify(nombreProv, t('mob.wear.sinBuild', 'This build does not include the Health connector yet — your choice is saved and sync will start with the next update.'));
       }
-      const scopes = [...tipos, ...(escribir ? ['write_flow'] : [])];
-      await connectProvider(userId, provider, scopes);
-      syncSaludAlAbrir(userId).catch(() => {});   // primer sync, sin bloquear la salida
-      notify(t('mob.wear.listoTitulo', 'Connected'), t('mob.wear.listoTexto', 'Your phone will now fill in what it already knows. What you write always wins.'));
+      const scopes = estadoAScopes(sel, escribir);
+      if (editando) {
+        await updateProviderScopes(userId, provider, scopes);
+        syncSaludAlAbrir(userId).catch(() => {});   // la siguiente sync ya lee solo lo elegido
+        notify(t('mob.wear.guardadoTitulo', 'Saved'), t('mob.wear.guardadoTexto', 'Your choice is saved. From now on NutriSync reads only what you selected.'));
+      } else {
+        await connectProvider(userId, provider, scopes);
+        syncSaludAlAbrir(userId).catch(() => {});   // primer sync, sin bloquear la salida
+        notify(t('mob.wear.listoTitulo', 'Connected'), t('mob.wear.listoTexto', 'Your phone will now fill in what it already knows. What you write always wins.'));
+      }
       navigation.goBack();
     } catch (e: any) {
       notify(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
@@ -132,12 +172,14 @@ export default function HealthConsentScreen({ navigation, route }: any) {
 
           <Pressable onPress={conectar} disabled={busy || sel.size === 0}
             style={[st.btn, (busy || sel.size === 0) && { opacity: 0.5 }]}>
-            <Text style={st.btnTxt}>{busy ? '…' : t('mob.wear.conectar', 'Connect')}</Text>
+            <Text style={st.btnTxt}>{busy ? '…' : editando ? t('mob.wear.guardar', 'Save changes') : t('mob.wear.conectar', 'Connect')}</Text>
           </Pressable>
           <Pressable onPress={() => navigation.goBack()} style={st.btnGhost}>
-            <Text style={st.btnGhostTxt}>{t('mob.wear.ahoraNo', 'Not now')}</Text>
+            <Text style={st.btnGhostTxt}>{editando ? t('ui.cancel', 'Cancel') : t('mob.wear.ahoraNo', 'Not now')}</Text>
           </Pressable>
-          <Text style={st.nota}>{t('mob.wear.luego', 'You can connect later from Settings → Connected Devices.')}</Text>
+          {!editando ? (
+            <Text style={st.nota}>{t('mob.wear.luego', 'You can connect later from Settings → Connected Devices.')}</Text>
+          ) : null}
         </ScrollView>
       </SafeAreaView>
     </View>

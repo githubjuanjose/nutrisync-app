@@ -1082,7 +1082,12 @@
         "ytd": "Del que va d'any",
         "total": "Total"
       },
-      "stepsCockpit": "Resum de passes"
+      "stepsCockpit": "Resum de passes",
+      "manageSignals": "Gestiona els senyals",
+      "chooseSignals": "Tria què seguir",
+      "guardar": "Desa els canvis",
+      "guardadoTitulo": "Desat",
+      "guardadoTexto": "La teva elecció s'ha desat. A partir d'ara NutriSync només llegeix el que has seleccionat."
     },
     "stepsToday": "Avui, des de Salut"
   },

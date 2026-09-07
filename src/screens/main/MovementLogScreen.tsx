@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, Image, TextInput, Switch } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, Image, TextInput, Switch, Platform } from 'react-native';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -255,8 +255,10 @@ export default function MovementLogScreen() {
             </Pressable>
           ) : null}
 
-          {/* r24-l · switch real de Apple Salud, acción en el momento */}
-          {flags.connectors && healthOn !== null ? (
+          {/* r24-l · switch real de Apple Salud, acción en el momento.
+              UST-09 C2 · SOLO iOS: en Android no hay HealthKit (hkDisponible=false) y el
+              switch «conectaba» sin datos; Health Connect (O3) llegará con su propio acceso. */}
+          {flags.connectors && Platform.OS === 'ios' && healthOn !== null ? (
             <View style={styles.healthRow}>
               <StepsIcon />
               <View style={{ flex: 1, marginLeft: 10 }}>
@@ -268,6 +270,14 @@ export default function MovementLogScreen() {
                       ? t('mob.wear.connectedManage', 'Connected · syncing your steps')
                       : t('mob.wear.connectCta', 'Connect to sync your steps, sleep and workouts')}
                 </Text>
+                {/* UST-09 C1 · conectado: el camino a la pantalla señal a señal, que el
+                    switch (r24-l) había dejado sin acceso — regresión vista por Juanjo 7-sep */}
+                {healthOn && !healthBusy ? (
+                  <Pressable onPress={() => nav.navigate('HealthConsent', { provider: 'apple_health', edit: true })}
+                    hitSlop={8} accessibilityRole="button">
+                    <Text style={styles.healthLink}>{t('mob.wear.chooseSignals', 'Choose what to track')} ›</Text>
+                  </Pressable>
+                ) : null}
               </View>
               <Switch
                 value={!!healthOn}
@@ -279,8 +289,8 @@ export default function MovementLogScreen() {
             </View>
           ) : null}
 
-          {/* r24-o · Cockpit de actividad: pasos acumulados por periodo */}
-          {flags.connectors && healthOn && cockpit ? (
+          {/* r24-o · Cockpit de actividad: pasos acumulados por periodo (C2: solo iOS, como el switch) */}
+          {flags.connectors && Platform.OS === 'ios' && healthOn && cockpit ? (
             <View style={styles.cockpit}>
               <View style={styles.cockpitHead}>
                 <StepsIcon />
@@ -386,6 +396,7 @@ const styles = StyleSheet.create({
   healthRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', borderRadius: radius.lg, padding: 14, marginTop: 12, ...shadow.card },
   healthName: { fontFamily: font.semibold, fontSize: 14, color: colors.ink },
   healthSub: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2 },
+  healthLink: { fontFamily: font.semibold, fontSize: 12.5, color: colors.coralDeep, marginTop: 6 },   // UST-09 C1
   healthAction: { fontFamily: font.semibold, fontSize: 13, color: colors.coralDeep },
   manageRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 12, backgroundColor: '#fff', borderRadius: radius.lg, paddingVertical: 13, paddingHorizontal: 14, ...shadow.card },
   manageTxt: { flex: 1, fontFamily: font.semibold, fontSize: 13.5, color: colors.ink },
