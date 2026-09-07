@@ -75,9 +75,9 @@ export default function MovementLogScreen() {
   // r24-o · carga el cockpit de pasos (hoy/ciclo/fase/mes/trimestre/YTD/total).
   const recargaCockpit = useCallback(() => {
     if (!userId) return;
-    cargarCockpitPasos(userId, recs?.cycle_day ?? null, recs?.phase ?? null)
+    cargarCockpitPasos(userId, recs?.cycle_day ?? null, recs?.phase ?? null, recs?.cycle_len ?? null)
       .then(setCockpit).catch(() => {});
-  }, [userId, recs?.cycle_day, recs?.phase]);
+  }, [userId, recs?.cycle_day, recs?.phase, recs?.cycle_len]);
   useEffect(() => { recargaCockpit(); }, [recargaCockpit]);
   // r24-p · al volver a la pantalla, re-lee pasos de hoy y cockpit — el sync de
   // fondo puede haber subido los pasos DESPUÉS de la primera carga (por eso el

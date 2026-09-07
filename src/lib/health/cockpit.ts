@@ -11,6 +11,7 @@
 import { supabase } from '../supabase';
 import { localDayISO } from '../localDay';
 import type { HealthSignalRow } from './mapping';
+import { phaseForDay } from '../cas';
 
 export type BucketPasos = 'hoy' | 'ciclo' | 'fase' | 'mes' | 'trimestre' | 'ytd' | 'total';
 export type PasosCockpit = Record<BucketPasos, number>;
@@ -71,12 +72,39 @@ export function inicioCicloISO(hoyISO: string, cycleDay: number | null | undefin
   return localDayISO(d);
 }
 
-/** IO fino · lee pasos (health_signal) + fase por día (scores) y agrega.
+/** Días (ISO local) del ciclo en curso que pertenecen a la MISMA familia de fase que hoy.
+ *  7-sep (sonda sobre la base, cuenta de Isabel): 15 días con pasos y solo 2 con fila en
+ *  daily_scores, porque esa tabla se escribe el día que la usuaria registra ánimo y energía.
+ *  Leer la fase de ahí hacía que «This phase» sumara solo los días con check-in — para quien
+ *  no lo hace, 0 aunque camine 20.000 pasos. La fase de un día es una función del ciclo
+ *  (inicio + número de día), no de si esa mañana se abrió la app: se calcula, no se consulta. */
+export function diasDeFase(
+  hoyISO: string,
+  cycleDay: number | null | undefined,
+  cycleLen: number | null | undefined,
+  faseActual: string | null | undefined,
+): Set<string> | null {
+  if (!cycleDay || cycleDay < 1 || !faseActual) return null;
+  const len = cycleLen && cycleLen >= 15 ? cycleLen : 28;   // fuera de rango → ciclo estándar
+  const fa = familiaFase(faseActual);
+  const out = new Set<string>();
+  const d = new Date(`${hoyISO}T00:00:00`);
+  for (let n = cycleDay; n >= 1; n--) {
+    if (familiaFase(phaseForDay(n, len)) === fa) {
+      out.add(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`);
+    }
+    d.setDate(d.getDate() - 1);
+  }
+  return out;
+}
+
+/** IO fino · lee pasos (health_signal) y agrega; la fase por día se CALCULA del ciclo.
  *  Jamás lanza: ante cualquier fallo devuelve ceros (la tarjeta cae a «—»). */
 export async function cargarCockpitPasos(
   userId: string | null | undefined,
   cycleDay: number | null | undefined,
   faseActual: string | null | undefined,
+  cycleLen: number | null | undefined = 28,
 ): Promise<PasosCockpit | null> {
   try {
     if (!userId) return null;
@@ -93,18 +121,7 @@ export async function cargarCockpitPasos(
 
     const cicloDesde = inicioCicloISO(hoy, cycleDay);
 
-    // Días de la fase actual dentro del ciclo en curso: se leen de daily_scores
-    // (phase por fecha). Sin fase o sin filas → bucket de fase queda en 0.
-    let diasFase: Set<string> | null = null;
-    if (faseActual && cicloDesde) {
-      const { data: sc } = await supabase.from('daily_scores')
-        .select('date,phase').eq('user_id', userId)
-        .gte('date', cicloDesde).lte('date', hoy);
-      const fa = familiaFase(faseActual);
-      diasFase = new Set((sc ?? [])
-        .filter((r: any) => familiaFase(r.phase) === fa)
-        .map((r: any) => r.date));
-    }
+    const diasFase = diasDeFase(hoy, cycleDay, cycleLen, faseActual);
 
     return agregaPasos(filas, hoy, cicloDesde, diasFase);
   } catch { return null; }

@@ -1,7 +1,7 @@
 /**
  * Cockpit de actividad (r24-o) — unitarios de la parte PURA (r11c-2).
  */
-import { agregaPasos, inicioTrimestreISO, inicioCicloISO, familiaFase } from '../health/cockpit';
+import { agregaPasos, inicioTrimestreISO, inicioCicloISO, familiaFase, diasDeFase } from '../health/cockpit';
 
 describe('familiaFase — granular (daily_scores) → familia (badge/recs)', () => {
   it('mapea los sub-tramos lúteos a luteal', () => {
@@ -75,5 +75,38 @@ describe('agregaPasos — sin ciclo ni fase', () => {
   it('ciclo y fase quedan en 0, el resto suma', () => {
     const r = agregaPasos([{ dayISO: '2026-09-03', value: 1200 }], '2026-09-03', null, null);
     expect(r).toEqual({ hoy: 1200, ciclo: 0, fase: 0, mes: 1200, trimestre: 1200, ytd: 1200, total: 1200 });
+  });
+});
+
+describe('diasDeFase — la fase de un día se CALCULA del ciclo, no se lee de los check-ins (7-sep)', () => {
+  // Ciclo de 28: menstrual 1-5 · folicular 6-13 · ovulatoria 14-16 · lútea 17-28 (phaseForDay)
+  it('día 20 de un ciclo de 28 en fase lútea → los días 17..20, cuatro días', () => {
+    const d = diasDeFase('2026-09-07', 20, 28, 'luteal')!;
+    expect(d.size).toBe(4);
+    expect(d.has('2026-09-07')).toBe(true);   // día 20 = hoy
+    expect(d.has('2026-09-04')).toBe(true);   // día 17 = inicio de la lútea
+    expect(d.has('2026-09-03')).toBe(false);  // día 16 = ovulatoria, fuera
+  });
+  it('la familia manda: late_luteal y early_luteal cuentan como luteal', () => {
+    const d = diasDeFase('2026-09-07', 20, 28, 'late_luteal')!;
+    expect(d.size).toBe(4);
+  });
+  it('un ciclo largo (día 44, largo 28): toda la lútea desde el día 17, sin depender de daily_scores', () => {
+    const d = diasDeFase('2026-09-07', 44, 28, 'luteal')!;
+    expect(d.size).toBe(28);                    // días 17..44
+    expect(d.has('2026-09-07')).toBe(true);
+    expect(d.has('2026-08-11')).toBe(true);     // día 17
+    expect(d.has('2026-08-10')).toBe(false);    // día 16
+  });
+  it('día 3, menstrual → tres días', () => {
+    expect(diasDeFase('2026-09-07', 3, 28, 'menstrual')!.size).toBe(3);
+  });
+  it('sin día de ciclo o sin fase → null (el bucket se queda en 0, no revienta)', () => {
+    expect(diasDeFase('2026-09-07', null, 28, 'luteal')).toBeNull();
+    expect(diasDeFase('2026-09-07', 0, 28, 'luteal')).toBeNull();
+    expect(diasDeFase('2026-09-07', 12, 28, null)).toBeNull();
+  });
+  it('un largo de ciclo absurdo cae al estándar de 28', () => {
+    expect(diasDeFase('2026-09-07', 20, 3, 'luteal')!.size).toBe(4);
   });
 });
