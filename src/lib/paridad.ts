@@ -125,8 +125,8 @@ export const EXCEPCIONES: Excepcion[] = [
   },
   {
     fichero: 'screens/settings/HealthConsentScreen.tsx',
-    patrones: ["Platform.OS !== 'android'"],
-    motivo: 'El estado del SDK (instalar / actualizar / listo) solo existe en Health Connect: en iPhone no hay nada que consultar. La decisión de QUÉ enseñar es de estadoSdk (pura).',
+    patrones: ["Platform.OS !== 'android'", "Platform.OS === 'android' && !hcHayModulo()"],
+    motivo: 'El estado del SDK (instalar / actualizar / listo) y la pregunta «¿viaja el módulo en este binario?» solo existen en Health Connect: en iPhone no hay nada que consultar. La decisión de QUÉ enseñar es de estadoSdk (pura).',
     tipo: 'permanente',
   },
   {

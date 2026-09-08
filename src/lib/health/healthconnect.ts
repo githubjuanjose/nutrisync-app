@@ -51,6 +51,15 @@ async function preparado(m: HCModulo): Promise<boolean> {
   } catch { return false; }
 }
 
+/** ¿Viaja el módulo nativo en ESTE binario? Los builds anteriores al 25-ago
+ *  (runtimes 0.18–0.22, que siguen vivos y reciben esta misma OTA) NO lo
+ *  llevan: allí el mensaje honesto es «actualiza la app desde Play», no
+ *  «instala Health Connect» — que ya la tiene. Distinguirlo evita mandar a una
+ *  mujer a instalar algo que no le falta (P0 de UST-15: ningún callejón). */
+export function hcHayModulo(): boolean {
+  return modulo() != null;
+}
+
 /* ── Estado del SDK (C2, D4): instalar · actualizar · listo ────────────────── */
 export async function hcEstado(): Promise<EstadoSdk> {
   const m = modulo();

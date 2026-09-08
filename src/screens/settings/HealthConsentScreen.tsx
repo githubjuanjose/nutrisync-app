@@ -26,7 +26,7 @@ import { connectProvider, getConnections, updateProviderScopes } from '../../lib
 import { scopesAEstado, estadoAScopes, tiposNuevos, hayQuePedir } from '../../lib/health/scopes';
 import { adaptadorDeProveedor } from '../../lib/health/adaptador';
 import { EstadoSdk, nombreProveedor, proveedorDePlataforma, PLAY_HC } from '../../lib/health/proveedor';
-import { hcEstado } from '../../lib/health/healthconnect';
+import { hcEstado, hcHayModulo } from '../../lib/health/healthconnect';
 import { syncSaludAlAbrir } from '../../lib/health/sync';
 
 const NOMBRES: Record<SignalType, [string, string]> = {
@@ -67,7 +67,10 @@ export default function HealthConsentScreen({ navigation, route }: any) {
     hcEstado().then((e) => { if (vivo) setSdk(e); }).catch(() => {});
     return () => { vivo = false; };
   }, [provider]);
-  const faltaHC = provider === 'health_connect' && (sdk === 'instalar' || sdk === 'actualizar');
+  // Sin módulo en el binario (runtimes anteriores al 25-ago, que reciben esta
+  // misma OTA) no falta Health Connect: falta ACTUALIZAR la app desde Play.
+  const sinModulo = provider === 'health_connect' && Platform.OS === 'android' && !hcHayModulo();
+  const faltaHC = provider === 'health_connect' && !sinModulo && (sdk === 'instalar' || sdk === 'actualizar');
   const abrirPlay = () => { Linking.openURL(PLAY_HC).catch(() => {}); };
 
   const [sel, setSel] = useState<Set<SignalType>>(
@@ -137,9 +140,17 @@ export default function HealthConsentScreen({ navigation, route }: any) {
           }
         }
       } else if (provider === 'health_connect') {
-        // C2 · sin Health Connect en el teléfono no se guarda nada: se ofrece instalarlo.
-        setSdk(await hcEstado());
-        notify(nombreProv, t('mob.wear.hcInstalarTexto', 'Health Connect is the Android app where your health data lives. Install it (free, from Google) and come back — NutriSync will read only what you choose.'));
+        // C2 · no se guarda nada, y se dice la verdad EXACTA: si el binario es
+        // anterior al módulo (runtimes 0.18–0.22, que reciben esta misma OTA),
+        // lo que falta es ACTUALIZAR la app; si el módulo está, lo que falta es
+        // Health Connect en el teléfono. Mandar a instalar algo que ya se tiene
+        // es el mismo callejón que cerró UST-15, con otra cara.
+        if (sinModulo) {
+          notify(nombreProv, t('mob.wear.sinBuild', 'This build does not include the Health connector yet — your choice is saved and sync will start with the next update.'));
+        } else {
+          setSdk(await hcEstado());
+          notify(nombreProv, t('mob.wear.hcInstalarTexto', 'Health Connect is the Android app where your health data lives. Install it (free, from Google) and come back — NutriSync will read only what you choose.'));
+        }
         setBusy(false);
         return;
       } else {
