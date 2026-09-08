@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, ActivityIndic
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla } from '../../lib/plataforma';
 import { colors, font, radius, shadow } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
 import { NutriAvatar } from '../../ui/NutriAvatar';
@@ -150,7 +151,7 @@ export default function PersonalInfoScreen({ navigation }: any) {
 
   return (
     <View style={styles.fill}>
-      <SafeAreaView style={styles.fill} edges={['top']}>
+      <SafeAreaView style={styles.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
           <Text style={styles.headerTitle}>{t('mob.personalInfo', "Personal Information")}</Text><View style={{ width: 24 }} />

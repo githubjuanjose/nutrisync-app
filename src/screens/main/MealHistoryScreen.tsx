@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, Pressable, ScrollView, Image, Platform } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { insetInferior } from '../../lib/plataforma';
 import { useNavigation } from '@react-navigation/native';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
@@ -22,6 +23,7 @@ const slotLabel = (t: (p: string, f?: string) => string, k: string) => t('mob.me
 
 export default function MealHistoryScreen() {
   const t = useT();
+  const alza = insetInferior(Platform.OS, useSafeAreaInsets().bottom);   // UST-15 C1 (D1): solo Android
   const nav = useNavigation<any>();
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
@@ -130,7 +132,7 @@ export default function MealHistoryScreen() {
           })}
         </ScrollView>
 
-        <Pressable style={styles.cta} onPress={() => nav.navigate('MealLog')}>
+        <Pressable style={[styles.cta, { bottom: 18 + alza }]} onPress={() => nav.navigate('MealLog')}>
           <Text style={styles.ctaTxt}>+ {t('mob.logNewMeal', 'Log New Meal')}</Text>
         </Pressable>
       </SafeAreaView>

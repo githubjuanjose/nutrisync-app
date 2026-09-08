@@ -1,26 +1,49 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla } from '../../lib/plataforma';
 import { SettingsIcon } from '../../ui/SettingsIcons';
 import { colors, font, radius, shadow } from '../../theme';
 import { useSession } from '../../state/SessionProvider';
 import { useT } from '../../i18n';
 import Constants from 'expo-constants';
+import * as LocalAuthentication from 'expo-local-authentication';
+import * as SecureStore from 'expo-secure-store';
+import { tipoBiometria, BIO_EN, TipoBio } from '../../lib/plataforma';
 
 export default function SecurityScreen({ navigation }: any) {
   const t = useT();
   const { session } = useSession();
   const email = session?.user.email ?? 'you@email.com';
 
-  const TFA = [
-    { icon: 'key', label: 'Authenticator App', status: 'Disabled' },
-    { icon: 'sms', label: 'SMS Verification', status: 'Disabled' },
-    { icon: 'faceid', label: 'Face ID / Touch ID', status: 'Disabled' },
-  ];
+  // UST-15 C4 (D5): la fila biométrica dice lo que el teléfono TIENE (Face ID / Touch ID en
+  // iPhone; huella o cara en Android) y su estado REAL (ns.biolock). Antes eran tres filas
+  // escritas a mano —«Authenticator App», «SMS Verification», «Face ID / Touch ID»— en inglés,
+  // sin traducir y «Disabled» aunque el bloqueo estuviera activo; las dos primeras no existen.
+  const [bio, setBio] = useState<{ tipo: TipoBio; activo: boolean; hay: boolean }>({ tipo: tipoBiometria(null, Platform.OS), activo: false, hay: true });
+  useEffect(() => {
+    let vivo = true;
+    (async () => {
+      try {
+        const [tipos, hw, activo] = await Promise.all([
+          LocalAuthentication.supportedAuthenticationTypesAsync().catch(() => [] as number[]),
+          LocalAuthentication.hasHardwareAsync().catch(() => false),
+          SecureStore.getItemAsync('ns.biolock').catch(() => null),
+        ]);
+        if (vivo) setBio({ tipo: tipoBiometria(tipos as number[], Platform.OS), activo: activo === '1', hay: !!hw });
+      } catch { /* la pantalla nunca se queda en blanco por esto */ }
+    })();
+    return () => { vivo = false; };
+  }, []);
+  const nombreBio = t('mob.seg.bio.' + bio.tipo, BIO_EN[bio.tipo]);
+  const etiquetaBio = Platform.OS === 'ios' ? nombreBio : t('mob.seg.biometria', 'Unlock with {{que}}').replace('{{que}}', nombreBio);
+  const TFA = bio.hay ? [
+    { icon: 'faceid', label: etiquetaBio, status: bio.activo ? t('mob.seg.activado', 'On') : t('mob.seg.desactivado', 'Off') },
+  ] : [];
 
   return (
     <View style={styles.fill}>
-      <SafeAreaView style={styles.fill} edges={['top']}>
+      <SafeAreaView style={styles.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
           <Text style={styles.headerTitle}>{t('ui.security', 'Sign-in & Security')}</Text><View style={{ width: 24 }} />

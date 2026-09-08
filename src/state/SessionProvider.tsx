@@ -71,8 +71,14 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       setSession(null);
       setLoading(false);
     });
-    const { data: sub } = supabase.auth.onAuthStateChange(async (_e, s) => {
+    const { data: sub } = supabase.auth.onAuthStateChange(async (e, s) => {
       setSession(s);
+      // UST-15 E1 (8-sep): la PRIMERA sesión tras iniciar sesión no dejaba rastro en
+      // access_log (K4 solo apunta en el arranque CON sesión guardada; el ping de primer
+      // plano arranca su contador en el montaje). Instalar → login → usar → cerrar = 0 filas.
+      if (e === 'SIGNED_IN' && s?.user?.id) {
+        supabase.rpc('log_access', { p_platform: Platform.OS, p_version: String(Constants.expoConfig?.version ?? '') }).then(() => {}, () => {});
+      }
       await check(s?.user.id ?? null);
     });
     return () => sub.subscription.unsubscribe();

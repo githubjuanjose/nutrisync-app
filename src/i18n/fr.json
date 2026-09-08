@@ -886,7 +886,8 @@
     "fb": {
       "attach": "📎 Joindre une capture",
       "attached": "Capture jointe ✓ (touche pour retirer)",
-      "attachSoon": "Les captures arrivent avec la prochaine mise à jour."
+      "attachSoon": "Les captures arrivent avec la prochaine mise à jour.",
+      "attachFail": "Impossible de joindre la capture (touchez pour la retirer)"
     },
     "foto": {
       "titulo": "Enregistre ton repas",
@@ -979,7 +980,8 @@
       "anadido": "aliment ajouté",
       "sinScore": "Pas encore de score",
       "cambiarTipo": "Mauvais repas ? Déplace-le :",
-      "anilloSin": "Aucun de ces aliments n’est encore dans la feuille d’alignement — ton repas compte quand même dans ta journée."
+      "anilloSin": "Aucun de ces aliments n’est encore dans la feuille d’alignement — ton repas compte quand même dans ta journée.",
+      "abrirAjustes": "Ouvrir les Réglages"
     },
     "set": {
       "otaEmbedded": "bundle d'usine — aucune OTA appliquée"
@@ -1086,9 +1088,32 @@
       "chooseSignals": "Choisir quoi suivre",
       "guardar": "Enregistrer les modifications",
       "guardadoTitulo": "Enregistré",
-      "guardadoTexto": "Votre choix est enregistré. Désormais NutriSync ne lit que ce que vous avez sélectionné."
+      "guardadoTexto": "Votre choix est enregistré. Désormais NutriSync ne lit que ce que vous avez sélectionné.",
+      "proximamente": "Arrive dans une prochaine version",
+      "pronto": "Bientôt",
+      "proximamenteTexto": "Health Connect arrive dans une prochaine version de NutriSync. Rien à configurer pour l’instant.",
+      "notaAndroid": "Health Connect arrive dans une prochaine version : d’ici là, rien ne se synchronise sur Android. Connecter enregistre votre consentement ; déconnecter arrête immédiatement toute synchronisation.",
+      "notaIos": "Connecter enregistre votre consentement maintenant. Apple Santé se synchronise en direct dans cette version ; les autres sources s’activent à l’arrivée de leur connecteur. Déconnecter arrête immédiatement la synchronisation."
     },
-    "stepsToday": "Aujourd'hui, via Santé"
+    "stepsToday": "Aujourd'hui, via Santé",
+    "auth": {
+      "bioTitleAndroid": "Déverrouiller avec votre empreinte ou votre visage ?"
+    },
+    "stepsAndroid": "Vos pas arriveront avec Health Connect, dans une prochaine version",
+    "seg": {
+      "biometria": "Déverrouiller avec {{que}}",
+      "activado": "Activé",
+      "desactivado": "Désactivé",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "votre empreinte",
+        "cara": "votre visage",
+        "huellaOCara": "votre empreinte ou votre visage",
+        "iris": "l’iris"
+      }
+    }
   },
   "cat": {
     "Getting started": "Premiers pas",

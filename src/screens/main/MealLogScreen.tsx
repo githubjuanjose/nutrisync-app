@@ -4,6 +4,7 @@ import {
   Platform, ScrollView, ActivityIndicator, Keyboard,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla } from '../../lib/plataforma';
 import { useNavigation } from '@react-navigation/native';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
@@ -70,7 +71,7 @@ export default function MealLogScreen({ route }: any) {
 
   return (
     <View style={styles.fill}>
-      <SafeAreaView style={styles.fill} edges={['top']}>
+      <SafeAreaView style={styles.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={styles.header}>
           <Pressable onPress={() => nav.goBack()} hitSlop={12}><Text style={styles.back}>‹</Text></Pressable>
           <Text style={styles.headerTitle}>{t('mob.mealLog', 'Meal Log')}</Text>

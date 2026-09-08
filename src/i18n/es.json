@@ -1217,7 +1217,8 @@
       "bioYes": "Sí, activar",
       "bioNo": "Ahora no",
       "bioUnlock": "Desbloquea NutriSync",
-      "bioFallback": "Usar contraseña"
+      "bioFallback": "Usar contraseña",
+      "bioTitleAndroid": "¿Desbloquear con tu huella o tu cara?"
     },
     "graceAvg": "tu media es",
     "graceQ": "¿Te ha venido el período?",
@@ -1290,7 +1291,8 @@
     "fb": {
       "attach": "📎 Adjuntar captura",
       "attached": "Captura adjunta ✓ (toca para quitar)",
-      "attachSoon": "Las capturas llegan con la próxima actualización de la app."
+      "attachSoon": "Las capturas llegan con la próxima actualización de la app.",
+      "attachFail": "No se pudo adjuntar la captura (toca para quitarla)"
     },
     "foto": {
       "titulo": "Registra tu comida",
@@ -1383,7 +1385,8 @@
       "anadido": "alimento añadido",
       "sinScore": "Sin score aún",
       "cambiarTipo": "¿Comida equivocada? Muévela:",
-      "anilloSin": "Ninguno de estos alimentos está aún en la hoja de alineación — tu comida cuenta igual en tu día."
+      "anilloSin": "Ninguno de estos alimentos está aún en la hoja de alineación — tu comida cuenta igual en tu día.",
+      "abrirAjustes": "Abrir Ajustes"
     },
     "tiempo": {
       "ayer": "Ayer",
@@ -1487,9 +1490,29 @@
       "chooseSignals": "Elige qué seguir",
       "guardar": "Guardar cambios",
       "guardadoTitulo": "Guardado",
-      "guardadoTexto": "Tu elección está guardada. A partir de ahora NutriSync solo lee lo que has seleccionado."
+      "guardadoTexto": "Tu elección está guardada. A partir de ahora NutriSync solo lee lo que has seleccionado.",
+      "proximamente": "Llega en una próxima versión",
+      "pronto": "Pronto",
+      "proximamenteTexto": "Health Connect llega en una próxima versión de NutriSync. Todavía no hay nada que configurar.",
+      "notaAndroid": "Health Connect llega en una próxima versión: hasta entonces en Android no se sincroniza nada. Conectar registra tu consentimiento; desconectar detiene cualquier sincronización al instante.",
+      "notaIos": "Conectar registra tu consentimiento ahora. Apple Salud sincroniza en vivo en esta versión; las otras fuentes se activan cuando llegue su conector. Desconectar detiene la sincronización al instante."
     },
-    "stepsToday": "Hoy, desde Salud"
+    "stepsToday": "Hoy, desde Salud",
+    "stepsAndroid": "Tus pasos llegarán con Health Connect, en una próxima versión",
+    "seg": {
+      "biometria": "Desbloquear con {{que}}",
+      "activado": "Activado",
+      "desactivado": "Desactivado",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "tu huella",
+        "cara": "tu cara",
+        "huellaOCara": "tu huella o tu cara",
+        "iris": "el iris"
+      }
+    }
   },
   "cat": {
     "Getting started": "Primeros pasos",

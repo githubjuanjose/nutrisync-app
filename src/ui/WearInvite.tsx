@@ -25,7 +25,9 @@ export default function WearInvite({ navigation }: { navigation: any }) {
     let vivo = true;
     (async () => {
       try {
-        if (!flags.connectors || !userId) return;
+        // UST-15 C2 (D2): en Android la invitación llevaba al consentimiento de Health Connect,
+        // que no conecta nada hasta O3 (UST-16). Solo iOS mientras tanto.
+        if (!flags.connectors || !userId || Platform.OS !== 'ios') return;
         if ((await AsyncStorage.getItem(CLAVE)) === '1') return;
         const conexiones = await getConnections(userId);
         const ya = conexiones.some((c) => c.provider === 'apple_health' || c.provider === 'health_connect');

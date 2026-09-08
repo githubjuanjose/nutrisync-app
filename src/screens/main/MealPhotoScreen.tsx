@@ -201,13 +201,18 @@ export default function MealPhotoScreen({ navigation, route }: any) {
         : await IP.requestMediaLibraryPermissionsAsync();
       if (!permiso?.granted) {
         // Permiso denegado NO es un error nuestro: se explica y se ofrece la salida.
-        notify(
-          t('mob.foto.permTit', 'Permission needed'),
-          fuente === 'camara'
-            ? t('mob.foto.permCam', 'NutriSync needs the camera to photograph your meal.')
-            : t('mob.foto.permGal', 'NutriSync needs access to your photos to pick a meal.'),
-        );
-        if (permiso?.canAskAgain === false) Linking.openSettings?.();
+        // UST-15 C8 (D6): antes se saltaba a Ajustes con la alerta aún en pantalla; ahora es un botón.
+        const msg = fuente === 'camara'
+          ? t('mob.foto.permCam', 'NutriSync needs the camera to photograph your meal.')
+          : t('mob.foto.permGal', 'NutriSync needs access to your photos to pick a meal.');
+        if (permiso?.canAskAgain === false) {
+          notify(t('mob.foto.permTit', 'Permission needed'), msg, [
+            { text: t('ui.cancel', 'Cancel'), style: 'cancel' },
+            { text: t('mob.foto.abrirAjustes', 'Open Settings'), onPress: () => { Linking.openSettings?.(); } },
+          ]);
+        } else {
+          notify(t('mob.foto.permTit', 'Permission needed'), msg);
+        }
         return;
       }
       const r = fuente === 'camara'
@@ -884,7 +889,7 @@ const s = StyleSheet.create({
   scanFoto: { width: '100%', height: '100%' },
   scanLinea: {
     position: 'absolute', left: 0, right: 0, height: 3,
-    backgroundColor: P.naranja, shadowColor: P.naranja, shadowOpacity: 0.6, shadowRadius: 6,
+    backgroundColor: P.naranja, shadowColor: P.naranja, shadowOpacity: 0.6, shadowRadius: 6, elevation: 2,   // UST-15 C8: brillo también en Android
   },
   progreso: {
     width: '62%', height: 8, borderRadius: 4, backgroundColor: '#F1E2DC',

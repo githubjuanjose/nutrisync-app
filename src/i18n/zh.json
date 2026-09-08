@@ -888,7 +888,8 @@
     "fb": {
       "attach": "📎 添加截图",
       "attached": "已添加截图 ✓（点按可移除）",
-      "attachSoon": "截图功能将随下次更新推出。"
+      "attachSoon": "截图功能将随下次更新推出。",
+      "attachFail": "无法附加截图（点击移除）"
     },
     "foto": {
       "titulo": "记录你的餐食",
@@ -981,7 +982,8 @@
       "anadido": "种食材已添加",
       "sinScore": "暂无评分",
       "cambiarTipo": "选错餐了？移动到：",
-      "anilloSin": "这些食物尚未加入匹配表 — 你的这餐仍会计入今天。"
+      "anilloSin": "这些食物尚未加入匹配表 — 你的这餐仍会计入今天。",
+      "abrirAjustes": "打开设置"
     },
     "set": {
       "otaEmbedded": "出厂包 — 尚未应用OTA"
@@ -1088,9 +1090,32 @@
       "chooseSignals": "选择要追踪的内容",
       "guardar": "保存更改",
       "guardadoTitulo": "已保存",
-      "guardadoTexto": "你的选择已保存。从现在起 NutriSync 只读取你选择的内容。"
+      "guardadoTexto": "你的选择已保存。从现在起 NutriSync 只读取你选择的内容。",
+      "proximamente": "将在后续版本推出",
+      "pronto": "即将推出",
+      "proximamenteTexto": "Health Connect 将在 NutriSync 的后续版本中推出，目前无需设置。",
+      "notaAndroid": "Health Connect 将在后续版本中推出：在此之前，Android 上不会同步任何数据。连接会记录你的同意；断开会立即停止所有同步。",
+      "notaIos": "连接会立即记录你的同意。此版本中 Apple 健康实时同步；其他来源会在其连接器上线后启用。断开会立即停止同步。"
     },
-    "stepsToday": "今天，来自“健康”"
+    "stepsToday": "今天，来自“健康”",
+    "auth": {
+      "bioTitleAndroid": "用指纹或面容解锁？"
+    },
+    "stepsAndroid": "你的步数将在后续版本中通过 Health Connect 获取",
+    "seg": {
+      "biometria": "使用{{que}}解锁",
+      "activado": "已开启",
+      "desactivado": "已关闭",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "指纹",
+        "cara": "面容",
+        "huellaOCara": "指纹或面容",
+        "iris": "虹膜"
+      }
+    }
   },
   "cat": {
     "Getting started": "新手入门",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, ActivityIndicator, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla } from '../../lib/plataforma';
 import { colors, font, radius, shadow } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
 import { ChipGroup } from '../../ui/Chips';
@@ -64,7 +65,7 @@ export default function NutritionalPreferencesScreen({ navigation }: any) {
 
   return (
     <View style={styles.fill}>
-      <SafeAreaView style={styles.fill} edges={['top']}>
+      <SafeAreaView style={styles.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
           <Text style={styles.headerTitle}>{t('mob.nutritionalPrefs', "Nutritional Preferences")}</Text><View style={{ width: 24 }} />

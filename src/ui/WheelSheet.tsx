@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, Modal, Platform } from 'react-native';
 import { colors, font } from '../theme';
 import { useT } from '../i18n';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { insetInferior } from '../lib/plataforma';
 import { wheelIndex, wheelOffset } from '../lib/pickers';
 
 /**
@@ -72,11 +74,14 @@ export function WheelSheet({ visible, title, cols, onClose }: {
   visible: boolean; title: string; cols: WheelCol[]; onClose: () => void;
 }) {
   const t = useT();
+  // UST-15 A4/A5: en Android el Modal no hereda edge-to-edge (barras que saltan a opaco) y la fila
+  // «Done» quedaba bajo los 3 botones. Translúcido + paddingBottom con el inset (0 en iPhone).
+  const alza = insetInferior(Platform.OS, useSafeAreaInsets().bottom);
   if (!visible) return null;
   return (
-    <Modal transparent animationType="fade" visible={visible} onRequestClose={onClose}>
+    <Modal transparent animationType="fade" visible={visible} onRequestClose={onClose} statusBarTranslucent navigationBarTranslucent>
       <Pressable style={s.backdrop} onPress={onClose} />
-      <View style={s.sheet}>
+      <View style={[s.sheet, { paddingBottom: 26 + alza }]}>
         <View style={s.head}>
           <Text style={s.title}>{title}</Text>
           <Pressable onPress={onClose} hitSlop={10}><Text style={s.done}>{t('ui.done', 'Done')}</Text></Pressable>

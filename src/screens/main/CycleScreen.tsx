@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, Pressable, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable, ScrollView, ActivityIndicator, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { insetInferior } from '../../lib/plataforma';
 import { NutriAvatar } from '../../ui/NutriAvatar';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
@@ -36,6 +37,7 @@ function weekAroundToday(tag: string) {
 export default function CycleScreen({ navigation }: any) {
   const { userId } = useSession();
   const t = useT();
+  const alza = insetInferior(Platform.OS, useSafeAreaInsets().bottom);   // UST-15 C1 (D1): solo Android
   const { lang } = useI18n();
   const [profile, setProfile] = useState<UserRow | null>(null);
   const [cycle, setCycle] = useState<CycleRow | null>(null);
@@ -88,7 +90,7 @@ export default function CycleScreen({ navigation }: any) {
       {/* R4-f2: coral-to-white screen gradient */}
       <LinearGradient colors={screenGrad.colors as any} locations={screenGrad.locations as any} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top']}>
-        <ScrollView contentContainerStyle={{ paddingBottom: 30 }} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 92 + alza }} showsVerticalScrollIndicator={false}>
           <WearInvite navigation={navigation} />
           <View style={styles.header}>
             <View style={styles.brandLockup}>

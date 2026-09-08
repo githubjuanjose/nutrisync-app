@@ -888,7 +888,8 @@
     "fb": {
       "attach": "📎 Screenshot toevoegen",
       "attached": "Screenshot toegevoegd ✓ (tik om te verwijderen)",
-      "attachSoon": "Screenshots komen met de volgende update."
+      "attachSoon": "Screenshots komen met de volgende update.",
+      "attachFail": "Screenshot kon niet worden bijgevoegd (tik om te verwijderen)"
     },
     "foto": {
       "titulo": "Registreer je maaltijd",
@@ -981,7 +982,8 @@
       "anadido": "ingrediënt toegevoegd",
       "sinScore": "Nog geen score",
       "cambiarTipo": "Verkeerde maaltijd? Verplaats:",
-      "anilloSin": "Geen van deze voedingsmiddelen staat nog in het afstemmingsblad — je maaltijd telt gewoon mee in je dag."
+      "anilloSin": "Geen van deze voedingsmiddelen staat nog in het afstemmingsblad — je maaltijd telt gewoon mee in je dag.",
+      "abrirAjustes": "Instellingen openen"
     },
     "set": {
       "otaEmbedded": "fabrieksbundel — nog geen OTA"
@@ -1088,9 +1090,32 @@
       "chooseSignals": "Kies wat je bijhoudt",
       "guardar": "Wijzigingen opslaan",
       "guardadoTitulo": "Opgeslagen",
-      "guardadoTexto": "Je keuze is opgeslagen. Vanaf nu leest NutriSync alleen wat je hebt geselecteerd."
+      "guardadoTexto": "Je keuze is opgeslagen. Vanaf nu leest NutriSync alleen wat je hebt geselecteerd.",
+      "proximamente": "Komt in een volgende versie",
+      "pronto": "Binnenkort",
+      "proximamenteTexto": "Health Connect komt in een volgende versie van NutriSync. Er valt nu nog niets in te stellen.",
+      "notaAndroid": "Health Connect komt in een volgende versie: tot die tijd wordt er op Android niets gesynchroniseerd. Verbinden legt je toestemming vast; loskoppelen stopt elke synchronisatie meteen.",
+      "notaIos": "Verbinden legt je toestemming nu vast. Apple Gezondheid synchroniseert live in deze versie; andere bronnen worden actief zodra hun koppeling er is. Loskoppelen stopt de synchronisatie meteen."
     },
-    "stepsToday": "Vandaag, uit Gezondheid"
+    "stepsToday": "Vandaag, uit Gezondheid",
+    "auth": {
+      "bioTitleAndroid": "Ontgrendelen met je vingerafdruk of gezicht?"
+    },
+    "stepsAndroid": "Je stappen komen met Health Connect, in een volgende versie",
+    "seg": {
+      "biometria": "Ontgrendelen met {{que}}",
+      "activado": "Aan",
+      "desactivado": "Uit",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "je vingerafdruk",
+        "cara": "je gezicht",
+        "huellaOCara": "je vingerafdruk of gezicht",
+        "iris": "je iris"
+      }
+    }
   },
   "cat": {
     "Getting started": "Aan de slag",

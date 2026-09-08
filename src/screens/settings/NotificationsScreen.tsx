@@ -4,8 +4,9 @@
 // rachas · reenganche) y horarios de mañana/noche. Cada toque persiste solo
 // su columna (upsert parcial: jamás pisa lo que posee otro flujo).
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Switch, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Switch, ActivityIndicator, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla } from '../../lib/plataforma';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT, useI18n } from '../../i18n';
 import { useSession } from '../../state/SessionProvider';
@@ -85,7 +86,7 @@ export default function NotificationsScreen({ navigation }: any) {
 
   return (
     <View style={styles.fill}>
-      <SafeAreaView style={styles.fill} edges={['top']}>
+      <SafeAreaView style={styles.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
           <Text style={styles.headerTitle}>{t('mob.notifReminders', 'Notifications & Reminders')}</Text><View style={{ width: 24 }} />

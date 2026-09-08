@@ -8,6 +8,9 @@ import { Platform } from 'react-native';
 import { supabase } from './supabase';
 import { mapPermission, buildPrefsUpsert } from './pushPure';
 
+/** Canal de Android que la Edge notify-dispatch debe nombrar en channelId (UST-15 C7). */
+export const CANAL_ANDROID = 'nutrisync-v2';
+
 export type PushStatus = 'ok' | 'denied' | 'unsupported' | 'error';
 
 const EAS_PROJECT_ID = '3b124e7e-e7e8-43ed-a54c-b660a07109dc';
@@ -36,9 +39,16 @@ export async function enablePush(userId: string, idioma = 'en'): Promise<PushSta
     if (st === 'ask') st = mapPermission((await N.requestPermissionsAsync())?.status);
     if (st !== 'granted') return 'denied';
     if (Platform.OS === 'android') {
-      await N.setNotificationChannelAsync('default', {
+      // UST-15 C7 (D4): el canal «default» nació con importancia DEFAULT → los avisos llegaban
+      // EN SILENCIO a la bandeja (sin banner ni sonido); en iPhone hay banner. Android no deja
+      // subir la importancia de un canal ya creado: canal NUEVO. La Edge notify-dispatch manda
+      // channelId 'nutrisync-v2' DESPUÉS de esta OTA (las apps viejas siguen en 'default').
+      await N.setNotificationChannelAsync(CANAL_ANDROID, {
         name: 'NutriSync',
-        importance: N.AndroidImportance?.DEFAULT ?? 3,
+        importance: N.AndroidImportance?.HIGH ?? 4,
+        sound: 'default',
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF6103',
       });
     }
     const token = (await N.getExpoPushTokenAsync({ projectId: EAS_PROJECT_ID }))?.data;

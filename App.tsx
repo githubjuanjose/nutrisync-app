@@ -15,6 +15,7 @@ import { PeachBg } from './src/ui/PeachBg';
 import { BioGate, BioOfferModal, useBioOffer } from './src/ui/BioLock';
 import { useOtaAutoApply } from './src/lib/otaAutoApply';
 import { iniciarCrash } from './src/lib/crash';
+import { BarrasSistema } from './src/ui/BarrasSistema';
 
 // r24-f: Crashlytics sin identidad — no-op en runtimes sin el módulo nativo.
 iniciarCrash();
@@ -35,6 +36,7 @@ function AppInner() {
       <PeachBg style={StyleSheet.absoluteFill} />
       <NavigationContainer theme={navTheme} ref={navRef}>
         <StatusBar style="dark" />
+        <BarrasSistema />   {/* UST-15 A6: barra de navegación de Android oscura sobre fondo transparente */}
         <RootNavigator />
       </NavigationContainer>
       <BioOfferModal visible={bio.visible} onClose={bio.close} />
@@ -47,7 +49,7 @@ export default function App() {
     Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold,
   });
 
-  if (!loaded) return <View style={{ flex: 1, backgroundColor: '#FFF8F1' }} />;
+  if (!loaded) return <View style={{ flex: 1, backgroundColor: '#FCF1EC' }} />;   // UST-15 C8: el mismo beige que el splash (app.json)
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

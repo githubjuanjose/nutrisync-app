@@ -887,7 +887,8 @@
     "fb": {
       "attach": "📎 スクリーンショットを添付",
       "attached": "添付済み ✓（タップで削除）",
-      "attachSoon": "スクリーンショットは次のアップデートで使えます。"
+      "attachSoon": "スクリーンショットは次のアップデートで使えます。",
+      "attachFail": "スクリーンショットを添付できませんでした（タップで削除）"
     },
     "foto": {
       "titulo": "食事を記録",
@@ -980,7 +981,8 @@
       "anadido": "件の食材を追加",
       "sinScore": "スコアはまだ",
       "cambiarTipo": "食事の種類が違う？移動：",
-      "anilloSin": "これらの食品はまだアラインメント表にありません — それでも食事は今日の記録に数えられます。"
+      "anilloSin": "これらの食品はまだアラインメント表にありません — それでも食事は今日の記録に数えられます。",
+      "abrirAjustes": "設定を開く"
     },
     "set": {
       "otaEmbedded": "初期バンドル — OTA未適用"
@@ -1087,9 +1089,32 @@
       "chooseSignals": "記録する項目を選ぶ",
       "guardar": "変更を保存",
       "guardadoTitulo": "保存しました",
-      "guardadoTexto": "選択内容を保存しました。今後 NutriSync は選択した項目のみを読み取ります。"
+      "guardadoTexto": "選択内容を保存しました。今後 NutriSync は選択した項目のみを読み取ります。",
+      "proximamente": "今後のバージョンで対応予定",
+      "pronto": "近日",
+      "proximamenteTexto": "Health Connect は NutriSync の今後のバージョンで対応します。今はまだ設定するものはありません。",
+      "notaAndroid": "Health Connect は今後のバージョンで対応します。それまで Android では何も同期されません。接続は同意を記録し、切断はすべての同期をすぐに止めます。",
+      "notaIos": "接続すると今すぐ同意が記録されます。このバージョンでは Apple ヘルスケアがリアルタイムで同期し、他のソースはコネクタの提供とともに有効になります。切断すると同期はすぐに止まります。"
     },
-    "stepsToday": "今日、ヘルスケアから"
+    "stepsToday": "今日、ヘルスケアから",
+    "auth": {
+      "bioTitleAndroid": "指紋または顔でロック解除しますか？"
+    },
+    "stepsAndroid": "歩数は今後のバージョンで Health Connect から取得できるようになります",
+    "seg": {
+      "biometria": "{{que}}でロック解除",
+      "activado": "オン",
+      "desactivado": "オフ",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "指紋",
+        "cara": "顔",
+        "huellaOCara": "指紋または顔",
+        "iris": "虹彩"
+      }
+    }
   },
   "cat": {
     "Getting started": "はじめの一歩",

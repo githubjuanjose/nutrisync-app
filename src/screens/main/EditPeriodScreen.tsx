@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndicator, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla } from '../../lib/plataforma';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path } from 'react-native-svg';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
@@ -189,7 +190,7 @@ export default function EditPeriodScreen({ navigation }: any) {
   return (
     <View style={styles.fill}>
       <LinearGradient colors={screenGrad.colors as any} locations={screenGrad.locations as any} style={StyleSheet.absoluteFill} />
-      <SafeAreaView style={styles.fill} edges={['top']}>
+      <SafeAreaView style={styles.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={styles.header}>
           <Pressable onPress={() => navigation.goBack()} style={styles.iconBtn}><Text style={styles.x}>✕</Text></Pressable>
           <View style={{ alignItems: 'center' }}>
@@ -355,8 +356,8 @@ export default function EditPeriodScreen({ navigation }: any) {
         {notesOpen && (
           <View style={styles.notesOverlay}>
             <LinearGradient colors={['#FCF1EC', '#FBE7DB']} style={StyleSheet.absoluteFill} />
-            <SafeAreaView style={{ flex: 1 }} edges={['top', 'bottom']}>
-              <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1 }} edges={['bottom']}>   {/* UST-15 A8: el exterior ya protege arriba */}
+              <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}   /* UST-15 A7: adjustResize ya ajusta en Android */ style={{ flex: 1 }}>
                 <View style={styles.header}>
                   <Pressable onPress={() => setNotesOpen(false)} style={styles.iconBtn}><Text style={styles.x}>✕</Text></Pressable>
                   <Text style={styles.title}>{t('mob.notes', 'Add notes')}</Text>

@@ -21,9 +21,10 @@
  *  · Tip/insight/recetas solo se enseñan HOY: son guía del día, no historia.
  */
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, Image, Platform } from 'react-native';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { insetInferior } from '../../lib/plataforma';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
@@ -88,6 +89,7 @@ type Quick = { mood: number | null; energy: number | null; flow_level: number | 
 
 export default function NutriLogScreen() {
   const t = useT();
+  const alza = insetInferior(Platform.OS, useSafeAreaInsets().bottom);   // UST-15 C1 (D1): solo Android
   const tc = useTc();
   const { lang } = useI18n();
   const nav = useNavigation<any>();
@@ -220,7 +222,7 @@ export default function NutriLogScreen() {
           </Pressable>
         </View>
 
-        <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 130 }} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 130 + alza }} showsVerticalScrollIndicator={false}>
           {esDia ? (
             <>
               {/* ── Daily Tip (solo hoy: guía del día) ── */}

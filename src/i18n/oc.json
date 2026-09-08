@@ -888,7 +888,8 @@
     "fb": {
       "attach": "📎 Ajustar captura",
       "attached": "Captura ajustada ✓ (tòca per la levar)",
-      "attachSoon": "Las capturas arriban amb la venenta mesa a jorn."
+      "attachSoon": "Las capturas arriban amb la venenta mesa a jorn.",
+      "attachFail": "Se pòt pas apondre la captura (tòca per la levar)"
     },
     "foto": {
       "titulo": "Enregistra ton repais",
@@ -981,7 +982,8 @@
       "anadido": "aliment apondut",
       "sinScore": "Encara sens score",
       "cambiarTipo": "Repais marrit? Desplaça-lo:",
-      "anilloSin": "Cap d’aquestes aliments es pas encara dins la fuèlha d’alinhament — ton repais compta parièr dins ta jornada."
+      "anilloSin": "Cap d’aquestes aliments es pas encara dins la fuèlha d’alinhament — ton repais compta parièr dins ta jornada.",
+      "abrirAjustes": "Dobrir los Paramètres"
     },
     "set": {
       "otaEmbedded": "paquet d'origina — cap d'OTA aplicada"
@@ -1088,9 +1090,32 @@
       "chooseSignals": "Causís çò que vòls seguir",
       "guardar": "Salvar los cambiaments",
       "guardadoTitulo": "Salvat",
-      "guardadoTexto": "Ta causida es salvada. D'ara enlà NutriSync legís pas que çò qu'as seleccionat."
+      "guardadoTexto": "Ta causida es salvada. D'ara enlà NutriSync legís pas que çò qu'as seleccionat.",
+      "proximamente": "Arriba dins una version venenta",
+      "pronto": "Lèu",
+      "proximamenteTexto": "Health Connect arriba dins una version venenta de NutriSync. I a pas encara res a configurar.",
+      "notaAndroid": "Health Connect arriba dins una version venenta: fins alara sus Android res se sincroniza pas. Connectar enregistra ton consentiment; desconnectar arrèsta tota sincronizacion sul pic.",
+      "notaIos": "Connectar enregistra ton consentiment ara. Apple Santat se sincroniza en dirècte dins aquesta version; las autras fonts s’activan quand arriba lor connector. Desconnectar arrèsta la sincronizacion sul pic."
     },
-    "stepsToday": "Uèi, dempuèi Santat"
+    "stepsToday": "Uèi, dempuèi Santat",
+    "auth": {
+      "bioTitleAndroid": "Desblocar amb ton emprenta o ta cara?"
+    },
+    "stepsAndroid": "Tos passes arribaràn amb Health Connect, dins una version venenta",
+    "seg": {
+      "biometria": "Desblocar amb {{que}}",
+      "activado": "Activat",
+      "desactivado": "Desactivat",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "ton emprenta",
+        "cara": "ta cara",
+        "huellaOCara": "ton emprenta o ta cara",
+        "iris": "l’iris"
+      }
+    }
   },
   "cat": {
     "Getting started": "Prumèri passi",

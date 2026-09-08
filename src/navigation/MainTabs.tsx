@@ -1,5 +1,7 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { insetInferior } from '../lib/plataforma';
 import { NavIcon } from '../ui/NavIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MainTabParamList } from './types';
@@ -30,6 +32,11 @@ const ACTIVE = '#E4572E';
 const INACTIVE = '#B8ADA4';
 
 export default function MainTabs() {
+  // UST-15 C1 (D1): en Android la app dibuja edge-to-edge (SDK 54, siempre) y la
+  // píldora quedaba bajo los botones del sistema. Sube exactamente el inset —
+  // SOLO en Android; en iPhone insetInferior devuelve 0 y nada cambia.
+  const insets = useSafeAreaInsets();
+  const alza = insetInferior(Platform.OS, insets.bottom);
   return (
     // r17-j: fuera `sceneContainerStyle` — era API de la v6 y la v7 la IGNORABA
     // en silencio desde la actualización. La app se veía bien igualmente porque
@@ -42,7 +49,7 @@ export default function MainTabs() {
         tabBarInactiveTintColor: INACTIVE,
         tabBarShowLabel: false,
         tabBarStyle: {
-          position: 'absolute', left: 14, right: 14, bottom: 10,
+          position: 'absolute', left: 14, right: 14, bottom: 10 + alza,
           backgroundColor: colors.white, borderTopWidth: 0, borderRadius: 32,
           height: 62, paddingBottom: 6, paddingTop: 6,
           shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 18, shadowOffset: { width: 0, height: 8 }, elevation: 10,

@@ -889,7 +889,8 @@
     "fb": {
       "attach": "📎 Erantsi pantaila-argazkia",
       "attached": "Argazkia erantsita ✓ (kendu ukituz)",
-      "attachSoon": "Pantaila-argazkiak hurrengo eguneratzearekin datoz."
+      "attachSoon": "Pantaila-argazkiak hurrengo eguneratzearekin datoz.",
+      "attachFail": "Ezin izan da pantaila-argazkia erantsi (ukitu kentzeko)"
     },
     "foto": {
       "titulo": "Erregistratu zure otordua",
@@ -982,7 +983,8 @@
       "anadido": "elikagai gehituta",
       "sinScore": "Oraindik punturik ez",
       "cambiarTipo": "Otordu okerra? Mugitu:",
-      "anilloSin": "Janari hauetako bat ere ez dago oraindik lerrokatze-orrian — zure otorduak berdin balio du zure egunean."
+      "anilloSin": "Janari hauetako bat ere ez dago oraindik lerrokatze-orrian — zure otorduak berdin balio du zure egunean.",
+      "abrirAjustes": "Ireki Ezarpenak"
     },
     "set": {
       "otaEmbedded": "fabrikako paketea — OTA-rik gabe"
@@ -1089,9 +1091,32 @@
       "chooseSignals": "Aukeratu zer jarraitu",
       "guardar": "Gorde aldaketak",
       "guardadoTitulo": "Gordeta",
-      "guardadoTexto": "Zure aukera gorde da. Hemendik aurrera NutriSync-ek hautatu duzuna bakarrik irakurtzen du."
+      "guardadoTexto": "Zure aukera gorde da. Hemendik aurrera NutriSync-ek hautatu duzuna bakarrik irakurtzen du.",
+      "proximamente": "Hurrengo bertsio batean iritsiko da",
+      "pronto": "Laster",
+      "proximamenteTexto": "Health Connect NutriSync-en hurrengo bertsio batean iritsiko da. Oraindik ez dago ezer konfiguratzeko.",
+      "notaAndroid": "Health Connect hurrengo bertsio batean iritsiko da: ordura arte Android-en ez da ezer sinkronizatzen. Konektatzeak zure baimena erregistratzen du; deskonektatzeak edozein sinkronizazio berehala gelditzen du.",
+      "notaIos": "Konektatzeak zure baimena erregistratzen du orain. Apple Osasuna zuzenean sinkronizatzen da bertsio honetan; beste iturriak beren konektorea iristean aktibatzen dira. Deskonektatzeak sinkronizazioa berehala gelditzen du."
     },
-    "stepsToday": "Gaur, Osasunetik"
+    "stepsToday": "Gaur, Osasunetik",
+    "auth": {
+      "bioTitleAndroid": "Hatz-markarekin edo aurpegiarekin desblokeatu?"
+    },
+    "stepsAndroid": "Zure pausoak Health Connect-ekin iritsiko dira, hurrengo bertsio batean",
+    "seg": {
+      "biometria": "{{que}} erabiliz desblokeatu",
+      "activado": "Aktibatuta",
+      "desactivado": "Desaktibatuta",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "hatz-marka",
+        "cara": "aurpegia",
+        "huellaOCara": "hatz-marka edo aurpegia",
+        "iris": "irisa"
+      }
+    }
   },
   "cat": {
     "Getting started": "Lehen pausoak",

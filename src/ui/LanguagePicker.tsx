@@ -70,7 +70,7 @@ export function LanguagePicker({ style, align = 'left' }: { style?: StyleProp<Vi
         </View>
       )}
 
-      <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}>
+      <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)} statusBarTranslucent navigationBarTranslucent>
         <Pressable style={styles.backdrop} onPress={() => setOpen(false)}>
           <Pressable style={[styles.card, cardStyle]} onPress={() => {}}>
             {/* Cap at exactly 4 rows (ROW_H * 4) → small, elegant box; the rest scroll. */}

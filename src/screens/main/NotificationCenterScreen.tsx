@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { colorDeFase } from '../../lib/fases';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla } from '../../lib/plataforma';
 import { colors, font, radius, shadow, phaseColor, PhaseKey } from '../../theme';
 import { useT } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
@@ -109,7 +110,7 @@ export default function NotificationCenterScreen({ navigation }: any) {
 
   return (
     <View style={styles.fill}>
-      <SafeAreaView style={styles.fill} edges={['top']}>
+      <SafeAreaView style={styles.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
           <Text style={styles.headerTitle}>{t('mob.notifications', "Notifications")}</Text><View style={{ width: 24 }} />

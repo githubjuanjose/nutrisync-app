@@ -888,7 +888,8 @@
     "fb": {
       "attach": "📎 Achegar captura",
       "attached": "Captura achegada ✓ (toca para quitala)",
-      "attachSoon": "As capturas chegan coa próxima actualización."
+      "attachSoon": "As capturas chegan coa próxima actualización.",
+      "attachFail": "Non se puido achegar a captura (toca para quitala)"
     },
     "foto": {
       "titulo": "Rexistra a túa comida",
@@ -981,7 +982,8 @@
       "anadido": "alimento engadido",
       "sinScore": "Aínda sen score",
       "cambiarTipo": "Comida equivocada? Móvea:",
-      "anilloSin": "Ningún destes alimentos está aínda na folla de aliñamento — a túa comida conta igual no teu día."
+      "anilloSin": "Ningún destes alimentos está aínda na folla de aliñamento — a túa comida conta igual no teu día.",
+      "abrirAjustes": "Abrir Axustes"
     },
     "set": {
       "otaEmbedded": "paquete de fábrica — sen OTA aplicada"
@@ -1088,9 +1090,32 @@
       "chooseSignals": "Escolle que seguir",
       "guardar": "Gardar cambios",
       "guardadoTitulo": "Gardado",
-      "guardadoTexto": "A túa elección está gardada. A partir de agora NutriSync só le o que seleccionaches."
+      "guardadoTexto": "A túa elección está gardada. A partir de agora NutriSync só le o que seleccionaches.",
+      "proximamente": "Chega nunha próxima versión",
+      "pronto": "Pronto",
+      "proximamenteTexto": "Health Connect chega nunha próxima versión de NutriSync. Aínda non hai nada que configurar.",
+      "notaAndroid": "Health Connect chega nunha próxima versión: ata entón en Android non se sincroniza nada. Conectar rexistra o teu consentimento; desconectar detén calquera sincronización ao instante.",
+      "notaIos": "Conectar rexistra o teu consentimento agora. Apple Saúde sincroniza en vivo nesta versión; as outras fontes actívanse cando chegue o seu conector. Desconectar detén a sincronización ao instante."
     },
-    "stepsToday": "Hoxe, desde Saúde"
+    "stepsToday": "Hoxe, desde Saúde",
+    "auth": {
+      "bioTitleAndroid": "Desbloquear coa túa pegada ou coa túa cara?"
+    },
+    "stepsAndroid": "Os teus pasos chegarán con Health Connect, nunha próxima versión",
+    "seg": {
+      "biometria": "Desbloquear con {{que}}",
+      "activado": "Activado",
+      "desactivado": "Desactivado",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "a túa pegada",
+        "cara": "a túa cara",
+        "huellaOCara": "a túa pegada ou a túa cara",
+        "iris": "o iris"
+      }
+    }
   },
   "cat": {
     "Getting started": "Primeiros pasos",

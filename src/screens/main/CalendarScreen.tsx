@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Defs, RadialGradient, Stop, Rect, Circle as SvgCircle, Path } from 'react-native-svg';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { insetInferior } from '../../lib/plataforma';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT, useI18n, localeTag } from '../../i18n';
 import { LoadingView } from '../../ui/LoadingView';
@@ -43,6 +44,7 @@ const PAGE = 12;
 
 export default function CalendarScreen({ navigation }: any) {
   const t = useT();
+  const alza = insetInferior(Platform.OS, useSafeAreaInsets().bottom);   // UST-15 C1 (D1): solo Android
   const { lang } = useI18n();
   const lt = localeTag(lang);
   const { userId } = useSession();
@@ -298,7 +300,7 @@ export default function CalendarScreen({ navigation }: any) {
           )}
         </View>
 
-        <ScrollView contentContainerStyle={{ padding: 14, paddingTop: 4, paddingBottom: 92 }} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={{ padding: 14, paddingTop: 4, paddingBottom: 92 + alza }} showsVerticalScrollIndicator={false}>
           {view === 'month' ? (
             <>
               <View

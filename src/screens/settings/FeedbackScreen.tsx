@@ -8,7 +8,9 @@ import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
 import { useSession } from '../../state/SessionProvider';
 import { supabase } from '../../lib/supabase';
-import { buildShotPath, extFromUri } from '../../lib/shots';
+import { buildShotPath } from '../../lib/shots';
+import { bytesDesdeBase64 } from '../../lib/foto';
+import { estadoCaptura } from '../../lib/plataforma';
 
 /**
  * R3-49 (f55) — in-app Send Feedback. Writes to public.feedback (RLS: insert
@@ -22,6 +24,7 @@ export default function FeedbackScreen({ navigation }: any) {
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
   const [shot, setShot] = useState<string | null>(null);   // r16-F: screenshot adjunto
+  const [shotFallo, setShotFallo] = useState(false);        // UST-15 C6: la subida falló → la UI lo dice
 
   // El picker es módulo NATIVO: en runtimes sin él (≤0.21) o web, aviso amable.
   const pick = async () => {
@@ -43,14 +46,21 @@ export default function FeedbackScreen({ navigation }: any) {
       // r16-F: si hay screenshot, sube ANTES del insert (carpeta de la usuaria, RLS)
       let screenshot_path: string | null = null;
       if (shot) {
+        // UST-15 C6 (D1 del informe): fetch(file://)+blob fallaba en Android en silencio
+        // («Network request failed») y la pantalla decía «Screenshot attached ✓» — misma
+        // familia que r18-b (foto de comida). Mismo camino que MealPhoto: manipulador con
+        // base64 → bytes propios → ArrayBuffer. Si falla, el feedback sale sin foto y la UI lo dice.
         try {
-          const resp = await fetch(shot);
-          const blob = await resp.blob();
-          const ruta = buildShotPath(userId, Date.now(), extFromUri(shot));
+          const IM: any = require('expo-image-manipulator');
+          const listo = await IM.manipulateAsync(shot, [{ resize: { width: 1080 } }], { compress: 0.8, format: IM.SaveFormat.JPEG, base64: true });
+          const bytes = bytesDesdeBase64(listo.base64);
+          if (bytes.byteLength === 0) throw new Error('empty_image');
+          const ruta = buildShotPath(userId, Date.now(), 'jpg');
           const up = await supabase.storage.from('feedback-shots')
-            .upload(ruta, blob, { contentType: blob.type || 'image/jpeg' });
-          if (!up.error) screenshot_path = ruta;
-        } catch { /* sin red o sin bucket: el feedback sale igual, sin foto */ }
+            .upload(ruta, bytes.buffer as ArrayBuffer, { contentType: 'image/jpeg' });
+          if (up.error) throw up.error;
+          screenshot_path = ruta;
+        } catch { setShotFallo(true); /* sin red, sin bucket o sin manipulador: el feedback sale igual, sin foto */ }
       }
       const { error } = await supabase.from('feedback').insert({
         user_id: userId,
@@ -71,7 +81,7 @@ export default function FeedbackScreen({ navigation }: any) {
     <View style={styles.fill}>
       <LinearGradient colors={['#FCF1EC', '#FBE7DB']} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top', 'bottom']}>
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}   /* UST-15 A7 */ style={{ flex: 1 }}>
           <View style={styles.header}>
             <Pressable onPress={() => navigation.goBack()} hitSlop={12}><Text style={styles.back}>‹</Text></Pressable>
             <Text style={styles.headerTitle}>{t('mob.sendFeedback', 'Send Feedback')}</Text>
@@ -92,9 +102,11 @@ export default function FeedbackScreen({ navigation }: any) {
                 style={styles.input} maxLength={4000}
               />
               {/* r16-F: adjuntar screenshot — módulo nativo con guarda amable */}
-              <Pressable onPress={shot ? () => setShot(null) : pick} style={styles.attach}>
+              <Pressable onPress={shot ? () => { setShot(null); setShotFallo(false); } : pick} style={styles.attach}>
                 <Text style={styles.attachTxt}>
-                  {shot ? t('mob.fb.attached', 'Screenshot attached ✓ (tap to remove)') : t('mob.fb.attach', '📎 Add screenshot')}
+                  {estadoCaptura(shot, shotFallo) === 'fallo'
+                    ? t('mob.fb.attachFail', 'Screenshot could not be attached (tap to remove)')
+                    : shot ? t('mob.fb.attached', 'Screenshot attached ✓ (tap to remove)') : t('mob.fb.attach', '📎 Add screenshot')}
                 </Text>
               </Pressable>
               <Pressable onPress={send} disabled={busy || !text.trim()} style={[styles.btn, (busy || !text.trim()) && { opacity: 0.5 }]}>

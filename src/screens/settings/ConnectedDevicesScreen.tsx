@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Platform } from 'react-native';
 import { notify } from '../../lib/notify';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla, proveedoresVisibles, estadoProveedor } from '../../lib/plataforma';
 import { colors, font, radius, shadow } from '../../theme';
 import { LoadingView } from '../../ui/LoadingView';
 import { useSession } from '../../state/SessionProvider';
@@ -84,12 +85,13 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
 
   if (loading) return <LoadingView />;
 
-  const platformOk = (p: typeof PROVIDERS[number]) =>
-    p.platform === 'both' || (p.platform === 'ios' && Platform.OS === 'ios') || (p.platform === 'android' && Platform.OS === 'android');
+  // UST-15 C2 (D2): Android no ve «Apple Health · iOS only»; Health Connect y Samsung
+  // son «Próximamente» SIN botón hasta O3 (UST-16) — antes «Connect» conectaba nada (P0).
+  const visibles = proveedoresVisibles(Platform.OS, PROVIDERS);
 
   return (
     <View style={styles.fill}>
-      <SafeAreaView style={styles.fill} edges={['top']}>
+      <SafeAreaView style={styles.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
           <Text style={styles.headerTitle}>{t('mob.connectedDevices', "Connected Devices")}</Text><View style={{ width: 24 }} />
@@ -101,11 +103,12 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
 
           <Text style={styles.sectionTitle}>{t('mob.healthPlatforms', "HEALTH PLATFORMS")}</Text>
           <View style={styles.card}>
-            {PROVIDERS.map((p, i) => {
+            {visibles.map((p, i) => {
               const on = connected.has(p.key);
-              const ok = platformOk(p);
+              const estado = estadoProveedor(Platform.OS, p);
+              const ok = estado === 'conectable';
               return (
-                <View key={p.key} style={[styles.row, i < PROVIDERS.length - 1 && styles.rowBorder]}>
+                <View key={p.key} style={[styles.row, i < visibles.length - 1 && styles.rowBorder]}>
                   <Text style={styles.icon}>{p.icon}</Text>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.name}>{p.name}</Text>
@@ -114,7 +117,7 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
                         ? (scopesDe[p.key]?.length
                             ? `${t('ui.connectedWord', 'Connected')} · ${scopesDe[p.key].filter((s) => s !== 'write_flow').slice(0, 3).join(' · ').replace(/_/g, ' ')}`
                             : t('ui.connectedWord', 'Connected'))
-                        : ok ? p.scopes.slice(0, 3).join(' · ') : `${p.platform === 'ios' ? 'iOS' : 'Android'} only`}
+                        : ok ? p.scopes.slice(0, 3).join(' · ') : t('mob.wear.proximamente', 'Coming in a future version')}
                     </Text>
                   </View>
                   {on ? (
@@ -129,17 +132,21 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
                         <Text style={styles.btnOffTxt}>{t('mob.disconnect', "Disconnect")}</Text>
                       </Pressable>
                     </View>
-                  ) : (
-                    <Pressable onPress={() => onConnect(p.key, p.name, p.scopes)} disabled={busy === p.key || !ok} style={[styles.btn, styles.btnOn, !ok && styles.btnDim]}>
+                  ) : ok ? (
+                    <Pressable onPress={() => onConnect(p.key, p.name, p.scopes)} disabled={busy === p.key} style={[styles.btn, styles.btnOn]}>
                       <Text style={styles.btnOnTxt}>{busy === p.key ? '…' : t('ui.connectWord', 'Connect')}</Text>
                     </Pressable>
+                  ) : (
+                    <View style={[styles.btn, styles.btnDim]}><Text style={styles.btnDimTxt}>{t('mob.wear.pronto', 'Soon')}</Text></View>
                   )}
                 </View>
               );
             })}
           </View>
 
-          <Text style={styles.note}>Connecting records your consent now. Each source's live data sync (Apple Health, Health Connect, Garmin, etc.) turns on in the native app build — see the connector guide. Disconnecting stops sync immediately.</Text>
+          <Text style={styles.note}>{Platform.OS === 'android'
+            ? t('mob.wear.notaAndroid', 'Health Connect arrives in a future version: until then nothing syncs on Android. Connecting records your consent; disconnecting stops any sync immediately.')
+            : t('mob.wear.notaIos', 'Connecting records your consent now. Apple Health syncs live in this build; other sources activate as their connectors ship. Disconnecting stops sync immediately.')}</Text>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -169,6 +176,7 @@ const styles = StyleSheet.create({
   btnCol: { alignItems: 'flex-end', gap: 6 },
   btnManage: { borderWidth: 1, borderColor: colors.coral, backgroundColor: colors.white },
   btnManageTxt: { fontFamily: font.semibold, fontSize: 12.5, color: colors.coral },
-  btnDim: { opacity: 0.4 },
+  btnDimTxt: { fontFamily: font.semibold, fontSize: 12.5, color: colors.muted },
+  btnDim: { backgroundColor: '#F1E9E3', opacity: 1 },
   note: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 16, lineHeight: 17, paddingHorizontal: 4 },
 });

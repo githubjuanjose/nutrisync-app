@@ -905,7 +905,8 @@
       "bioYes": "Yes, activate",
       "bioNo": "Not now",
       "bioUnlock": "Unlock NutriSync",
-      "bioFallback": "Use password"
+      "bioFallback": "Use password",
+      "bioTitleAndroid": "Unlock with your fingerprint or face?"
     },
     "graceAvg": "your average is",
     "graceQ": "Has your period arrived?",
@@ -978,7 +979,8 @@
     "fb": {
       "attach": "📎 Add screenshot",
       "attached": "Screenshot attached ✓ (tap to remove)",
-      "attachSoon": "Screenshots arrive with the next app update."
+      "attachSoon": "Screenshots arrive with the next app update.",
+      "attachFail": "Screenshot could not be attached (tap to remove)"
     },
     "foto": {
       "titulo": "Log Your Meal",
@@ -1071,7 +1073,8 @@
       "anadido": "ingredient added",
       "sinScore": "No score yet",
       "cambiarTipo": "Wrong meal? Move it:",
-      "anilloSin": "None of these foods are in the alignment sheet yet — your meal still counts in your day."
+      "anilloSin": "None of these foods are in the alignment sheet yet — your meal still counts in your day.",
+      "abrirAjustes": "Open Settings"
     },
     "tiempo": {
       "ayer": "Yesterday",
@@ -1175,9 +1178,29 @@
       "chooseSignals": "Choose what to track",
       "guardar": "Save changes",
       "guardadoTitulo": "Saved",
-      "guardadoTexto": "Your choice is saved. From now on NutriSync reads only what you selected."
+      "guardadoTexto": "Your choice is saved. From now on NutriSync reads only what you selected.",
+      "proximamente": "Coming in a future version",
+      "pronto": "Soon",
+      "proximamenteTexto": "Health Connect arrives in a future version of NutriSync. Nothing to set up yet.",
+      "notaAndroid": "Health Connect arrives in a future version: until then nothing syncs on Android. Connecting records your consent; disconnecting stops any sync immediately.",
+      "notaIos": "Connecting records your consent now. Apple Health syncs live in this build; other sources activate as their connectors ship. Disconnecting stops sync immediately."
     },
-    "stepsToday": "Today, from Health"
+    "stepsToday": "Today, from Health",
+    "stepsAndroid": "Your steps arrive with Health Connect, in a future version",
+    "seg": {
+      "biometria": "Unlock with {{que}}",
+      "activado": "On",
+      "desactivado": "Off",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "fingerprint",
+        "cara": "face",
+        "huellaOCara": "fingerprint or face",
+        "iris": "iris"
+      }
+    }
   },
   "ob": {
     "accurate": "Be as accurate as possible so NutriSync can give you tailored results.",

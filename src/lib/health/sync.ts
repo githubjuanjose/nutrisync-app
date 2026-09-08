@@ -18,7 +18,7 @@ import {
   dedupe, suggestDailyLog, toSignalRow, DailySuggestion,
 } from './mapping';
 import { getConnections } from './connections';
-import { hkDisponible, hkLeer } from './healthkit';
+import { hkDisponible, hkLeer, hkPasosPorHora, FUENTE_FUSIONADA } from './healthkit';
 
 /* ── PURO · la ventana de lectura ──────────────────────────────────────────
    Desde la última señal guardada (con 1 día de solape: HealthKit re-escribe
@@ -59,7 +59,7 @@ export function resumenDeHoy(
   filas: HealthSignalRow[],
   hoyLocal: string,
 ): { sleepMinutes: number | null; workoutMinutes: number | null; flow: string | null; steps: number | null } {
-  let sueno = 0, entreno = 0, pasos = 0;
+  let sueno = 0, entreno = 0, pasos = 0, pasosFusionados = 0;
   let flujo: string | null = null;
   for (const f of filas) {
     const fin = f.end_ts ?? f.start_ts;
@@ -67,7 +67,12 @@ export function resumenDeHoy(
     if (dia !== hoyLocal) continue;
     if (f.type === 'sleep_minutes') sueno += f.value ?? 0;
     if (f.type === 'workout') entreno += f.value ?? 0;
-    if (f.type === 'steps') pasos += f.value ?? 0;   // r24-i: la tarjeta STEPS los pinta
+    if (f.type === 'steps') {                         // r24-i: la tarjeta STEPS los pinta
+      // UST-09 C3: si hay horas FUSIONADAS por HealthKit, mandan ellas solas (las crudas
+      // de iPhone+Watch de ese día se contarían dos veces). Sin fusionadas, lo de antes.
+      if ((f.metadata as any)?.fuente === FUENTE_FUSIONADA) pasosFusionados += f.value ?? 0;
+      else pasos += f.value ?? 0;
+    }
     if (f.type === 'menstrual_flow') {
       const texto = (f.metadata as any)?.flow_text;
       if (typeof texto === 'string') flujo = texto;
@@ -77,7 +82,7 @@ export function resumenDeHoy(
     sleepMinutes: sueno > 0 ? Math.round(sueno) : null,
     workoutMinutes: entreno > 0 ? Math.round(entreno) : null,
     flow: flujo,
-    steps: pasos > 0 ? Math.round(pasos) : null,
+    steps: pasosFusionados > 0 ? Math.round(pasosFusionados) : pasos > 0 ? Math.round(pasos) : null,
   };
 }
 
@@ -89,7 +94,7 @@ export async function pasosDeHoy(userId: string | null | undefined): Promise<num
     if (!userId) return null;
     const desde = new Date(); desde.setDate(desde.getDate() - 1);
     const { data } = await supabase.from('health_signal')
-      .select('type,value,start_ts,end_ts')
+      .select('type,value,start_ts,end_ts,metadata')
       .eq('user_id', userId).eq('type', 'steps')
       .gte('start_ts', desde.toISOString());
     const filas = (data as HealthSignalRow[]) ?? [];
@@ -144,9 +149,18 @@ export async function syncSaludAlAbrir(userId: string | null | undefined): Promi
       .order('start_ts', { ascending: false }).limit(1).maybeSingle();
     const { desdeISO, hastaISO } = ventanaDeSync(ult?.start_ts ?? null, new Date().toISOString());
 
-    const lectura = await hkLeer(tipos, desdeISO, hastaISO);
+    // UST-09 C3 (0.23.5): los PASOS ya no entran como muestras crudas (iPhone + Watch = doble
+    // cuenta) sino como la estadística por HORA que HealthKit ya fusiona; el resto igual.
+    const conPasos = tipos.includes('steps');
+    const lectura = await hkLeer(tipos.filter((t) => t !== 'steps'), desdeISO, hastaISO);
     const filas = dedupe(
       lectura.muestras
+        .map((m: RawSample) => toSignalRow('apple_health', m))
+        .filter((r): r is HealthSignalRow => r != null),
+    );
+    const pasosHora = conPasos ? await hkPasosPorHora(desdeISO, hastaISO) : { ok: true, muestras: [] as RawSample[] };
+    const filasPasos = dedupe(
+      pasosHora.muestras
         .map((m: RawSample) => toSignalRow('apple_health', m))
         .filter((r): r is HealthSignalRow => r != null),
     );
@@ -160,16 +174,26 @@ export async function syncSaludAlAbrir(userId: string | null | undefined): Promi
       if (error) return { corrio: true, subidas, sugerencia: null, error: error.message };
       subidas += lote.length;
     }
+    // Las horas fusionadas se ACTUALIZAN (la hora en curso crece; HealthKit reescribe recientes):
+    // sin ignoreDuplicates, el conflicto por start_ts sobreescribe el valor.
+    for (let i = 0; i < filasPasos.length; i += 200) {
+      const lote = filasPasos.slice(i, i + 200).map((r) => ({ ...r, user_id: userId }));
+      const { error } = await supabase.from('health_signal')
+        .upsert(lote, { onConflict: 'user_id,provider,type,start_ts' });
+      if (error) return { corrio: true, subidas, sugerencia: null, error: error.message };
+      subidas += lote.length;
+    }
+    const todas = filas.concat(filasPasos);
 
     // La sugerencia de HOY (solo campos vacíos — mapping.suggestDailyLog manda).
     const hoy = localDayISO(new Date());
-    const resumen = resumenDeHoy(filas, hoy);
+    const resumen = resumenDeHoy(todas, hoy);
     const { data: log } = await supabase.from('daily_logs')
       .select('sleep_quality, workout_logged, flow_level')
       .eq('user_id', userId).eq('date', hoy).maybeSingle();
     const sugerencia = suggestDailyLog(resumen, log ?? null);
 
-    return { corrio: true, subidas, sugerencia, error: lectura.ok ? undefined : lectura.error };
+    return { corrio: true, subidas, sugerencia, error: lectura.ok ? (pasosHora.ok ? undefined : pasosHora.error) : lectura.error };
   } catch (e: any) {
     return { corrio: false, subidas: 0, sugerencia: null, error: e?.message ?? 'sync fallida' };
   }

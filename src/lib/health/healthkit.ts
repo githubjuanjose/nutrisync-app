@@ -205,6 +205,46 @@ export async function hkLeer(
   }
 }
 
+/* ── Pasos por HORA, fusionados por HealthKit (UST-09 C3, 0.23.5) ──────────
+   iPhone en el bolsillo + Apple Watch en la muñeca = dos muestras por la misma
+   pisada. La app Salud enseña la estadística FUSIONADA (HKStatisticsQuery con
+   cumulativeSum prioriza fuentes por tramo y no suma solapes); nosotros leíamos
+   muestras crudas y sumábamos todo (37.259 en un día de ~20.000, sonda 7-sep).
+   Se lee la colección por horas (queryStatisticsCollectionForQuantity, .d.ts de
+   14.0.2: identifier, [opciones], anchorDate, intervalComponents, {filter, unit})
+   y cada hora sale como UNA muestra con fuente 'hk_merged'. La RPC pasos_por_dia
+   (max por hora y fuente) la prefiere sola: fusionada ≥ cualquier fuente aislada. */
+export const FUENTE_FUSIONADA = 'hk_merged';
+
+export async function hkPasosPorHora(desdeISO: string, hastaISO: string): Promise<{ ok: boolean; muestras: RawSample[]; error?: string }> {
+  const m = modulo();
+  if (!m) return { ok: false, muestras: [], error: 'HealthKit no disponible' };
+  const f = fn(m, ['queryStatisticsCollectionForQuantity']);
+  if (!f) return { ok: false, muestras: [], error: 'queryStatisticsCollectionForQuantity no existe en esta versión del módulo' };
+  const desde = new Date(desdeISO), hasta = new Date(hastaISO);
+  const ancla = new Date(desde); ancla.setMinutes(0, 0, 0);
+  try {
+    const r = await f(CUANTITATIVAS.steps, ['cumulativeSum'], ancla, { hour: 1 },
+      { filter: { date: { startDate: desde, endDate: hasta } }, unit: 'count' });
+    const lista: any[] = Array.isArray(r) ? r : (r?.statistics ?? []);
+    const out: RawSample[] = [];
+    for (const st of lista) {
+      const v = Number(st?.sumQuantity?.quantity ?? NaN);
+      const start = iso(st?.startDate);
+      if (!start || !isFinite(v) || v <= 0) continue;
+      // end_ts = fin de la hora MENOS un segundo: la RPC pasos_por_dia atribuye cada fila a la
+      // hora (y al día) de su end_ts; con 11:00:00 en punto, la hora 10–11 caería en la 11
+      // y las 23–24 en el día siguiente.
+      const finRaw = st?.endDate ? new Date(st.endDate) : null;
+      const end = finRaw && isFinite(+finRaw) ? new Date(finRaw.getTime() - 1000).toISOString() : null;
+      out.push({ type: 'steps', value: Math.round(v), startISO: start, endISO: end, metadata: { fuente: FUENTE_FUSIONADA } });
+    }
+    return { ok: true, muestras: out };
+  } catch (e: any) {
+    return { ok: false, muestras: [], error: e?.message ?? 'estadística fallida' };
+  }
+}
+
 /* ── Escritura O2: devolver el período a Salud (idempotente) ───────────── */
 export async function hkEscribirFlujo(
   diaISO: string,            // día local YYYY-MM-DD

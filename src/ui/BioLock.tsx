@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Modal, Pressable, Image, AppState } from 'react-native';
+import { View, Text, StyleSheet, Modal, Pressable, Image, AppState, Platform, BackHandler } from 'react-native';
+import { claveTituloBio } from '../lib/plataforma';
 import { debeRelock } from '../lib/relock';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
@@ -51,7 +52,7 @@ export function BioOfferModal({ visible, onClose }: { visible: boolean; onClose:
         await SecureStore.setItemAsync(KEY_ENABLED, '1');
         // Trial run so the OS permission/consent sheet appears right now,
         // not as a surprise on the next cold start.
-        await LocalAuthentication.authenticateAsync({ promptMessage: t('mob.auth.bioUnlock', 'Unlock NutriSync') });
+        await LocalAuthentication.authenticateAsync({ promptMessage: t('mob.auth.bioUnlock', 'Unlock NutriSync'), cancelLabel: t('ui.cancel', 'Cancel'), fallbackLabel: t('mob.auth.bioFallback', 'Use password') });
       }
     } catch { /* best-effort: the gate never locks without working biometrics */ }
     try { await SecureStore.setItemAsync(KEY_OFFERED, '1'); } catch {}
@@ -60,10 +61,10 @@ export function BioOfferModal({ visible, onClose }: { visible: boolean; onClose:
   }, [onClose, t]);
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={() => finish(false)}>
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={() => finish(false)} statusBarTranslucent navigationBarTranslucent>
       <View style={m.backdrop}>
         <View style={m.card}>
-          <Text style={m.title}>{t('mob.auth.bioTitle', 'Unlock with Face ID?')}</Text>
+          <Text style={m.title}>{t(claveTituloBio(Platform.OS), Platform.OS === 'ios' ? 'Unlock with Face ID?' : 'Unlock with your fingerprint or face?')}</Text>
           <Text style={m.sub}>
             {t('mob.auth.bioSub', 'Open NutriSync with your face or fingerprint. Your password still works, and biometrics never leave your phone.')}
           </Text>
@@ -176,7 +177,7 @@ export function BioGate({ children }: { children: React.ReactNode }) {
     if (authBusy.current) return;
     authBusy.current = true;
     try {
-      const res = await LocalAuthentication.authenticateAsync({ promptMessage: t('mob.auth.bioUnlock', 'Unlock NutriSync') });
+      const res = await LocalAuthentication.authenticateAsync({ promptMessage: t('mob.auth.bioUnlock', 'Unlock NutriSync'), cancelLabel: t('ui.cancel', 'Cancel'), fallbackLabel: t('mob.auth.bioFallback', 'Use password') });
       if (res.success) setState('open');
     } catch { /* stay locked; the button retries */ }
     authBusy.current = false;
@@ -186,6 +187,15 @@ export function BioGate({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (state === 'locked') tryUnlock();
   }, [state, tryUnlock]);
+
+  // UST-15 C5: en Android el botón atrás en la pantalla de bloqueo SALÍA de la app (esta
+  // pantalla vive fuera del navegador, nadie absorbía el back). Mientras esté bloqueada,
+  // el back no hace nada: el candado se queda y no parece que te eche.
+  useEffect(() => {
+    if (Platform.OS !== 'android' || state !== 'locked') return;
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => true);
+    return () => sub.remove();
+  }, [state]);
 
   if (state === 'open') return <>{children}</>;
 

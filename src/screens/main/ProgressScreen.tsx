@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, Pressable, ScrollView, Platform } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { insetInferior } from '../../lib/plataforma';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Circle, Path, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
 import { useFocusEffect } from '@react-navigation/native';
@@ -103,6 +104,7 @@ function StabilityRing({ v, label }: { v: number | null; label: string }) {
 
 export default function ProgressScreen({ navigation }: any) {
   const t = useT();
+  const alza = insetInferior(Platform.OS, useSafeAreaInsets().bottom);   // UST-15 C1 (D1): solo Android
   const { userId } = useSession();
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
@@ -289,7 +291,7 @@ export default function ProgressScreen({ navigation }: any) {
       {/* R4-f2: coral-to-white screen gradient */}
       <LinearGradient colors={screenGrad.colors as any} locations={screenGrad.locations as any} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.fill} edges={['top']}>
-        <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 110 }} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={{ padding: 18, paddingBottom: 110 + alza }} showsVerticalScrollIndicator={false}>
           {/* R6-f8: brighter hero gradient FF6903 → ED3413 (left→right) */}
           <LinearGradient colors={['#FF6903', '#ED3413']} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} style={styles.hero}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>

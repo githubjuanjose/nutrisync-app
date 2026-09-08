@@ -888,7 +888,8 @@
     "fb": {
       "attach": "📎 Allega screenshot",
       "attached": "Screenshot allegato ✓ (tocca per rimuovere)",
-      "attachSoon": "Gli screenshot arrivano col prossimo aggiornamento."
+      "attachSoon": "Gli screenshot arrivano col prossimo aggiornamento.",
+      "attachFail": "Impossibile allegare lo screenshot (tocca per rimuoverlo)"
     },
     "foto": {
       "titulo": "Registra il tuo pasto",
@@ -981,7 +982,8 @@
       "anadido": "alimento aggiunto",
       "sinScore": "Ancora nessun punteggio",
       "cambiarTipo": "Pasto sbagliato? Spostalo:",
-      "anilloSin": "Nessuno di questi cibi è ancora nel foglio di allineamento — il tuo pasto conta comunque nella tua giornata."
+      "anilloSin": "Nessuno di questi cibi è ancora nel foglio di allineamento — il tuo pasto conta comunque nella tua giornata.",
+      "abrirAjustes": "Apri Impostazioni"
     },
     "set": {
       "otaEmbedded": "bundle di fabbrica — nessun OTA applicato"
@@ -1088,9 +1090,32 @@
       "chooseSignals": "Scegli cosa monitorare",
       "guardar": "Salva le modifiche",
       "guardadoTitulo": "Salvato",
-      "guardadoTexto": "La tua scelta è salvata. D'ora in poi NutriSync legge solo ciò che hai selezionato."
+      "guardadoTexto": "La tua scelta è salvata. D'ora in poi NutriSync legge solo ciò che hai selezionato.",
+      "proximamente": "Arriva in una prossima versione",
+      "pronto": "Presto",
+      "proximamenteTexto": "Health Connect arriva in una prossima versione di NutriSync. Per ora non c’è nulla da configurare.",
+      "notaAndroid": "Health Connect arriva in una prossima versione: fino ad allora su Android non si sincronizza nulla. Collegare registra il tuo consenso; scollegare ferma subito qualsiasi sincronizzazione.",
+      "notaIos": "Collegare registra il tuo consenso adesso. Apple Salute si sincronizza in tempo reale in questa versione; le altre fonti si attivano all’arrivo del loro connettore. Scollegare ferma subito la sincronizzazione."
     },
-    "stepsToday": "Oggi, da Salute"
+    "stepsToday": "Oggi, da Salute",
+    "auth": {
+      "bioTitleAndroid": "Sbloccare con l’impronta o con il viso?"
+    },
+    "stepsAndroid": "I tuoi passi arriveranno con Health Connect, in una prossima versione",
+    "seg": {
+      "biometria": "Sblocca con {{que}}",
+      "activado": "Attivo",
+      "desactivado": "Disattivo",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "l’impronta",
+        "cara": "il viso",
+        "huellaOCara": "l’impronta o il viso",
+        "iris": "l’iride"
+      }
+    }
   },
   "cat": {
     "Getting started": "Primi passi",

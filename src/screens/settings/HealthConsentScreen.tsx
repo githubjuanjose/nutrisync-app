@@ -16,6 +16,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla, consentimientoDisponible } from '../../lib/plataforma';
 import { colors, font, radius, shadow } from '../../theme';
 import { notify } from '../../lib/notify';
 import { useSession } from '../../state/SessionProvider';
@@ -43,6 +44,15 @@ export default function HealthConsentScreen({ navigation, route }: any) {
   const provider: string = route?.params?.provider ?? (Platform.OS === 'ios' ? 'apple_health' : 'health_connect');
   const esApple = provider === 'apple_health';
   const nombreProv = esApple ? 'Apple Health' : 'Health Connect';
+  // UST-15 C2 (D2, P0): hasta O3 (UST-16) en Android no hay conector — antes esta pantalla
+  // enseñaba «this build does not include…» y AUN ASÍ escribía la conexión en la base.
+  // Ahora: aviso y atrás, sin escribir nada.
+  const disponible = consentimientoDisponible(Platform.OS, provider);
+  useEffect(() => {
+    if (disponible) return;
+    notify(nombreProv, t('mob.wear.proximamenteTexto', 'Health Connect arrives in a future version of NutriSync. Nothing to set up yet.'));
+    navigation.goBack();
+  }, [disponible]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [sel, setSel] = useState<Set<SignalType>>(
     new Set(SIGNALS.filter((s) => s.esencial).map((s) => s.type)),
@@ -117,6 +127,7 @@ export default function HealthConsentScreen({ navigation, route }: any) {
     } finally { setBusy(false); }
   };
 
+  if (!disponible) return null;
   const esenciales = SIGNALS.filter((s) => s.esencial);
   const opcionales = SIGNALS.filter((s) => !s.esencial);
 
@@ -133,7 +144,7 @@ export default function HealthConsentScreen({ navigation, route }: any) {
 
   return (
     <View style={st.fill}>
-      <SafeAreaView style={st.fill} edges={['top']}>
+      <SafeAreaView style={st.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={st.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={st.back}>‹</Text></Pressable>
           <Text style={st.headerTitle}>{nombreProv}</Text><View style={{ width: 24 }} />

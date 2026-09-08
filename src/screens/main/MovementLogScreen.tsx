@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, Image, TextInput, Switch, Platform } from 'react-native';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { insetInferior } from '../../lib/plataforma';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { colors, font, radius, shadow, screenGrad } from '../../theme';
@@ -55,6 +56,7 @@ const TIP_CHARS = [
 
 export default function MovementLogScreen() {
   const t = useT();
+  const alza = insetInferior(Platform.OS, useSafeAreaInsets().bottom);   // UST-15 C1 (D1): solo Android
   const tc = useTc();
   const { lang } = useI18n();
   const nav = useNavigation<any>();
@@ -210,7 +212,7 @@ export default function MovementLogScreen() {
           ))}
         </View>
 
-        <ScrollView automaticallyAdjustKeyboardInsets contentContainerStyle={{ padding: 18, paddingBottom: 110 }} showsVerticalScrollIndicator={false}>
+        <ScrollView automaticallyAdjustKeyboardInsets contentContainerStyle={{ padding: 18, paddingBottom: 110 + alza }} showsVerticalScrollIndicator={false}>
           <View style={styles.card}>
             <View style={{ flex: 1, paddingRight: 8 }}>
               <Text style={styles.badge}>{badge}</Text>
@@ -239,7 +241,10 @@ export default function MovementLogScreen() {
             <View style={styles.stat}>
               <View style={styles.statHead}><StepsIcon /><Text style={styles.statTag}>STEPS</Text></View>
               <Text style={styles.statVal}>{steps == null ? '—' : steps.toLocaleString()}</Text>
-              <Text style={styles.statLbl}>{steps == null ? t('mob.stepsSync', 'Syncs with devices') : t('mob.stepsToday', 'Today, from Health')}</Text>
+              {/* UST-15 C3 (B3): en Android no hay fuente de pasos hasta O3 — la tarjeta lo dice, sin prometer dispositivos */}
+              <Text style={styles.statLbl}>{Platform.OS === 'android'
+                ? t('mob.stepsAndroid', 'Your steps arrive with Health Connect, in a future version')
+                : steps == null ? t('mob.stepsSync', 'Syncs with devices') : t('mob.stepsToday', 'Today, from Health')}</Text>
             </View>
           </View>
 
@@ -376,7 +381,7 @@ export default function MovementLogScreen() {
         </ScrollView>
 
         {/* R3-42: primary CTA lifted ABOVE the floating tab bar (was hidden under it) */}
-        <Pressable style={styles.cta} onPress={() => nav.navigate('LogMovement')}>
+        <Pressable style={[styles.cta, { bottom: 84 + alza }]} onPress={() => nav.navigate('LogMovement')}>
           <Text style={styles.ctaTxt}>+ {t('mob.logTodaysMovement', "Log Today's Movement")}</Text>
         </Pressable>
       </SafeAreaView>

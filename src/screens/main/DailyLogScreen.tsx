@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { colorDeFase } from '../../lib/fases';
-import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, ActivityIndicator, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla } from '../../lib/plataforma';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { colors, font, radius, shadow } from '../../theme';
 import { PhaseKey, phaseColor } from '../../theme';
@@ -67,7 +68,7 @@ export default function DailyLogScreen({
 
   return (
     <View style={styles.fill}>
-      <SafeAreaView style={styles.fill} edges={['top']}>
+      <SafeAreaView style={styles.fill} edges={bordesPantalla(Platform.OS)}>
         <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           <View style={styles.head}>
             <View style={{ flex: 1 }} />

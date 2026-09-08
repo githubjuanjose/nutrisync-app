@@ -72,6 +72,25 @@ describe('resumenDeHoy — solo cuenta lo de HOY local', () => {
     const r = resumenDeHoy([fila('workout', 30, '2026-08-20T09:00:00')], hoy);
     expect(r).toEqual({ sleepMinutes: null, workoutMinutes: null, flow: null, steps: null });
   });
+
+  // UST-09 C3 (0.23.5): las horas FUSIONADAS por HealthKit mandan solas — las crudas de
+  // iPhone + Watch del mismo día son la misma pisada contada dos veces.
+  it('con horas fusionadas (hk_merged) del día, ignora las crudas de ese día', () => {
+    const r = resumenDeHoy([
+      fila('steps', 6000, '2026-08-25T10:30:00', { fuente: 'iPhone' }),
+      fila('steps', 5800, '2026-08-25T10:31:00', { fuente: 'Apple Watch' }),
+      fila('steps', 6100, '2026-08-25T10:00:00', { fuente: 'hk_merged' }),
+      fila('steps', 2000, '2026-08-25T11:00:00', { fuente: 'hk_merged' }),
+    ], hoy);
+    expect(r.steps).toBe(8100);
+  });
+  it('sin fusionadas, suma lo crudo como antes (runtime viejo o datos anteriores)', () => {
+    const r = resumenDeHoy([
+      fila('steps', 6000, '2026-08-25T10:30:00', { fuente: 'iPhone' }),
+      fila('steps', 1000, '2026-08-25T12:30:00', { fuente: 'iPhone' }),
+    ], hoy);
+    expect(r.steps).toBe(7000);
+  });
 });
 
 describe('healthkit — tablas de traducción puras', () => {

@@ -887,7 +887,8 @@
     "fb": {
       "attach": "📎 Adjuntar captura",
       "attached": "Captura adjunta ✓ (toca per llevar-la)",
-      "attachSoon": "Les captures arriben amb la pròxima actualització."
+      "attachSoon": "Les captures arriben amb la pròxima actualització.",
+      "attachFail": "No s’ha pogut adjuntar la captura (toca per llevar-la)"
     },
     "foto": {
       "titulo": "Registra el teu menjar",
@@ -980,7 +981,8 @@
       "anadido": "aliment afegit",
       "sinScore": "Encara sense score",
       "cambiarTipo": "Menjar equivocat? Mou-lo:",
-      "anilloSin": "Cap d’estos aliments està encara en la fulla d’alineació — el teu menjar compta igual en el teu dia."
+      "anilloSin": "Cap d’estos aliments està encara en la fulla d’alineació — el teu menjar compta igual en el teu dia.",
+      "abrirAjustes": "Obrir Configuració"
     },
     "set": {
       "otaEmbedded": "paquet de fàbrica — cap OTA aplicada"
@@ -1087,9 +1089,32 @@
       "chooseSignals": "Tria què seguir",
       "guardar": "Guarda els canvis",
       "guardadoTitulo": "Guardat",
-      "guardadoTexto": "La teua elecció s'ha guardat. A partir d'ara NutriSync només llig el que has seleccionat."
+      "guardadoTexto": "La teua elecció s'ha guardat. A partir d'ara NutriSync només llig el que has seleccionat.",
+      "proximamente": "Arriba en una pròxima versió",
+      "pronto": "Prompte",
+      "proximamenteTexto": "Health Connect arriba en una pròxima versió de NutriSync. Encara no hi ha res a configurar.",
+      "notaAndroid": "Health Connect arriba en una pròxima versió: fins llavors en Android no se sincronitza res. Connectar registra el teu consentiment; desconnectar para qualsevol sincronització a l’instant.",
+      "notaIos": "Connectar registra el teu consentiment ara. Apple Salut sincronitza en viu en esta versió; les altres fonts s’activen quan arribe el seu connector. Desconnectar para la sincronització a l’instant."
     },
-    "stepsToday": "Hui, des de Salut"
+    "stepsToday": "Hui, des de Salut",
+    "auth": {
+      "bioTitleAndroid": "Desbloquejar amb la teua empremta o la teua cara?"
+    },
+    "stepsAndroid": "Els teus passos arribaran amb Health Connect, en una pròxima versió",
+    "seg": {
+      "biometria": "Desbloquejar amb {{que}}",
+      "activado": "Activat",
+      "desactivado": "Desactivat",
+      "bio": {
+        "faceid": "Face ID",
+        "touchid": "Touch ID",
+        "faceOrTouch": "Face ID / Touch ID",
+        "huella": "la teua empremta",
+        "cara": "la teua cara",
+        "huellaOCara": "la teua empremta o la teua cara",
+        "iris": "l’iris"
+      }
+    }
   },
   "cat": {
     "Getting started": "Primers passos",

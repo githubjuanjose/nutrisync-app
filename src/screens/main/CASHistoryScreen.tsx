@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla } from '../../lib/plataforma';
 import Svg, { Circle, Path, Polyline } from 'react-native-svg';
 import { colors, font } from '../../theme';
 import { useT } from '../../i18n';
@@ -106,7 +107,7 @@ export default function CASHistoryScreen({ navigation }: any) {
 
   return (
     <View style={s.fill}>
-      <SafeAreaView style={s.fill} edges={['top']}>
+      <SafeAreaView style={s.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={s.header}>
           <Pressable onPress={() => navigation.goBack()} hitSlop={12}><Text style={s.back}>‹</Text></Pressable>
           <Text style={s.title}>{t('mob.casHistory', 'CAS History')}</Text>

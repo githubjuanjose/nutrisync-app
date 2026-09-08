@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Switch } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { bordesPantalla } from '../../lib/plataforma';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors, font, radius, shadow } from '../../theme';
 import { useT } from '../../i18n';
@@ -45,7 +46,7 @@ export default function AppPreferencesScreen({ navigation }: any) {
 
   return (
     <View style={styles.fill}>
-      <SafeAreaView style={styles.fill} edges={['top']}>
+      <SafeAreaView style={styles.fill} edges={bordesPantalla(Platform.OS)}>
         <View style={styles.headerBar}>
           <Pressable onPress={() => navigation.goBack()}><Text style={styles.back}>‹</Text></Pressable>
           <Text style={styles.headerTitle}>{t('mob.appPreferences', "App Preferences")}</Text><View style={{ width: 24 }} />
@@ -79,11 +80,8 @@ export default function AppPreferencesScreen({ navigation }: any) {
 
           <Text style={styles.sectionTitle}>{t('mob.generalCaps', "GENERAL")}</Text>
           <View style={styles.card}>
-            <View style={[styles.row, styles.rowBorder]}>
-              <Text style={styles.rowLabel}>{t('mob.haptics', "Haptic feedback")}</Text>
-              <Switch value={p.haptics} onValueChange={(v) => update({ haptics: v })}
-                trackColor={{ true: colors.coral, false: '#E3D8CE' }} thumbColor="#fff" />
-            </View>
+            {/* UST-15 C8 (D8): el interruptor «Haptic feedback» no tenía función detrás (sin expo-haptics
+                ni Vibration en el código). Fuera hasta que exista; la preferencia guardada no se toca. */}
             <View style={styles.rowCol}>
               <Text style={styles.rowLabel}>{t('mob.appearance', "Appearance")}</Text>
               <Segment value={p.appearance} onChange={(v) => update({ appearance: v })}

@@ -3,6 +3,9 @@ import { Pressable, Text, StyleSheet, ViewStyle, StyleProp } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, font, radius } from '../theme';
 
+/** UST-15 C8: respuesta táctil en Android (ripple suave); en iOS se ignora. */
+const RIPPLE = { color: 'rgba(0,0,0,0.08)', borderless: false } as const;
+
 type Props = {
   label: string;
   onPress?: () => void;
@@ -11,7 +14,7 @@ type Props = {
 
 export function PrimaryButton({ label, onPress, style }: Props) {
   return (
-    <Pressable onPress={onPress} style={({ pressed }) => [{ opacity: pressed ? 0.9 : 1 }, style]}>
+    <Pressable onPress={onPress} android_ripple={RIPPLE} style={({ pressed }) => [{ opacity: pressed ? 0.9 : 1 }, style]}>
       <LinearGradient
         colors={[colors.orange, colors.orangeLight]}
         start={{ x: 0, y: 0 }}
@@ -28,6 +31,7 @@ export function SecondaryButton({ label, onPress, style }: Props) {
   return (
     <Pressable
       onPress={onPress}
+      android_ripple={RIPPLE}
       style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.9 : 1 }, style]}
     >
       <Text style={styles.secondaryTxt}>{label}</Text>
