@@ -21,6 +21,7 @@ export type RootStackParamList = {
   AddIngredients: { mealId: string };
   EditarEscaneo: { mealId: string; mealLogId?: number };
   HealthConsent: { provider?: string } | undefined;
+  HealthRationale: { provider?: string } | undefined;   // UST-16 C7
   LogMovement: undefined;
   MovementHistory: undefined;
   NotificationCenter: undefined;

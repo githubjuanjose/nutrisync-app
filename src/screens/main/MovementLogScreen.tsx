@@ -16,7 +16,7 @@ import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib
 import { pasosDeHoy, syncSaludAlAbrir } from '../../lib/health/sync';
 import { cargarCockpitPasos, PasosCockpit, BucketPasos } from '../../lib/health/cockpit';
 import { getConnections, connectProvider, disconnectProvider } from '../../lib/health/connections';
-import { hkDisponible, hkPedirPermisos } from '../../lib/health/healthkit';
+import { adaptadorDe } from '../../lib/health/adaptador';
 import { SIGNALS, SignalType } from '../../lib/health/mapping';
 import { notify } from '../../lib/notify';
 import { flags } from '../../lib/flags';
@@ -53,6 +53,12 @@ const TIP_CHARS = [
   require('../../../assets/movementlog/tip-char-3.png'),
   require('../../../assets/movementlog/tip-char-4.png'),
 ];
+
+/** UST-16 C5 · el proveedor de salud de ESTA plataforma: Apple Salud en
+ *  iPhone, Health Connect en Android. El switch y el resumen de pasos son los
+ *  mismos en las dos — se retira el gate `Platform.OS === 'ios'` de UST-09 C2,
+ *  que existía solo mientras Android no tenía fuente de pasos. */
+const AD = adaptadorDe(Platform.OS);
 
 export default function MovementLogScreen() {
   const t = useT();
@@ -100,7 +106,7 @@ export default function MovementLogScreen() {
   // tocar, no que lleve a otra pantalla). ON = pide permisos + registra consentimiento
   // + sincroniza; OFF = revoca. Optimista con reversión si algo falla.
   const toggleHealth = useCallback(async (want: boolean) => {
-    if (!userId || healthBusy) return;
+    if (!userId || healthBusy || !AD) return;
     setHealthBusy(true);
     const antes = healthOn;
     setHealthOn(want);   // respuesta inmediata del toggle
@@ -108,19 +114,39 @@ export default function MovementLogScreen() {
       if (want) {
         const tipos = SIGNALS.filter((s) => s.esencial).map((s) => s.type) as SignalType[];
         if (!tipos.includes('steps' as SignalType)) tipos.push('steps' as SignalType);
-        if (await hkDisponible()) await hkPedirPermisos(tipos, false);
-        await connectProvider(userId, 'apple_health', tipos as string[]);
+        let guardar = tipos;
+        if (await AD.disponible()) {
+          const r = await AD.pedirPermisos(tipos, false);
+          // UST-16 C3 · en Android se guarda lo CONCEDIDO, no lo pedido. Si no
+          // concedió nada, no se escribe una conexión que no leería nada: el
+          // toggle vuelve atrás y lo dice (nunca «conectado» en falso).
+          if (AD.informaConcesion) {
+            guardar = tipos.filter((tp) => r.tipos.includes(tp));
+            if (!guardar.length) {
+              setHealthOn(antes);
+              notify(AD.nombre, t('mob.wear.hcSinPermiso', 'Android did not grant any of the signals, so nothing was connected. You can try again whenever you want.'));
+              return;
+            }
+          }
+        } else if (AD.provider === 'health_connect') {
+          // C2 · sin Health Connect en el teléfono: a la pantalla que lo explica
+          // y lleva a Play, en vez de guardar una conexión muerta.
+          setHealthOn(antes);
+          nav.navigate('HealthConsent', { provider: AD.provider });
+          return;
+        }
+        await connectProvider(userId, AD.provider, guardar as string[]);
         // r24-m: diagnóstico retirado — cadena verificada en dispositivo (3-sep).
         syncSaludAlAbrir(userId).then(() => pasosDeHoy(userId).then(setSteps).catch(() => {})).catch(() => {});
       } else {
-        await disconnectProvider(userId, 'apple_health');
+        await disconnectProvider(userId, AD.provider);
         setSteps(null);
       }
     } catch (e: any) {
       setHealthOn(antes);   // revertir: el toggle no miente
       notify(t('mob.saveFailed', 'Could not save'), e?.message ?? t('mob.tryAgain', 'Please try again.'));
     } finally { setHealthBusy(false); }
-  }, [userId, healthOn, healthBusy, t]);
+  }, [userId, healthOn, healthBusy, t, nav]);
 
   const load = useCallback(async () => {
     if (!userId) { setLoading(false); return; }
@@ -131,9 +157,9 @@ export default function MovementLogScreen() {
     setOthers([...ck].filter((n) => !known.has(n)));
     setLoading(false);
     pasosDeHoy(userId).then(setSteps).catch(() => {});   // r24-i: pasos de Salud, sin bloquear
-    if (flags.connectors) {                              // r24-j: estado de conexión de Apple Health
+    if (flags.connectors && AD) {                        // r24-j: ¿conectado el proveedor de esta plataforma?
       getConnections(userId)
-        .then((cx) => setHealthOn(cx.some((c) => c.provider === 'apple_health' && c.status === 'connected')))
+        .then((cx) => setHealthOn(cx.some((c) => c.provider === AD.provider && c.status === 'connected')))
         .catch(() => setHealthOn(false));
     }
   }, [userId]);
@@ -241,10 +267,12 @@ export default function MovementLogScreen() {
             <View style={styles.stat}>
               <View style={styles.statHead}><StepsIcon /><Text style={styles.statTag}>STEPS</Text></View>
               <Text style={styles.statVal}>{steps == null ? '—' : steps.toLocaleString()}</Text>
-              {/* UST-15 C3 (B3): en Android no hay fuente de pasos hasta O3 — la tarjeta lo dice, sin prometer dispositivos */}
-              <Text style={styles.statLbl}>{Platform.OS === 'android'
-                ? t('mob.stepsAndroid', 'Your steps arrive with Health Connect, in a future version')
-                : steps == null ? t('mob.stepsSync', 'Syncs with devices') : t('mob.stepsToday', 'Today, from Health')}</Text>
+              {/* UST-16 C5: la misma tarjeta en las dos plataformas — Android ya tiene
+                  fuente de pasos (Health Connect), así que muere el texto «en una
+                  próxima versión» de UST-15 C3. */}
+              <Text style={styles.statLbl}>{steps == null
+                ? t('mob.stepsSync', 'Syncs with devices')
+                : t('mob.stepsToday', 'Today, from Health')}</Text>
             </View>
           </View>
 
@@ -260,14 +288,15 @@ export default function MovementLogScreen() {
             </Pressable>
           ) : null}
 
-          {/* r24-l · switch real de Apple Salud, acción en el momento.
-              UST-09 C2 · SOLO iOS: en Android no hay HealthKit (hkDisponible=false) y el
-              switch «conectaba» sin datos; Health Connect (O3) llegará con su propio acceso. */}
-          {flags.connectors && Platform.OS === 'ios' && healthOn !== null ? (
+          {/* r24-l · switch real del proveedor de salud, acción en el momento.
+              UST-16 C5: vale para las DOS plataformas (Apple Salud · Health Connect).
+              El gate «solo iOS» de UST-09 C2 existía porque Android no tenía fuente
+              de pasos; ahora la tiene y la paridad se restablece. */}
+          {flags.connectors && AD && healthOn !== null ? (
             <View style={styles.healthRow}>
               <StepsIcon />
               <View style={{ flex: 1, marginLeft: 10 }}>
-                <Text style={styles.healthName}>{t('mob.wear.appleHealth', 'Apple Health')}</Text>
+                <Text style={styles.healthName}>{AD.nombre}</Text>
                 <Text style={styles.healthSub}>
                   {healthBusy
                     ? t('mob.wear.connecting', 'Connecting…')
@@ -278,7 +307,7 @@ export default function MovementLogScreen() {
                 {/* UST-09 C1 · conectado: el camino a la pantalla señal a señal, que el
                     switch (r24-l) había dejado sin acceso — regresión vista por Juanjo 7-sep */}
                 {healthOn && !healthBusy ? (
-                  <Pressable onPress={() => nav.navigate('HealthConsent', { provider: 'apple_health', edit: true })}
+                  <Pressable onPress={() => nav.navigate('HealthConsent', { provider: AD.provider, edit: true })}
                     hitSlop={8} accessibilityRole="button">
                     <Text style={styles.healthLink}>{t('mob.wear.chooseSignals', 'Choose what to track')} ›</Text>
                   </Pressable>
@@ -294,8 +323,9 @@ export default function MovementLogScreen() {
             </View>
           ) : null}
 
-          {/* r24-o · Cockpit de actividad: pasos acumulados por periodo (C2: solo iOS, como el switch) */}
-          {flags.connectors && Platform.OS === 'ios' && healthOn && cockpit ? (
+          {/* r24-o · Cockpit de actividad: pasos acumulados por periodo.
+              UST-16 C5: en las dos plataformas, como el switch. */}
+          {flags.connectors && AD && healthOn && cockpit ? (
             <View style={styles.cockpit}>
               <View style={styles.cockpitHead}>
                 <StepsIcon />

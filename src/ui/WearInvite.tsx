@@ -12,9 +12,13 @@ import { colors, font, radius, shadow } from '../theme';
 import { flags } from '../lib/flags';
 import { useSession } from '../state/SessionProvider';
 import { getConnections } from '../lib/health/connections';
+import { proveedorDePlataforma } from '../lib/health/proveedor';
 import { useT } from '../i18n';
 
 const CLAVE = 'ns.wear.invite.v1';
+/** UST-16 C5 · el proveedor de esta plataforma. La invitación vuelve a Android
+ *  porque ya lleva a algo que conecta de verdad (antes, a un callejón: C2 de UST-15). */
+const PROVIDER = proveedorDePlataforma(Platform.OS);
 
 export default function WearInvite({ navigation }: { navigation: any }) {
   const t = useT();
@@ -25,9 +29,9 @@ export default function WearInvite({ navigation }: { navigation: any }) {
     let vivo = true;
     (async () => {
       try {
-        // UST-15 C2 (D2): en Android la invitación llevaba al consentimiento de Health Connect,
-        // que no conecta nada hasta O3 (UST-16). Solo iOS mientras tanto.
-        if (!flags.connectors || !userId || Platform.OS !== 'ios') return;
+        // UST-16 C5: las dos plataformas. (UST-15 C2 la había dejado solo en iOS
+        // mientras el consentimiento de Android no conectaba nada.)
+        if (!flags.connectors || !userId || !PROVIDER) return;
         if ((await AsyncStorage.getItem(CLAVE)) === '1') return;
         const conexiones = await getConnections(userId);
         const ya = conexiones.some((c) => c.provider === 'apple_health' || c.provider === 'health_connect');
@@ -40,7 +44,7 @@ export default function WearInvite({ navigation }: { navigation: any }) {
   if (!visible) return null;
 
   const descartar = () => { setVisible(false); AsyncStorage.setItem(CLAVE, '1').catch(() => {}); };
-  const provider = Platform.OS === 'ios' ? 'apple_health' : 'health_connect';
+  const provider = PROVIDER;
 
   return (
     <View style={st.card}>

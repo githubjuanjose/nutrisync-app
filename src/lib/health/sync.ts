@@ -9,7 +9,7 @@
  * campos VACÍOS — si ella escribió algo, gana ella.
  */
 import { useEffect, useRef } from 'react';
-import { AppState } from 'react-native';
+import { AppState, Platform } from 'react-native';
 import { supabase } from '../supabase';
 import { flags } from '../flags';
 import { localDayISO } from '../localDay';
@@ -18,7 +18,8 @@ import {
   dedupe, suggestDailyLog, toSignalRow, DailySuggestion,
 } from './mapping';
 import { getConnections } from './connections';
-import { hkDisponible, hkLeer, hkPasosPorHora, FUENTE_FUSIONADA } from './healthkit';
+import { adaptadorDe } from './adaptador';
+import { esFusionada } from './proveedor';
 
 /* ── PURO · la ventana de lectura ──────────────────────────────────────────
    Desde la última señal guardada (con 1 día de solape: HealthKit re-escribe
@@ -68,9 +69,10 @@ export function resumenDeHoy(
     if (f.type === 'sleep_minutes') sueno += f.value ?? 0;
     if (f.type === 'workout') entreno += f.value ?? 0;
     if (f.type === 'steps') {                         // r24-i: la tarjeta STEPS los pinta
-      // UST-09 C3: si hay horas FUSIONADAS por HealthKit, mandan ellas solas (las crudas
-      // de iPhone+Watch de ese día se contarían dos veces). Sin fusionadas, lo de antes.
-      if ((f.metadata as any)?.fuente === FUENTE_FUSIONADA) pasosFusionados += f.value ?? 0;
+      // UST-09 C3: si hay horas FUSIONADAS por la plataforma, mandan ellas solas (las crudas
+      // de iPhone+Watch —o de móvil+reloj en Android— se contarían dos veces). Sin
+      // fusionadas, lo de antes. UST-16 C4: vale para hk_merged y para hc_merged.
+      if (esFusionada((f.metadata as any)?.fuente)) pasosFusionados += f.value ?? 0;
       else pasos += f.value ?? 0;
     }
     if (f.type === 'menstrual_flow') {
@@ -120,11 +122,12 @@ export async function escribirFlujoSiProcede(
 ): Promise<void> {
   try {
     if (!userId || level == null || !flags.connectors) return;
+    const ad = adaptadorDe(Platform.OS);          // UST-16 C4: el proveedor de ESTA plataforma
+    if (!ad) return;
     const conexiones = await getConnections(userId);
-    const con = conexiones.find((c) => c.provider === 'apple_health');
+    const con = conexiones.find((c) => c.provider === ad.provider);
     if (!con || !(con.scopes ?? []).includes('write_flow')) return;
-    const { hkEscribirFlujo } = await import('./healthkit');
-    await hkEscribirFlujo(localDayISO(new Date()), level);
+    await ad.escribirFlujo(localDayISO(new Date()), level);
   } catch { /* silencio deliberado: reciprocidad, no dependencia */ }
 }
 
@@ -132,10 +135,16 @@ export async function syncSaludAlAbrir(userId: string | null | undefined): Promi
   try {
     if (!userId || !flags.connectors) return NO_CORRIO;
 
+    // UST-16 C4 · la sincronización deja de estar cableada a Apple Salud: pregunta
+    // por el proveedor de ESTA plataforma (iOS → Apple Salud · Android → Health
+    // Connect). Antes, en Android, la ruta moría aquí: NO_CORRIO para siempre.
+    const ad = adaptadorDe(Platform.OS);
+    if (!ad) return NO_CORRIO;
+
     const conexiones = await getConnections(userId);
-    const con = conexiones.find((c) => c.provider === 'apple_health');
+    const con = conexiones.find((c) => c.provider === ad.provider);
     if (!con) return NO_CORRIO;
-    if (!(await hkDisponible())) return NO_CORRIO;
+    if (!(await ad.disponible())) return NO_CORRIO;
 
     // Señales consentidas = scopes de la conexión (la BD manda, no la UI).
     const tipos = (con.scopes ?? []).filter((s): s is SignalType =>
@@ -145,23 +154,23 @@ export async function syncSaludAlAbrir(userId: string | null | undefined): Promi
 
     // Ventana desde la última señal guardada (la BD es la fuente de verdad).
     const { data: ult } = await supabase.from('health_signal')
-      .select('start_ts').eq('user_id', userId).eq('provider', 'apple_health')
+      .select('start_ts').eq('user_id', userId).eq('provider', ad.provider)
       .order('start_ts', { ascending: false }).limit(1).maybeSingle();
     const { desdeISO, hastaISO } = ventanaDeSync(ult?.start_ts ?? null, new Date().toISOString());
 
     // UST-09 C3 (0.23.5): los PASOS ya no entran como muestras crudas (iPhone + Watch = doble
     // cuenta) sino como la estadística por HORA que HealthKit ya fusiona; el resto igual.
     const conPasos = tipos.includes('steps');
-    const lectura = await hkLeer(tipos.filter((t) => t !== 'steps'), desdeISO, hastaISO);
+    const lectura = await ad.leer(tipos.filter((t) => t !== 'steps'), desdeISO, hastaISO);
     const filas = dedupe(
       lectura.muestras
-        .map((m: RawSample) => toSignalRow('apple_health', m))
+        .map((m: RawSample) => toSignalRow(ad.provider, m))
         .filter((r): r is HealthSignalRow => r != null),
     );
-    const pasosHora = conPasos ? await hkPasosPorHora(desdeISO, hastaISO) : { ok: true, muestras: [] as RawSample[] };
+    const pasosHora = conPasos ? await ad.pasosPorHora(desdeISO, hastaISO) : { ok: true, muestras: [] as RawSample[] };
     const filasPasos = dedupe(
       pasosHora.muestras
-        .map((m: RawSample) => toSignalRow('apple_health', m))
+        .map((m: RawSample) => toSignalRow(ad.provider, m))
         .filter((r): r is HealthSignalRow => r != null),
     );
 

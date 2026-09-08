@@ -11,6 +11,8 @@
  * `env(safe-area-inset-bottom)`; `insetInferior` ES ese env() y hoy nadie
  * lo usaba (MainTabs bottom:10 fijo — lo que Juanjo vio el 8-sep).
  */
+import { PROVEEDORES_CON_ADAPTADOR, proveedorDePlataforma } from './health/proveedor';
+
 export type SO = 'ios' | 'android' | 'web' | string;
 
 /** D1 (firmada): la píldora y los pádings suben exactamente el inset del
@@ -36,13 +38,16 @@ export type EstadoProveedor = 'conectable' | 'proximamente' | 'oculto';
 
 /** Qué se enseña de cada proveedor en esta plataforma:
  *  · de OTRA plataforma → oculto (Android no ve «Apple Health · iOS only»)
- *  · nativo de Android (Health Connect, Samsung) → «Próximamente» sin botón
- *    hasta que O3 exista (UST-16); hoy conectar no conectaba nada (P0).
- *  · el resto → conectable. */
+ *  · nativo SIN adaptador escrito (Samsung Health) → «Próximamente» sin botón:
+ *    un botón que no hace nada es peor que no tener botón (P0 de UST-15).
+ *  · el resto → conectable.
+ *  UST-16 C3: la lista de los que SÍ tienen adaptador vive en health/proveedor.ts
+ *  (una sola definición) — al escribir O3, Health Connect entra en ella y esta
+ *  función no cambia: deja de ser «próximamente» sola. */
 export function estadoProveedor(so: SO, p: ProveedorMin): EstadoProveedor {
   if (p.platform === 'ios' && so !== 'ios') return 'oculto';
   if (p.platform === 'android' && so !== 'android') return 'oculto';
-  if (p.platform === 'android' && p.native) return 'proximamente';
+  if (p.native && !PROVEEDORES_CON_ADAPTADOR.has(p.key)) return 'proximamente';
   return 'conectable';
 }
 
@@ -51,10 +56,11 @@ export function proveedoresVisibles<T extends ProveedorMin>(so: SO, lista: T[]):
 }
 
 /** ¿Puede esta plataforma abrir el consentimiento señal a señal de un
- *  proveedor? Solo Apple Salud en iOS hasta O3. En Android la pantalla
- *  vuelve atrás sin escribir nada (antes escribía una conexión muerta). */
+ *  proveedor? El de SU sistema y ninguno más: Apple Salud en iPhone, Health
+ *  Connect en Android (UST-16 C3). Con cualquier otro, la pantalla vuelve
+ *  atrás sin escribir nada — antes escribía una conexión que nadie leía. */
 export function consentimientoDisponible(so: SO, provider: string | null | undefined): boolean {
-  return so === 'ios' && provider === 'apple_health';
+  return !!provider && proveedorDePlataforma(so) === provider;
 }
 
 /* ── Biometría con nombre propio (C4, D5 alternativa) ────────────────────── */

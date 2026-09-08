@@ -38,11 +38,11 @@ const PROV = [
   { key: 'garmin', platform: 'both' as const, native: false },
 ];
 
-describe('estadoProveedor / proveedoresVisibles — C2, D2', () => {
-  it('Android no ve Apple Health; Health Connect y Samsung son «Próximamente» (O3 no existe)', () => {
+describe('estadoProveedor / proveedoresVisibles — C2, D2 (actualizado por UST-16 C3)', () => {
+  it('Android no ve Apple Health; Health Connect YA es conectable (O3) y Samsung sigue «Próximamente»', () => {
     expect(estadoProveedor('android', PROV[0])).toBe('oculto');
-    expect(estadoProveedor('android', PROV[1])).toBe('proximamente');
-    expect(estadoProveedor('android', PROV[2])).toBe('proximamente');
+    expect(estadoProveedor('android', PROV[1])).toBe('conectable');
+    expect(estadoProveedor('android', PROV[2])).toBe('proximamente');   // sin adaptador escrito
     expect(estadoProveedor('android', PROV[3])).toBe('conectable');
     expect(proveedoresVisibles('android', PROV).map((p) => p.key)).toEqual(['health_connect', 'samsung', 'garmin']);
   });
@@ -54,10 +54,12 @@ describe('estadoProveedor / proveedoresVisibles — C2, D2', () => {
 });
 
 describe('consentimientoDisponible — la pantalla señal a señal', () => {
-  it('solo Apple Salud en iOS', () => {
+  it('el proveedor de SU sistema, y ninguno más (paridad: la misma pantalla en las dos)', () => {
     expect(consentimientoDisponible('ios', 'apple_health')).toBe(true);
-    expect(consentimientoDisponible('android', 'health_connect')).toBe(false);
+    expect(consentimientoDisponible('android', 'health_connect')).toBe(true);   // UST-16 C3
     expect(consentimientoDisponible('android', 'apple_health')).toBe(false);
+    expect(consentimientoDisponible('ios', 'health_connect')).toBe(false);
+    expect(consentimientoDisponible('web', 'health_connect')).toBe(false);
     expect(consentimientoDisponible('ios', null)).toBe(false);
   });
 });

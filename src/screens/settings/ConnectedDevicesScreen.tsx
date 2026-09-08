@@ -144,8 +144,10 @@ export default function ConnectedDevicesScreen({ navigation }: any) {
             })}
           </View>
 
+          {/* UST-16 C3: en Android ya sincroniza Health Connect — la nota deja de
+              prometer «una versión futura» y dice lo mismo en las dos plataformas. */}
           <Text style={styles.note}>{Platform.OS === 'android'
-            ? t('mob.wear.notaAndroid', 'Health Connect arrives in a future version: until then nothing syncs on Android. Connecting records your consent; disconnecting stops any sync immediately.')
+            ? t('mob.wear.notaAndroid', 'Connecting records your consent now. Health Connect syncs live in this build, and Android decides signal by signal: NutriSync saves only what you grant. Other sources activate as their connectors ship. Disconnecting stops sync immediately.')
             : t('mob.wear.notaIos', 'Connecting records your consent now. Apple Health syncs live in this build; other sources activate as their connectors ship. Disconnecting stops sync immediately.')}</Text>
         </ScrollView>
       </SafeAreaView>

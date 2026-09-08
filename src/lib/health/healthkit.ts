@@ -16,6 +16,7 @@
  */
 import { Platform } from 'react-native';
 import { cargaHK } from './hkNativo';
+import { FUENTE_FUSIONADA_HK } from './proveedor';
 import type { RawSample, SignalType } from './mapping';
 
 /* ── Identificadores de HealthKit por señal ────────────────────────────── */
@@ -214,7 +215,7 @@ export async function hkLeer(
    14.0.2: identifier, [opciones], anchorDate, intervalComponents, {filter, unit})
    y cada hora sale como UNA muestra con fuente 'hk_merged'. La RPC pasos_por_dia
    (max por hora y fuente) la prefiere sola: fusionada ≥ cualquier fuente aislada. */
-export const FUENTE_FUSIONADA = 'hk_merged';
+export const FUENTE_FUSIONADA = FUENTE_FUSIONADA_HK;   // una sola definición: proveedor.ts
 
 export async function hkPasosPorHora(desdeISO: string, hastaISO: string): Promise<{ ok: boolean; muestras: RawSample[]; error?: string }> {
   const m = modulo();

@@ -14,7 +14,7 @@
  * Antes esta pantalla solo se alcanzaba sin conexión: regresión r24-l/n.
  */
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Platform } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Switch, Platform, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { bordesPantalla, consentimientoDisponible } from '../../lib/plataforma';
 import { colors, font, radius, shadow } from '../../theme';
@@ -24,7 +24,9 @@ import { useT } from '../../i18n';
 import { SIGNALS, SignalType } from '../../lib/health/mapping';
 import { connectProvider, getConnections, updateProviderScopes } from '../../lib/health/connections';
 import { scopesAEstado, estadoAScopes, tiposNuevos, hayQuePedir } from '../../lib/health/scopes';
-import { hkDisponible, hkPedirPermisos } from '../../lib/health/healthkit';
+import { adaptadorDeProveedor } from '../../lib/health/adaptador';
+import { EstadoSdk, nombreProveedor, proveedorDePlataforma, PLAY_HC } from '../../lib/health/proveedor';
+import { hcEstado } from '../../lib/health/healthconnect';
 import { syncSaludAlAbrir } from '../../lib/health/sync';
 
 const NOMBRES: Record<SignalType, [string, string]> = {
@@ -41,18 +43,32 @@ const NOMBRES: Record<SignalType, [string, string]> = {
 export default function HealthConsentScreen({ navigation, route }: any) {
   const t = useT();
   const { userId } = useSession();
-  const provider: string = route?.params?.provider ?? (Platform.OS === 'ios' ? 'apple_health' : 'health_connect');
+  const provider: string = route?.params?.provider ?? proveedorDePlataforma(Platform.OS) ?? 'health_connect';
   const esApple = provider === 'apple_health';
-  const nombreProv = esApple ? 'Apple Health' : 'Health Connect';
-  // UST-15 C2 (D2, P0): hasta O3 (UST-16) en Android no hay conector — antes esta pantalla
-  // enseñaba «this build does not include…» y AUN ASÍ escribía la conexión en la base.
-  // Ahora: aviso y atrás, sin escribir nada.
+  const nombreProv = nombreProveedor(provider);
+  const ad = adaptadorDeProveedor(provider);
+  // UST-16 C3: la MISMA pantalla en las dos plataformas — el proveedor de este
+  // sistema. Con cualquier otro (o en web) sigue el aviso de UST-15 C2: atrás
+  // sin escribir nada, jamás una conexión que nadie leerá.
   const disponible = consentimientoDisponible(Platform.OS, provider);
   useEffect(() => {
     if (disponible) return;
-    notify(nombreProv, t('mob.wear.proximamenteTexto', 'Health Connect arrives in a future version of NutriSync. Nothing to set up yet.'));
+    notify(nombreProv, t('mob.wear.proximamenteTexto', 'This source arrives in a future version of NutriSync. Nothing to set up yet.'));
     navigation.goBack();
   }, [disponible]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // C2 (D4) · estado del SDK de Health Connect: instalar · actualizar · listo.
+  // Ningún botón muerto: si falta la app del sistema, la pantalla lo dice y
+  // lleva a Play en vez de fingir que conecta.
+  const [sdk, setSdk] = useState<EstadoSdk>('listo');
+  useEffect(() => {
+    let vivo = true;
+    if (provider !== 'health_connect' || Platform.OS !== 'android') return;
+    hcEstado().then((e) => { if (vivo) setSdk(e); }).catch(() => {});
+    return () => { vivo = false; };
+  }, [provider]);
+  const faltaHC = provider === 'health_connect' && (sdk === 'instalar' || sdk === 'actualizar');
+  const abrirPlay = () => { Linking.openURL(PLAY_HC).catch(() => {}); };
 
   const [sel, setSel] = useState<Set<SignalType>>(
     new Set(SIGNALS.filter((s) => s.esencial).map((s) => s.type)),
@@ -90,28 +106,46 @@ export default function HealthConsentScreen({ navigation, route }: any) {
     setBusy(true);
     try {
       const tipos = Array.from(sel);
-      // Editando: a HealthKit solo se le piden los tipos NUEVOS (o el write-back recién activado).
+      // Editando: a la plataforma solo se le piden los tipos NUEVOS (o el write-back recién activado).
       const aPedir = editando ? tiposNuevos(scopesAntes!, tipos) : tipos;
       const pedir = editando ? hayQuePedir(scopesAntes!, tipos, escribir) : true;
-      if (esApple) {
-        if (await hkDisponible()) {
-          if (pedir) {
-            const r = await hkPedirPermisos(aPedir, escribir);
-            if (!r.ok) {
-              // Apple no cuenta qué se concedió (privacidad): registramos la
-              // intención; la lectura solo trae lo realmente permitido.
-              notify(t('mob.wear.permTitulo', 'Permissions'), r.error ?? t('mob.wear.permTexto', 'You can adjust permissions any time in Health.'));
+
+      // UST-16 C1/C3 · un solo camino para las dos plataformas: el adaptador de
+      // ESTE proveedor. La diferencia real es si el sistema dice qué concedió
+      // (Android sí — y entonces se guarda ESO, no lo que pedimos; Apple no lo
+      // revela por privacidad y se registra la intención, como en UST-06).
+      let tiposFinales: SignalType[] = tipos;
+      let escribirFinal = escribir;
+      if (ad && await ad.disponible()) {
+        if (pedir) {
+          const r = await ad.pedirPermisos(aPedir, escribir);
+          if (ad.informaConcesion) {
+            const antes = editando ? scopesAEstado(scopesAntes!) : { tipos: new Set<SignalType>(), escribir: false };
+            const concedidas = new Set<SignalType>(r.tipos);
+            for (const tp of antes.tipos) concedidas.add(tp);       // lo ya concedido sigue concedido
+            tiposFinales = tipos.filter((tp) => concedidas.has(tp));
+            escribirFinal = escribir && (r.escribir || antes.escribir);
+            if (!tiposFinales.length) {
+              // Nada concedido: NO se escribe una conexión que no leería nada.
+              notify(t('mob.wear.permTitulo', 'Permissions'),
+                t('mob.wear.hcSinPermiso', 'Android did not grant any of the signals, so nothing was connected. You can try again whenever you want.'));
+              setBusy(false);
+              return;
             }
+          } else if (!r.ok) {
+            notify(t('mob.wear.permTitulo', 'Permissions'), r.error ?? t('mob.wear.permTexto', 'You can adjust permissions any time in Health.'));
           }
-        } else {
-          notify(nombreProv, t('mob.wear.sinBuild', 'This build does not include the Health connector yet — your choice is saved and sync will start with the next update.'));
         }
+      } else if (provider === 'health_connect') {
+        // C2 · sin Health Connect en el teléfono no se guarda nada: se ofrece instalarlo.
+        setSdk(await hcEstado());
+        notify(nombreProv, t('mob.wear.hcInstalarTexto', 'Health Connect is the Android app where your health data lives. Install it (free, from Google) and come back — NutriSync will read only what you choose.'));
+        setBusy(false);
+        return;
       } else {
-        // O3: el conector de Health Connect llega en el mismo build 0.23.0;
-        // registrar el consentimiento ya deja la sincronización lista.
         notify(nombreProv, t('mob.wear.sinBuild', 'This build does not include the Health connector yet — your choice is saved and sync will start with the next update.'));
       }
-      const scopes = estadoAScopes(sel, escribir);
+      const scopes = estadoAScopes(new Set(tiposFinales), escribirFinal);
       if (editando) {
         await updateProviderScopes(userId, provider, scopes);
         syncSaludAlAbrir(userId).catch(() => {});   // la siguiente sync ya lee solo lo elegido
@@ -155,27 +189,59 @@ export default function HealthConsentScreen({ navigation, route }: any) {
             {t('mob.wear.intro', 'NutriSync can fill in what your watch or phone already records — sleep, workouts, your period. You choose signal by signal, you can change your mind any time, and what you write always wins: your data fills gaps, it never corrects you.')}
           </Text>
 
+          {/* C2 (D4) · Health Connect ausente o viejo: se dice y se lleva a Play.
+              Un botón que no hace nada es peor que no tener botón (P0 de UST-15). */}
+          {faltaHC ? (
+            <View style={st.aviso}>
+              <Text style={st.avisoTit}>
+                {sdk === 'actualizar'
+                  ? t('mob.wear.hcActualizarTitulo', 'Health Connect needs an update')
+                  : t('mob.wear.hcInstalarTitulo', 'Health Connect is not on this phone yet')}
+              </Text>
+              <Text style={st.avisoTxt}>
+                {sdk === 'actualizar'
+                  ? t('mob.wear.hcActualizarTexto', 'Your version of Health Connect is older than the one NutriSync needs. Update it and come back — nothing else changes.')
+                  : t('mob.wear.hcInstalarTexto', 'Health Connect is the Android app where your health data lives. Install it (free, from Google) and come back — NutriSync will read only what you choose.')}
+              </Text>
+              <Pressable onPress={abrirPlay} style={st.avisoBtn} accessibilityRole="button">
+                <Text style={st.avisoBtnTxt}>
+                  {sdk === 'actualizar'
+                    ? t('mob.wear.hcActualizarBoton', 'Update Health Connect')
+                    : t('mob.wear.hcInstalarBoton', 'Install Health Connect')}
+                </Text>
+              </Pressable>
+            </View>
+          ) : null}
+
           <Text style={st.seccion}>{t('mob.wear.esenciales', 'THE ESSENTIAL THREE')}</Text>
           <View style={st.card}>{esenciales.map((s) => <Fila key={s.type} s={s} />)}</View>
 
           <Text style={st.seccion}>{t('mob.wear.opcionales', 'OPTIONAL — NICE TO HAVE')}</Text>
           <View style={st.card}>{opcionales.map((s) => <Fila key={s.type} s={s} />)}</View>
 
-          {esApple && (
-            <>
-              <Text style={st.seccion}>{t('mob.wear.escribirSec', 'GIVE BACK')}</Text>
-              <View style={st.card}>
-                <View style={st.fila}>
-                  <View style={{ flex: 1, paddingRight: 10 }}>
-                    <Text style={st.nombre}>{t('mob.wear.escribirTitulo', 'Write my period back to Health')}</Text>
-                    <Text style={st.porque}>{t('mob.wear.escribirTexto', 'If you log your period here, NutriSync writes it to Apple Health too, so your other apps stay in sync. Off until you turn it on.')}</Text>
-                  </View>
-                  <Switch value={escribir} onValueChange={setEscribir}
-                    trackColor={{ true: colors.coral, false: '#E7DCD3' }} thumbColor="#fff" />
-                </View>
+          {/* C6 · el write-back también en Android (WRITE_MENSTRUATION ya viaja en
+              el binario desde el 25-ago). Sigue APAGADO por defecto. */}
+          <Text style={st.seccion}>{t('mob.wear.escribirSec', 'GIVE BACK')}</Text>
+          <View style={st.card}>
+            <View style={st.fila}>
+              <View style={{ flex: 1, paddingRight: 10 }}>
+                <Text style={st.nombre}>{t('mob.wear.escribirTitulo', 'Write my period back to Health')}</Text>
+                <Text style={st.porque}>
+                  {esApple
+                    ? t('mob.wear.escribirTexto', 'If you log your period here, NutriSync writes it to Apple Health too, so your other apps stay in sync. Off until you turn it on.')
+                    : t('mob.wear.escribirTextoHC', 'If you log your period here, NutriSync writes it to Health Connect too, so your other apps stay in sync. Off until you turn it on. One difference: “none” is not written back — Health Connect has no such level.')}
+                </Text>
               </View>
-            </>
-          )}
+              <Switch value={escribir} onValueChange={setEscribir}
+                trackColor={{ true: colors.coral, false: '#E7DCD3' }} thumbColor="#fff" />
+            </View>
+          </View>
+
+          {/* C7 · el «para qué» completo, la misma página que Google exige enseñar
+              cuando el sistema pregunta por los permisos de salud. */}
+          <Pressable onPress={() => navigation.navigate('HealthRationale', { provider })} hitSlop={8} accessibilityRole="button">
+            <Text style={st.enlace}>{t('mob.wear.verJustificacion', 'Why NutriSync asks for each signal')} ›</Text>
+          </Pressable>
 
           <Text style={st.legal}>
             {t('mob.wear.legal', 'This consent is separate from the pilot terms and revocable in one tap from Settings → Connected Devices; revoking stops sync immediately. Health data is used only for your features inside NutriSync — never for advertising, never sold, never fed to generative AI. We keep short windows and aggregates, not your life history.')}
@@ -215,4 +281,10 @@ const st = StyleSheet.create({
   btnGhost: { height: 44, alignItems: 'center', justifyContent: 'center', marginTop: 6 },
   btnGhostTxt: { fontFamily: font.medium, fontSize: 14, color: colors.muted },
   nota: { fontFamily: font.regular, fontSize: 11.5, color: colors.muted, textAlign: 'center', marginTop: 2 },
+  enlace: { fontFamily: font.medium, fontSize: 13, color: colors.coral, marginTop: 14, marginLeft: 4 },
+  aviso: { backgroundColor: '#FDECE6', borderRadius: radius.lg, padding: 14, marginTop: 16 },
+  avisoTit: { fontFamily: font.semibold, fontSize: 14.5, color: colors.ink },
+  avisoTxt: { fontFamily: font.regular, fontSize: 12.5, color: colors.body, lineHeight: 18, marginTop: 4 },
+  avisoBtn: { backgroundColor: colors.coral, borderRadius: radius.pill, height: 42, alignItems: 'center', justifyContent: 'center', marginTop: 12 },
+  avisoBtnTxt: { fontFamily: font.semibold, fontSize: 14, color: '#fff' },
 });
