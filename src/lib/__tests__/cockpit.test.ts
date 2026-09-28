@@ -1,7 +1,7 @@
 /**
  * Cockpit de actividad (r24-o) — unitarios de la parte PURA (r11c-2).
  */
-import { agregaPasos, inicioTrimestreISO, inicioCicloISO, familiaFase, diasDeFase, zonaHoraria } from '../health/cockpit';
+import { agregaPasos, inicioTrimestreISO, inicioCicloISO, familiaFase, diasDeFase, zonaHoraria, primerDiaConPasos } from '../health/cockpit';
 
 describe('familiaFase — granular (daily_scores) → familia (badge/recs)', () => {
   it('mapea los sub-tramos lúteos a luteal', () => {
@@ -115,5 +115,19 @@ describe('zonaHoraria — la app le dice a la base qué día es para ella (NS-00
   it('devuelve una zona IANA o null, nunca revienta', () => {
     const z = zonaHoraria();
     expect(z === null || typeof z === 'string').toBe(true);
+  });
+});
+
+/* UST-26 F2 (28-sep) · «Datos desde»: el primer día LOCAL con pasos. La cifra «All time» solo
+   es honesta si al lado dice desde cuándo suma (Pilar vio ciclo = mes = trimestre = YTD = total). */
+describe('primerDiaConPasos — el día más antiguo con pasos (UST-26 F2)', () => {
+  it('sin filas → null', () => expect(primerDiaConPasos([])).toBeNull());
+  it('ignora días a cero o negativos (un día sin pasos no es «desde cuándo hay datos»)', () => {
+    expect(primerDiaConPasos([{ dayISO: '2026-01-01', value: 0 }, { dayISO: '2026-03-02', value: 500 }])).toBe('2026-03-02');
+  });
+  it('devuelve el más antiguo aunque venga desordenado', () => {
+    expect(primerDiaConPasos([
+      { dayISO: '2026-09-27', value: 2476 }, { dayISO: '2024-11-03', value: 8000 }, { dayISO: '2025-06-30', value: 1000 },
+    ])).toBe('2024-11-03');
   });
 });

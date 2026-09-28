@@ -217,15 +217,22 @@ export async function hkLeer(
    (max por hora y fuente) la prefiere sola: fusionada ≥ cualquier fuente aislada. */
 export const FUENTE_FUSIONADA = FUENTE_FUSIONADA_HK;   // una sola definición: proveedor.ts
 
-export async function hkPasosPorHora(desdeISO: string, hastaISO: string): Promise<{ ok: boolean; muestras: RawSample[]; error?: string }> {
+/** UST-26 F5 · estadística de pasos FUSIONADA por HealthKit en buckets de una hora (sincronización
+ *  normal) o de un día (relleno de historial: ≤730 filas por usuaria en vez de 17.520). El bucket
+ *  diario lleva metadata.granularidad = 'dia' y se ancla a la MEDIANOCHE LOCAL: su end_ts (fin − 1 s)
+ *  cae en la hora 23 de su propio día, que es donde pasos_por_dia lo atribuye. */
+async function hkPasosAgregados(
+  desdeISO: string, hastaISO: string, granularidad: 'hora' | 'dia',
+): Promise<{ ok: boolean; muestras: RawSample[]; error?: string }> {
   const m = modulo();
   if (!m) return { ok: false, muestras: [], error: 'HealthKit no disponible' };
   const f = fn(m, ['queryStatisticsCollectionForQuantity']);
   if (!f) return { ok: false, muestras: [], error: 'queryStatisticsCollectionForQuantity no existe en esta versión del módulo' };
   const desde = new Date(desdeISO), hasta = new Date(hastaISO);
-  const ancla = new Date(desde); ancla.setMinutes(0, 0, 0);
+  const ancla = new Date(desde);
+  if (granularidad === 'dia') ancla.setHours(0, 0, 0, 0); else ancla.setMinutes(0, 0, 0);
   try {
-    const r = await f(CUANTITATIVAS.steps, ['cumulativeSum'], ancla, { hour: 1 },
+    const r = await f(CUANTITATIVAS.steps, ['cumulativeSum'], ancla, granularidad === 'dia' ? { day: 1 } : { hour: 1 },
       { filter: { date: { startDate: desde, endDate: hasta } }, unit: 'count' });
     const lista: any[] = Array.isArray(r) ? r : (r?.statistics ?? []);
     const out: RawSample[] = [];
@@ -238,12 +245,22 @@ export async function hkPasosPorHora(desdeISO: string, hastaISO: string): Promis
       // y las 23–24 en el día siguiente.
       const finRaw = st?.endDate ? new Date(st.endDate) : null;
       const end = finRaw && isFinite(+finRaw) ? new Date(finRaw.getTime() - 1000).toISOString() : null;
-      out.push({ type: 'steps', value: Math.round(v), startISO: start, endISO: end, metadata: { fuente: FUENTE_FUSIONADA } });
+      out.push({ type: 'steps', value: Math.round(v), startISO: start, endISO: end,
+        metadata: granularidad === 'dia' ? { fuente: FUENTE_FUSIONADA, granularidad: 'dia' } : { fuente: FUENTE_FUSIONADA } });
     }
     return { ok: true, muestras: out };
   } catch (e: any) {
     return { ok: false, muestras: [], error: e?.message ?? 'estadística fallida' };
   }
+}
+
+export function hkPasosPorHora(desdeISO: string, hastaISO: string): Promise<{ ok: boolean; muestras: RawSample[]; error?: string }> {
+  return hkPasosAgregados(desdeISO, hastaISO, 'hora');
+}
+
+/** UST-26 F5 · buckets DIARIOS para el relleno de historial (hasta 2 años, una vez). */
+export function hkPasosPorDia(desdeISO: string, hastaISO: string): Promise<{ ok: boolean; muestras: RawSample[]; error?: string }> {
+  return hkPasosAgregados(desdeISO, hastaISO, 'dia');
 }
 
 /* ── Escritura O2: devolver el período a Salud (idempotente) ───────────── */

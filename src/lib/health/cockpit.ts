@@ -19,6 +19,18 @@ export function zonaHoraria(): string | null {
 
 export type BucketPasos = 'hoy' | 'ciclo' | 'fase' | 'mes' | 'trimestre' | 'ytd' | 'total';
 export type PasosCockpit = Record<BucketPasos, number>;
+/** UST-26 F2 · los 7 buckets + el primer día LOCAL con pasos (para la línea «Datos desde»). */
+export type CockpitPasos = PasosCockpit & { primerDia: string | null };
+
+/** PURO · UST-26 F2 · el día local más antiguo con pasos (> 0), o null. Compara ISO como texto. */
+export function primerDiaConPasos(filas: { dayISO: string; value: number }[]): string | null {
+  let min: string | null = null;
+  for (const f of filas) {
+    if (!(f.value > 0) || !f.dayISO) continue;
+    if (min === null || f.dayISO < min) min = f.dayISO;
+  }
+  return min;
+}
 
 /** Familia de fase: daily_scores guarda granular (early_luteal, late_luteal…);
  *  el badge/recs usan la gruesa (luteal). Comparamos por familia para que
@@ -109,7 +121,7 @@ export async function cargarCockpitPasos(
   cycleDay: number | null | undefined,
   faseActual: string | null | undefined,
   cycleLen: number | null | undefined = 28,
-): Promise<PasosCockpit | null> {
+): Promise<CockpitPasos | null> {
   try {
     if (!userId) return null;
     const hoy = localDayISO(new Date());
@@ -130,6 +142,6 @@ export async function cargarCockpitPasos(
 
     const diasFase = diasDeFase(hoy, cycleDay, cycleLen, faseActual);
 
-    return agregaPasos(filas, hoy, cicloDesde, diasFase);
+    return { ...agregaPasos(filas, hoy, cicloDesde, diasFase), primerDia: primerDiaConPasos(filas) };
   } catch { return null; }
 }

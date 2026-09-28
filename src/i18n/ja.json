@@ -1085,6 +1085,9 @@
         "total": "累計"
       },
       "stepsCockpit": "歩数の概要",
+      "verMas": "もっと見る",
+      "verMenos": "閉じる",
+      "datosDesde": "{d}以降のデータ",
       "manageSignals": "シグナルを管理",
       "chooseSignals": "記録する項目を選ぶ",
       "guardar": "変更を保存",

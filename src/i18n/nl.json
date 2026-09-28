@@ -1086,6 +1086,9 @@
         "total": "Totaal"
       },
       "stepsCockpit": "Stappenoverzicht",
+      "verMas": "Meer tonen",
+      "verMenos": "Minder tonen",
+      "datosDesde": "Gegevens sinds {d}",
       "manageSignals": "Signalen beheren",
       "chooseSignals": "Kies wat je bijhoudt",
       "guardar": "Wijzigingen opslaan",

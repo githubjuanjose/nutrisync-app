@@ -198,9 +198,14 @@ export async function hcLeer(
    entre apps por Health Connect — igual que la estadística de HealthKit. Cada
    hora sale como UNA muestra con fuente hc_merged y la RPC pasos_por_dia v3
    la prefiere sola. */
-export async function hcPasosPorHora(
+/** UST-26 F5 · agregación de pasos por HORA (sincronización normal) o por DÍA (relleno de historial).
+ *  DESVIACIÓN TEMPORAL declarada (UST-26 F5): sin `android.permission.health.READ_HEALTH_DATA_HISTORY`
+ *  —permiso del manifest, build nativo 0.24.0— Health Connect solo entrega los 30 días anteriores a la
+ *  concesión del permiso; el relleno en Android llega hasta donde la plataforma deja leer. */
+async function hcPasosAgregados(
   desdeISO: string,
   hastaISO: string,
+  granularidad: 'hora' | 'dia',
 ): Promise<{ ok: boolean; muestras: RawSample[]; error?: string }> {
   const m = modulo();
   if (!m) return { ok: false, muestras: [], error: 'Health Connect no disponible' };
@@ -212,7 +217,7 @@ export async function hcPasosPorHora(
     const grupos = await m.aggregateGroupByDuration({
       recordType: 'Steps',
       timeRangeFilter: rangoHC(desdeISO, hastaISO),
-      timeRangeSlicer: { duration: 'HOURS', length: 1 },
+      timeRangeSlicer: granularidad === 'dia' ? { duration: 'DAYS', length: 1 } : { duration: 'HOURS', length: 1 },
     });
     const out: RawSample[] = [];
     for (const g of Array.isArray(grupos) ? grupos : []) {
@@ -223,12 +228,22 @@ export async function hcPasosPorHora(
       // pasos_por_dia atribuye la fila a la hora (y al día) de su end_ts.
       const finRaw = g?.endTime ? new Date(g.endTime) : null;
       const end = finRaw && isFinite(+finRaw) ? new Date(finRaw.getTime() - 1000).toISOString() : null;
-      out.push({ type: 'steps', value: Math.round(v), startISO: start, endISO: end, metadata: { fuente: FUENTE_FUSIONADA_HC } });
+      out.push({ type: 'steps', value: Math.round(v), startISO: start, endISO: end,
+        metadata: granularidad === 'dia' ? { fuente: FUENTE_FUSIONADA_HC, granularidad: 'dia' } : { fuente: FUENTE_FUSIONADA_HC } });
     }
     return { ok: true, muestras: out };
   } catch (e: any) {
     return { ok: false, muestras: [], error: e?.message ?? 'agregación fallida' };
   }
+}
+
+export function hcPasosPorHora(desdeISO: string, hastaISO: string): Promise<{ ok: boolean; muestras: RawSample[]; error?: string }> {
+  return hcPasosAgregados(desdeISO, hastaISO, 'hora');
+}
+
+/** UST-26 F5 · buckets DIARIOS para el relleno de historial (Health Connect: ≤30 días sin el permiso de historia). */
+export function hcPasosPorDia(desdeISO: string, hastaISO: string): Promise<{ ok: boolean; muestras: RawSample[]; error?: string }> {
+  return hcPasosAgregados(desdeISO, hastaISO, 'dia');
 }
 
 /* ── Escritura (C6/D2): devolver el período a Health Connect, idempotente ─── */

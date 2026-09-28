@@ -1087,6 +1087,9 @@
         "total": "Guztira"
       },
       "stepsCockpit": "Urratsen laburpena",
+      "verMas": "Gehiago ikusi",
+      "verMenos": "Gutxiago ikusi",
+      "datosDesde": "Datuak {d}(e)tik aurrera",
       "manageSignals": "Kudeatu seinaleak",
       "chooseSignals": "Aukeratu zer jarraitu",
       "guardar": "Gorde aldaketak",

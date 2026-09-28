@@ -1174,6 +1174,9 @@
         "total": "All time"
       },
       "stepsCockpit": "Steps overview",
+      "verMas": "See more",
+      "verMenos": "See less",
+      "datosDesde": "Data since {d}",
       "manageSignals": "Manage signals",
       "chooseSignals": "Choose what to track",
       "guardar": "Save changes",

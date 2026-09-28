@@ -1086,6 +1086,9 @@
         "total": "Gesamt"
       },
       "stepsCockpit": "Schritte-Übersicht",
+      "verMas": "Mehr anzeigen",
+      "verMenos": "Weniger anzeigen",
+      "datosDesde": "Daten seit {d}",
       "manageSignals": "Signale verwalten",
       "chooseSignals": "Wähle, was erfasst wird",
       "guardar": "Änderungen speichern",

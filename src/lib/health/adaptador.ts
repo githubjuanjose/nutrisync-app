@@ -14,10 +14,10 @@ import type { RawSample, SignalType } from './mapping';
 import { ProveedorSalud, proveedorDePlataforma, nombreProveedor } from './proveedor';
 import type { SO } from '../plataforma';
 import {
-  hkDisponible, hkPedirPermisos, hkLeer, hkPasosPorHora, hkEscribirFlujo, FUENTE_FUSIONADA,
+  hkDisponible, hkPedirPermisos, hkLeer, hkPasosPorHora, hkPasosPorDia, hkEscribirFlujo, FUENTE_FUSIONADA,
 } from './healthkit';
 import {
-  hcDisponible, hcPedirPermisos, hcLeer, hcPasosPorHora, hcEscribirFlujo, FUENTE_FUSIONADA_HC,
+  hcDisponible, hcPedirPermisos, hcLeer, hcPasosPorHora, hcPasosPorDia, hcEscribirFlujo, FUENTE_FUSIONADA_HC,
 } from './healthconnect';
 
 export type Lectura = { ok: boolean; muestras: RawSample[]; error?: string };
@@ -35,6 +35,8 @@ export type Adaptador = {
   pedirPermisos(tipos: SignalType[], escribirFlujo: boolean): Promise<Permisos>;
   leer(tipos: SignalType[], desdeISO: string, hastaISO: string): Promise<Lectura>;
   pasosPorHora(desdeISO: string, hastaISO: string): Promise<Lectura>;
+  /** UST-26 F5 · buckets diarios fusionados, para el relleno de historial (una vez). */
+  pasosPorDia(desdeISO: string, hastaISO: string): Promise<Lectura>;
   escribirFlujo(diaISO: string, level: number): Promise<{ ok: boolean; saltado?: boolean; error?: string }>;
 };
 
@@ -52,6 +54,7 @@ const APPLE: Adaptador = {
   },
   leer: hkLeer,
   pasosPorHora: hkPasosPorHora,
+  pasosPorDia: hkPasosPorDia,
   escribirFlujo: hkEscribirFlujo,
 };
 
@@ -64,6 +67,7 @@ const ANDROID: Adaptador = {
   pedirPermisos: hcPedirPermisos,
   leer: hcLeer,
   pasosPorHora: hcPasosPorHora,
+  pasosPorDia: hcPasosPorDia,
   escribirFlujo: hcEscribirFlujo,
 };
 

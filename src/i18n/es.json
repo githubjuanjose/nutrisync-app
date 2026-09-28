@@ -1486,6 +1486,9 @@
         "total": "Total"
       },
       "stepsCockpit": "Resumen de pasos",
+      "verMas": "Ver más",
+      "verMenos": "Ver menos",
+      "datosDesde": "Datos desde el {d}",
       "manageSignals": "Gestionar señales",
       "chooseSignals": "Elige qué seguir",
       "guardar": "Guardar cambios",

@@ -1086,6 +1086,9 @@
         "total": "Total"
       },
       "stepsCockpit": "Resumit de las passes",
+      "verMas": "Veire mai",
+      "verMenos": "Veire mens",
+      "datosDesde": "Donadas dempuèi lo {d}",
       "manageSignals": "Gerir los senhals",
       "chooseSignals": "Causís çò que vòls seguir",
       "guardar": "Salvar los cambiaments",

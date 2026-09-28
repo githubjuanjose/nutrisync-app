@@ -18,7 +18,7 @@ import {
   dedupe, suggestDailyLog, toSignalRow, DailySuggestion,
 } from './mapping';
 import { getConnections } from './connections';
-import { adaptadorDe } from './adaptador';
+import { adaptadorDe, Adaptador } from './adaptador';
 import { esFusionada } from './proveedor';
 
 /* ── PURO · la ventana de lectura ──────────────────────────────────────────
@@ -37,6 +37,27 @@ export function ventanaDeSync(
     if (solape > suelo) desde = solape;
   }
   return { desdeISO: desde.toISOString(), hastaISO: ahora.toISOString() };
+}
+
+/* ── PURO · UST-26 F5 · la ventana del RELLENO de historial de pasos ──────────
+   Solo pasos, solo días ANTERIORES al primer día local que ya tiene horas, y como
+   mucho `maxDias` hacia atrás (730 = la ventana que lee pasos_por_dia). Devuelve
+   null cuando no hay nada que rellenar: sin dato previo (la sincronización normal
+   aún no corrió) o con el dato más antiguo ya en el fondo de la ventana. */
+export function diasARellenar(
+  masAntiguoISO: string | null,
+  ahoraISO: string,
+  maxDias = 730,
+): { desdeISO: string; hastaISO: string } | null {
+  if (!masAntiguoISO) return null;
+  const ahora = new Date(ahoraISO);
+  const suelo = new Date(ahora.getTime() - maxDias * 86400000);
+  // Corte: la medianoche LOCAL del día del dato más antiguo — ese día ya tiene horas
+  // (aunque sea parcial) y un bucket diario encima lo contaría dos veces.
+  const corte = new Date(masAntiguoISO);
+  corte.setHours(0, 0, 0, 0);
+  if (corte.getTime() - suelo.getTime() < 86400000) return null;   // menos de un día: nada que rellenar
+  return { desdeISO: suelo.toISOString(), hastaISO: corte.toISOString() };
 }
 
 /* ── PURO · sueño: tramos dormida → minutos por DÍA LOCAL ──────────────────
@@ -194,6 +215,9 @@ export async function syncSaludAlAbrir(userId: string | null | undefined): Promi
     }
     const todas = filas.concat(filasPasos);
 
+    // UST-26 F5 · el historial de pasos, DESPUÉS de lo de hoy (y solo si los pasos están consentidos).
+    if (conPasos) await rellenarHistorialPasos(userId, ad);
+
     // La sugerencia de HOY (solo campos vacíos — mapping.suggestDailyLog manda).
     const hoy = localDayISO(new Date());
     const resumen = resumenDeHoy(todas, hoy);
@@ -205,6 +229,43 @@ export async function syncSaludAlAbrir(userId: string | null | undefined): Promi
     return { corrio: true, subidas, sugerencia, error: lectura.ok ? (pasosHora.ok ? undefined : pasosHora.error) : lectura.error };
   } catch (e: any) {
     return { corrio: false, subidas: 0, sugerencia: null, error: e?.message ?? 'sync fallida' };
+  }
+}
+
+/* ── UST-26 F5 · relleno de historial de PASOS (una vez por arranque y usuaria) ──
+   Después de la sincronización normal (que sigue leyendo ≤14 días de TODAS las
+   señales por horas), pide a la plataforma los pasos DIARIOS fusionados de hasta
+   2 años para los días anteriores al primero que ya tiene horas y los sube en
+   lotes (índice único user·provider·type·start_ts: idempotente). Jamás lanza. */
+const rellenoHecho = new Set<string>();
+
+export async function rellenarHistorialPasos(
+  userId: string,
+  ad: Adaptador,
+  ahoraISO: string = new Date().toISOString(),
+): Promise<{ corrio: boolean; subidas: number; error?: string }> {
+  try {
+    if (rellenoHecho.has(userId)) return { corrio: false, subidas: 0 };
+    rellenoHecho.add(userId);                       // una vez por proceso, pase lo que pase
+    const { data: ant } = await supabase.from('health_signal')
+      .select('start_ts').eq('user_id', userId).eq('provider', ad.provider).eq('type', 'steps')
+      .order('start_ts', { ascending: true }).limit(1).maybeSingle();
+    const ventana = diasARellenar(ant?.start_ts ?? null, ahoraISO);
+    if (!ventana) return { corrio: false, subidas: 0 };
+    const r = await ad.pasosPorDia(ventana.desdeISO, ventana.hastaISO);
+    if (!r.ok) return { corrio: true, subidas: 0, error: r.error };
+    const filas = dedupe(r.muestras.map((m: RawSample) => toSignalRow(ad.provider, m)).filter((x): x is HealthSignalRow => x != null));
+    let subidas = 0;
+    for (let i = 0; i < filas.length; i += 200) {
+      const lote = filas.slice(i, i + 200).map((f) => ({ ...f, user_id: userId }));
+      const { error } = await supabase.from('health_signal')
+        .upsert(lote, { onConflict: 'user_id,provider,type,start_ts', ignoreDuplicates: true });
+      if (error) return { corrio: true, subidas, error: error.message };
+      subidas += lote.length;
+    }
+    return { corrio: true, subidas };
+  } catch (e: any) {
+    return { corrio: true, subidas: 0, error: e?.message ?? 'relleno fallido' };
   }
 }
 

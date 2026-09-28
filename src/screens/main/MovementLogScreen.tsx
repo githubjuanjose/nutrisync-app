@@ -14,7 +14,7 @@ import { pickVariantIndex } from '../../ui/NutriAvatar';
 import { saveChecklist, normalizeIntensity, categoryIntensity } from '../../lib/daily';
 import { fetchDailyRecs, DailyRecs, fetchCheckedToday, RecItem } from '../../lib/recs';
 import { pasosDeHoy, syncSaludAlAbrir } from '../../lib/health/sync';
-import { cargarCockpitPasos, PasosCockpit, BucketPasos } from '../../lib/health/cockpit';
+import { cargarCockpitPasos, CockpitPasos, BucketPasos } from '../../lib/health/cockpit';
 import { getConnections, connectProvider, disconnectProvider } from '../../lib/health/connections';
 import { adaptadorDe } from '../../lib/health/adaptador';
 import { SIGNALS, SignalType } from '../../lib/health/mapping';
@@ -78,7 +78,8 @@ export default function MovementLogScreen() {
   const [steps, setSteps] = useState<number | null>(null);   // r24-i: pasos de Salud (base)
   const [healthOn, setHealthOn] = useState<boolean | null>(null);   // r24-j: ¿Apple Health conectado?
   const [healthBusy, setHealthBusy] = useState(false);              // r24-l: el switch en curso
-  const [cockpit, setCockpit] = useState<PasosCockpit | null>(null); // r24-o: pasos por periodo
+  const [cockpit, setCockpit] = useState<CockpitPasos | null>(null); // r24-o: pasos por periodo
+  const [cockpitMas, setCockpitMas] = useState(false);                 // UST-26 D1: «Ver más» plegado por defecto
 
   // r24-o · carga el cockpit de pasos (hoy/ciclo/fase/mes/trimestre/YTD/total).
   const recargaCockpit = useCallback(() => {
@@ -324,7 +325,9 @@ export default function MovementLogScreen() {
           ) : null}
 
           {/* r24-o · Cockpit de actividad: pasos acumulados por periodo.
-              UST-16 C5: en las dos plataformas, como el switch. */}
+              UST-16 C5: en las dos plataformas, como el switch.
+              UST-26 (Pilar + Juanjo, 28-sep): tres cifras a la vista —Today · This phase · This cycle—
+              y las otras cuatro detrás de «Ver más», con el primer día con datos (D1, D3). */}
           {flags.connectors && AD && healthOn && cockpit ? (
             <View style={styles.cockpit}>
               <View style={styles.cockpitHead}>
@@ -334,12 +337,8 @@ export default function MovementLogScreen() {
               <View style={styles.cockpitGrid}>
                 {([
                   ['hoy', t('mob.wear.b.today', 'Today')],
-                  ['ciclo', t('mob.wear.b.cycle', 'This cycle')],
                   ['fase', t('mob.wear.b.phase', 'This phase')],
-                  ['mes', t('mob.wear.b.month', 'This month')],
-                  ['trimestre', t('mob.wear.b.quarter', 'This quarter')],
-                  ['ytd', t('mob.wear.b.ytd', 'Year to date')],
-                  ['total', t('mob.wear.b.total', 'All time')],
+                  ['ciclo', t('mob.wear.b.cycle', 'This cycle')],
                 ] as [BucketPasos, string][]).map(([k, label]) => (
                   <View key={k} style={styles.cockpitCell}>
                     <Text style={styles.cockpitVal}>{(cockpit[k] ?? 0).toLocaleString()}</Text>
@@ -347,6 +346,30 @@ export default function MovementLogScreen() {
                   </View>
                 ))}
               </View>
+              {cockpitMas ? (
+                <View style={styles.cockpitGrid}>
+                  {([
+                    ['mes', t('mob.wear.b.month', 'This month')],
+                    ['trimestre', t('mob.wear.b.quarter', 'This quarter')],
+                    ['ytd', t('mob.wear.b.ytd', 'Year to date')],
+                    ['total', t('mob.wear.b.total', 'All time')],
+                  ] as [BucketPasos, string][]).map(([k, label]) => (
+                    <View key={k} style={styles.cockpitCell}>
+                      <Text style={styles.cockpitVal}>{(cockpit[k] ?? 0).toLocaleString()}</Text>
+                      <Text style={styles.cockpitLbl}>{label}</Text>
+                    </View>
+                  ))}
+                </View>
+              ) : null}
+              {cockpitMas && cockpit.primerDia ? (
+                <Text style={styles.cockpitDesde}>
+                  {t('mob.wear.datosDesde', 'Data since {d}').replace('{d}',
+                    new Date(cockpit.primerDia + 'T12:00:00').toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }))}
+                </Text>
+              ) : null}
+              <Pressable onPress={() => setCockpitMas((v) => !v)} hitSlop={8} accessibilityRole="button">
+                <Text style={styles.cockpitMas}>{cockpitMas ? t('mob.wear.verMenos', 'See less') : t('mob.wear.verMas', 'See more')} ›</Text>
+              </Pressable>
             </View>
           ) : null}
 
@@ -442,6 +465,8 @@ const styles = StyleSheet.create({
   cockpitCell: { width: '33.33%', paddingVertical: 8, paddingRight: 6 },
   cockpitVal: { fontFamily: font.semibold, fontSize: 18, color: colors.coralDeep },
   cockpitLbl: { fontFamily: font.regular, fontSize: 11, color: colors.muted, marginTop: 1 },
+  cockpitMas: { fontFamily: font.semibold, fontSize: 12.5, color: colors.coralDeep, marginTop: 6 },     // UST-26 D1
+  cockpitDesde: { fontFamily: font.regular, fontSize: 11, color: colors.muted, marginTop: 4 },          // UST-26 D1 «Datos desde»
   sectionNote: { fontFamily: font.regular, fontSize: 12, color: colors.muted, marginTop: 2, marginBottom: 8 },
   tabs: { flexDirection: 'row', marginHorizontal: 18, marginTop: 12, backgroundColor: '#F6EEE7', borderRadius: radius.pill, padding: 4, gap: 4 },
   tab: { flex: 1, height: 38, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },

@@ -2,7 +2,7 @@
  * Wearables O1 (UST-2026-08-24-06) — unitarios de la parte PURA del sync.
  * Regla r11c-2: la lógica nace con sus casos en el mismo cambio.
  */
-import { ventanaDeSync, minutosDeSuenoPorDia, resumenDeHoy } from '../health/sync';
+import { ventanaDeSync, minutosDeSuenoPorDia, resumenDeHoy, diasARellenar } from '../health/sync';
 import { localDayISO } from '../localDay';
 import { flujoHKaTexto, nivelAFlujoHK, SUENO_DORMIDA } from '../health/healthkit';
 import type { HealthSignalRow } from '../health/mapping';
@@ -114,5 +114,35 @@ describe('healthkit — tablas de traducción puras', () => {
     expect(SUENO_DORMIDA.has(1)).toBe(true);
     expect(SUENO_DORMIDA.has(0)).toBe(false);
     expect(SUENO_DORMIDA.has(4)).toBe(true);
+  });
+});
+
+/* UST-26 F5 (28-sep, D5 alternativa) · el relleno de historial de PASOS: solo días anteriores al
+   primero que ya tiene horas, ≤730 días atrás, y nada si no hay nada que rellenar. */
+describe('diasARellenar — la ventana del relleno de historial (UST-26 F5)', () => {
+  const ahora = '2026-09-28T08:00:00.000Z';
+
+  it('sin dato previo (la sincronización normal aún no corrió) → null', () => {
+    expect(diasARellenar(null, ahora)).toBeNull();
+  });
+
+  it('primera sincronización hace 14 días: rellena desde 730 días atrás hasta la medianoche LOCAL del día más antiguo', () => {
+    const masAntiguo = new Date('2026-09-14T10:00:00'); // hora local: primer bucket por horas
+    const v = diasARellenar(masAntiguo.toISOString(), ahora)!;
+    expect(v).not.toBeNull();
+    expect(new Date(ahora).getTime() - new Date(v.desdeISO).getTime()).toBe(730 * DIA);
+    const corte = new Date(masAntiguo); corte.setHours(0, 0, 0, 0);
+    expect(v.hastaISO).toBe(corte.toISOString());           // el día parcial NO se rellena por días: se contaría dos veces
+  });
+
+  it('con el dato más antiguo ya en el fondo de la ventana → null (idempotente: no repite el relleno)', () => {
+    const viejo = new Date(new Date(ahora).getTime() - 730 * DIA + 6 * 3600000).toISOString();
+    expect(diasARellenar(viejo, ahora)).toBeNull();
+  });
+
+  it('la ventana máxima es configurable (Health Connect solo deja 30 días sin el permiso de historia)', () => {
+    const masAntiguo = new Date('2026-09-14T10:00:00').toISOString();
+    const v = diasARellenar(masAntiguo, ahora, 30)!;
+    expect(new Date(ahora).getTime() - new Date(v.desdeISO).getTime()).toBe(30 * DIA);
   });
 });

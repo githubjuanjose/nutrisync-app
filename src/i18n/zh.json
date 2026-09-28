@@ -1086,6 +1086,9 @@
         "total": "累计"
       },
       "stepsCockpit": "步数概览",
+      "verMas": "查看更多",
+      "verMenos": "收起",
+      "datosDesde": "数据自{d}起",
       "manageSignals": "管理信号",
       "chooseSignals": "选择要追踪的内容",
       "guardar": "保存更改",
